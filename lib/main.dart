@@ -155,20 +155,71 @@ class _Trending extends State<Home> {
 //        ),
 
         body: Center(
-          child: FutureBuilder<TrendingMasterObject>(
-            future: fetchPost(),
+            child: new Container(
+                child: new SingleChildScrollView(
+                    child: new ConstrainedBox(
+                      constraints: new BoxConstraints(),
+                      child: new Column(children: <Widget>[
 
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-               // return Text(snapshot.data.title);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+                      new FutureBuilder<TrendingMasterObject>(
+                          future: fetchPost(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          TrendingMasterObject trendingMasterObject =snapshot.data;
+                          List<TrendingList> trending=trendingMasterObject.trendingList;
+                          for(TrendingList trendingList in trending){
+                            return new Image.network(
+                              trendingList.mainDisplay,
+                            );
+                        return new Container(
+                        padding:
+                        EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+                        color: Colors.grey,
+                        child: new Text(
+                        'Cast Light life style Here',
+                        textDirection: TextDirection.ltr,
+                        style: new TextStyle(
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        ),
+                        ),
+                        );
+                        return new Container(
+                        child: new Text(
+                        'Hi There ? this is sample plaid app using flutter sdk and dart programming language, devceloper is Hammad Tariq'
+                        'this is sample Flutter app example Code'
+                        'Flutter Column Widget scrollable using SingleChildScrollView'
+                        'I am just loving Flutter SDK'
+                        'Flutter scrollview example using Single Child Scroll View'
+                        'flutter fixing bottom overflow by xx pixels in flutter'
+                        'Flutter scrollable layout example'
+                        'Flutter app SingleChildScrollView Example ',
+                        textDirection: TextDirection.ltr,
+                        style: new TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pink,
+                        ),
+                        ),
+                        );
+                          }
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
 
-              // By default, show a loading spinner
-              return CircularProgressIndicator();
-            },
-          ),
+                        // By default, show a loading spinner
+                        return CircularProgressIndicator();
+                      },
+                    ),
+
+
+
+
+
+
+                      ]),
+                    )))
         ),
       ),
     );
@@ -194,7 +245,7 @@ Future<TrendingMasterObject> fetchPost() async {
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON
     try {
-      TrendingMasterObject ddd= TrendingMasterObject.fromJson(json.decode(response.body));
+      return TrendingMasterObject.fromJson(json.decode(response.body));
       String dsfsd="sdf";
     } catch (e) {}
   } else {
