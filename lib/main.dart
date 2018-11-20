@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:stats/TrendingMasterObject.dart';
 import 'package:stats/PlaceholderWidget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:stats/Trending.dart';
-import 'package:stats/TrendingMasterObject.dart';
+
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -157,6 +157,7 @@ class _Trending extends State<Home> {
         body: Center(
           child: FutureBuilder<TrendingMasterObject>(
             future: fetchPost(),
+
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                // return Text(snapshot.data.title);
@@ -185,7 +186,7 @@ Future<TrendingMasterObject> fetchPost() async {
   Map<String, String> body = {
     'memberID': '7',
   };
-  String requestUrl = "http://192.168.1.40:8090/trending";
+  String requestUrl = "http://192.168.88.223:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,
@@ -193,7 +194,8 @@ Future<TrendingMasterObject> fetchPost() async {
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON
     try {
-      return TrendingMasterObject.fromJson(json.decode(response.body));
+      TrendingMasterObject ddd= TrendingMasterObject.fromJson(json.decode(response.body));
+      String dsfsd="sdf";
     } catch (e) {}
   } else {
     // If that call was not successful, throw an error.
