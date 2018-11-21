@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
-
 const PrimaryColor = const Color(0x00000000);
 
 void main() => runApp(Home());
@@ -157,70 +155,25 @@ class _Trending extends State<Home> {
         body: Center(
             child: new Container(
                 child: new SingleChildScrollView(
-                    child: new ConstrainedBox(
-                      constraints: new BoxConstraints(),
-                      child: new Column(children: <Widget>[
+          child: FutureBuilder<TrendingMasterObject>(
+            future: fetchPost(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                TrendingMasterObject trendingMasterObject = snapshot.data;
+                List<TrendingList> trending = trendingMasterObject.trendingList;
+                return new ConstrainedBox(
+                  constraints: new BoxConstraints(),
+                  child: new Column(children: ListMyWidgets(trending)),
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
 
-                      new FutureBuilder<TrendingMasterObject>(
-                          future: fetchPost(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          TrendingMasterObject trendingMasterObject =snapshot.data;
-                          List<TrendingList> trending=trendingMasterObject.trendingList;
-                          for(TrendingList trendingList in trending){
-                            return new Image.network(
-                              trendingList.mainDisplay,
-                            );
-                        return new Container(
-                        padding:
-                        EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
-                        color: Colors.grey,
-                        child: new Text(
-                        'Cast Light life style Here',
-                        textDirection: TextDirection.ltr,
-                        style: new TextStyle(
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        ),
-                        ),
-                        );
-                        return new Container(
-                        child: new Text(
-                        'Hi There ? this is sample plaid app using flutter sdk and dart programming language, devceloper is Hammad Tariq'
-                        'this is sample Flutter app example Code'
-                        'Flutter Column Widget scrollable using SingleChildScrollView'
-                        'I am just loving Flutter SDK'
-                        'Flutter scrollview example using Single Child Scroll View'
-                        'flutter fixing bottom overflow by xx pixels in flutter'
-                        'Flutter scrollable layout example'
-                        'Flutter app SingleChildScrollView Example ',
-                        textDirection: TextDirection.ltr,
-                        style: new TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.pink,
-                        ),
-                        ),
-                        );
-                          }
-                        } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
-
-                        // By default, show a loading spinner
-                        return CircularProgressIndicator();
-                      },
-                    ),
-
-
-
-
-
-
-                      ]),
-                    )))
-        ),
+              // By default, show a loading spinner
+              return CircularProgressIndicator();
+            },
+          ),
+        ))),
       ),
     );
   }
@@ -233,11 +186,65 @@ class _Trending extends State<Home> {
   }
 }
 
+List<Widget> ListMyWidgets(List<TrendingList> trending) {
+  List<Widget> list = new List();
+
+  for (TrendingList trendingList in trending) {
+    if (trendingList.descriptionType == 1) {
+
+      list.add(  new Container(
+
+        width: 65,
+        height: 65,
+        decoration: new BoxDecoration(
+          color: Colors.transparent,
+          image: new DecorationImage(
+            image: new NetworkImage(trendingList.profilePic),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+          border: new Border.all(
+            color: Colors.blueGrey,
+            width: 1,
+          ),
+        ),
+      ),);
+
+      list.add(Text(trendingList.description));
+
+      list.add(new Image.network(trendingList.mainDisplay,
+        height: 270,
+        color: null,
+        fit: BoxFit.fill,
+        alignment: Alignment.center,));
+
+      list.add(new Container(
+        color: Colors.white30,
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            new BottomNavigationBarItem(
+                icon: const Icon(Icons.poll), title: new Text("")),
+            new BottomNavigationBarItem(
+                icon: const Icon(Icons.work), title: new Text("")),
+            new BottomNavigationBarItem(
+                icon: const Icon(Icons.face), title: new Text(""))
+          ],
+          fixedColor: Colors.white,
+        ),
+      ));
+
+
+    }
+  }
+
+  return list;
+}
+
 Future<TrendingMasterObject> fetchPost() async {
   Map<String, String> body = {
     'memberID': '7',
   };
-  String requestUrl = "http://192.168.88.223:8090/trending";
+  String requestUrl = "http://192.168.1.40:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,
@@ -246,7 +253,7 @@ Future<TrendingMasterObject> fetchPost() async {
     // If the call to the server was successful, parse the JSON
     try {
       return TrendingMasterObject.fromJson(json.decode(response.body));
-      String dsfsd="sdf";
+      String dsfsd = "sdf";
     } catch (e) {}
   } else {
     // If that call was not successful, throw an error.
