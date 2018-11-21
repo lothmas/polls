@@ -192,34 +192,49 @@ List<Widget> ListMyWidgets(List<TrendingList> trending) {
   for (TrendingList trendingList in trending) {
     if (trendingList.descriptionType == 1) {
 
-      list.add(  new Container(
 
-        width: 65,
-        height: 65,
-        decoration: new BoxDecoration(
-          color: Colors.transparent,
-          image: new DecorationImage(
-            image: new NetworkImage(trendingList.profilePic),
-            fit: BoxFit.cover,
+
+
+      list.add(Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+                child: new CircleAvatar(
+                    child: new Image(image: NetworkImage(trendingList.profilePic)),
+                    foregroundColor: Colors.transparent,
+
+                ),
+                width: 65.0,
+                height: 65.9,
+                padding: const EdgeInsets.all(2.0), // borde width
+                decoration: new BoxDecoration(
+                  color: const Color(0xFFFFFFFF), // border color
+                  shape: BoxShape.circle,
+                )
+            )
           ),
-          borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
-          border: new Border.all(
-            color: Colors.blueGrey,
-            width: 1,
+          Expanded(
+            child: Text(trendingList.title, textAlign: TextAlign.center),
           ),
-        ),
-      ),);
+
+        ],
+      ));
+
+
 
       list.add(Text(trendingList.description));
+
+
+
 
       list.add(new Image.network(trendingList.mainDisplay,
         height: 270,
         color: null,
         fit: BoxFit.fill,
-        alignment: Alignment.center,));
+        alignment: Alignment.topLeft,));
 
       list.add(new Container(
-        color: Colors.white30,
+        color: Colors.transparent,
         child: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             new BottomNavigationBarItem(
@@ -244,7 +259,8 @@ Future<TrendingMasterObject> fetchPost() async {
   Map<String, String> body = {
     'memberID': '7',
   };
-  String requestUrl = "http://192.168.1.40:8090/trending";
+  //192.168.88.223   work: 192.168.1.40
+  String requestUrl = "http://192.168.88.223:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,
