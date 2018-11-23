@@ -4,6 +4,7 @@ import 'package:stats/PlaceholderWidget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:badge/badge.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
+    imageCache.clear();
     return _Trending();
   }
 }
@@ -33,8 +35,8 @@ class _Trending extends State<Home> {
       itemBuilder: (BuildContext ctx) {},
       child: new Image(
         image: new AssetImage("images/notification.png"),
-        width: 34,
-        height: 34,
+        width: 26,
+        height: 26,
         color: null,
         fit: BoxFit.scaleDown,
         alignment: Alignment.center,
@@ -45,7 +47,7 @@ class _Trending extends State<Home> {
       home: Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.white,
-          elevation: 10,
+          elevation: 2,
           title: new Text(
             'Trending',
             textAlign: TextAlign.left,
@@ -55,8 +57,8 @@ class _Trending extends State<Home> {
           ),
           leading: new Image(
             image: new AssetImage("images/menu.png"),
-            width: 24,
-            height: 24,
+//            width: 20,
+//            height: 20,
             color: null,
             fit: BoxFit.scaleDown,
             alignment: Alignment.center,
@@ -191,64 +193,164 @@ List<Widget> ListMyWidgets(List<TrendingList> trending) {
 
   for (TrendingList trendingList in trending) {
     if (trendingList.descriptionType == 1) {
-
-
-
-
       list.add(Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-                child: new CircleAvatar(
-                    child: new Image(image: NetworkImage(trendingList.profilePic)),
-                    foregroundColor: Colors.transparent,
-
+        children: [
+          Container(
+            color: Colors.transparent,
+            child: ClipOval(
+                child: Image.network(
+              trendingList.profilePic,
+              fit: BoxFit.fill,
+              width: 75.0,
+              height: 75.0,
+            )),
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 10.0,
+          ),
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 1.0),
+                color: Colors.transparent,
+                child: Text(
+                  trendingList.title,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.bold),
                 ),
-                width: 65.0,
-                height: 65.9,
-                padding: const EdgeInsets.all(2.0), // borde width
-                decoration: new BoxDecoration(
-                  color: const Color(0xFFFFFFFF), // border color
-                  shape: BoxShape.circle,
-                )
+              ),
+              Container(
+                color: Colors.transparent,
+                height: 5.0,
+              ),
+              Container(
+                color: Colors.transparent,
+                child: Text(
+                  trendingList.owner,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.lightBlueAccent),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 50.0,
+          ),
+          Container(
+            //color: Colors.purple,
+            child: Badge.before(
+                value: "Text", // value to show inside the badge
+               // child: new Text("button") // text to append (required)
             )
           ),
-          Expanded(
-            child: Text(trendingList.title, textAlign: TextAlign.center),
-          ),
-
         ],
       ));
 
+      list.add( Container(
+        color: Colors.transparent,
+        height: 20.0,
+      ));
 
+      list.add(Text(trendingList.description,textAlign: TextAlign.left));
+      list.add( Container(
+        color: Colors.transparent,
+        height: 20.0,
+      ));
 
-      list.add(Text(trendingList.description));
-
-
-
-
-      list.add(new Image.network(trendingList.mainDisplay,
+      list.add(new Image.network(
+        trendingList.mainDisplay,
         height: 270,
         color: null,
         fit: BoxFit.fill,
-        alignment: Alignment.topLeft,));
-
-      list.add(new Container(
-        color: Colors.transparent,
-        child: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            new BottomNavigationBarItem(
-                icon: const Icon(Icons.poll), title: new Text("")),
-            new BottomNavigationBarItem(
-                icon: const Icon(Icons.work), title: new Text("")),
-            new BottomNavigationBarItem(
-                icon: const Icon(Icons.face), title: new Text(""))
-          ],
-          fixedColor: Colors.white,
-        ),
+        alignment: Alignment.topLeft,
       ));
 
+//      list.add(new Container(
+//        color: Colors.black,
+//        child: BottomNavigationBar(
+//
+//          items: <BottomNavigationBarItem>[
+//            new BottomNavigationBarItem(
+//                icon: const Icon(Icons.poll), title: new Text("ff")),
+//            new BottomNavigationBarItem(
+//                icon: const Icon(Icons.work), title: new Text("")),
+//            new BottomNavigationBarItem(
+//                icon: const Icon(Icons.face), title: new Text(""))
+//          ],
+//          fixedColor: Colors.white,
+//
+//        ),
+//      ));
 
+      list.add( Container(
+        color: Colors.transparent,
+        height: 20.0,
+      ));
+
+      list.add(Divider(),);
+
+      list.add(
+
+          Row(
+
+        children: [
+          Container(
+            color: Colors.transparent,
+            width: 20.0,
+          ),
+          Container(child: Image(
+            image: new AssetImage("images/cast.png"),
+            width: 30,
+            height: 30,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 100.0,
+          ),
+          Container(child: Image(
+            image: new AssetImage("images/trending.png"),
+            width: 30,
+            height: 30,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+
+          ),
+
+          ),
+
+          Container(
+            color: Colors.transparent,
+            width: 100.0,
+          ),
+          Container(child: Image(
+            image: new AssetImage("images/share.png"),
+            width: 30,
+            height: 30,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+
+          ),
+          ),
+        ],
+      ));
+
+      list.add(Divider(),);
+
+      list.add( Container(
+        color: Colors.transparent,
+        height: 30.0,
+      ));
     }
   }
 
@@ -260,7 +362,7 @@ Future<TrendingMasterObject> fetchPost() async {
     'memberID': '7',
   };
   //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.88.223:8090/trending";
+  String requestUrl = "http://192.168.1.40:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,
