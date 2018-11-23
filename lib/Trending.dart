@@ -10,6 +10,10 @@ class Trending{
 
       for (TrendingList trendingList in trending) {
         if (trendingList.descriptionType == 1) {
+          list.add( Container(
+            color: Colors.transparent,
+            height: 12.0,
+          ));
           list.add(Row(
             children: [
               Container(
@@ -70,7 +74,7 @@ class Trending{
 
           list.add( Container(
             color: Colors.transparent,
-            height: 20.0,
+            height: 12.0,
           ));
 
           list.add(Text(trendingList.description,textAlign: TextAlign.left));
