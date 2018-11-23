@@ -104,70 +104,82 @@ class Trending{
 //        ),
 //      ));
 
-          list.add( Container(
-            color: Colors.transparent,
-            height: 20.0,
-          ));
+
+//          list.add(
+//
+//              );
+
 
           list.add(Divider(),);
 
-          list.add(
+          list.add( new Container(
+            width: 500.0,
+            height: 50.0,
+         //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+            decoration: new BoxDecoration(
+                color: Colors.white30,
+                boxShadow: [new BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 20.0,
+                ),]
+            ),
+            child: new Column(
 
-              Row(
-
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    color: Colors.transparent,
-                    width: 20.0,
-                  ),
-                  Container(child: Image(
-                    image: new AssetImage("images/cast.png"),
-                    width: 30,
-                    height: 30,
-                    color: null,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
-                  ),
-                  ),
-                  Container(
-                    color: Colors.transparent,
-                    width: 100.0,
-                  ),
-                  Container(child: Image(
-                    image: new AssetImage("images/trending.png"),
-                    width: 30,
-                    height: 30,
-                    color: null,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
+                  new Row(
 
-                  ),
+                    children: [
+                      Container(
+                        color: Colors.transparent,
+                        width: 20.0,
+                      ),
+                      Container(child: Image(
+                        image: new AssetImage("images/cast.png"),
+                        width: 30,
+                        height: 30,
+                        color: null,
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.center,
+                      ),
+                      ),
+                      Container(
+                        color: Colors.transparent,
+                        width: 100.0,
+                      ),
+                      Container(child: Image(
+                        image: new AssetImage("images/trending.png"),
+                        width: 30,
+                        height: 30,
+                        color: null,
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.center,
 
-                  ),
+                      ),
 
-                  Container(
-                    color: Colors.transparent,
-                    width: 100.0,
-                  ),
-                  Container(child: Image(
-                    image: new AssetImage("images/share.png"),
-                    width: 30,
-                    height: 30,
-                    color: null,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
+                      ),
 
+                      Container(
+                        color: Colors.transparent,
+                        width: 100.0,
+                      ),
+                      Container(child: Image(
+                        image: new AssetImage("images/share.png"),
+                        width: 30,
+                        height: 30,
+                        color: null,
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.center,
+
+                      ),
+                      ),
+                    ],
                   ),
-                  ),
-                ],
-              ));
+                ]
+            ),
+          ),);
 
           list.add(Divider(),);
-
-          list.add( Container(
-            color: Colors.transparent,
-            height: 30.0,
-          ));
         }
       }
 
