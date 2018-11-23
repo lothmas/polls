@@ -123,7 +123,7 @@ class Trending{
             decoration: new BoxDecoration(
                 color: Colors.white30,
                 boxShadow: [new BoxShadow(
-                  color: Colors.grey,
+                  color: Colors.lightBlueAccent,
                   blurRadius: 20.0,
                 ),]
             ),
