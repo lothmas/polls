@@ -105,7 +105,7 @@ class Trending {
                           ),
                           Container(
                             child: Image(
-                              image: new AssetImage("images/cast.png"),
+                              image: new AssetImage("images/lock.png"),
                               width: 18,
                               height: 18,
                               color: null,

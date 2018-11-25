@@ -57,6 +57,7 @@ flutter:
     - images/megaphone.png
     - images/cast.png
     - images/info.png
+    - images/lock.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
