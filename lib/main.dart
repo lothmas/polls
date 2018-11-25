@@ -58,8 +58,8 @@ class _Trending extends State<Home> {
           ),
           leading: new Image(
             image: new AssetImage("images/menu.png"),
-//            width: 20,
-//            height: 20,
+            width: 20,
+            height: 20,
             color: null,
             fit: BoxFit.scaleDown,
             alignment: Alignment.center,
@@ -166,7 +166,7 @@ class _Trending extends State<Home> {
                 List<TrendingList> trending = trendingMasterObject.trendingList;
                 return new ConstrainedBox(
                   constraints: new BoxConstraints(),
-                  child: new Column(children: homeTrending.homeTrendingList(trending)),
+                  child: new Column(children: homeTrending.homeTrendingList(trending,context)),
                 );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
@@ -196,7 +196,7 @@ Future<TrendingMasterObject> fetchPost() async {
     'memberID': '7',
   };
   //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.1.40:8090/trending";
+  String requestUrl = "http://192.168.88.223:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,
