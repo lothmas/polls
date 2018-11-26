@@ -36,8 +36,8 @@ class _Trending extends State<Home> {
       itemBuilder: (BuildContext ctx) {},
       child: new Image(
         image: new AssetImage("images/notification.png"),
-        width: 26,
-        height: 26,
+        width: 32,
+        height: 32,
         color: null,
         fit: BoxFit.scaleDown,
         alignment: Alignment.center,
@@ -81,6 +81,7 @@ class _Trending extends State<Home> {
                 color: null,
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.center,
+
               ),
               title: new Text(
                 'home',
@@ -196,7 +197,7 @@ Future<TrendingMasterObject> fetchPost() async {
     'memberID': '7',
   };
   //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.88.223:8090/trending";
+  String requestUrl = "http://192.168.1.40:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,

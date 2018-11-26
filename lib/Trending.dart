@@ -10,13 +10,15 @@ import 'package:super_tooltip/super_tooltip.dart';
 class Trending {
   var youtube = new FlutterYoutube();
 
-
-  List<Widget> homeTrendingList(List<TrendingList> trending,BuildContext context) {
+  List<Widget> homeTrendingList(
+      List<TrendingList> trending, BuildContext context) {
+    var assetImage = new AssetImage("images/cast.png");
+    var cast = new Image(image: assetImage,width: 18,height: 18,color: null,fit: BoxFit.scaleDown,alignment: Alignment.center,);
 
     RenderBox renderBox = context.findRenderObject();
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
-    var targetGlobalCenter =
-    renderBox.localToGlobal(renderBox.size.center(Offset.zero), ancestor: overlay);
+    var targetGlobalCenter = renderBox
+        .localToGlobal(renderBox.size.center(Offset.zero), ancestor: overlay);
 
     List<Widget> list = new List();
 
@@ -132,8 +134,10 @@ class Trending {
                             width: 58,
                           ),
                           GestureDetector(
-                            onTap: (){
-                              new Tooltip(message: "Hello World", child: new Text("foo"));
+                            onTap: () {
+                              list.add(new Tooltip(
+                                  message: "Hello World",
+                                  child: new Text("foo")));
                             },
                             child: Image(
                               image: new AssetImage("images/info.png"),
@@ -142,7 +146,6 @@ class Trending {
                               color: null,
                               fit: BoxFit.scaleDown,
                               alignment: Alignment.center,
-
                             ),
                           ),
                         ],
@@ -153,21 +156,18 @@ class Trending {
           ),
           Container(
             color: Colors.transparent,
-            width: 30.0,
+            width: 40.0,
           ),
           Container(
               color: Colors.grey,
-              width: 5,
               child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-            value: trendingList.votesCasted.toString() +
-                ' | ' +
-                trendingList.allowedVoteNumber
-                    .toString(),
-                color: Colors.blueGrey,
-                borderSize: 1,// value to show inside the badge
-            // child: new Text("button") // text to append (required)
-          )),
+                value: trendingList.votesCasted.toString() +
+                    ' | ' +
+                    trendingList.allowedVoteNumber.toString(),
+                color: Colors.blueGrey, // value to show inside the badge
+                // child: new Text("button") // text to append (required)
+              )),
         ],
       ));
 
@@ -227,15 +227,27 @@ class Trending {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      child: Image(
-                        image: new AssetImage("images/cast.png"),
-                        width: 18,
-                        height: 18,
-                        color: null,
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.center,
+
+                      height: cast.height,
+                      width: cast.width,
+                      child: new FlatButton(
+//              onPressed: castClick(),
+                        child: new ConstrainedBox(
+                          constraints: new BoxConstraints.expand(),
+                          child: cast,
+                        ),
                       ),
                     ),
+//                    Container(
+//                      child: Image(
+//                        image: new AssetImage("images/cast.png"),
+//                        width: 18,
+//                        height: 18,
+//                        color: null,
+//
+//                        alignment: Alignment.center,
+//                      ),
+//                    ),
                     Container(
                       child: Image(
                         image: new AssetImage("images/trending.png"),
@@ -287,7 +299,11 @@ class Trending {
       int mins = DateTime.now().difference(dateVoteCreated).inMinutes;
       if (mins < 0) {
         mins = -mins;
-        mins = mins - 60;
+        if (mins < 60) {
+          mins = 60 - mins;
+        } else {
+          mins = mins % 60;
+        }
       }
       return mins.toString() + " mins";
     } else if (DateTime.now().difference(dateVoteCreated).inHours < 24) {
@@ -322,4 +338,6 @@ class TooltipText extends StatelessWidget {
       child: Text(text),
     );
   }
+
+  void castClick() {}
 }

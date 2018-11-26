@@ -24,6 +24,7 @@ dependencies:
   chewie: ^0.8.0
   flutter_youtube: ^1.1.4
   super_tooltip: ^0.9.0
+  date_format: ^1.0.5
 
 dev_dependencies:
   flutter_test:
