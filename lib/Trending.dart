@@ -133,26 +133,7 @@ class Trending {
                           ),
                           GestureDetector(
                             onTap: (){
-                               SuperTooltip(
-                                  popupDirection: TooltipDirection.left,
-                                  top: 150.0,
-                                  left: 30.0,
-                                  arrowTipDistance: 10.0,
-                                  showCloseButton: ShowCloseButton.inside,
-                                  closeButtonColor: Colors.black,
-                                  closeButtonSize: 30.0,
-                                  hasShadow: false,
-                                  touchThrougArea: new Rect.fromCircle(center:targetGlobalCenter, radius: 40.0),
-                                  content: new Material(
-                                  child: Padding(
-                                  padding: const EdgeInsets.only(top:20.0),
-                              child: Text(
-                              "Lorem ipsum dolor sit amet, consetetursadipscing elitr, "
-                              "sed diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat, "
-                              "sed diam voluptua. At vero eos et accusam etjusto duo dolores et ea rebum. ",
-                              softWrap: true,
-                              ),
-                              ),));
+                              new Tooltip(message: "Hello World", child: new Text("foo"));
                             },
                             child: Image(
                               image: new AssetImage("images/info.png"),
@@ -172,16 +153,19 @@ class Trending {
           ),
           Container(
             color: Colors.transparent,
-            width: 50.0,
+            width: 30.0,
           ),
           Container(
-              //color: Colors.purple,
+              color: Colors.grey,
+              width: 5,
               child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
             value: trendingList.votesCasted.toString() +
-                '|' +
+                ' | ' +
                 trendingList.allowedVoteNumber
-                    .toString(), // value to show inside the badge
+                    .toString(),
+                color: Colors.blueGrey,
+                borderSize: 1,// value to show inside the badge
             // child: new Text("button") // text to append (required)
           )),
         ],
