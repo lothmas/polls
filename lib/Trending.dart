@@ -301,8 +301,8 @@ class Trending {
           GestureDetector(
                       child: Image(
                         image: new AssetImage("images/cast.png"),
-                        width: 18,
-                        height: 18,
+                        width: 26,
+                        height: 26,
                         color: null,
 
                         alignment: Alignment.center,
@@ -317,8 +317,8 @@ class Trending {
                     Container(
                       child: Image(
                         image: new AssetImage("images/trending.png"),
-                        width: 18,
-                        height: 18,
+                        width: 26,
+                        height: 26,
                         color: null,
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.center,
@@ -327,8 +327,8 @@ class Trending {
                     Container(
                       child: Image(
                         image: new AssetImage("images/share.png"),
-                        width: 18,
-                        height: 18,
+                        width: 26,
+                        height: 26,
                         color: null,
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.center,
