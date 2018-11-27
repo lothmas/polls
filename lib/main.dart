@@ -206,7 +206,6 @@ Future<TrendingMasterObject> fetchPost() async {
     // If the call to the server was successful, parse the JSON
     try {
       return TrendingMasterObject.fromJson(json.decode(response.body));
-      String dsfsd = "sdf";
     } catch (e) {}
   } else {
     // If that call was not successful, throw an error.

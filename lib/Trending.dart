@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stats/Polling.dart';
 import 'package:stats/TrendingMasterObject.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
@@ -13,7 +14,7 @@ class Trending {
   List<Widget> homeTrendingList(
       List<TrendingList> trending, BuildContext context) {
     var assetImage = new AssetImage("images/cast.png");
-    var cast = new Image(image: assetImage,width: 18,height: 18,color: null,fit: BoxFit.scaleDown,alignment: Alignment.center,);
+    var cast = new Image(image: assetImage,width: 18,height: 18,fit: BoxFit.fill,alignment: Alignment.center,);
 
     RenderBox renderBox = context.findRenderObject();
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
@@ -189,22 +190,81 @@ class Trending {
           fit: BoxFit.fill,
           alignment: Alignment.topLeft,
         ));
-      } else if (trendingList.descriptionType == 2 &&
+      }
+      else if (trendingList.descriptionType == 2 &&
           trendingList.mainDisplay.contains("https://www.youtube.com")) {
-        list.add(FlutterYoutube.playYoutubeVideoByUrl(
+        list.add(Container(
+            height: 270,
+
+            child:FlutterYoutube.playYoutubeVideoByUrl(
             apiKey: "AIzaSyC-OhlIOcjW_WBqBbDUVKJF4qN4MMSNL8c",
             videoUrl: trendingList.mainDisplay,
             autoPlay: false, //default falase
-            fullScreen: false //default false
-            ));
-      } else if (trendingList.descriptionType == 2) {
+            fullScreen: false
+            ,
+          //default false
+
+            )),);
+
+      }
+      else if (trendingList.descriptionType == 2) {
         list.add(new Chewie(
           new VideoPlayerController.network(trendingList.mainDisplay),
-          aspectRatio: 3 / 2,
+          //aspectRatio: 3 / 2,
+
           autoPlay: false,
           looping: true,
+          autoInitialize: true,
+
+//          placeholder: Image(
+//            image: new AssetImage("images/plan.jpg"),
+//            width: 18,
+//            height: 18,
+//            color: null,
+//            fit: BoxFit.scaleDown,
+//            alignment: Alignment.center,
+//          ),
         ));
       }
+
+
+      list.add(
+        new Container(
+          width: 500.0,
+          height: 22.0,
+          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+          child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                new Row(
+                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      //color: Colors.purple,
+                        child: Badge.before(
+                          color: Colors.transparent,
+                          borderColor: Colors.transparent,
+                          textStyle: TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.bold),
+                          value: countdown(DateTime.parse(trendingList.time)) +
+                              " :ago",
+                        )),
+                  ],
+                ),
+              ]),
+        ),
+      );
+
+
+
       list.add(
         Divider(),
       );
@@ -216,7 +276,7 @@ class Trending {
           //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
             new BoxShadow(
-              color: Colors.grey,
+              color: Colors.black26,
               blurRadius: 20.0,
             ),
           ]),
@@ -226,28 +286,34 @@ class Trending {
                 new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-
-                      height: cast.height,
-                      width: cast.width,
-                      child: new FlatButton(
-//              onPressed: castClick(),
-                        child: new ConstrainedBox(
-                          constraints: new BoxConstraints.expand(),
-                          child: cast,
-                        ),
-                      ),
-                    ),
 //                    Container(
-//                      child: Image(
-//                        image: new AssetImage("images/cast.png"),
-//                        width: 18,
-//                        height: 18,
-//                        color: null,
 //
-//                        alignment: Alignment.center,
+//                      height: cast.height,
+//                      width: cast.width,
+//                      child: new FlatButton(
+////              onPressed: castClick(),
+//                        child: new ConstrainedBox(
+//                          constraints: new BoxConstraints.expand(),
+//                          child: cast,
+//                        ),
 //                      ),
 //                    ),
+          GestureDetector(
+                      child: Image(
+                        image: new AssetImage("images/cast.png"),
+                        width: 18,
+                        height: 18,
+                        color: null,
+
+                        alignment: Alignment.center,
+                      ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Polling()),
+              );
+            },
+                    ),
                     Container(
                       child: Image(
                         image: new AssetImage("images/trending.png"),
@@ -268,18 +334,6 @@ class Trending {
                         alignment: Alignment.center,
                       ),
                     ),
-                    Container(
-                        //color: Colors.purple,
-                        child: Badge.before(
-                      color: Colors.grey,
-                      borderColor: Colors.transparent,
-                      textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.bold),
-                      value: countdown(DateTime.parse(trendingList.time)) +
-                          " :ago",
-                    )),
                   ],
                 ),
               ]),
@@ -340,4 +394,6 @@ class TooltipText extends StatelessWidget {
   }
 
   void castClick() {}
+
+
 }
