@@ -11,8 +11,7 @@ import 'package:super_tooltip/super_tooltip.dart';
 class Trending {
   var youtube = new FlutterYoutube();
   String voteID;
-  List<Widget> homeTrendingList(
-      List<TrendingList> trending, BuildContext context) {
+  List<Widget> homeTrendingList(List<TrendingList> trending, BuildContext context) {
     var assetImage = new AssetImage("images/cast.png");
     var cast = new Image(image: assetImage,width: 18,height: 18,fit: BoxFit.fill,alignment: Alignment.center,);
 
@@ -167,7 +166,7 @@ class Trending {
                     ' | ' +
                     trendingList.allowedVoteNumber.toString(),
                 color: Colors.blueGrey, // value to show inside the badge
-                // child: new Text("button") // text to append (required)
+                 child: new Text("") // text to append (required)
               )),
         ],
       ));
@@ -256,6 +255,7 @@ class Trending {
                               fontWeight: FontWeight.bold),
                           value: countdown(DateTime.parse(trendingList.time)) +
                               " :ago",
+                          child: null,
                         )),
                   ],
                 ),

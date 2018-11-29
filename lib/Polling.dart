@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
+import 'package:stats/Nominees.dart';
 import 'package:stats/Trending.dart';
 import 'package:stats/TrendingMasterObject.dart';
 import 'package:stats/PlaceholderWidget.dart';
@@ -39,7 +40,7 @@ class _Trending extends State<Polling> {
 
   @override
   Widget build(BuildContext context) {
-    Trending PollingTrending=new Trending();
+    Nominees PollingTrending=new Nominees();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
       itemBuilder: (BuildContext ctx) {},
@@ -83,7 +84,30 @@ class _Trending extends State<Polling> {
         ),
 
 
-        body: App(),
+        body: Center(
+
+                child:  FutureBuilder<NomineeMasterObject>(
+                    future: fetchPost(voteIDs),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        NomineeMasterObject nomineeMasterObject = snapshot.data;
+                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
+//                        return new ConstrainedBox(
+//                          constraints: new BoxConstraints(),
+//                          child: new Column(children: PollingTrending.nominees(nomineesList)),
+//                        );
+//
+                        List<Widget>  nomieeGrid=PollingTrending.nominees(nomineesList);
+                       return App(nomieeGrid:nomieeGrid);
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+
+                      // By default, show a loading spinner
+                   //   return CircularProgressIndicator();
+                    },
+                  ),
+                ),
 //            new Container(
 //
 //                  child: FutureBuilder<NomineeMasterObject>(
@@ -108,6 +132,31 @@ class _Trending extends State<Polling> {
       ),
     );
   }
+
+
+  Future<NomineeMasterObject> fetchPost(String voteID) async {
+    Map<String, String> body = {
+      'voteID': voteID,
+    };
+    //192.168.88.223   work: 192.168.1.40
+    String requestUrl = "http://192.168.88.223:8090/nominees";
+    final response = await http.post(
+      requestUrl,
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      try {
+        return NomineeMasterObject.fromJson(json.decode(response.body));
+        // nomineesList = nomineeMasterObject.nomineesEntityList;
+
+      } catch (e) {}
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
 
   void onTabTapped(int index) {
     setState(() {
@@ -185,139 +234,69 @@ class NomineeGrid1 extends StatelessWidget {
 
 
 
-Future<NomineeMasterObject> fetchPost(String voteID) async {
-  Map<String, String> body = {
-    'voteID': voteID,
-  };
-  //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.1.40:8090/nominees";
-  final response = await http.post(
-    requestUrl,
-    body: body,
-  );
-  if (response.statusCode == 200) {
-    // If the call to the server was successful, parse the JSON
-    try {
-      return NomineeMasterObject.fromJson(json.decode(response.body));
-     // nomineesList = nomineeMasterObject.nomineesEntityList;
 
-    } catch (e) {}
-  } else {
-    // If that call was not successful, throw an error.
-    throw Exception('Failed to load post');
-  }
-}
 
 class App extends StatefulWidget {
   @override
-  AppState createState() => AppState();
+
+  List<Widget>  nomieeGrid;
+  App({List<Widget> nomieeGrid}){
+    this.nomieeGrid=nomieeGrid;
+  }
+  AppState createState() => AppState(nomieeGrid:nomieeGrid);
+
 }
 
 class AppState extends State<App> {
   Color caughtColor = Colors.grey;
+  List<Widget>  nomieeGrid;
+
+  AppState({List<Widget> nomieeGrid}){
+    this.nomieeGrid=nomieeGrid;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget>[
-        DragBox(Offset(0.0, 0.0), 'Box One', Colors.blueAccent),
-        DragBox(Offset(100.0, 0.0), 'Box Two', Colors.orange),
-        DragBox(Offset(200.0, 0.0), 'Box Three', Colors.lightGreen),
-        DragBox(Offset(300.0, 0.0), 'Box Four', Colors.redAccent),
-        Positioned(
-          left: 100.0,
-          bottom: 0.0,
-          child: DragTarget(
-            onAccept: (Color color) {
-              caughtColor = color;
-            },
-            builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-                ) {
-              return Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: BoxDecoration(
-                  color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-                ),
-                child: Center(
-                  child: Text("Drag Here!"),
-                ),
-              );
-            },
-          ),
-        )
-      ],
+      children: nomieeGrid,
+
+
+
+//      <Widget>[
+//        DragBox(Offset(0.0, 0.0), 'Box One', Colors.blueAccent),
+//        DragBox(Offset(100.0, 0.0), 'Box Two', Colors.orange),
+//        DragBox(Offset(200.0, 0.0), 'Box Three', Colors.lightGreen),
+//        DragBox(Offset(300.0, 0.0), 'Box Four', Colors.redAccent),
+//        Positioned(
+//          left: 100.0,
+//          bottom: 0.0,
+//          child: DragTarget(
+//            onAccept: (Color color) {
+//              caughtColor = color;
+//            },
+//            builder: (
+//                BuildContext context,
+//                List<dynamic> accepted,
+//                List<dynamic> rejected,
+//                ) {
+//              return Container(
+//                width: 200.0,
+//                height: 200.0,
+//                decoration: BoxDecoration(
+//                  color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
+//                ),
+//                child: Center(
+//                  child: Text("Drag Here!"),
+//                ),
+//              );
+//            },
+//          ),
+//        )
+//      ],
     );
   }
 }
 
-class DragBox extends StatefulWidget {
-  final Offset initPos;
-  final String label;
-  final Color itemColor;
 
-  DragBox(this.initPos, this.label, this.itemColor);
-
-  @override
-  DragBoxState createState() => DragBoxState();
-}
-
-class DragBoxState extends State<DragBox> {
-  Offset position = Offset(0.0, 0.0);
-
-  @override
-  void initState() {
-    super.initState();
-    position = widget.initPos;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        left: position.dx,
-        top: position.dy,
-        child: Draggable(
-          data: widget.itemColor,
-          child: Container(
-            width: 100.0,
-            height: 100.0,
-            color: widget.itemColor,
-            child: Center(
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 20.0,
-                ),
-              ),
-            ),
-          ),
-          onDraggableCanceled: (velocity, offset) {
-            setState(() {
-              position = offset;
-            });
-          },
-          feedback: Container(
-            width: 120.0,
-            height: 120.0,
-            color: widget.itemColor.withOpacity(0.5),
-            child: Center(
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 18.0,
-                ),
-              ),
-            ),
-          ),
-        ));
-  }
-}
 
 
