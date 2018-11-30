@@ -9,8 +9,16 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-const PrimaryColor = const Color(0x00000000);
+import 'package:stats/drag.dart';
+import 'package:stats/dropcity/country.dart';
 
+const PrimaryColor = const Color(0x00000000);
+final countries = [
+  new Country(0, 'Paris', ''),
+  new Country(1, 'Madrid', ''),
+  new Country(2, 'Rome', ''),
+  new Country(3, 'Portugal', 'Lisbonne'),
+];
 String voteIDs;
 
 class Polling extends StatefulWidget {
@@ -55,6 +63,7 @@ class _Trending extends State<Polling> {
       //Logo
     );
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.white,
@@ -84,30 +93,33 @@ class _Trending extends State<Polling> {
         ),
 
 
-        body: Center(
-
-                child:  FutureBuilder<NomineeMasterObject>(
-                    future: fetchPost(voteIDs),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        NomineeMasterObject nomineeMasterObject = snapshot.data;
-                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
-//                        return new ConstrainedBox(
-//                          constraints: new BoxConstraints(),
-//                          child: new Column(children: PollingTrending.nominees(nomineesList)),
-//                        );
+        body:new DropCityApp(countries),
 //
-                        List<Widget>  nomieeGrid=PollingTrending.nominees(nomineesList);
-                       return App(nomieeGrid:nomieeGrid);
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-
-                      // By default, show a loading spinner
-                   //   return CircularProgressIndicator();
-                    },
-                  ),
-                ),
+// Center(
+//
+//                child:  FutureBuilder<NomineeMasterObject>(
+//                    future: fetchPost(voteIDs),
+//                    builder: (context, snapshot) {
+//                      if (snapshot.hasData) {
+//                        NomineeMasterObject nomineeMasterObject = snapshot.data;
+//                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
+////                        return new ConstrainedBox(
+////                          constraints: new BoxConstraints(),
+////                          child: new Column(children: PollingTrending.nominees(nomineesList)),
+////                        );
+////
+//
+//                        List<Widget>  nomieeGrid=PollingTrending.nominees(nomineesList);
+//                       return App(nomieeGrid:nomieeGrid);
+//                      } else if (snapshot.hasError) {
+//                        return Text("${snapshot.error}");
+//                      }
+//
+//                      // By default, show a loading spinner
+//                   //   return CircularProgressIndicator();
+//                    },
+//                  ),
+//                ),
 //            new Container(
 //
 //                  child: FutureBuilder<NomineeMasterObject>(
@@ -139,7 +151,7 @@ class _Trending extends State<Polling> {
       'voteID': voteID,
     };
     //192.168.88.223   work: 192.168.1.40
-    String requestUrl = "http://192.168.88.223:8090/nominees";
+    String requestUrl = "http://192.168.1.40:8090/nominees";
     final response = await http.post(
       requestUrl,
       body: body,

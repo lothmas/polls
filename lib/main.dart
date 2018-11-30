@@ -30,6 +30,7 @@ class _Trending extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     Trending homeTrending=new Trending();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
@@ -45,6 +46,7 @@ class _Trending extends State<Home> {
       //Logo
     );
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.white,
@@ -197,7 +199,7 @@ Future<TrendingMasterObject> fetchPost() async {
     'memberID': '7',
   };
   //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.88.223:8090/trending";
+  String requestUrl = "http://192.168.1.40:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,

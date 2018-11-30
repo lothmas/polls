@@ -10,48 +10,45 @@ import 'package:quiver/async.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
 class Nominees {
-
-
-  List<Widget>  nominees(List<NomineesEntityList> nomineesEntityList){
+  List<Widget> nominees(List<NomineesEntityList> nomineesEntityList) {
     Color caughtColor = Colors.grey;
 
     List<Widget> list = new List();
-    int count=1;
+    int count = 1;
     for (NomineesEntityList nomineeList in nomineesEntityList) {
-      list.add(DragBox(Offset(100.0*count, 0.0), 'Box'+count.toString(), Colors.blueAccent));
+      list.add(DragBox(Offset(100.0 * count, 0.0), nomineeList.nomineeImage,
+          Colors.greenAccent));
       count++;
     }
     list.add(Positioned(
-    left: 100.0,
-    bottom: 0.0,
-    child: DragTarget(
-    onAccept: (Color color) {
-    caughtColor = color;
-    },
-    builder: (
-    BuildContext context,
-    List<dynamic> accepted,
-    List<dynamic> rejected,
-    ) {
-    return Container(
-    width: 200.0,
-    height: 200.0,
-    decoration: BoxDecoration(
-    color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-    ),
-    child: Center(
-    child: Text("Drag Here!"),
-    ),
-    );
-    },
-    ),
+      left: 100.0,
+      bottom: 0.0,
+      child: DragTarget(
+        onAccept: (Color color) {
+          caughtColor = color;
+        },
+        builder: (
+          BuildContext context,
+          List<dynamic> accepted,
+          List<dynamic> rejected,
+        ) {
+          return Container(
+            width: 200.0,
+            height: 200.0,
+            decoration: BoxDecoration(
+              color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
+            ),
+            child: Center(
+              child: Text("Drag Here!"),
+            ),
+          );
+        },
+      ),
     ));
 
     return list;
-
   }
 }
-
 
 class DragBox extends StatefulWidget {
   final Offset initPos;
@@ -85,14 +82,8 @@ class DragBoxState extends State<DragBox> {
             height: 100.0,
             color: widget.itemColor,
             child: Center(
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 20.0,
-                ),
-              ),
+                child: Image(image: NetworkImage(widget.label),width: 100,height: 100,fit: BoxFit.fill,alignment: Alignment.center,),
+
             ),
           ),
           onDraggableCanceled: (velocity, offset) {
@@ -105,14 +96,7 @@ class DragBoxState extends State<DragBox> {
             height: 120.0,
             color: widget.itemColor.withOpacity(0.5),
             child: Center(
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 18.0,
-                ),
-              ),
+              child: Image(image: NetworkImage(widget.label),width: 18,height: 18,fit: BoxFit.fill,alignment: Alignment.center,)
             ),
           ),
         ));
