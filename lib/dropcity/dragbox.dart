@@ -6,6 +6,9 @@ import 'package:stats/dropcity/drop_target.dart';
 class GameView extends StatefulWidget {
   List<Country> items;
 
+  final countries = [
+    new Country(0, '', 'Grag Here'),
+  ];
   GameView(this.items);
 
   @override
@@ -92,7 +95,7 @@ class _GameViewState extends State<GameView> {
           child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
-              children: widget.items
+              children: widget.countries
                   .map((item) => new DropTarget(item,
                       selectedItem: pairs[item.id],
                       size: targetSize,
