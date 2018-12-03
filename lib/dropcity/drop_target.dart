@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
@@ -6,30 +7,30 @@ typedef void DropItemSelector(Country item, DropTarget target);
 
 class SelectionNotification extends Notification {
   final int dropIndex;
-  final Country item;
+  final NomineesEntityList item;
   final bool cancel;
 
   SelectionNotification(this.dropIndex, this.item, {this.cancel: false});
 }
 
 class DropTarget extends StatefulWidget {
-  final Country item;
+  final NomineesEntityList item;
 
   final Size size;
   final Size itemSize;
 
-  Country _selection;
+  NomineesEntityList _selection;
 
-  Country get selection => _selection;
+  NomineesEntityList get selection => _selection;
 
   get id => item.id;
 
-  set selection(Country value) {
+  set selection(NomineesEntityList value) {
     clearSelection();
     _selection = value;
   }
 
-  DropTarget(this.item, {this.size, Country selectedItem, this.itemSize}) {
+  DropTarget(this.item, {this.size, NomineesEntityList selectedItem, this.itemSize}) {
     _selection = selectedItem;
   }
   @override
@@ -51,30 +52,27 @@ class _DropTargetState extends State<DropTarget> {
             widget.selection != null ? addDraggable(getTarget()) : getTarget());
   }
 
-  Widget addDraggable(DragTarget target) => new Draggable<Country>(
+  Widget addDraggable(DragTarget target) => new Draggable<NomineesEntityList>(
       data: widget.selection,
       dragAnchor: DragAnchor.pointer,
       onDraggableCanceled: onDragCancelled,
       feedback: getCenteredAvatar(),
       child: target);
 
-  DragTarget getTarget() => new DragTarget<Country>(
+  DragTarget getTarget() => new DragTarget<NomineesEntityList>(
       onWillAccept: (item) => widget.selection != item,
       onAccept: (value) {
         new SelectionNotification(widget.item.id, value).dispatch(context);
       },
-      builder: (BuildContext context, List<Country> accepted,
+      builder: (BuildContext context, List<NomineesEntityList> accepted,
           List<dynamic> rejected) {
         return new SizedBox(
             child: new Container(
                 width: widget.size.width,
                 height: widget.size.height,
                 decoration: new BoxDecoration(
-                    color: accepted.isEmpty
-                        ? (widget.selection != null
-                            ? getDropBorderColor(widget.selection.status)
-                            : Colors.grey[300])
-                        : Colors.cyan[100],
+                    color:
+                         Colors.cyan[100],
                     border: new Border.all(
                         width: 2.0,
                         color:
@@ -83,7 +81,7 @@ class _DropTargetState extends State<DropTarget> {
                     ? new Column(children: [
                         new Padding(
                             padding: new EdgeInsets.symmetric(vertical: 16.0),
-                            child: new Text(widget.item.country)),
+                            child: new Text(widget.item.nomineesDescription)),
                         new Center(
                             child: new SizedBox(
                                 width: widget.itemSize.width,
@@ -92,11 +90,11 @@ class _DropTargetState extends State<DropTarget> {
                                     elevation: 1.0,
                                     child: new Center(
                                       child: new Text(
-                                        widget.selection.city,
+                                        widget.selection.nomineeName,
                                       ),
                                     )))),
                       ])
-                    : new Center(child: new Text(widget.item.country))));
+                    : new Center(child: new Text(widget.item.nomineesDescription))));
       });
 
   void onDragCancelled(Velocity velocity, Offset offset) {
@@ -111,7 +109,7 @@ class _DropTargetState extends State<DropTarget> {
       transform: new Matrix4.identity()
         ..translate(-100.0 / 2.0, -(100.0 / 2.0)),
       child: new DragAvatarBorder(
-        new Text(widget.selection?.city,
+        new Text(widget.selection?.nomineeName,
             style: new TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,

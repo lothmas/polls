@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Status { none, correct, wrong }
+enum Statuss { none, correct, wrong }
 
 class Country {
   final int id;
@@ -13,11 +13,11 @@ class Country {
   void set selected(bool value) {
     _selected = value;
     if( _selected == false )
-      status = Status.none;
+      status = Statuss.none;
   }
-  Status status;
+  Statuss status;
 
-  Country(this.id, this.city, this.country, {this.status: Status.none});
+  Country(this.id, this.city, this.country, {this.status: Statuss.none});
 
   @override
   String toString() {
@@ -26,16 +26,16 @@ class Country {
   }
 }
 
-Color getDropBorderColor(Status status) {
+Color getDropBorderColor(Statuss status) {
   Color c;
   switch (status) {
-    case Status.none:
+    case Statuss.none:
       c = Colors.grey[300];
       break;
-    case Status.correct:
+    case Statuss.correct:
       c = Colors.lime[300];
       break;
-    case Status.wrong:
+    case Statuss.wrong:
       c = Colors.orange[300];
       break;
   }

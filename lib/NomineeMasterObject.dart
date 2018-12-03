@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+enum Status { none, correct, wrong }
+
 class NomineeMasterObject {
   List<NomineesEntityList> nomineesEntityList;
 
@@ -29,6 +33,16 @@ class NomineesEntityList {
   String nomineeImage;
   String nomineesDescription;
   int enabled;
+  bool _selected = false;
+
+  bool get selected => _selected;
+
+  void set selected(bool value) {
+    _selected = value;
+    if( _selected == false )
+      status = Status.none;
+  }
+  Status status;
 
   NomineesEntityList(
       {this.id,
@@ -36,7 +50,7 @@ class NomineesEntityList {
         this.nomineeName,
         this.nomineeImage,
         this.nomineesDescription,
-        this.enabled});
+        this.enabled,this.status: Status.none});
 
   NomineesEntityList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,4 +71,22 @@ class NomineesEntityList {
     data['enabled'] = this.enabled;
     return data;
   }
+
+}
+
+
+Color getDropBorderColor(Status status) {
+  Color c;
+  switch (status) {
+    case Status.none:
+      c = Colors.grey[300];
+      break;
+    case Status.correct:
+      c = Colors.lime[300];
+      break;
+    case Status.wrong:
+      c = Colors.orange[300];
+      break;
+  }
+  return c;
 }

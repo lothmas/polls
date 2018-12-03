@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stats/dropcity/country.dart';
+import 'package:stats/NomineeMasterObject.dart';
+//import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_text.dart';
 import 'package:stats/dropcity/drop_target.dart';
 
 class GameView extends StatefulWidget {
-  List<Country> items;
+  List<NomineesEntityList> items;
 
-  final countries = [
-    new Country(0, '', 'Grag Here'),
-  ];
+//  final countries = [
+//    new Country(0, '', 'Grag Here'),
+//  ];
   GameView(this.items);
 
   @override
@@ -19,7 +20,7 @@ class _GameViewState extends State<GameView> {
   final _gap = 8.0;
   final _margin = 10.0;
 
-  Map<int, Country> pairs = {};
+  Map<int, NomineesEntityList> pairs = {};
 
   bool validated = false;
 
@@ -95,7 +96,7 @@ class _GameViewState extends State<GameView> {
           child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
-              children: widget.countries
+              children: widget.items
                   .map((item) => new DropTarget(item,
                       selectedItem: pairs[item.id],
                       size: targetSize,
@@ -122,7 +123,7 @@ class _GameViewState extends State<GameView> {
     return false;
   }
 
-  void _onItemSelection(Country selectedItem, int targetId) {
+  void _onItemSelection(NomineesEntityList selectedItem, int targetId) {
     setState(() {
       if (selectedItem != null) {
         selectedItem.selected = true;

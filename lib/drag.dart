@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/dragbox.dart';
 
@@ -14,7 +15,7 @@ import 'package:stats/dropcity/dragbox.dart';
 //}
 
 class DropCityApp extends StatelessWidget {
-  List<Country> items;
+  List<NomineesEntityList> items;
   DropCityApp(this.items);
 
   @override

@@ -93,33 +93,34 @@ class _Trending extends State<Polling> {
         ),
 
 
-        body:new DropCityApp(countries),
+        body:
 //
-// Center(
+ Center(
+
+                child:  FutureBuilder<NomineeMasterObject>(
+                    future: fetchPost(voteIDs),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        NomineeMasterObject nomineeMasterObject = snapshot.data;
+                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
+//                        return new ConstrainedBox(
+//                          constraints: new BoxConstraints(),
+//                          child: new Column(children: PollingTrending.nominees(nomineesList)),
+//                        );
 //
-//                child:  FutureBuilder<NomineeMasterObject>(
-//                    future: fetchPost(voteIDs),
-//                    builder: (context, snapshot) {
-//                      if (snapshot.hasData) {
-//                        NomineeMasterObject nomineeMasterObject = snapshot.data;
-//                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
-////                        return new ConstrainedBox(
-////                          constraints: new BoxConstraints(),
-////                          child: new Column(children: PollingTrending.nominees(nomineesList)),
-////                        );
-////
-//
+
 //                        List<Widget>  nomieeGrid=PollingTrending.nominees(nomineesList);
 //                       return App(nomieeGrid:nomieeGrid);
-//                      } else if (snapshot.hasError) {
-//                        return Text("${snapshot.error}");
-//                      }
-//
-//                      // By default, show a loading spinner
-//                   //   return CircularProgressIndicator();
-//                    },
-//                  ),
-//                ),
+                       return new DropCityApp(nomineesList);
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+
+                      // By default, show a loading spinner
+                   //   return CircularProgressIndicator();
+                    },
+                  ),
+                ),
 //            new Container(
 //
 //                  child: FutureBuilder<NomineeMasterObject>(
@@ -151,7 +152,7 @@ class _Trending extends State<Polling> {
       'voteID': voteID,
     };
     //192.168.88.223   work: 192.168.1.40
-    String requestUrl = "http://192.168.88.223:8090/nominees";
+    String requestUrl = "http://192.168.1.40:8090/nominees";
     final response = await http.post(
       requestUrl,
       body: body,
@@ -271,40 +272,6 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     return Stack(
       children: nomieeGrid,
-
-
-
-//      <Widget>[
-//        DragBox(Offset(0.0, 0.0), 'Box One', Colors.blueAccent),
-//        DragBox(Offset(100.0, 0.0), 'Box Two', Colors.orange),
-//        DragBox(Offset(200.0, 0.0), 'Box Three', Colors.lightGreen),
-//        DragBox(Offset(300.0, 0.0), 'Box Four', Colors.redAccent),
-//        Positioned(
-//          left: 100.0,
-//          bottom: 0.0,
-//          child: DragTarget(
-//            onAccept: (Color color) {
-//              caughtColor = color;
-//            },
-//            builder: (
-//                BuildContext context,
-//                List<dynamic> accepted,
-//                List<dynamic> rejected,
-//                ) {
-//              return Container(
-//                width: 200.0,
-//                height: 200.0,
-//                decoration: BoxDecoration(
-//                  color: accepted.isEmpty ? caughtColor : Colors.grey.shade200,
-//                ),
-//                child: Center(
-//                  child: Text("Drag Here!"),
-//                ),
-//              );
-//            },
-//          ),
-//        )
-//      ],
     );
   }
 }
