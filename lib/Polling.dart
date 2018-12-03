@@ -115,25 +115,7 @@ class _Trending extends State<Polling> {
                     },
                   ),
                 ),
-//            new Container(
-//
-//                  child: FutureBuilder<NomineeMasterObject>(
-//                    future: fetchPost(voteIDs),
-//                    builder: (context, snapshot) {
-//                      if (snapshot.hasData) {
-//                        NomineeMasterObject nomineeMasterObject = snapshot.data;
-//                        List<NomineesEntityList> nomineeList = nomineeMasterObject.nomineesEntityList;
-//
-//                        return new NomineeGrid1(nomineeList: nomineeList);
-//                      } else if (snapshot.hasError) {
-//                        return Text("${snapshot.error}");
-//                      }
-//
-//                      // By default, show a loading spinner
-//                      return CircularProgressIndicator();
-//                    },
-//                  ),
-//                ),
+
 
      //   gridView,
       ),

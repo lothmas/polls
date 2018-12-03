@@ -68,7 +68,7 @@ class _GameViewState extends State<GameView> {
               mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.max,
               children: [
-                new Text('Score '),
+                new Text('lock in poll '),
                 _buildButton(validated ? Icons.refresh : Icons.check,
                     validated ? _onClear : _onValidate)
               ]),
@@ -81,7 +81,7 @@ class _GameViewState extends State<GameView> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
-            new Text('Score : $score / ${widget.items.length}'),
+            new Text('lock : $score / ${widget.items.length}'),
             _buildButton(validated ? Icons.refresh : Icons.check,
                 validated ? _onClear : _onValidate)
           ]);
