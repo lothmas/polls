@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
-import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
-typedef void DropItemSelector(Country item, DropTarget target);
+typedef void DropItemSelector(NomineesEntityList item, DropTarget target);
 
 class SelectionNotification extends Notification {
   final int dropIndex;
@@ -71,8 +70,11 @@ class _DropTargetState extends State<DropTarget> {
                 width: widget.size.width,
                 height: widget.size.height,
                 decoration: new BoxDecoration(
-                    color:
-                         Colors.cyan[100],
+                    color: accepted.isEmpty
+                        ? (widget.selection != null
+                            ? getDropBorderColor(widget.selection.status)
+                            : Colors.grey[300])
+                        : Colors.cyan[100],
                     border: new Border.all(
                         width: 2.0,
                         color:

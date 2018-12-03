@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
-import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
 class DraggableCity extends StatefulWidget {

@@ -6,11 +6,15 @@ import 'package:stats/dropcity/drop_target.dart';
 
 class GameView extends StatefulWidget {
   List<NomineesEntityList> items;
-
+  List<NomineesEntityList> items1=new List();
 //  final countries = [
 //    new Country(0, '', 'Grag Here'),
 //  ];
-  GameView(this.items);
+  GameView(this.items)
+  {
+    items1.add(items.elementAt(0));
+    items1.elementAt(0).nomineesDescription="Drag Here";
+  }
 
   @override
   _GameViewState createState() => new _GameViewState();
@@ -96,7 +100,7 @@ class _GameViewState extends State<GameView> {
           child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
-              children: widget.items
+              children: widget.items1
                   .map((item) => new DropTarget(item,
                       selectedItem: pairs[item.id],
                       size: targetSize,
