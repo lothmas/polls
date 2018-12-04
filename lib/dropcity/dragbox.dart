@@ -86,13 +86,17 @@ class _GameViewState extends State<GameView> {
                 validated ? _onClear : _onValidate)
           ]);
 
-  Widget _buildDragableList(Size itemSize) => new Row(
+  Widget _buildDragableList(Size itemSize) => new Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
-      children: widget.items
-          .where((item) => !item.selected)
-          .map((item) => new DraggableCity(item, size: itemSize))
-          .toList());
+
+      children:<Widget>[
+        Flexible(
+            child:  GridView.count(crossAxisCount: 4,children: widget.items
+      .where((item) => !item.selected)
+      .map((item) => new DraggableCity(item, size: itemSize))
+      .toList()),)]
+  );
 
   Widget _buildTargetRow(Size targetSize, Size itemSize) =>
       new NotificationListener<SelectionNotification>(
