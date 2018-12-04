@@ -67,8 +67,8 @@ class _DropTargetState extends State<DropTarget> {
           List<dynamic> rejected) {
         return new SizedBox(
             child: new Container(
-                width: 200,
-                height: 144,
+                width: 180,
+                height: 130,
                 decoration: new BoxDecoration(
                     color: accepted.isEmpty
                         ? (widget.selection != null
@@ -76,27 +76,37 @@ class _DropTargetState extends State<DropTarget> {
                             : Colors.grey[300])
                         : Colors.cyan[100],
                     border: new Border.all(
-                        width: 2.0,
+                        width: 1.0,
                         color:
-                            accepted.isEmpty ? Colors.grey : Colors.cyan[300])),
+                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[600])),
                 child: widget.selection != null
                     ? new Column(children: [
                         new Padding(
-                            padding: new EdgeInsets.symmetric(vertical: 16.0),
-                            child: new Text(widget.item.nomineesDescription)),
+                            padding: new EdgeInsets.symmetric(vertical: 12.0),
+                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold),)),
                         new Center(
                             child: new SizedBox(
-                                width: widget.itemSize.width,
-                                height: widget.itemSize.height,
+                                width: 160,
+                                height: 70,
                                 child: new Material(
-                                    elevation: 1.0,
+                                    elevation: 10.0,
                                     child: new Center(
-                                      child: new Text(
+                                      child: new
+                                      Text(
                                         widget.selection.nomineeName,
+                                        textAlign: TextAlign.center,
+                                        style:  TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold),
                                       ),
+
                                     )))),
                       ])
-                    : new Center(child: new Text(widget.item.nomineesDescription))));
+                    : new Center(child: new Text(widget.item.nomineesDescription))),
+
+
+        );
       });
 
   void onDragCancelled(Velocity velocity, Offset offset) {

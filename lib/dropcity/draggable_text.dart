@@ -17,7 +17,7 @@ class _DraggableCityState extends State<DraggableCity> {
   @override
   Widget build(BuildContext context) {
     return new Padding(
-        padding: new EdgeInsets.all(4.0),
+        padding: new EdgeInsets.all(2.0),
         child: new Draggable<NomineesEntityList>(
             onDraggableCanceled: (velocity, offset) {
               setState(() {
@@ -26,7 +26,7 @@ class _DraggableCityState extends State<DraggableCity> {
               });
             },
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
-                color: Colors.grey[200], size: widget.size),
+                color: Colors.lime [200], size: widget.size),
             child: new Container(
                 width: widget.size.width,
                 height: widget.size.height,

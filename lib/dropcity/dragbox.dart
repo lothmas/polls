@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
+
 //import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_text.dart';
 import 'package:stats/dropcity/drop_target.dart';
 
 class GameView extends StatefulWidget {
   List<NomineesEntityList> items;
-  List<NomineesEntityList> items1=new List();
+  List<NomineesEntityList> items1 = new List();
+
 //  final countries = [
 //    new Country(0, '', 'Grag Here'),
 //  ];
-  GameView(this.items)
-  {
+  GameView(this.items) {
     items1.add(items.elementAt(0));
-    items1.elementAt(0).nomineesDescription="Drag Here";
+    items1.elementAt(0).nomineesDescription = "Drag Here";
   }
 
   @override
@@ -64,14 +65,6 @@ class _GameViewState extends State<GameView> {
             ? MainAxisAlignment.end
             : MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                new Text('lock in poll '),
-                _buildButton(validated ? Icons.refresh : Icons.check,
-                    validated ? _onClear : _onValidate)
-              ]),
           new Expanded(child: _buildDragableList(draggableSize)),
           _buildTargetRow(targetSize, draggableSize),
         ]);
@@ -87,29 +80,54 @@ class _GameViewState extends State<GameView> {
           ]);
 
   Widget _buildDragableList(Size itemSize) => new Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-
-      children:<Widget>[
-        Flexible(
-            child:  GridView.count(crossAxisCount: 4,children: widget.items
-      .where((item) => !item.selected)
-      .map((item) => new DraggableCity(item, size: itemSize))
-      .toList()),)]
-  );
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(
+              child: GridView.count(
+                primary: true,
+                padding: const EdgeInsets.all(0.0),
+//                crossAxisSpacing: 2.0,
+                crossAxisCount: 3,
+                children: widget.items
+                    .where((item) => !item.selected)
+                    .map((item) => new DraggableCity(item, size: itemSize))
+                    .toList(),
+              ),
+            )
+          ]);
 
   Widget _buildTargetRow(Size targetSize, Size itemSize) =>
       new NotificationListener<SelectionNotification>(
-          onNotification: _onSelection,
-          child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: widget.items1
-                  .map((item) => new DropTarget(item,
-                      selectedItem: pairs[item.id],
-                      size: targetSize,
-                      itemSize: itemSize))
-                  .toList()));
+        onNotification: _onSelection,
+        child: Row(
+          children: [
+            Container(
+//                color: Colors.orange,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: widget.items1
+                      .map((item) => new DropTarget(item,
+                          selectedItem: pairs[item.id],
+                          size: targetSize,
+                          itemSize: itemSize))
+                      .toList()),
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    color: Colors.transparent,
+                    width: 10,
+                  ),
+                  _buildButton(validated ? Icons.refresh : Icons.check,
+                      validated ? _onClear : _onValidate)
+                ]),
+          ],
+        ),
+      );
 
   bool _onSelection(SelectionNotification notif) {
     setState(() {
