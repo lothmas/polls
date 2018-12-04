@@ -118,10 +118,11 @@ class _GameViewState extends State<GameView> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    color: Colors.transparent,
-                    width: 10,
-                  ),
+//                  Container(
+//                    color: Colors.transparent,
+//                    height: 5,
+//                    width: 5,
+//                  ),
                   _buildButton(validated ? Icons.refresh : Icons.check,
                       validated ? _onClear : _onValidate)
                 ]),

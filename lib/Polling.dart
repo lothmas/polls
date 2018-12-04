@@ -4,12 +4,12 @@ import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/Nominees.dart';
 import 'package:stats/Trending.dart';
 import 'package:stats/TrendingMasterObject.dart';
-import 'package:stats/PlaceholderWidget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:stats/drag.dart';
+
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -33,12 +33,7 @@ class Polling extends StatefulWidget {
 class _Trending extends State<Polling> {
 
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.white)
-  ];
+
 
   @override
   Widget build(BuildContext context) {

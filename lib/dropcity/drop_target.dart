@@ -67,8 +67,8 @@ class _DropTargetState extends State<DropTarget> {
           List<dynamic> rejected) {
         return new SizedBox(
             child: new Container(
-                width: 180,
-                height: 130,
+                width: 270,
+                height: 120,
                 decoration: new BoxDecoration(
                     color: accepted.isEmpty
                         ? (widget.selection != null
@@ -86,7 +86,7 @@ class _DropTargetState extends State<DropTarget> {
                             child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold),)),
                         new Center(
                             child: new SizedBox(
-                                width: 160,
+                                width: 240,
                                 height: 70,
                                 child: new Material(
                                     elevation: 10.0,
