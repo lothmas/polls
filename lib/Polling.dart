@@ -92,21 +92,13 @@ class _Trending extends State<Polling> {
                       if (snapshot.hasData) {
                         NomineeMasterObject nomineeMasterObject = snapshot.data;
                         List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
-//                        return new ConstrainedBox(
-//                          constraints: new BoxConstraints(),
-//                          child: new Column(children: PollingTrending.nominees(nomineesList)),
-//                        );
-//
-
-//                        List<Widget>  nomieeGrid=PollingTrending.nominees(nomineesList);
-//                       return App(nomieeGrid:nomieeGrid);
                        return new DropCityApp(nomineesList);
                       } else if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
 
                       // By default, show a loading spinner
-                   //   return CircularProgressIndicator();
+                      return CircularProgressIndicator();
                     },
                   ),
                 ),

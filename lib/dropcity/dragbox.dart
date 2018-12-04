@@ -9,9 +9,6 @@ class GameView extends StatefulWidget {
   List<NomineesEntityList> items;
   List<NomineesEntityList> items1 = new List();
 
-//  final countries = [
-//    new Country(0, '', 'Grag Here'),
-//  ];
   GameView(this.items) {
     items1.add(items.elementAt(0));
     items1.elementAt(0).nomineesDescription = "Drag Here";

@@ -27,13 +27,17 @@ class _DraggableCityState extends State<DraggableCity> {
             },
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
                 color: Colors.lime [200], size: widget.size),
-            child: new Container(
-                width: widget.size.width,
-                height: widget.size.height,
-                color: widget.item.selected ? Colors.grey : Colors.cyan,
+            child: new  Container(
+        decoration: new BoxDecoration(
+        image: new DecorationImage(
+        image: new AssetImage("images/background.jpg"),
+      fit: BoxFit.cover,
+    ),
+    ),
                 child: new Center(
-                  child: new Text(widget.item.nomineeName,
-                      style: new TextStyle(color: Colors.white)),
+                  child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
+                      style: new TextStyle(color: Colors.white,fontSize: 14.0,
+                          fontWeight: FontWeight.bold)),
                 )),
             data: widget.item,
             feedback: new DragAvatarBorder(
