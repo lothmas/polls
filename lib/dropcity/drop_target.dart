@@ -67,18 +67,18 @@ class _DropTargetState extends State<DropTarget> {
           List<dynamic> rejected) {
         return new SizedBox(
             child: new Container(
-                width: 270,
-                height: 120,
+                width: 250,
+                height: 110,
                 decoration: new BoxDecoration(
                     color: accepted.isEmpty
                         ? (widget.selection != null
                             ? getDropBorderColor(widget.selection.status)
                             : Colors.transparent)
-                        : Colors.cyan[100],
+                        : Colors.lime[200],
                     border: new Border.all(
                         width: 1.0,
                         color:
-                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[600])),
+                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[200])),
                 child: widget.selection != null
                     ? new Column(children: [
                         new Padding(
@@ -87,7 +87,7 @@ class _DropTargetState extends State<DropTarget> {
                         new Center(
                             child: new SizedBox(
                                 width: 240,
-                                height: 70,
+                                height: 60,
                                 child: new Material(
                                     elevation: 10.0,
                                     child: new Center(
@@ -125,7 +125,7 @@ class _DropTargetState extends State<DropTarget> {
             style: new TextStyle(
                 fontSize: 12.0,
                 color: Colors.white,
-                decoration: TextDecoration.none)),
+                decoration: TextDecoration.none,fontWeight: FontWeight.bold)),
         size: widget.itemSize,
         color: Colors.cyan,
       ));
