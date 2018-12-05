@@ -103,7 +103,7 @@ class _DropTargetState extends State<DropTarget> {
 
                                     )))),
                       ])
-                    : new Center(child: new Text(widget.item.nomineesDescription))),
+                    : new Center(child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,)))),
 
 
         );
