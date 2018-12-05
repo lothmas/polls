@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/Nominees.dart';
-import 'package:stats/Trending.dart';
-import 'package:stats/TrendingMasterObject.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:stats/drag.dart';
 
 const PrimaryColor = const Color(0x00000000);
@@ -99,11 +96,61 @@ class _Trending extends State<Polling> {
             },
           ),
         ),
-
+        floatingActionButton: new FloatingActionButton(
+          //onPressed: DropCityApp(nomineesList),
+          child:  _buildButton(validated ? Icons.refresh : Icons.check,
+                      validated ? _onClear : _onValidate),
+          mini: true,
+        ),
+        floatingActionButtonLocation:
+        FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: new BottomAppBar(
+          color: Colors.transparent,
+        //  child: new Row(...),
+        ), //
         //   gridView,
       ),
     );
   }
+
+  Map<int, NomineesEntityList> pairs = {};
+
+  bool validated = false;
+
+  int score = 0;
+
+  void _onValidate() {
+    setState(() {
+      score = 0;
+      pairs.forEach((index, item) {
+        if (item.id == index) {
+          item.status = Status.correct;
+          score++;
+        } else
+          item.status = Status.wrong;
+      });
+      validated = true;
+    });
+  }
+
+  void _onClear() {
+    setState(() {
+      pairs.forEach((index, item) {
+        item.status = Status.none;
+        item.selected = false;
+      });
+      pairs.clear();
+      validated = false;
+    });
+  }
+
+  Widget _buildButton(IconData icon, VoidCallback onPress) => new Padding(
+      padding: new EdgeInsets.all(10.0),
+      child: new FloatingActionButton(
+          mini: true,
+          backgroundColor: Colors.green,
+          child: new Icon(icon),
+          onPressed: onPress));
 
   Future<NomineeMasterObject> fetchPost(String voteID) async {
     Map<String, String> body = {

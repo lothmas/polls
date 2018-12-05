@@ -11,7 +11,7 @@ class GameView extends StatefulWidget {
 
   GameView(this.items) {
     items1.add(items.elementAt(0));
-    items1.elementAt(0).nomineesDescription = "TO NOMINATE DRAG HERE";
+    items1.elementAt(0).nomineesDescription = "To Nominate Long Press & Grag Here";
   }
 
   @override
@@ -38,7 +38,7 @@ class _GameViewState extends State<GameView> {
   Size getTargetSize({Size areaSize, int numItems}) {
     final landScape = areaSize.width > areaSize.height;
     final targetWidth =
-        (areaSize.width - (2 * _margin) - (_gap * (numItems - 1))) / numItems;
+        (areaSize.width - (2 * _margin) - (_gap * (1 - 1))) / 1;
     return new Size(targetWidth, areaSize.height * (landScape ? 0.45 : 0.3));
   }
 
@@ -98,12 +98,11 @@ class _GameViewState extends State<GameView> {
   Widget _buildTargetRow(Size targetSize, Size itemSize) =>
       new NotificationListener<SelectionNotification>(
         onNotification: _onSelection,
-        child: Row(
-          children: [
+        child:
             Container(
 //                color: Colors.orange,
               child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: widget.items1
                       .map((item) => new DropTarget(item,
@@ -112,20 +111,19 @@ class _GameViewState extends State<GameView> {
                           itemSize: itemSize))
                       .toList()),
             ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-//                  Container(
-//                    color: Colors.transparent,
-//                    height: 5,
-//                    width: 5,
-//                  ),
-                  _buildButton(validated ? Icons.refresh : Icons.check,
-                      validated ? _onClear : _onValidate)
-                ]),
-          ],
-        ),
+//            Row(
+//                mainAxisAlignment: MainAxisAlignment.end,
+//                mainAxisSize: MainAxisSize.max,
+//                children: [
+////                  Container(
+////                    color: Colors.transparent,
+////                    height: 5,
+////                    width: 5,
+////                  ),
+//                  _buildButton(validated ? Icons.refresh : Icons.check,
+//                      validated ? _onClear : _onValidate)
+//                ]),
+
       );
 
   bool _onSelection(SelectionNotification notif) {

@@ -48,7 +48,9 @@ class _DropTargetState extends State<DropTarget> {
     return new Padding(
         padding: new EdgeInsets.all(4.0),
         child:
-            widget.selection != null ? addDraggable(getTarget()) : getTarget());
+            widget.selection != null ? addDraggable(getTarget()) : getTarget()
+
+    );
   }
 
   Widget addDraggable(DragTarget target) => new Draggable<NomineesEntityList>(
@@ -67,7 +69,7 @@ class _DropTargetState extends State<DropTarget> {
           List<dynamic> rejected) {
         return new SizedBox(
             child: new Container(
-                width: 250,
+                width: MediaQuery.of(context).size.width-8,
                 height: 110,
                 decoration: new BoxDecoration(
                     color: accepted.isEmpty
@@ -75,10 +77,14 @@ class _DropTargetState extends State<DropTarget> {
                             ? getDropBorderColor(widget.selection.status)
                             : Colors.transparent)
                         : Colors.lime[200],
-                    border: new Border.all(
-                        width: 1.0,
-                        color:
-                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[200])),
+                  border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor),
+//                      left: BorderSide(color: Theme.of(context).dividerColor),
+                      top: BorderSide(color: Theme.of(context).dividerColor)),
+//                    border: new Border.all(
+//                        width: 1.0,
+//                        color:
+//                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[200])
+                ),
                 child: widget.selection != null
                     ? new Column(children: [
                         new Padding(
@@ -86,7 +92,7 @@ class _DropTargetState extends State<DropTarget> {
                             child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,),)),
                         new Center(
                             child: new SizedBox(
-                                width: 240,
+                                width: MediaQuery.of(context).size.width-50,
                                 height: 60,
                                 child: new Material(
                                     elevation: 10.0,
