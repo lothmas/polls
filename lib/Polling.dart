@@ -96,20 +96,20 @@ class _Trending extends State<Polling> {
             },
           ),
         ),
-        floatingActionButton: new FloatingActionButton(
-          //onPressed: DropCityApp(nomineesList),
-          child:  _buildButton(validated ? Icons.refresh : Icons.check,
-                      validated ? _onClear : _onValidate),
-          mini: true,
-        ),
+//        floatingActionButton: new FloatingActionButton(
+//          //onPressed: DropCityApp(nomineesList),
+//          child:  _buildButton(validated ? Icons.refresh : Icons.check,
+//                      validated ? _onClear : _onValidate),
+//          mini: true,
+//        ),
         floatingActionButtonLocation:
         FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: new BottomAppBar(
-          color: Colors.transparent,
+        floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,
+                validated ? _onClear : _onValidate)
         //  child: new Row(...),
         ), //
         //   gridView,
-      ),
+
     );
   }
 
@@ -157,7 +157,7 @@ class _Trending extends State<Polling> {
       'voteID': voteID,
     };
     //192.168.88.223   work: 192.168.1.40
-    String requestUrl = "http://192.168.1.40:8090/nominees";
+    String requestUrl = "http://192.168.88.223:8090/nominees";
     final response = await http.post(
       requestUrl,
       body: body,
