@@ -10,7 +10,6 @@ import 'dart:convert';
 
 import 'package:stats/drag.dart';
 
-
 const PrimaryColor = const Color(0x00000000);
 
 String voteIDs;
@@ -22,22 +21,20 @@ class Polling extends StatefulWidget {
     imageCache.clear();
     return _Trending();
   }
-   String voteID;
-  Polling({this.voteID}){
-    voteIDs=voteID;
+
+  String voteID;
+
+  Polling({this.voteID}) {
+    voteIDs = voteID;
   }
-
-
 }
 
 class _Trending extends State<Polling> {
-
   int _currentIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
-    Nominees PollingTrending=new Nominees();
+    Nominees PollingTrending = new Nominees();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
       itemBuilder: (BuildContext ctx) {},
@@ -64,14 +61,15 @@ class _Trending extends State<Polling> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black.withOpacity(0.6)),
           ),
-          leading: GestureDetector(child: Image(
-            image: new AssetImage("images/exit.png"),
-            width: 14,
-            height: 14,
-            color: null,
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.center,
-          ),
+          leading: GestureDetector(
+            child: Image(
+              image: new AssetImage("images/exit.png"),
+              width: 14,
+              height: 14,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+            ),
             onTap: () {
               Navigator.pop(context);
             },
@@ -81,34 +79,31 @@ class _Trending extends State<Polling> {
           ],
         ),
 
-
         body:
 //
- Center(
+            Center(
+          child: FutureBuilder<NomineeMasterObject>(
+            future: fetchPost(voteIDs),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                NomineeMasterObject nomineeMasterObject = snapshot.data;
+                List<NomineesEntityList> nomineesList =
+                    nomineeMasterObject.nomineesEntityList;
+                return new DropCityApp(nomineesList);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
 
-                child:  FutureBuilder<NomineeMasterObject>(
-                    future: fetchPost(voteIDs),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        NomineeMasterObject nomineeMasterObject = snapshot.data;
-                        List<NomineesEntityList> nomineesList = nomineeMasterObject.nomineesEntityList;
-                       return new DropCityApp(nomineesList);
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
+              // By default, show a loading spinner
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
 
-                      // By default, show a loading spinner
-                      return CircularProgressIndicator();
-                    },
-                  ),
-                ),
-
-
-     //   gridView,
+        //   gridView,
       ),
     );
   }
-
 
   Future<NomineeMasterObject> fetchPost(String voteID) async {
     Map<String, String> body = {
@@ -133,7 +128,6 @@ class _Trending extends State<Polling> {
     }
   }
 
-
   void onTabTapped(int index) {
     setState(() {
       if (index == 1) {}
@@ -153,15 +147,14 @@ class NomineeGrid1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-
         padding: const EdgeInsets.all(1.0),
-
         itemCount: nomineeList.length,
-        gridDelegate:
-        new SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 4,
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
           childAspectRatio: 1.0,
           mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,),
+          crossAxisSpacing: 4.0,
+        ),
         itemBuilder: (BuildContext context, int index) {
           return new GestureDetector(
             child: new Card(
@@ -169,8 +162,8 @@ class NomineeGrid1 extends StatelessWidget {
               child: new Container(
                 alignment: Alignment.center,
                 child: Image(
-                  image: new NetworkImage(nomineeList.elementAt(index).nomineeImage),
-
+                  image: new NetworkImage(
+                      nomineeList.elementAt(index).nomineeImage),
                   color: null,
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
@@ -208,27 +201,23 @@ class NomineeGrid1 extends StatelessWidget {
   }
 }
 
-
-
-
-
 class App extends StatefulWidget {
   @override
+  List<Widget> nomieeGrid;
 
-  List<Widget>  nomieeGrid;
-  App({List<Widget> nomieeGrid}){
-    this.nomieeGrid=nomieeGrid;
+  App({List<Widget> nomieeGrid}) {
+    this.nomieeGrid = nomieeGrid;
   }
-  AppState createState() => AppState(nomieeGrid:nomieeGrid);
 
+  AppState createState() => AppState(nomieeGrid: nomieeGrid);
 }
 
 class AppState extends State<App> {
   Color caughtColor = Colors.grey;
-  List<Widget>  nomieeGrid;
+  List<Widget> nomieeGrid;
 
-  AppState({List<Widget> nomieeGrid}){
-    this.nomieeGrid=nomieeGrid;
+  AppState({List<Widget> nomieeGrid}) {
+    this.nomieeGrid = nomieeGrid;
   }
 
   @override
@@ -238,7 +227,3 @@ class AppState extends State<App> {
     );
   }
 }
-
-
-
-

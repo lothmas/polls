@@ -73,7 +73,7 @@ class _DropTargetState extends State<DropTarget> {
                     color: accepted.isEmpty
                         ? (widget.selection != null
                             ? getDropBorderColor(widget.selection.status)
-                            : Colors.grey[300])
+                            : Colors.transparent)
                         : Colors.cyan[100],
                     border: new Border.all(
                         width: 1.0,

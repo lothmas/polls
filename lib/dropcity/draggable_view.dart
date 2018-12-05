@@ -20,7 +20,7 @@ class DragAvatarBorder extends StatelessWidget {
         transform: new Matrix4.identity()..scale(scale),
         width: size.width,
         height: size.height,
-        color: color ?? Colors.grey.shade400,
+        color: color ?? Colors.transparent,
         child: new Center(child: child),
       ));
 }

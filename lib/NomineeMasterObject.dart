@@ -79,13 +79,13 @@ Color getDropBorderColor(Status status) {
   Color c;
   switch (status) {
     case Status.none:
-      c = Colors.grey[300];
+      c = Colors.transparent;
       break;
     case Status.correct:
-      c = Colors.lime[300];
+      c = Colors.lime[50];
       break;
     case Status.wrong:
-      c = Colors.orange[300];
+      c = Colors.lime[50];
       break;
   }
   return c;

@@ -11,7 +11,7 @@ class GameView extends StatefulWidget {
 
   GameView(this.items) {
     items1.add(items.elementAt(0));
-    items1.elementAt(0).nomineesDescription = "Drag Here";
+    items1.elementAt(0).nomineesDescription = "TO NOMINATE DRAG HERE";
   }
 
   @override
@@ -45,6 +45,7 @@ class _GameViewState extends State<GameView> {
   Widget _buildButton(IconData icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
+          mini: true,
           backgroundColor: Colors.green,
           child: new Icon(icon),
           onPressed: onPress));

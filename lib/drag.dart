@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/dragbox.dart';
 
-//final countries = [
-//  new Country(0, 'Paris', 'France'),
-//  new Country(1, 'Madrid', 'Spain'),
-//  new Country(2, 'Rome', 'Italy'),
-//  new Country(3, 'Portugal', 'Lisbonne')
-//];
-
-//void main() {
-//  runApp(new DropCityApp(countries));
-//}
-
 class DropCityApp extends StatelessWidget {
   List<NomineesEntityList> items;
   DropCityApp(this.items);
