@@ -83,7 +83,7 @@ class _DropTargetState extends State<DropTarget> {
                     ? new Column(children: [
                         new Padding(
                             padding: new EdgeInsets.symmetric(vertical: 12.0),
-                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold),)),
+                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,),)),
                         new Center(
                             child: new SizedBox(
                                 width: 240,
@@ -123,7 +123,7 @@ class _DropTargetState extends State<DropTarget> {
       child: new DragAvatarBorder(
         new Text(widget.selection?.nomineeName,
             style: new TextStyle(
-                fontSize: 16.0,
+                fontSize: 12.0,
                 color: Colors.white,
                 decoration: TextDecoration.none)),
         size: widget.itemSize,
