@@ -93,7 +93,7 @@ class _GameViewState extends State<GameView> {
 
                 children:
                 widget.items.data.documents.map((DocumentSnapshot document) {
-                   return DraggableCity(document);
+                   return DraggableCity(document,size: itemSize,);
                                  }
                 ).toList(),
 
