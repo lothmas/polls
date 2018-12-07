@@ -93,8 +93,7 @@ class _GameViewState extends State<GameView> {
 
                 children:
                 widget.items.data.documents.map((DocumentSnapshot document) {
-                   return DraggableCity(document,size: itemSize,);
-                                 }
+                   return DraggableCity(document,size: itemSize,);                                 }
                 ).toList(),
 
 
@@ -160,7 +159,7 @@ class _GameViewState extends State<GameView> {
     setState(() {
       if (selectedItem != null) {
         selectedItem.selected = true;
-        selectedItem.status = Status.none;
+      //  selectedItem.status = Status.none;
       }
 
       pairs[targetId] = selectedItem;
@@ -172,10 +171,11 @@ class _GameViewState extends State<GameView> {
       score = 0;
       pairs.forEach((index, item) {
         if (item.id == index) {
-          item.status = Status.correct;
+     //     item.status = Status.correct;
           score++;
-        } else
-          item.status = Status.wrong;
+        }
+        //else
+       //   item.status = Status.wrong;
       });
       validated = true;
     });
@@ -184,7 +184,7 @@ class _GameViewState extends State<GameView> {
   void _onClear() {
     setState(() {
       pairs.forEach((index, item) {
-        item.status = Status.none;
+       // item.status = Status.none;
         item.selected = false;
       });
       pairs.clear();

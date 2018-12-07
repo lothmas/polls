@@ -1,14 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
+enum Status { none, correct, wrong }
 
 class DraggableCity extends StatefulWidget {
+
+
+
+
   final DocumentSnapshot  item;
   final Size size;
 
   bool enabled = true;
   DraggableCity(this.item, {this.size});
+
+  bool _selected = false;
+
+  bool get selected => _selected;
+
+  void set selected(bool value) {
+    _selected = value;
+    if( _selected == false )
+      status = Status.none;
+  }
+  Status status;
+
 
   @override
   _DraggableCityState createState() => new _DraggableCityState();
