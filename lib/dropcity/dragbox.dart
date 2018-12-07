@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 
@@ -6,12 +7,14 @@ import 'package:stats/dropcity/draggable_text.dart';
 import 'package:stats/dropcity/drop_target.dart';
 
 class GameView extends StatefulWidget {
-  List<NomineesEntityList> items;
+  AsyncSnapshot<QuerySnapshot>  items;
   List<NomineesEntityList> items1 = new List();
 
   GameView(this.items) {
-    items1.add(items.elementAt(0));
-    items1.elementAt(0).nomineesDescription = "To Nominate Long Press & Grag Here";
+//    items1.add(items.elementAt(0));
+  NomineesEntityList d=new NomineesEntityList();
+  d.nomineesDescription= "To Nominate Long Press & Grag Here";
+  items1.add(d);
   }
 
   @override
@@ -72,7 +75,7 @@ class _GameViewState extends State<GameView> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
-            new Text('lock : $score / ${widget.items.length}'),
+            new Text('lock : $score / ${widget.items.data.documents.length}'),
             _buildButton(validated ? Icons.refresh : Icons.check,
                 validated ? _onClear : _onValidate)
           ]);
@@ -87,10 +90,17 @@ class _GameViewState extends State<GameView> {
                 padding: const EdgeInsets.all(0.0),
 //                crossAxisSpacing: 2.0,
                 crossAxisCount: 3,
-                children: widget.items
-                    .where((item) => !item.selected)
-                    .map((item) => new DraggableCity(item, size: itemSize))
-                    .toList(),
+
+                children:
+                widget.items.data.documents.map((DocumentSnapshot document) {
+                   return DraggableCity(document);
+                                 }
+                ).toList(),
+
+
+
+
+
               ),
             )
           ]);

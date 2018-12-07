@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
@@ -79,29 +80,47 @@ class _Trending extends State<Polling> {
         body:
 //
             Center(
-          child: FutureBuilder<NomineeMasterObject>(
-            future: fetchPost(voteIDs),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                NomineeMasterObject nomineeMasterObject = snapshot.data;
-                List<NomineesEntityList> nomineesList =
-                    nomineeMasterObject.nomineesEntityList;
-                return new DropCityApp(nomineesList);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+                child:  StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: 1).snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-              // By default, show a loading spinner
-              return CircularProgressIndicator();
-            },
-          ),
+                    if (snapshot.hasData) {
+                      return new DropCityApp(snapshot);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+
+
+                    // By default, show a loading spinner
+                    return CircularProgressIndicator();
+
+
+                  },
+                )
+//          child: FutureBuilder<NomineeMasterObject>(
+//            future: fetchPost(voteIDs),
+//            builder: (context, snapshot) {
+//              if (snapshot.hasData) {
+//                NomineeMasterObject nomineeMasterObject = snapshot.data;
+//                List<NomineesEntityList> nomineesList =
+//                    nomineeMasterObject.nomineesEntityList;
+//                return new DropCityApp(nomineesList);
+//              } else if (snapshot.hasError) {
+//                return Text("${snapshot.error}");
+//              }
+//
+//              // By default, show a loading spinner
+//              return CircularProgressIndicator();
+//            },
+//          ),
         ),
-//        floatingActionButton: new FloatingActionButton(
-//          //onPressed: DropCityApp(nomineesList),
-//          child:  _buildButton(validated ? Icons.refresh : Icons.check,
-//                      validated ? _onClear : _onValidate),
-//          mini: true,
-//        ),
+
+
+
+
+
+
+
         floatingActionButtonLocation:
         FloatingActionButtonLocation.endDocked,
         floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,

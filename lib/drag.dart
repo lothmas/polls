@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/dragbox.dart';
 
 class DropCityApp extends StatelessWidget {
-  List<NomineesEntityList> items;
+  AsyncSnapshot<QuerySnapshot>  items;
   DropCityApp(this.items);
 
   @override

@@ -1,9 +1,16 @@
+import 'package:badge/badge.dart';
+import 'package:chewie/chewie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_youtube/flutter_youtube.dart';
+import 'package:stats/Polling.dart';
 import 'package:stats/Trending.dart';
 import 'package:stats/TrendingMasterObject.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:video_player/video_player.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -154,29 +161,39 @@ class _Trending extends State<Home> {
 
         body: Center(
             child: new Container(
-                child: new SingleChildScrollView(
-          child: FutureBuilder<TrendingMasterObject>(
-            future: fetchPost(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                TrendingMasterObject trendingMasterObject = snapshot.data;
-                List<TrendingList> trending = trendingMasterObject.trendingList;
-                return new ConstrainedBox(
-                  constraints: new BoxConstraints(),
-                  child: new Column(children: homeTrending.homeTrendingList(trending,context)),
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+//                child: new SingleChildScrollView(
+          child:  StreamBuilder<QuerySnapshot>(
+                stream: Firestore.instance.collection('votes').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-              // By default, show a loading spinner
-              return CircularProgressIndicator();
-            },
-          ),
-        ))),
+                if (snapshot.hasData) {
+                  return new ListView(
+                    children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                      return new Column(
+                        children:
+                        homeTrending.homeTrendingList(context, document),
+                      );
+                    }
+                    ).toList(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+
+                // By default, show a loading spinner
+                return CircularProgressIndicator();
+
+
+              },
+            )
+
+        )),
       ),
     );
   }
+
+
 
   void onTabTapped(int index) {
     setState(() {
@@ -193,7 +210,7 @@ Future<TrendingMasterObject> fetchPost() async {
     'memberID': '7',
   };
   //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.88.223:8090/trending";
+  String requestUrl = "http://192.168.1.40:8090/trending";
   final response = await http.post(
     requestUrl,
     body: body,

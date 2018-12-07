@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
 class DraggableCity extends StatefulWidget {
-  final NomineesEntityList item;
+  final DocumentSnapshot  item;
   final Size size;
 
   bool enabled = true;
@@ -18,14 +19,14 @@ class _DraggableCityState extends State<DraggableCity> {
   Widget build(BuildContext context) {
     return new Padding(
         padding: new EdgeInsets.all(2.0),
-        child: new LongPressDraggable<NomineesEntityList>(
+        child: new LongPressDraggable<DocumentSnapshot>(
             onDraggableCanceled: (velocity, offset) {
               setState(() {
-                widget.item.selected = false;
-                widget.item.status = Status.none;
+//                widget.item.selected = false;
+     //           widget.item.status = Colors.transparent;
               });
             },
-            childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
+            childWhenDragging: new DragAvatarBorder(new Text(widget.item['nominee_name']),
                 color: Colors.white, size: widget.size),
             child: new  Container(
         decoration: new BoxDecoration(
@@ -35,13 +36,13 @@ class _DraggableCityState extends State<DraggableCity> {
     ),
     ),
                 child: new Center(
-                  child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
+                  child: new Text(widget.item['nominee_name'],textAlign: TextAlign.center,
                       style: new TextStyle(color: Colors.black,fontSize: 14.0,
                           fontWeight: FontWeight.bold)),
                 )),
             data: widget.item,
             feedback: new DragAvatarBorder(
-              new Text(widget.item.nomineeName,
+              new Text(widget.item['nominee_name'],
                   style: new TextStyle(
                       fontSize: 16.0,
                       color: Colors.blueGrey,
