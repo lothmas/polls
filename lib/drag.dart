@@ -4,7 +4,7 @@ import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/dragbox.dart';
 
 class DropCityApp extends StatelessWidget {
-  AsyncSnapshot<QuerySnapshot>  items;
+  List<NomineesEntityList> items;
   DropCityApp(this.items);
 
   @override

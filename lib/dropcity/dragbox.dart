@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 
@@ -7,14 +6,12 @@ import 'package:stats/dropcity/draggable_text.dart';
 import 'package:stats/dropcity/drop_target.dart';
 
 class GameView extends StatefulWidget {
-  AsyncSnapshot<QuerySnapshot>  items;
+  List<NomineesEntityList> items;
   List<NomineesEntityList> items1 = new List();
 
   GameView(this.items) {
-//    items1.add(items.elementAt(0));
-  NomineesEntityList d=new NomineesEntityList();
-  d.nomineesDescription= "To Nominate Long Press & Grag Here";
-  items1.add(d);
+    items1.add(items.elementAt(0));
+    items1.elementAt(0).nomineesDescription = "To Nominate Long Press & Grag Here";
   }
 
   @override
@@ -72,54 +69,48 @@ class _GameViewState extends State<GameView> {
   }
 
   Widget _buildValidateButton() => new Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            new Text('lock : $score / ${widget.items.data.documents.length}'),
-            _buildButton(validated ? Icons.refresh : Icons.check,
-                validated ? _onClear : _onValidate)
-          ]);
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        new Text('lock : $score / ${widget.items.length}'),
+        _buildButton(validated ? Icons.refresh : Icons.check,
+            validated ? _onClear : _onValidate)
+      ]);
 
   Widget _buildDragableList(Size itemSize) => new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Flexible(
-              child: GridView.count(
-                primary: true,
-                padding: const EdgeInsets.all(0.0),
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Flexible(
+          child: GridView.count(
+            primary: true,
+            padding: const EdgeInsets.all(0.0),
 //                crossAxisSpacing: 2.0,
-                crossAxisCount: 3,
-
-                children:
-                widget.items.data.documents.map((DocumentSnapshot document) {
-                   return DraggableCity(document,size: itemSize,);                                 }
-                ).toList(),
-
-
-
-
-
-              ),
-            )
-          ]);
+            crossAxisCount: 3,
+            children: widget.items
+                .where((item) => !item.selected)
+                .map((item) => new DraggableCity(item, size: itemSize))
+                .toList(),
+          ),
+        )
+      ]);
 
   Widget _buildTargetRow(Size targetSize, Size itemSize) =>
       new NotificationListener<SelectionNotification>(
         onNotification: _onSelection,
         child:
-            Container(
+        Container(
 //                color: Colors.orange,
-              child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: widget.items1
-                      .map((item) => new DropTarget(item,
-                          selectedItem: pairs[item.id],
-                          size: targetSize,
-                          itemSize: itemSize))
-                      .toList()),
-            ),
+          child: new Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: widget.items1
+                  .map((item) => new DropTarget(item,
+                  selectedItem: pairs[item.id],
+                  size: targetSize,
+                  itemSize: itemSize))
+                  .toList()),
+        ),
 //            Row(
 //                mainAxisAlignment: MainAxisAlignment.end,
 //                mainAxisSize: MainAxisSize.max,
@@ -159,7 +150,7 @@ class _GameViewState extends State<GameView> {
     setState(() {
       if (selectedItem != null) {
         selectedItem.selected = true;
-      //  selectedItem.status = Status.none;
+        selectedItem.status = Status.none;
       }
 
       pairs[targetId] = selectedItem;
@@ -171,11 +162,10 @@ class _GameViewState extends State<GameView> {
       score = 0;
       pairs.forEach((index, item) {
         if (item.id == index) {
-     //     item.status = Status.correct;
+          item.status = Status.correct;
           score++;
-        }
-        //else
-       //   item.status = Status.wrong;
+        } else
+          item.status = Status.wrong;
       });
       validated = true;
     });
@@ -184,7 +174,7 @@ class _GameViewState extends State<GameView> {
   void _onClear() {
     setState(() {
       pairs.forEach((index, item) {
-       // item.status = Status.none;
+        item.status = Status.none;
         item.selected = false;
       });
       pairs.clear();

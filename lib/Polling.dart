@@ -83,16 +83,34 @@ class _Trending extends State<Polling> {
                 child:  StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: 1).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+                    List<NomineesEntityList> nomineesList =new List();
                     if (snapshot.hasData) {
-                      return new DropCityApp(snapshot);
+
+                        snapshot.data.documents.map((DocumentSnapshot document) {
+                          NomineesEntityList nominee=new NomineesEntityList();
+                          nominee.nomineeName=document['nominee_name'];
+                          nominee.id=document['id'];
+                          nominee.nomineesDescription=document['nominee_description'];
+                          nomineesList.add(nominee);
+                        }
+                        ).toList();
+                        return new DropCityApp(nomineesList);
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
 
-
                     // By default, show a loading spinner
                     return CircularProgressIndicator();
+
+//                    if (snapshot.hasData) {
+//                      return new DropCityApp(snapshot);
+//                    } else if (snapshot.hasError) {
+//                      return Text("${snapshot.error}");
+//                    }
+//
+//
+//                    // By default, show a loading spinner
+//                    return CircularProgressIndicator();
 
 
                   },
