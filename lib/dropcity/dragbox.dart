@@ -42,12 +42,19 @@ class _GameViewState extends State<GameView> {
     return new Size(targetWidth, areaSize.height * (landScape ? 0.45 : 0.3));
   }
 
-  Widget _buildButton(IconData icon, VoidCallback onPress) => new Padding(
+  Widget _buildButton(String icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
           mini: true,
-          backgroundColor: Colors.green,
-          child: new Icon(icon),
+          backgroundColor: Colors.white,
+          child: Image(
+            image: new AssetImage(icon),
+            width: 18,
+            height: 18,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
           onPressed: onPress));
 
   @override
@@ -73,8 +80,8 @@ class _GameViewState extends State<GameView> {
       mainAxisSize: MainAxisSize.max,
       children: [
         new Text('lock : $score / ${widget.items.length}'),
-        _buildButton(validated ? Icons.refresh : Icons.check,
-            validated ? _onClear : _onValidate)
+//        _buildButton(validated ? Icons.refresh : Icons.check,
+//            validated ? _onClear : _onValidate)
       ]);
 
   Widget _buildDragableList(Size itemSize) => new Column(
@@ -112,18 +119,27 @@ class _GameViewState extends State<GameView> {
                   itemSize: itemSize))
                   .toList()),
 
-//                      Row(
-//                mainAxisAlignment: MainAxisAlignment.end,
-//                mainAxisSize: MainAxisSize.max,
-//                children: [
-////                  Container(
-////                    color: Colors.transparent,
-////                    height: 5,
-////                    width: 5,
-////                  ),
-//                  _buildButton(validated ? Icons.refresh : Icons.check,
-//                      validated ? _onClear : _onValidate)
-//                ]),
+                      Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+//                  Container(
+//                    color: Colors.transparent,
+//                    height: 5,
+//                    width: 5,
+//                  ),
+
+
+                  _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
+                  new Image(
+                    image: new AssetImage("images/vote.png"),
+                    width: 32,
+                    height: 32,
+                    color: null,
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                  ),
+                ]),
        ]),
 
         ),

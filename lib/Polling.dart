@@ -33,19 +33,19 @@ class _Trending extends State<Polling> {
   @override
   Widget build(BuildContext context) {
     Nominees PollingTrending = new Nominees();
-    final menuButton = new PopupMenuButton<int>(
-      onSelected: (int i) {},
-      itemBuilder: (BuildContext ctx) {},
-      child: new Image(
-        image: new AssetImage("images/vote.png"),
-        width: 32,
-        height: 32,
-        color: null,
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.center,
-      ),
-      //Logo
-    );
+//    final menuButton = new PopupMenuButton<int>(
+//      onSelected: (int i) {},
+//      itemBuilder: (BuildContext ctx) {},
+//      child: new Image(
+//        image: new AssetImage("images/vote.png"),
+//        width: 32,
+//        height: 32,
+//        color: null,
+//        fit: BoxFit.scaleDown,
+//        alignment: Alignment.center,
+//      ),
+//      //Logo
+//    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -72,9 +72,9 @@ class _Trending extends State<Polling> {
               Navigator.pop(context);
             },
           ),
-          actions: [
-            menuButton,
-          ],
+//          actions: [
+//            menuButton,
+//          ],
         ),
 
         body:

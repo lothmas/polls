@@ -29,6 +29,8 @@ class _DraggableCityState extends State<DraggableCity> {
                 color: Colors.white, size: widget.size),
             child: new  Container(
                 decoration: new BoxDecoration(
+                  border: Border.all(color: const Color(0x33A6A6A6)),
+                  shape: BoxShape.circle,
                   image: new DecorationImage(
                     image: new AssetImage("images/background.jpg"),
                     fit: BoxFit.cover,
