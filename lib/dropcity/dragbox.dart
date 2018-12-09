@@ -101,7 +101,8 @@ class _GameViewState extends State<GameView> {
         child:
         Container(
 //                color: Colors.orange,
-          child: new Row(
+            child:  Column(children: <Widget>[
+          new Row(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: widget.items1
@@ -110,8 +111,8 @@ class _GameViewState extends State<GameView> {
                   size: targetSize,
                   itemSize: itemSize))
                   .toList()),
-        ),
-//            Row(
+
+//                      Row(
 //                mainAxisAlignment: MainAxisAlignment.end,
 //                mainAxisSize: MainAxisSize.max,
 //                children: [
@@ -123,6 +124,10 @@ class _GameViewState extends State<GameView> {
 //                  _buildButton(validated ? Icons.refresh : Icons.check,
 //                      validated ? _onClear : _onValidate)
 //                ]),
+       ]),
+
+        ),
+
 
       );
 

@@ -139,10 +139,10 @@ class _Trending extends State<Polling> {
 
 
 
-        floatingActionButtonLocation:
-        FloatingActionButtonLocation.endDocked,
-        floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,
-                validated ? _onClear : _onValidate)
+//        floatingActionButtonLocation:
+//        FloatingActionButtonLocation.endDocked,
+//        floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,
+//                validated ? _onClear : _onValidate)
         //  child: new Row(...),
         ), //
         //   gridView,
