@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
+import 'package:stats/dropcity/draggable_image.dart';
 
 //import 'package:stats/dropcity/country.dart';
 import 'package:stats/dropcity/draggable_text.dart';
@@ -57,6 +58,21 @@ class _GameViewState extends State<GameView> {
           ),
           onPressed: onPress));
 
+  Widget _buildButton1(String icon, VoidCallback onPress) => new Padding(
+      padding: new EdgeInsets.all(10.0),
+      child: new FloatingActionButton(
+          mini: true,
+          backgroundColor: Colors.white,
+          child: Image(
+            image: new AssetImage(icon),
+            width: 32,
+            height: 32,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          onPressed: onPress));
+
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
@@ -96,7 +112,7 @@ class _GameViewState extends State<GameView> {
             crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
-                .map((item) => new DraggableCity(item, size: itemSize))
+                .map((item) => new DraggableImages(item, size: itemSize))
                 .toList(),
           ),
         )
@@ -107,9 +123,11 @@ class _GameViewState extends State<GameView> {
         onNotification: _onSelection,
         child:
         Container(
+
 //                color: Colors.orange,
             child:  Column(children: <Widget>[
           new Row(
+
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: widget.items1
@@ -131,14 +149,9 @@ class _GameViewState extends State<GameView> {
 
 
                   _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
-                  new Image(
-                    image: new AssetImage("images/vote.png"),
-                    width: 32,
-                    height: 32,
-                    color: null,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
-                  ),
+                  _buildButton1('images/vote.png',validated ? _onClear : _onValidate),
+
+
                 ]),
        ]),
 

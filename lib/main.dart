@@ -31,7 +31,7 @@ class _Trending extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
+    imageCache.clear();
     Trending homeTrending=new Trending();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
@@ -205,23 +205,4 @@ class _Trending extends State<Home> {
 
 
 
-Future<TrendingMasterObject> fetchPost() async {
-  Map<String, String> body = {
-    'memberID': '7',
-  };
-  //192.168.88.223   work: 192.168.1.40
-  String requestUrl = "http://192.168.1.40:8090/trending";
-  final response = await http.post(
-    requestUrl,
-    body: body,
-  );
-  if (response.statusCode == 200) {
-    // If the call to the server was successful, parse the JSON
-    try {
-      return TrendingMasterObject.fromJson(json.decode(response.body));
-    } catch (e) {}
-  } else {
-    // If that call was not successful, throw an error.
-    throw Exception('Failed to load post');
-  }
-}
+

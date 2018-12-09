@@ -11,7 +11,8 @@ import 'package:super_tooltip/super_tooltip.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
-  String voteID;
+  int voteID;
+  int voteBy;
   List<Widget> homeTrendingList(BuildContext context , DocumentSnapshot document) {
     var assetImage = new AssetImage("images/cast.png");
     var cast = new Image(image: assetImage,width: 18,height: 18,fit: BoxFit.fill,alignment: Alignment.center,);
@@ -308,7 +309,7 @@ class Trending {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Polling(voteID:document['voteId'])),
+                        MaterialPageRoute(builder: (context) => Polling(voteID:document['voteId'],voteBy:document[''])),
                       );
                     },
                   ),

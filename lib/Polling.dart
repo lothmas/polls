@@ -10,7 +10,8 @@ import 'package:stats/drag.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
-String voteIDs;
+int voteIDs;
+int voteBy1;
 
 class Polling extends StatefulWidget {
   @override
@@ -20,10 +21,12 @@ class Polling extends StatefulWidget {
     return _Trending();
   }
 
-  String voteID;
+  int voteID;
+  int voteBy;
 
-  Polling({this.voteID}) {
+  Polling({this.voteID, this.voteBy}) {
     voteIDs = voteID;
+    voteBy1=voteBy;
   }
 }
 
@@ -33,19 +36,6 @@ class _Trending extends State<Polling> {
   @override
   Widget build(BuildContext context) {
     Nominees PollingTrending = new Nominees();
-//    final menuButton = new PopupMenuButton<int>(
-//      onSelected: (int i) {},
-//      itemBuilder: (BuildContext ctx) {},
-//      child: new Image(
-//        image: new AssetImage("images/vote.png"),
-//        width: 32,
-//        height: 32,
-//        color: null,
-//        fit: BoxFit.scaleDown,
-//        alignment: Alignment.center,
-//      ),
-//      //Logo
-//    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -72,16 +62,13 @@ class _Trending extends State<Polling> {
               Navigator.pop(context);
             },
           ),
-//          actions: [
-//            menuButton,
-//          ],
         ),
 
         body:
 //
             Center(
                 child:  StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: 1).snapshots(),
+                  stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: voteIDs).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     List<NomineesEntityList> nomineesList =new List();
                     if (snapshot.hasData) {
@@ -91,7 +78,9 @@ class _Trending extends State<Polling> {
                           nominee.nomineeName=document['nominee_name'];
                           nominee.id=document['id'];
                           nominee.nomineesDescription=document['nominee_description'];
+                          nominee.nomineeImage=document['nominee_media'];
                           nomineesList.add(nominee);
+
                         }
                         ).toList();
                         return new DropCityApp(nomineesList);
@@ -102,34 +91,9 @@ class _Trending extends State<Polling> {
                     // By default, show a loading spinner
                     return CircularProgressIndicator();
 
-//                    if (snapshot.hasData) {
-//                      return new DropCityApp(snapshot);
-//                    } else if (snapshot.hasError) {
-//                      return Text("${snapshot.error}");
-//                    }
-//
-//
-//                    // By default, show a loading spinner
-//                    return CircularProgressIndicator();
-
-
                   },
                 )
-//          child: FutureBuilder<NomineeMasterObject>(
-//            future: fetchPost(voteIDs),
-//            builder: (context, snapshot) {
-//              if (snapshot.hasData) {
-//                NomineeMasterObject nomineeMasterObject = snapshot.data;
-//                List<NomineesEntityList> nomineesList =
-//                    nomineeMasterObject.nomineesEntityList;
-//                return new DropCityApp(nomineesList);
-//              } else if (snapshot.hasError) {
-//                return Text("${snapshot.error}");
-//              }
-//
-//              // By default, show a loading spinner
-//              return CircularProgressIndicator();
-//            },
+
 //          ),
         ),
 
@@ -156,61 +120,6 @@ class _Trending extends State<Polling> {
 
   int score = 0;
 
-  void _onValidate() {
-    setState(() {
-      score = 0;
-      pairs.forEach((index, item) {
-        if (item.id == index) {
-          item.status = Status.correct;
-          score++;
-        } else
-          item.status = Status.wrong;
-      });
-      validated = true;
-    });
-  }
-
-  void _onClear() {
-    setState(() {
-      pairs.forEach((index, item) {
-        item.status = Status.none;
-        item.selected = false;
-      });
-      pairs.clear();
-      validated = false;
-    });
-  }
-
-  Widget _buildButton(IconData icon, VoidCallback onPress) => new Padding(
-      padding: new EdgeInsets.all(10.0),
-      child: new FloatingActionButton(
-          mini: true,
-          backgroundColor: Colors.green,
-          child: new Icon(icon),
-          onPressed: onPress));
-
-  Future<NomineeMasterObject> fetchPost(String voteID) async {
-    Map<String, String> body = {
-      'voteID': voteID,
-    };
-    //192.168.88.223   work: 192.168.1.40
-    String requestUrl = "http://192.168.88.223:8090/nominees";
-    final response = await http.post(
-      requestUrl,
-      body: body,
-    );
-    if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON
-      try {
-        return NomineeMasterObject.fromJson(json.decode(response.body));
-        // nomineesList = nomineeMasterObject.nomineesEntityList;
-
-      } catch (e) {}
-    } else {
-      // If that call was not successful, throw an error.
-      throw Exception('Failed to load post');
-    }
-  }
 
   void onTabTapped(int index) {
     setState(() {
