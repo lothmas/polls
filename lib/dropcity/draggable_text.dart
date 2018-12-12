@@ -39,7 +39,7 @@ class _DraggableCityState extends State<DraggableCity> {
                 ),
                 child: new Center(
                   child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
-                      style: new TextStyle(color: Colors.white70,fontSize: 14.0,
+                      style: new TextStyle(color: Colors.blueGrey,fontSize: 14.0,
                           fontWeight: FontWeight.bold)),
                 )),
             data: widget.item,

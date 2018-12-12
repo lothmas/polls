@@ -47,6 +47,7 @@ class _GameViewState extends State<GameView> {
   Widget _buildButton(String icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
+          heroTag: "btn1",
           mini: true,
           backgroundColor: Colors.transparent,
           child: Image(
@@ -62,6 +63,7 @@ class _GameViewState extends State<GameView> {
   Widget _buildButton1(String icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
+          heroTag: "btn2",
           mini: true,
           backgroundColor: Colors.transparent,
           child: Image(
@@ -123,9 +125,9 @@ class _GameViewState extends State<GameView> {
         Flexible(
           child: GridView.count(
             primary: true,
-            padding: const EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(15.0),
 //                crossAxisSpacing: 2.0,
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             children: widget.items
                 .where((item) => !item.selected)
                 .map((item) => new DraggableCity(item, size: itemSize))
@@ -141,9 +143,9 @@ class _GameViewState extends State<GameView> {
         Flexible(
           child: GridView.count(
             primary: true,
-            padding: const EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(15.0),
 //                crossAxisSpacing: 2.0,
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             children: widget.items
                 .where((item) => !item.selected)
                 .map((item) => new DraggableImages(item, size: itemSize))

@@ -30,7 +30,7 @@ class _DraggableImages extends State<DraggableImages> {
             child: new  Container(
                 decoration: new BoxDecoration(
                   border: Border.all(color: const Color(0x33A6A6A6)),
-                  shape: BoxShape.circle,
+                  shape: BoxShape.rectangle,
                   image: new DecorationImage(
                     image:  NetworkImage(widget.item.nomineeImage
                     ),

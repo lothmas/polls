@@ -13,14 +13,19 @@ class Trending {
   var youtube = new FlutterYoutube();
   int voteID;
   int voteBy;
-  List<Widget> homeTrendingList(BuildContext context , DocumentSnapshot document) {
+
+  List<Widget> homeTrendingList(
+      BuildContext context, DocumentSnapshot document) {
     var assetImage = new AssetImage("images/cast.png");
-    var cast = new Image(image: assetImage,width: 18,height: 18,fit: BoxFit.fill,alignment: Alignment.center,);
-
-
+    var cast = new Image(
+      image: assetImage,
+      width: 18,
+      height: 18,
+      fit: BoxFit.fill,
+      alignment: Alignment.center,
+    );
 
     List<Widget> list = new List();
-
 
     list.add(Container(
       color: Colors.transparent,
@@ -32,11 +37,11 @@ class Trending {
           color: Colors.transparent,
           child: ClipOval(
               child: Image.network(
-                document['profile_pic'],
-                fit: BoxFit.fill,
-                width: 75.0,
-                height: 75.0,
-              )),
+            document['profile_pic'],
+            fit: BoxFit.fill,
+            width: 75.0,
+            height: 75.0,
+          )),
         ),
         Container(
           color: Colors.transparent,
@@ -113,7 +118,7 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                        ),
+                            ),
                         Container(
                           color: Colors.transparent,
                           width: 58,
@@ -127,26 +132,26 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                        ),
+                            ),
                         Container(
                           color: Colors.transparent,
                           width: 58,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            list.add(new Tooltip(
-                                message: "Hello World",
-                                child: new Text("foo")));
-                          },
-                          child: Image(
-                            image: new AssetImage("images/info.png"),
-                            width: 18,
-                            height: 18,
-                            color: null,
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.center,
-                          ),
-                        ),
+//                        GestureDetector(
+//                          onTap: () {
+//                            list.add(new Tooltip(
+//                                message: "Hello World",
+//                                child: new Text("foo")));
+//                          },
+//                          child: Image(
+//                            image: new AssetImage("images/info.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+//                        ),
                       ],
                     ),
                   ]),
@@ -161,12 +166,10 @@ class Trending {
             color: Colors.grey,
             child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                value: '0'  +
-                    ' | ' +
-                    document['allowedVoteNumber'].toString(),
+                value: '0' + ' | ' + document['allowedVoteNumber'].toString(),
                 color: Colors.blueGrey, // value to show inside the badge
                 child: new Text("") // text to append (required)
-            )),
+                )),
       ],
     ));
 
@@ -188,24 +191,20 @@ class Trending {
         fit: BoxFit.fill,
         alignment: Alignment.topLeft,
       ));
-    }
-    else if (document['postType']  == 2 &&
+    } else if (document['postType'] == 2 &&
         document['postPath'].contains("https://www.youtube.com")) {
-      list.add(Container(
-          height: 270,
-
-          child:FlutterYoutube.playYoutubeVideoByUrl(
-            apiKey: "AIzaSyC-OhlIOcjW_WBqBbDUVKJF4qN4MMSNL8c",
-            videoUrl: document['postPath'],
-            autoPlay: false, //default falase
-            fullScreen: false
-            ,
-            //default false
-
-          )),);
-
-    }
-    else if (document['postType'] == 2) {
+      list.add(
+        Container(
+            height: 270,
+            child: FlutterYoutube.playYoutubeVideoByUrl(
+              apiKey: "AIzaSyC-OhlIOcjW_WBqBbDUVKJF4qN4MMSNL8c",
+              videoUrl: document['postPath'],
+              autoPlay: false, //default falase
+              fullScreen: false,
+              //default false
+            )),
+      );
+    } else if (document['postType'] == 2) {
       list.add(new Chewie(
         new VideoPlayerController.network(document['postPath']),
         //aspectRatio: 3 / 2,
@@ -225,11 +224,10 @@ class Trending {
       ));
     }
 
-
     list.add(
       new Container(
         width: 500.0,
-        height: 22.0,
+//        height: 22.0,
         //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
@@ -237,32 +235,29 @@ class Trending {
 //              blurRadius: 20.0,
 //            ),
 //          ]),
-        child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              new Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    //color: Colors.purple,
-                      child: Badge.before(
-                        color: Colors.transparent,
-                        borderColor: Colors.transparent,
-                        textStyle: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.bold),
-                        value: '23 hrs' +
-                            " :ago",
-                        child: null,
-                      )),
-                ],
-              ),
-            ]),
+//        child: new Column(
+//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//            children: [
+//              new Row(
+//                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                children: [
+//                  Container(
+//                      //color: Colors.purple,
+//                      child: Badge.before(
+//                    color: Colors.transparent,
+//                    borderColor: Colors.transparent,
+//                    textStyle: TextStyle(
+//                        color: Colors.blueGrey,
+//                        fontSize: 11.0,
+//                        fontWeight: FontWeight.bold),
+//                    value: '23 hrs' + " :ago",
+//                    child: null,
+//                  )),
+//                ],
+//              ),
+//            ]),
       ),
     );
-
-
 
     list.add(
       Divider(),
@@ -271,78 +266,73 @@ class Trending {
     list.add(
       new Container(
         width: 500.0,
-        height: 50.0,
+        height: 60.0,
         //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-        decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
-          new BoxShadow(
-            color: Colors.black26,
-            blurRadius: 20.0,
-          ),
-        ]),
-        child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-//                    Container(
-//
-//                      height: cast.height,
-//                      width: cast.width,
-//                      child: new FlatButton(
-////              onPressed: castClick(),
-//                        child: new ConstrainedBox(
-//                          constraints: new BoxConstraints.expand(),
-//                          child: cast,
-//                        ),
-//                      ),
-//                    ),
-                  GestureDetector(
-                    child: Image(
-                      image: new AssetImage("images/cast.png"),
-                      width: 26,
-                      height: 26,
-                      color: null,
+//        decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//          new BoxShadow(
+//            color: Colors.black26,
+//            blurRadius: 20.0,
+//          ),
+//        ]),
+        child: new Scaffold(
 
-                      alignment: Alignment.center,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
-                      );
-                    },
-                  ),
-                  Container(
-                    child: Image(
-                      image: new AssetImage("images/trending.png"),
-                      width: 26,
-                      height: 26,
-                      color: null,
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                  Container(
-                    child: Image(
-                      image: new AssetImage("images/share.png"),
-                      width: 26,
-                      height: 26,
-                      color: null,
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                ],
-              ),
-            ]),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+            child: Image.asset("images/cast.png"),
+              heroTag: "btn3",
+
+              mini: true,
+              onPressed: () {
+                Navigator.push(
+                  context, new
+                  MaterialPageRoute(builder: (context) => Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
+                );
+              }          ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.black26,
+            shape: CircularNotchedRectangle(),
+            //notchMargin: 4.0,
+            child: new Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Image.asset("images/trending.png"),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Image.asset("images/share.png"),
+                  onPressed: () {},
+                ),
+
+              ],
+            ),
+          ),
+        ),
+//        new BottomNavigationBar(
+//          currentIndex: 0, // this will be set when a new tab is tapped
+//          items: [
+//            BottomNavigationBarItem(
+//              icon: new Icon(Icons.home),
+//              title: new Text('Home'),
+//            ),
+//            BottomNavigationBarItem(
+//              icon: new Icon(Icons.mail),
+//              title: new Text('Messages'),
+//            ),
+//            BottomNavigationBarItem(
+//                icon: Icon(Icons.person),
+//                title: Text('Profile')
+//            )
+//          ],
+//        ),
       ),
     );
 
     list.add(
       Divider(),
     );
-
 
     return list;
   }
@@ -371,8 +361,8 @@ class Trending {
       return (days / 7).toString().substring(0, 1) + " weeks";
     } else if (DateTime.now().difference(dateVoteCreated).inDays > 31) {
       return (DateTime.now().difference(dateVoteCreated).inDays / 30)
-          .toString()
-          .substring(0, 2) +
+              .toString()
+              .substring(0, 2) +
           " months";
     }
   }
@@ -393,6 +383,4 @@ class TooltipText extends StatelessWidget {
   }
 
   void castClick() {}
-
-
 }
