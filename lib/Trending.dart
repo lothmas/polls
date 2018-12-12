@@ -290,7 +290,8 @@ class Trending {
                 );
               }          ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.black26,
+            elevation: 0.5,
+            color: Colors.white,
             shape: CircularNotchedRectangle(),
             //notchMargin: 4.0,
             child: new Row(
