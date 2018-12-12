@@ -1,3 +1,4 @@
+import 'package:dragablegridview_flutter/dragablegridviewbin.dart';
 import 'package:flutter/material.dart';
 
 enum Status { none, correct, wrong }
@@ -26,7 +27,7 @@ class NomineeMasterObject {
   }
 }
 
-class NomineesEntityList {
+class NomineesEntityList extends DragAbleGridViewBin{
   int id;
   int voteId;
   String nomineeName;

@@ -5,7 +5,8 @@ import 'package:stats/dropcity/dragbox.dart';
 
 class DropCityApp extends StatelessWidget {
   List<NomineesEntityList> items;
-  DropCityApp(this.items);
+  int voteBy;
+  DropCityApp(this.items, this.voteBy);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,21 @@ class DropCityApp extends StatelessWidget {
 
         theme: _getTheme(context),
         home: new Scaffold(
-          body: new GameView(items),
+
+            body: new Stack(
+              children: <Widget>[
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
+                  ),
+                ),
+                new Center(
+                  child: new GameView(items,voteBy),
+                )
+              ],
+            )
+
+
 
         ));
   }

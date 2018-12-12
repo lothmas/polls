@@ -309,7 +309,7 @@ class Trending {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Polling(voteID:document['voteId'],voteBy:document[''])),
+                        MaterialPageRoute(builder: (context) => Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
                       );
                     },
                   ),

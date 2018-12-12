@@ -7,11 +7,13 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:stats/drag.dart';
+import 'package:stats/dragreorder/OrderByDragging.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
-int voteIDs;
+String voteIDs;
 int voteBy1;
+int voteType1;
 
 class Polling extends StatefulWidget {
   @override
@@ -21,12 +23,15 @@ class Polling extends StatefulWidget {
     return _Trending();
   }
 
-  int voteID;
+  String voteID;
   int voteBy;
+  int voteType;
 
-  Polling({this.voteID, this.voteBy}) {
+
+  Polling({this.voteID, this.voteBy, this.voteType}) {
     voteIDs = voteID;
     voteBy1=voteBy;
+    voteType1=voteType;
   }
 }
 
@@ -66,12 +71,19 @@ class _Trending extends State<Polling> {
 
         body:
 //
-            Center(
-                child:  StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: voteIDs).snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    List<NomineesEntityList> nomineesList =new List();
-                    if (snapshot.hasData) {
+          new Stack(
+            children: <Widget>[
+              new Container(
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
+                ),
+              ),
+              Center(
+                  child:  StreamBuilder<QuerySnapshot>(
+                    stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: voteIDs).snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      List<NomineesEntityList> nomineesList =new List();
+                      if (snapshot.hasData) {
 
                         snapshot.data.documents.map((DocumentSnapshot document) {
                           NomineesEntityList nominee=new NomineesEntityList();
@@ -83,19 +95,32 @@ class _Trending extends State<Polling> {
 
                         }
                         ).toList();
-                        return new DropCityApp(nomineesList);
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
+                        if(voteType1==1){
+                          return new DropCityApp(nomineesList,voteBy1);
+                        }
+                        else if (voteType1==2){
+                          return new OrderByDragging().drageableOrder(nomineesList,voteBy1);
 
-                    // By default, show a loading spinner
-                    return CircularProgressIndicator();
+                        }
+                        else if (voteType1==2){
 
-                  },
-                )
+                        }
+
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+
+                      // By default, show a loading spinner
+                      return CircularProgressIndicator();
+
+                    },
+                  )
 
 //          ),
-        ),
+              ),
+            ],
+          ),
+
 
 
 

@@ -9,8 +9,9 @@ import 'package:stats/dropcity/drop_target.dart';
 class GameView extends StatefulWidget {
   List<NomineesEntityList> items;
   List<NomineesEntityList> items1 = new List();
+  int voteBy;
 
-  GameView(this.items) {
+  GameView(this.items, this.voteBy) {
     items1.add(items.elementAt(0));
     items1.elementAt(0).nomineesDescription = "To Nominate Long Press & Grag Here";
   }
@@ -47,7 +48,7 @@ class _GameViewState extends State<GameView> {
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
           mini: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           child: Image(
             image: new AssetImage(icon),
             width: 18,
@@ -62,7 +63,7 @@ class _GameViewState extends State<GameView> {
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
           mini: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           child: Image(
             image: new AssetImage(icon),
             width: 32,
@@ -81,14 +82,29 @@ class _GameViewState extends State<GameView> {
     final numItems = 4;
     final draggableSize = getDragableSize(areaSize: size, numItems: numItems);
     final targetSize = getTargetSize(areaSize: size, numItems: numItems);
-    return new Column(
-        mainAxisAlignment: mq.orientation == Orientation.landscape
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.spaceEvenly,
-        children: [
-          new Expanded(child: _buildDragableList(draggableSize)),
-          _buildTargetRow(targetSize, draggableSize),
-        ]);
+
+    if(widget.voteBy==1){
+      return new Column(
+          mainAxisAlignment: mq.orientation == Orientation.landscape
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceEvenly,
+          children: [
+            new Expanded(child: _buildDragableTextList(draggableSize)),
+            _buildTargetRow(targetSize, draggableSize),
+          ]);
+    }
+    else if(widget.voteBy==2){
+      return new Column(
+          mainAxisAlignment: mq.orientation == Orientation.landscape
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceEvenly,
+          children: [
+            new Expanded(child: _buildDragableImageList(draggableSize)),
+            _buildTargetRow(targetSize, draggableSize),
+          ]);
+    }
+
+
   }
 
   Widget _buildValidateButton() => new Row(
@@ -100,7 +116,25 @@ class _GameViewState extends State<GameView> {
 //            validated ? _onClear : _onValidate)
       ]);
 
-  Widget _buildDragableList(Size itemSize) => new Column(
+  Widget _buildDragableTextList(Size itemSize) => new Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Flexible(
+          child: GridView.count(
+            primary: true,
+            padding: const EdgeInsets.all(0.0),
+//                crossAxisSpacing: 2.0,
+            crossAxisCount: 3,
+            children: widget.items
+                .where((item) => !item.selected)
+                .map((item) => new DraggableCity(item, size: itemSize))
+                .toList(),
+          ),
+        )
+      ]);
+
+  Widget _buildDragableImageList(Size itemSize) => new Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[

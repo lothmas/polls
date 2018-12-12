@@ -165,7 +165,10 @@ class _Trending extends State<Home> {
           child:  StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance.collection('votes').snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+//                FirebaseStorage storage = new FirebaseStorage(
+//                    storageBucket: 'gs://osszefogasaszanhuzokert.appspot.com/'
+//                );
+//                StorageReference imageLink = storage.ref().child('giftShopItems');
                 if (snapshot.hasData) {
                   return new ListView(
                     children:

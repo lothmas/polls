@@ -17,6 +17,7 @@ class _DraggableCityState extends State<DraggableCity> {
   @override
   Widget build(BuildContext context) {
     return new Padding(
+
         padding: new EdgeInsets.all(2.0),
         child: new LongPressDraggable<NomineesEntityList>(
             onDraggableCanceled: (velocity, offset) {
@@ -26,23 +27,24 @@ class _DraggableCityState extends State<DraggableCity> {
               });
             },
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
-                color: Colors.white, size: widget.size),
+                color: Colors.yellow, size: widget.size),
             child: new  Container(
                 decoration: new BoxDecoration(
-                  border: Border.all(color: const Color(0x33A6A6A6)),
+                  border: Border.all(color: Colors.cyan),
                   shape: BoxShape.circle,
-                  image: new DecorationImage(
-                    image: new AssetImage("images/background.jpg"),
-                    fit: BoxFit.cover,
-                  ),
+//                  image: new DecorationImage(
+//                    image: new AssetImage("images/background.jpg"),
+//                    fit: BoxFit.cover,
+//                  ),
                 ),
                 child: new Center(
                   child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
-                      style: new TextStyle(color: Colors.black,fontSize: 14.0,
+                      style: new TextStyle(color: Colors.white70,fontSize: 14.0,
                           fontWeight: FontWeight.bold)),
                 )),
             data: widget.item,
             feedback: new DragAvatarBorder(
+
               new Text(widget.item.nomineeName,
                   style: new TextStyle(
                       fontSize: 16.0,
