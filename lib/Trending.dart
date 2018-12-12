@@ -279,14 +279,16 @@ class Trending {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
-            child: Image.asset("images/cast.png"),
-              heroTag: "btn3",
+            backgroundColor: Colors.white70,
+            child: Image.asset("images/cast.png",      width: 22.0,
+              height: 22.0,),
+              heroTag: "btn1",
 
               mini: true,
               onPressed: () {
                 Navigator.push(
                   context, new
-                  MaterialPageRoute(builder: (context) => Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
+                  MaterialPageRoute(builder: (context) => new Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
                 );
               }          ),
           bottomNavigationBar: BottomAppBar(
@@ -299,11 +301,13 @@ class Trending {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
-                  icon: Image.asset("images/trending.png"),
+                  icon: Image.asset("images/trending.png",width: 22.0,
+                    height: 22.0,),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Image.asset("images/share.png"),
+                  icon: Image.asset("images/share.png",width: 22.0,
+                    height: 22.0,),
                   onPressed: () {},
                 ),
 
