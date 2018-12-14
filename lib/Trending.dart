@@ -16,6 +16,7 @@ class Trending {
 
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
+    double c_width = MediaQuery.of(context).size.width*1;
     var assetImage = new AssetImage("images/cast.png");
     var cast = new Image(
       image: assetImage,
@@ -33,6 +34,10 @@ class Trending {
     ));
     list.add(Row(
       children: [
+        Container(
+          color: Colors.transparent,
+          width: 10.0,
+        ),
         Container(
           color: Colors.transparent,
           child: ClipOval(
@@ -175,13 +180,35 @@ class Trending {
 
     list.add(Container(
       color: Colors.transparent,
-      height: 12.0,
+      height: 8.0,
     ));
-
-    list.add(Text(document['description'], textAlign: TextAlign.left));
+list.add(Container (
+  padding: const EdgeInsets.all(10),
+  width: c_width,
+  child: new Column (
+    children: <Widget>[
+      Text(document['description'], textAlign: TextAlign.justify,softWrap: true),
+    ],
+  ),
+));
+//    list.add(
+//      Row( children: [
+//        Container(
+//          color: Colors.transparent,
+//          width: 10.0,
+//        ),
+//
+//        Text(document['description'], textAlign: TextAlign.justify,softWrap: true),
+//        Container(
+//          color: Colors.transparent,
+//          width: 10.0,
+//        ),
+//          ]
+//      )
+//    );
     list.add(Container(
       color: Colors.transparent,
-      height: 20.0,
+      height: 8.0,
     ));
     if (document['postType'] == 1) {
       list.add(new Image.network(
@@ -282,8 +309,8 @@ class Trending {
           floatingActionButton: FloatingActionButton(
               heroTag: "btn1",
               backgroundColor: Colors.white70,
-            child: Image.asset("images/cast.png",      width: 22.0,
-              height: 22.0,),
+            child: Image.asset("images/cast.png",      width: 18.0,
+              height: 18.0,),
 
               mini: true,
               onPressed: () {
@@ -305,8 +332,8 @@ class Trending {
                   IconButton(
                     icon: Image.asset(
                       "images/trending.png",
-                      width: 22.0,
-                      height: 22.0,
+                      width: 18.0,
+                      height: 18.0,
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -336,8 +363,8 @@ class Trending {
                   IconButton(
                     icon: Image.asset(
                       "images/share.png",
-                      width: 22.0,
-                      height: 22.0,
+                      width: 18.0,
+                      height: 18.0,
                     ),
                     onPressed: () {},
                   ),

@@ -73,6 +73,7 @@ class _Trending extends State<Home> {
         ),
 
         bottomNavigationBar: BottomNavigationBar(
+    //      fixedColor: Colors.deepPurple,
           onTap: onTabTapped, // new
           currentIndex: _currentIndex, // new
           items: [
