@@ -16,7 +16,7 @@ class Trending {
 
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
-    double c_width = MediaQuery.of(context).size.width*1;
+    double c_width = MediaQuery.of(context).size.width * 1;
     var assetImage = new AssetImage("images/cast.png");
     var cast = new Image(
       image: assetImage,
@@ -39,6 +39,13 @@ class Trending {
           width: 10.0,
         ),
         Container(
+                    //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
           color: Colors.transparent,
           child: ClipOval(
               child: Image.network(
@@ -182,15 +189,16 @@ class Trending {
       color: Colors.transparent,
       height: 8.0,
     ));
-list.add(Container (
-  padding: const EdgeInsets.all(10),
-  width: c_width,
-  child: new Column (
-    children: <Widget>[
-      Text(document['description'], textAlign: TextAlign.justify,softWrap: true),
-    ],
-  ),
-));
+    list.add(Container(
+      padding: const EdgeInsets.all(10),
+      width: c_width,
+      child: new Column(
+        children: <Widget>[
+          Text(document['description'],
+              textAlign: TextAlign.justify,style: TextStyle(),),
+        ],
+      ),
+    ));
 //    list.add(
 //      Row( children: [
 //        Container(
@@ -288,7 +296,6 @@ list.add(Container (
 
     list.add(
       Divider(),
-
     );
 
     list.add(
@@ -303,23 +310,29 @@ list.add(Container (
 //          ),
 //        ]),
         child: new Scaffold(
-
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
               heroTag: "btn1",
               backgroundColor: Colors.white70,
-            child: Image.asset("images/cast.png",      width: 18.0,
-              height: 18.0,),
-
+              child: Image.asset(
+                "images/cast.png",
+                width: 18.0,
+                height: 18.0,
+              ),
               mini: true,
               onPressed: () {
                 Navigator.pushReplacement(
-                  context, new
-                  MaterialPageRoute(builder: (context) => new Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new Polling(
+                          voteID: document.documentID,
+                          voteBy: document['voteBy'],
+                          voteType: document['voteType'])),
                 );
-              }          ),
+              }),
           bottomNavigationBar: BottomAppBar(
+
             elevation: 0.5,
             color: Colors.white,
             shape: CircularNotchedRectangle(),
@@ -327,48 +340,47 @@ list.add(Container (
             child: new Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-
-                  IconButton(
-                    icon: Image.asset(
-                      "images/trending.png",
-                      width: 18.0,
-                      height: 18.0,
+              children: <Widget>[
+                IconButton(
+                  icon: Image.asset(
+                    "images/trending.png",
+                    width: 18.0,
+                    height: 18.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new Polling(
+                              voteID: document.documentID,
+                              voteBy: document['voteBy'],
+                              voteType: document['voteType'])),
+                    );
+                  },
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      height: 30.0,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new Polling(
-                                voteID: document.documentID,
-                                voteBy: document['voteBy'],
-                                voteType: document['voteType'])),
-                      );
-                    },
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        height: 30.0,
-                      ),
-                      Text(
-                        '12 hrs ago',
-                        style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      "images/share.png",
-                      width: 18.0,
-                      height: 18.0,
+                    Text(
+                      '12 hrs ago',
+                      style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {},
+                  ],
+                ),
+                IconButton(
+                  icon: Image.asset(
+                    "images/share.png",
+                    width: 18.0,
+                    height: 18.0,
                   ),
-                ],
+                  onPressed: () {},
+                ),
+              ],
             ),
           ),
         ),
