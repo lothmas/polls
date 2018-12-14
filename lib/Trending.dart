@@ -93,7 +93,7 @@ class Trending {
                     child: Text(
                       document['owner'],
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.lightBlueAccent),
+                      style: TextStyle(color: Colors.teal),
                     ),
                   ),
                 ],
@@ -172,16 +172,17 @@ class Trending {
         ),
         Container(
           color: Colors.transparent,
-          width: 40.0,
+          width: MediaQuery.of(context).size.width - 267.0,
         ),
+        new Align(child:
         Container(
-            color: Colors.grey,
+            color: Colors.black12,
             child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                 value: '0' + ' | ' + document['allowedVoteNumber'].toString(),
                 color: Colors.blueGrey, // value to show inside the badge
                 child: new Text("") // text to append (required)
-                )),
+                ))),
       ],
     ));
 
@@ -195,7 +196,7 @@ class Trending {
       child: new Column(
         children: <Widget>[
           Text(document['description'],
-              textAlign: TextAlign.justify,style: TextStyle(),),
+              textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0),),
         ],
       ),
     ));
