@@ -46,7 +46,7 @@ class _Trending extends State<Polling> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: new AppBar(
-          backgroundColor: Colors.deepPurpleAccent,
+          backgroundColor: Colors.blueGrey,
           elevation: 2,
           title: new Text(
             'Nominies',

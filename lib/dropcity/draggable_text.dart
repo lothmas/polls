@@ -30,7 +30,7 @@ class _DraggableCityState extends State<DraggableCity> {
                 color: Colors.yellow, size: widget.size),
             child: new  Container(
                 decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent),
+                  border: Border.all(color: Colors.blueGrey),
                   shape: BoxShape.circle,
 //                  image: new DecorationImage(
 //                    image: new AssetImage("images/background.jpg"),
@@ -39,7 +39,7 @@ class _DraggableCityState extends State<DraggableCity> {
                 ),
                 child: new Center(
                   child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
-                      style: new TextStyle(color: Colors.white,fontSize: 14.0,
+                      style: new TextStyle(color: Colors.white70,fontSize: 14.0,
                           fontWeight: FontWeight.bold)),
                 )),
             data: widget.item,
