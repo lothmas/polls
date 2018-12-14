@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:stats/drag.dart';
 import 'package:stats/dragreorder/OrderByDragging.dart';
+import 'package:stats/main.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -64,8 +65,11 @@ class _Trending extends State<Polling> {
               alignment: Alignment.center,
             ),
             onTap: () {
-              Navigator.pop(context);
-            },
+              Navigator.pushReplacement(
+                  context, new
+              MaterialPageRoute(builder: (context) => Home()),
+              );
+            }
           ),
         ),
 
