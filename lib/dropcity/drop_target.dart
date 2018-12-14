@@ -89,7 +89,7 @@ class _DropTargetState extends State<DropTarget> {
                     ? new Column(children: [
                         new Padding(
                             padding: new EdgeInsets.symmetric(vertical: 12.0),
-                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,),)),
+                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,color:Colors.black ),)),
                         new Center(
                             child: new SizedBox(
                                 width: MediaQuery.of(context).size.width-50,

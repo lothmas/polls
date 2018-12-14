@@ -49,7 +49,7 @@ class _GameViewState extends State<GameView> {
       child: new FloatingActionButton(
           heroTag: "btn1",
           mini: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white70,
           child: Image(
             image: new AssetImage(icon),
             width: 18,
@@ -65,7 +65,7 @@ class _GameViewState extends State<GameView> {
       child: new FloatingActionButton(
           heroTag: "btn2",
           mini: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white70,
           child: Image(
             image: new AssetImage(icon),
             width: 32,
@@ -127,7 +127,7 @@ class _GameViewState extends State<GameView> {
             primary: true,
             padding: const EdgeInsets.all(15.0),
 //                crossAxisSpacing: 2.0,
-            crossAxisCount: 2,
+            crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
                 .map((item) => new DraggableCity(item, size: itemSize))

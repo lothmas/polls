@@ -261,6 +261,7 @@ class Trending {
 
     list.add(
       Divider(),
+
     );
 
     list.add(
@@ -299,24 +300,48 @@ class Trending {
             child: new Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                  icon: Image.asset("images/trending.png",width: 22.0,
-                    height: 22.0,),
-                  onPressed: () {
-                    Navigator.push(
-                      context, new
-                    MaterialPageRoute(builder: (context) => new Polling(voteID:document.documentID,voteBy:document['voteBy'],voteType:document['voteType'])),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Image.asset("images/share.png",width: 22.0,
-                    height: 22.0,),
-                  onPressed: () {},
-                ),
+                children: <Widget>[
 
-              ],
+                  IconButton(
+                    icon: Image.asset(
+                      "images/trending.png",
+                      width: 22.0,
+                      height: 22.0,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => new Polling(
+                                voteID: document.documentID,
+                                voteBy: document['voteBy'],
+                                voteType: document['voteType'])),
+                      );
+                    },
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        height: 30.0,
+                      ),
+                      Text(
+                        '12 hrs ago',
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Image.asset(
+                      "images/share.png",
+                      width: 22.0,
+                      height: 22.0,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
             ),
           ),
         ),
