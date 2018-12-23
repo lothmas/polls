@@ -1,36 +1,76 @@
-import 'package:badge/badge.dart';
-import 'package:chewie/chewie.dart';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:stats/Polling.dart';
 import 'package:stats/Trending.dart';
-import 'package:stats/TrendingMasterObject.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:video_player/video_player.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
-void main() => runApp(Home());
+//void main() => runApp(Home());
+
+void main() async {
+  final FirebaseApp app = await FirebaseApp.configure(
+    name: 'test',
+    options: FirebaseOptions(
+      googleAppID: Platform.isIOS
+          ? '1:886993795008:ios:d682d7e2aee1bf4a'
+          : '1:886993795008:android:d682d7e2aee1bf4a',
+//      gcmSenderID: '159623150305',
+      apiKey: 'AIzaSyDYE13jkl283raYvE0MfmZfZOVwCsmHd70',
+      projectID: 'polls-223422',
+    ),
+  );
+  final FirebaseStorage storage = FirebaseStorage(
+      app: app, storageBucket: 'gs://polls-223422.appspot.com');
+  runApp(Home(storage: storage));
+}
 
 class Home extends StatefulWidget {
+  Home({this.storage});
+  final FirebaseStorage storage;
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     imageCache.clear();
-    return _Trending();
+    return _Trending(storage: storage);
   }
 }
 
 class _Trending extends State<Home> {
+
   int _currentIndex = 0;
+  _Trending({this.storage});
+  final FirebaseStorage storage;
+
+
+  String errorMsg;
+
+//  Uint8List profilePic( DocumentSnapshot document) {
+//    Uint8List imageBytes;
+//
+//    storage.ref().child(document['memberID']+"/profile_pic.jpg").getData(10000000).then((data) =>
+//        setState(() {
+//          imageBytes = data;
+//          return imageBytes;
+//        })
+//    ).catchError((e) =>
+//        setState(() {
+//          errorMsg = e.error;
+//        })
+//    );
+//  }
 
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
     imageCache.clear();
     Trending homeTrending=new Trending();
     final menuButton = new PopupMenuButton<int>(
@@ -174,6 +214,8 @@ class _Trending extends State<Home> {
                   return new ListView(
                     children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
+                      //imageBytes=null;
+
                       return new Column(
                         children:
                         homeTrending.homeTrendingList(context, document),
@@ -195,6 +237,35 @@ class _Trending extends State<Home> {
         )),
       ),
     );
+  }
+
+
+
+//  color: Colors.transparent,
+//  child: ClipOval(
+//  child: Image.network(profilePic(storage,document),
+//  fit: BoxFit.fill,
+//  width: 75.0,
+//  height: 75.0,
+//  )),
+//
+//
+//  Image.memory(
+//  imageBytes,
+//  fit: BoxFit.cover,
+//  )
+
+  Uint8List imageBytes;
+
+  Widget name(DocumentSnapshot document, {UniqueKey key}) {
+
+
+    printUrl() async {
+      StorageReference ref = storage.ref().child(
+          document['memberID']).child(document['profile_pic']);
+      String url = (await ref.getDownloadURL()).toString();
+      print("url from firebase storage"+url);
+    }
   }
 
 
