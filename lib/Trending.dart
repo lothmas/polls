@@ -33,6 +33,7 @@ class Trending {
       height: 12.0,
     ));
     list.add(Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           color: Colors.transparent,
@@ -172,12 +173,15 @@ class Trending {
         ),
         Container(
           color: Colors.transparent,
-          width: MediaQuery.of(context).size.width - 267.0,
+          width: 30,
         ),
         new Align(child:
         Container(
             color: Colors.black12,
-            child: Badge.before(
+            child:
+
+
+            Badge.right(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                 value: '0' + ' | ' + document['allowedVoteNumber'].toString(),
                 color: Colors.blueGrey, // value to show inside the badge

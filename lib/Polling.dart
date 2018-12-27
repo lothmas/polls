@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:stats/drag.dart';
+import 'package:stats/draggable_order_grid/drag_and_drop_grid_reorder.dart';
+import 'package:stats/draggable_order_list/drag_and_drop_list.dart';
 import 'package:stats/dragreorder/OrderByDragging.dart';
 import 'package:stats/main.dart';
 
@@ -28,11 +30,10 @@ class Polling extends StatefulWidget {
   int voteBy;
   int voteType;
 
-
   Polling({this.voteID, this.voteBy, this.voteType}) {
     voteIDs = voteID;
-    voteBy1=voteBy;
-    voteType1=voteType;
+    voteBy1 = voteBy;
+    voteType1 = voteType;
   }
 }
 
@@ -56,90 +57,120 @@ class _Trending extends State<Polling> {
                 color: Colors.black.withOpacity(0.6)),
           ),
           leading: GestureDetector(
-            child: Image(
-              image: new AssetImage("images/exit.png"),
-              width: 14,
-              height: 14,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                  context, new
-              MaterialPageRoute(builder: (context) => Home()),
-              );
-            }
-          ),
+              child: Image(
+                image: new AssetImage("images/exit.png"),
+                width: 14,
+                height: 14,
+                color: null,
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.center,
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  new MaterialPageRoute(builder: (context) => Home()),
+                );
+              }),
         ),
 
         body:
 //
-          new Stack(
-            children: <Widget>[
-              new Container(
-                decoration: new BoxDecoration(
-                  image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
-                ),
-              ),
-              Center(
-                  child:  StreamBuilder<QuerySnapshot>(
-                    stream: Firestore.instance.collection('nominees').where('vote_id',isEqualTo: voteIDs).snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      List<NomineesEntityList> nomineesList =new List();
-                      if (snapshot.hasData) {
+            new Stack(
+          children: <Widget>[
+//              new Container(
+//                decoration: new BoxDecoration(
+//                  image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
+//                ),
+//              ),
+            new Icon(Icons.monetization_on,
+                size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
+            new Positioned(
+              left: 20.0,
+              child: new Icon(Icons.monetization_on,
+                  size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
+            ),
+            new Positioned(
+              left: 40.0,
+              child: new Icon(Icons.monetization_on,
+                  size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
+            ),
+            Center(
+                child: StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance
+                  .collection('nominees')
+                  .where('vote_id', isEqualTo: voteIDs)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                List<NomineesEntityList> nomineesList = new List();
+                if (snapshot.hasData) {
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+                    NomineesEntityList nominee = new NomineesEntityList();
+                    nominee.nomineeName = document['nominee_name'];
+                    nominee.id = document['id'];
+                    nominee.nomineesDescription =
+                        document['nominee_description'];
+                    nominee.nomineeImage = document['nominee_media'];
+                    nomineesList.add(nominee);
+                  }).toList();
+                  List<String> items = new List();
 
-                        snapshot.data.documents.map((DocumentSnapshot document) {
-                          NomineesEntityList nominee=new NomineesEntityList();
-                          nominee.nomineeName=document['nominee_name'];
-                          nominee.id=document['id'];
-                          nominee.nomineesDescription=document['nominee_description'];
-                          nominee.nomineeImage=document['nominee_media'];
-                          nomineesList.add(nominee);
+                  //voteType 1(one_select) 2 (order) 3(multiple_select)
+                  //voteBy 1(text) 2(image) 3(video)
+                  if (voteType1 == 2 && voteBy1 == 2) {
+                    return new ReOrderGrid().reorder(nomineesList, voteType1);
+                  }
+                  if (voteType1 == 2 && voteBy1 == 1) {
+                    for (NomineesEntityList nominee in nomineesList) {
+                      items.add(nominee.nomineeName);
+                    }
+                    return new DragAndDropList<String>(
+                      items,
+                      itemBuilder: (BuildContext context, item) {
+                        return new SizedBox(
+                          child: new Card(
+                            child: new ListTile(
+                              title: new Text(item),
+                            ),
+                          ),
+                        );
+                      },
+                      onDragFinish: (before, after) {
+                        String data = items[before];
+                        items.removeAt(before);
+                        items.insert(after, data);
+                      },
+                      canBeDraggedTo: (one, two) => true,
+                      dragElevation: 8.0,
+                    );
+                  } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1==2)) {
+                    return new DropCityApp(
+                        nomineesList, voteBy1, "images/background.jpg");
+                  } else if (voteType1 == 2) {
+                    return new OrderByDragging()
+                        .drageableOrder(nomineesList, voteBy1);
+                  }
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
 
-                        }
-                        ).toList();
-                        if(voteType1==1){
-                          return new DropCityApp(nomineesList,voteBy1);
-                        }
-                        else if (voteType1==2){
-                          return new OrderByDragging().drageableOrder(nomineesList,voteBy1);
-
-                        }
-                        else if (voteType1==2){
-
-                        }
-
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-
-                      // By default, show a loading spinner
-                      return CircularProgressIndicator();
-
-                    },
-                  )
+                // By default, show a loading spinner
+                return CircularProgressIndicator();
+              },
+            )
 
 //          ),
-              ),
-            ],
-          ),
-
-
-
-
-
-
-
+                ),
+          ],
+        ),
 
 //        floatingActionButtonLocation:
 //        FloatingActionButtonLocation.endDocked,
 //        floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,
 //                validated ? _onClear : _onValidate)
         //  child: new Row(...),
-        ), //
-        //   gridView,
-
+      ), //
+      //   gridView,
     );
   }
 
@@ -148,7 +179,6 @@ class _Trending extends State<Polling> {
   bool validated = false;
 
   int score = 0;
-
 
   void onTabTapped(int index) {
     setState(() {
