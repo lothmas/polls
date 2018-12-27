@@ -29,6 +29,8 @@ dependencies:
   cloud_firestore: ^0.7.4
   dragablegridview_flutter: ^0.1.2
   firebase_storage: ^1.0.4
+  flutter_list_drag_and_drop: ^0.1.6
+ # flutter_facebook_login: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -67,9 +69,13 @@ flutter:
     - images/exit.png
     - images/vote.png
     - images/background.jpg
+    - images/background1.jpg
+    - images/background2.jpg
+    - images/background3.jpg
     - images/pollBox.jpg
     - images/yes.png
     - images/refresh.png
+    - images/long_press.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
