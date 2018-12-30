@@ -11,6 +11,7 @@ import 'package:stats/draggable_order_grid/drag_and_drop_grid_reorder.dart';
 import 'package:stats/draggable_order_list/drag_and_drop_list.dart';
 import 'package:stats/dragreorder/OrderByDragging.dart';
 import 'package:stats/main.dart';
+import 'package:stats/multipleorder/multiple_order.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -146,9 +147,9 @@ class _Trending extends State<Polling> {
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1==2)) {
                     return new DropCityApp(
                         nomineesList, voteBy1, "images/background.jpg");
-                  } else if (voteType1 == 2) {
-                    return new OrderByDragging()
-                        .drageableOrder(nomineesList, voteBy1);
+                  } else if (voteType1 == 3) {
+                  return new  MultipleSelect();
+                    //return new OrderByDragging().drageableOrder(nomineesList, voteBy1);
                   }
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
