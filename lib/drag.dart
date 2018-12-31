@@ -18,12 +18,12 @@ class DropCityApp extends StatelessWidget {
         home: new Scaffold(
             appBar: new AppBar(
               title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image.asset(
                     'images/long_press.png',
                     fit: BoxFit.contain,
-                    height: 100,
+                    height: 50,
                   ),
                   Container(
                       padding: const EdgeInsets.all(8.0), child: Text('Long-Press Favourite, Drag then Drop  ',style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),))
@@ -34,14 +34,14 @@ class DropCityApp extends StatelessWidget {
 
             body: new Stack(
           children: <Widget>[
-            new Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new AssetImage(backgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+//            new Container(
+//              decoration: new BoxDecoration(
+//                image: new DecorationImage(
+//                  image: new AssetImage(backgroundImage),
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//            ),
             // new Icon(Icons.monetization_on, size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
 //            new Positioned(
 //
@@ -70,28 +70,7 @@ class DropCityApp extends StatelessWidget {
 //
 //                  onPressed: () {},
 //                )),
-            new Positioned(
-                bottom: 35.0,
-                right: 0,
-                child: Transform.scale(
-                    scale: 0.4,
-                    child: new FloatingActionButton(
-                      child: Image(
-                        image: new AssetImage("images/background2.jpg"),
-//                    width: 10,
-//                    height: 18,
-                        color: null,
-                        fit: BoxFit.fill,
-                        alignment: Alignment.center,
-                      ),
-                      onPressed: () {
 
-                        backgroundImage="images/background2.jpg";
-                        new DropCityApp(this.items, this.voteBy,backgroundImage);
-
-
-                      },
-                    ))),
             new Center(
               child: new GameView(items, voteBy),
             )

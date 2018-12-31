@@ -143,9 +143,9 @@ class _GameViewState extends State<GameView> {
         Flexible(
           child: GridView.count(
             primary: true,
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(25.0),
 //                crossAxisSpacing: 2.0,
-            crossAxisCount: 2,
+            crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
                 .map((item) => new DraggableImages(item, size: itemSize))

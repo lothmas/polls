@@ -17,7 +17,7 @@ class _DraggableImages extends State<DraggableImages> {
   @override
   Widget build(BuildContext context) {
     return new Padding(
-        padding: new EdgeInsets.all(2.0),
+        padding: new EdgeInsets.all(5.0),
         child: new LongPressDraggable<NomineesEntityList>(
             onDraggableCanceled: (velocity, offset) {
               setState(() {
@@ -27,21 +27,33 @@ class _DraggableImages extends State<DraggableImages> {
             },
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
                 color: Colors.white, size: widget.size),
-            child: new  Container(
-                decoration: new BoxDecoration(
-                  border: Border.all(color: const Color(0x33A6A6A6)),
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    image:  NetworkImage(widget.item.nomineeImage
-                    ),
+            child: Column(children: <Widget>[  new Card(
+              child:
+//              new Column(
+//                crossAxisAlignment: CrossAxisAlignment.start,
+//                children: <Widget>[
+                  new Image.network(
+                    widget.item.nomineeImage,
                     fit: BoxFit.cover,
+                    height:100.0,
                   ),
-                ),
-                child: new Center(
-                  child: new Text(widget.item.nomineeName,textAlign: TextAlign.center,
-                      style: new TextStyle(color: Colors.black,fontSize: 14.0,
-                          fontWeight: FontWeight.bold)),
-                )),
+//                  new Container(
+//                      child: new Center(
+//                          child: new Column(
+//                            children: <Widget>[
+//                              new SizedBox(height: 1.0),
+//                              Text(widget.item.nomineeName,textAlign: TextAlign.center,
+//                                  style: new TextStyle(color: Colors.black,fontSize: 14.0,
+//                                      fontWeight: FontWeight.bold))
+////                          new Text('Population: ${item.population}')
+//                            ],
+//                          )))
+            //    ],
+              ),
+]),
+//              elevation: 2.0,
+//              margin: EdgeInsets.all(5.0),
+         //   ),
             data: widget.item,
             feedback: new DragAvatarBorder(
               new Text(widget.item.nomineeName,
