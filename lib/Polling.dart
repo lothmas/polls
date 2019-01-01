@@ -136,8 +136,10 @@ class _Trending extends State<Polling> {
                       dragElevation: 8.0,
                     );
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1==2)) {
-                    return new DropCityApp(
-                        nomineesList, voteBy1, "images/background.jpg");
+                    return new MultipleSelection1();
+
+//                    return new DropCityApp(
+//                        nomineesList, voteBy1, "images/background.jpg");
                   } else if (voteType1 == 3) {
                     return new MultipleSelection1();
                  // return new DraggableReOrderImage();

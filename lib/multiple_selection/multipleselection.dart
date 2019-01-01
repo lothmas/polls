@@ -40,9 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Selected ${indexList.length}  ' + indexList.toString()),
-      ),
+//      appBar: new AppBar(
+//        title: new Text('Selected ${indexList.length}  ' + indexList.toString()),
+//      ),
       body: new ListView.builder(
         itemCount: _allCities.length,
         itemBuilder: (context, index,) {
@@ -61,11 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+//      floatingActionButton: new FloatingActionButton(
+//        onPressed: () {},
+//        tooltip: 'Increment',
+//        child: new Icon(Icons.add),
+//      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
@@ -132,7 +132,7 @@ class _CustomWidgetState extends State<CustomWidget> {
           },
         ),
         decoration: selected
-            ? new BoxDecoration(color: Colors.black38, border: new Border.all(color: Colors.black))
+            ? new BoxDecoration(color: Colors.grey[300], border: new Border.all(color: Colors.blue))
             : new BoxDecoration(),
       ),
     );
