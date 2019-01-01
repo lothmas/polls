@@ -183,7 +183,7 @@ class _DragAndDropListState<T> extends State<DragAndDropList<T>> {
           itemBuilder: (BuildContext context2, int index) {
             return _getDraggableListItem(context2, index, context3);
           },
-          controller: scrollController,
+        //  controller: scrollController,
           itemCount: rows.length,
         ));
       },

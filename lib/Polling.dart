@@ -8,10 +8,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:stats/drag.dart';
 import 'package:stats/draggable_order_grid/drag_and_drop_grid_reorder.dart';
+import 'package:stats/draggable_order_image/reorderimage.dart';
 import 'package:stats/draggable_order_list/drag_and_drop_list.dart';
 import 'package:stats/dragreorder/OrderByDragging.dart';
 import 'package:stats/main.dart';
+import 'package:stats/multiple_selection/multipleselection.dart';
 import 'package:stats/multipleorder/multiple_order.dart';
+import 'package:stats/viewnominies/pages/homepage.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -83,18 +86,6 @@ class _Trending extends State<Polling> {
 //                  image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
 //                ),
 //              ),
-            new Icon(Icons.monetization_on,
-                size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
-            new Positioned(
-              left: 20.0,
-              child: new Icon(Icons.monetization_on,
-                  size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
-            ),
-            new Positioned(
-              left: 40.0,
-              child: new Icon(Icons.monetization_on,
-                  size: 36.0, color: const Color.fromRGBO(218, 165, 32, 1.0)),
-            ),
             Center(
                 child: StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance
@@ -148,7 +139,8 @@ class _Trending extends State<Polling> {
                     return new DropCityApp(
                         nomineesList, voteBy1, "images/background.jpg");
                   } else if (voteType1 == 3) {
-                  return new  MultipleSelect();
+                    return new MultipleSelection1();
+                 // return new DraggableReOrderImage();
                     //return new OrderByDragging().drageableOrder(nomineesList, voteBy1);
                   }
                 } else if (snapshot.hasError) {
