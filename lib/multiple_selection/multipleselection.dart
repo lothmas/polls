@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stats/viewnominies/model/city.dart';
 
 //void main() => runApp(new MyApp());
+final List<City> _allCities = City.allCities();
 
 class MultipleSelection1 extends StatelessWidget {
   @override
@@ -24,7 +25,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool longPressFlag = false;
   List<int> indexList = new List();
-  final List<City> _allCities = City.allCities();
 
   void longPress() {
     setState(() {
@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new ListView.builder(
         itemCount: _allCities.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (context, index,) {
           return new CustomWidget(
             index: index,
             longPressEnabled: longPressFlag,
