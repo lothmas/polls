@@ -78,12 +78,14 @@ class CustomWidget extends StatefulWidget {
   const CustomWidget({Key key, this.index, this.longPressEnabled, this.callback}) : super(key: key);
 
   @override
-  _CustomWidgetState createState() => new _CustomWidgetState();
+  _CustomWidgetState createState() => new _CustomWidgetState(index);
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
 
   bool selected = false;
+  int index;
+  _CustomWidgetState(this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -106,22 +108,22 @@ class _CustomWidgetState extends State<CustomWidget> {
         margin: new EdgeInsets.all(5.0),
         child: new ListTile(
           leading: new Image.asset(
-            "images/assets/" + _allCities[1].image,
+            "images/assets/" + _allCities[index].image,
             fit: BoxFit.fitHeight,
             width: 100,
           ),
           title: new Text(
-            _allCities[1].name,
+            _allCities[index].name,
             style: new TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
           ),
           subtitle: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Text(_allCities[1].country,
+                new Text(_allCities[index].country,
                     style: new TextStyle(
                         fontSize: 13.0, fontWeight: FontWeight.normal)),
-                new Text('Population: ${_allCities[1].population}',
+                new Text('Population: ${_allCities[index].population}',
                     style: new TextStyle(
                         fontSize: 11.0, fontWeight: FontWeight.normal)),
               ]),
