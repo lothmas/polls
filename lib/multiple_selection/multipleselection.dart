@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/viewnominies/model/city.dart';
 
 //void main() => runApp(new MyApp());
-final List<City> _allCities = City.allCities();
-
+List<NomineesEntityList> nomineesList = new List();
+int voteBy;
 class MultipleSelection1 extends StatelessWidget {
+  MultipleSelection1(List<NomineesEntityList> nomineesList1,int voteBy1){
+    nomineesList=nomineesList1;
+    voteBy=voteBy1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -44,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //        title: new Text('Selected ${indexList.length}  ' + indexList.toString()),
 //      ),
       body: new ListView.builder(
-        itemCount: _allCities.length,
+        itemCount: nomineesList.length,
         itemBuilder: (context, index,) {
           return new CustomWidget(
             index: index,
@@ -89,7 +95,22 @@ class _CustomWidgetState extends State<CustomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
+    var image;
+    if(voteBy==1){
+      image= new AssetImage(
+        "images/nominee_images/nominee" + index.toString()+".jpg",
+
+      );
+
+    }
+    else if(voteBy==2) {
+      image= new NetworkImage(
+        nomineesList[index].nomineeImage,
+//        fit: BoxFit.fitHeight,
+//        width: 100,
+      );
+    }
+      return new GestureDetector(
       onLongPress: () {
         setState(() {
           selected = !selected;
@@ -104,37 +125,44 @@ class _CustomWidgetState extends State<CustomWidget> {
           widget.callback();
         }
       },
-      child: new Container(
+      child: Card(child:  new Container(
         margin: new EdgeInsets.all(5.0),
         child: new ListTile(
-          leading: new Image.asset(
-            "images/assets/" + _allCities[index].image,
-            fit: BoxFit.fitHeight,
-            width: 100,
+          leading:  (new Container(
+          width: 100.0,
+          height: 79.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+
+            image: DecorationImage(
+                image: image,
+                fit: BoxFit.fill
+            ),
           ),
+        )),
           title: new Text(
-            _allCities[index].name,
+            nomineesList[index].nomineeName,
             style: new TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
           ),
           subtitle: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Text(_allCities[index].country,
+                new Text(nomineesList[index].nomineeName,
                     style: new TextStyle(
                         fontSize: 13.0, fontWeight: FontWeight.normal)),
-                new Text('Population: ${_allCities[index].population}',
+                new Text('Population: ${nomineesList[index].voteId.toString()}',
                     style: new TextStyle(
                         fontSize: 11.0, fontWeight: FontWeight.normal)),
               ]),
           onTap: () {
-           // _showSnackBar(context, _allCities[index]);
+           // _showSnackBar(context, nomineesList[index]);
           },
         ),
         decoration: selected
             ? new BoxDecoration(color: Colors.grey[300], border: new Border.all(color: Colors.blue))
             : new BoxDecoration(),
-      ),
+      ),)
     );
   }
 }

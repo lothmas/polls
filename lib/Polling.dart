@@ -110,39 +110,53 @@ class _Trending extends State<Polling> {
                   //voteType 1(one_select) 2 (order) 3(multiple_select)
                   //voteBy 1(text) 2(image) 3(video)
                   if (voteType1 == 2 && voteBy1 == 2) {
-                    return new ReOrderGrid().reorder(nomineesList, voteType1);
+                    // return new ReOrderGrid().reorder(nomineesList, voteType1);
+                    return new DraggableReOrderImage(nomineesList, voteBy1);
                   }
                   if (voteType1 == 2 && voteBy1 == 1) {
+                    List<NomineesEntityList> nomineesList1 = new List();
+                    int count=0;
                     for (NomineesEntityList nominee in nomineesList) {
-                      items.add(nominee.nomineeName);
+                      NomineesEntityList nominee1 = new NomineesEntityList();
+                      nominee1.nomineeName = nominee.nomineeName;
+                      nominee1.id = nominee.id;
+                      nominee1.nomineesDescription = nominee.nomineesDescription;
+                      nominee1.nomineeImage = "images/nominee_images/nominee"+count.toString()+".jpg";
+                      nomineesList1.add(nominee1);
+                      count++;
                     }
-                    return new DragAndDropList<String>(
-                      items,
-                      itemBuilder: (BuildContext context, item) {
-                        return new SizedBox(
-                          child: new Card(
-                            child: new ListTile(
-                              title: new Text(item),
-                            ),
-                          ),
-                        );
-                      },
-                      onDragFinish: (before, after) {
-                        String data = items[before];
-                        items.removeAt(before);
-                        items.insert(after, data);
-                      },
-                      canBeDraggedTo: (one, two) => true,
-                      dragElevation: 8.0,
-                    );
-                  } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1==2)) {
-                    return new MultipleSelection1();
+                    return new DraggableReOrderImage(nomineesList1, voteBy1);
 
-//                    return new DropCityApp(
-//                        nomineesList, voteBy1, "images/background.jpg");
+//                    for (NomineesEntityList nominee in nomineesList) {
+//                      items.add(nominee.nomineeName);
+//                    }
+//                    return new DragAndDropList<String>(
+//                      items,
+//                      itemBuilder: (BuildContext context, item) {
+//                        return new SizedBox(
+//                          child: new Card(
+//                            child: new ListTile(
+//                              title: new Text(item),
+//                            ),
+//                          ),
+//                        );
+//                      },
+//                      onDragFinish: (before, after) {
+//                        String data = items[before];
+//                        items.removeAt(before);
+//                        items.insert(after, data);
+//                      },
+//                      canBeDraggedTo: (one, two) => true,
+//                      dragElevation: 8.0,
+//                    );
+                  } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
+                    //    return new MultipleSelection1();
+
+                    return new DropCityApp(
+                        nomineesList, voteBy1, "images/background.jpg");
                   } else if (voteType1 == 3) {
-                    return new MultipleSelection1();
-                 // return new DraggableReOrderImage();
+                    return new MultipleSelection1(nomineesList, voteBy1);
+                    // return new DraggableReOrderImage();
                     //return new OrderByDragging().drageableOrder(nomineesList, voteBy1);
                   }
                 } else if (snapshot.hasError) {

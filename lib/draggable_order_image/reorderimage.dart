@@ -1,61 +1,134 @@
 import 'package:flutter/material.dart';
+import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/viewnominies/model/city.dart';
 
 
 class DraggableReOrderImage extends StatefulWidget {
+  List<NomineesEntityList> nomineesList;
+  int voteBy1;
+  DraggableReOrderImage(this.nomineesList, this.voteBy1);
+
   @override
-  MyAppState createState() => new MyAppState();
+  MyAppState createState() => new MyAppState(nomineesList,voteBy1);
 }
 
 class MyAppState extends State<DraggableReOrderImage> {
-  final List<City> _allCities = City.allCities();
+  List<NomineesEntityList> nomineesList;
+  MyAppState(this.nomineesList,this.voteBy1);
+  int voteBy1;
+
+  //final List<City> nomineesList = City.allCities();
 
   @override
   Widget build(BuildContext context) {
     final title = 'Sortable ListView';
 
-    return new MaterialApp(
-      title: title,
-      home: new Scaffold(
+    if(voteBy1==1) {
+      return new MaterialApp(
+        title: title,
+        home: new Scaffold(
 //        appBar: new AppBar(
 //          title: new Text(title),
 //        ),
-        body: new SortableListView(
-          items: _allCities,
-          itemBuilder: (_, int index) => new Card(
-              child: new Column(
-                children: <Widget>[
-                  new ListTile(
-                    leading: new Image.asset(
-                      "images/assets/" + _allCities[index].image,
-                      fit: BoxFit.fitHeight,
-                      width: 100,
-                    ),
-                    title: new Text(
-                      _allCities[index].name,
-                      style: new TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: new Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Text(_allCities[index].country,
-                              style: new TextStyle(
-                                  fontSize: 13.0, fontWeight: FontWeight.normal)),
-                          new Text('Population: ${_allCities[index].population}',
-                              style: new TextStyle(
-                                  fontSize: 11.0, fontWeight: FontWeight.normal)),
-                        ]),
-                    onTap: () {
-                      _showSnackBar(context, _allCities[index]);
-                    },
-                  )
-                ],
-              )),
+          body: new SortableListView(
+            items: nomineesList,
+            itemBuilder: (_, int index) =>
+            new Card(
+                child: new Column(
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Image.asset(
+                        nomineesList[index].nomineeImage,
+                        fit: BoxFit.fitHeight,
+                        width: 100,
+                      ),
+                      title: new Text(
+                        nomineesList[index].nomineeName,
+                        style: new TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: new Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Text(nomineesList[index].nomineesDescription,
+                                style: new TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.normal)),
+                            new Text(
+                                'Population: ${nomineesList[index].voteId}',
+                                style: new TextStyle(
+                                    fontSize: 11.0,
+                                    fontWeight: FontWeight.normal)),
+                          ]),
+                      onTap: () {
+                        // _showSnackBar(context, nomineesList[index].nomineeName);
+                      },
+                    )
+                  ],
+                )),
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
+    else if(voteBy1==2) {
+      return new MaterialApp(
+        title: title,
+        home: new Scaffold(
+//        appBar: new AppBar(
+//          title: new Text(title),
+//        ),
+          body: new SortableListView(
+            items: nomineesList,
+            itemBuilder: (_, int index) =>
+            new Card(
+                child: new Column(
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Container(
+                        width: 100.0,
+                        height: 68.0,
+                        alignment: Alignment.center,
+                        decoration: new BoxDecoration(
+
+                          image: DecorationImage(
+                              image: NetworkImage(nomineesList[index].nomineeImage),
+                              fit: BoxFit.fitHeight,
+
+                          ),
+                        ),
+                      ),
+                      title: new Text(
+                        nomineesList[index].nomineeName,
+                        style: new TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: new Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Text(nomineesList[index].nomineesDescription,
+                                style: new TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.normal)),
+                            new Text(
+                                'Population: ${nomineesList[index].voteId}',
+                                style: new TextStyle(
+                                    fontSize: 11.0,
+                                    fontWeight: FontWeight.normal)),
+                          ]),
+                      onTap: () {
+                        // _showSnackBar(context, nomineesList[index].nomineeName);
+                      },
+                    )
+                  ],
+                )),
+          ),
+        ),
+      );
+    }
+    }
+
 }
 _showSnackBar(BuildContext context, City item) {
   final SnackBar objSnackbar = new SnackBar(
