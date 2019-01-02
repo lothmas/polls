@@ -35,7 +35,7 @@ class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    imageCache.clear();
+   // imageCache.clear();
     return _Trending(storage: storage);
   }
 }
@@ -71,7 +71,7 @@ class _Trending extends State<Home> {
 
 
 
-    imageCache.clear();
+   // imageCache.clear();
     Trending homeTrending=new Trending();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},

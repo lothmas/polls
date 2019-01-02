@@ -194,6 +194,9 @@ class Trending {
       color: Colors.transparent,
       height: 8.0,
     ));
+    list.add(
+      Divider(),
+    );
     list.add(Container(
       padding: const EdgeInsets.all(10),
       width: c_width,
@@ -315,27 +318,27 @@ class Trending {
 //          ),
 //        ]),
         child: new Scaffold(
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: FloatingActionButton(
-              heroTag: "btn1",
-              backgroundColor: Colors.white70,
-              child: Image.asset(
-                "images/cast.png",
-                width: 18.0,
-                height: 18.0,
-              ),
-              mini: true,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new Polling(
-                          voteID: document.documentID,
-                          voteBy: document['voteBy'],
-                          voteType: document['voteType'])),
-                );
-              }),
+//          floatingActionButtonLocation:
+//              FloatingActionButtonLocation.centerDocked,
+//          floatingActionButton: FloatingActionButton(
+//              heroTag: "btn1",
+//              backgroundColor: Colors.white70,
+//              child: new Image.asset(
+//                "images/cast.png",
+//                width: 18.0,
+//                height: 18.0,
+//              ),
+//              mini: true,
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  new MaterialPageRoute(
+//                      builder: (context) => new Polling(
+//                          voteID: document.documentID,
+//                          voteBy: document['voteBy'],
+//                          voteType: document['voteType'])),
+//                );
+//              }),
           bottomNavigationBar: BottomAppBar(
 
             elevation: 0.5,
@@ -409,9 +412,7 @@ class Trending {
       ),
     );
 
-    list.add(
-      Divider(),
-    );
+
 
     return list;
   }

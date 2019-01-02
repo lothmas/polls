@@ -26,7 +26,7 @@ class Polling extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    imageCache.clear();
+ //   imageCache.clear();
     return _Trending();
   }
 
@@ -70,10 +70,8 @@ class _Trending extends State<Polling> {
                 alignment: Alignment.center,
               ),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  new MaterialPageRoute(builder: (context) => Home()),
-                );
+                Navigator.pop(
+                  context);
               }),
         ),
 
