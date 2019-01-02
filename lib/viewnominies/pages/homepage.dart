@@ -10,7 +10,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        key: scaffoldKey,
+        key: UniqueKey(),
+
 //        appBar: new AppBar(
 //          title: new Text(
 //            "Cites around world",
