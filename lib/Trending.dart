@@ -318,27 +318,28 @@ class Trending {
 //          ),
 //        ]),
         child: new Scaffold(
-//          floatingActionButtonLocation:
-//              FloatingActionButtonLocation.centerDocked,
-//          floatingActionButton: FloatingActionButton(
-//              heroTag: "btn1",
-//              backgroundColor: Colors.white70,
-//              child: new Image.asset(
-//                "images/cast.png",
-//                width: 18.0,
-//                height: 18.0,
-//              ),
-//              mini: true,
-//              onPressed: () {
-//                Navigator.push(
-//                  context,
-//                  new MaterialPageRoute(
-//                      builder: (context) => new Polling(
-//                          voteID: document.documentID,
-//                          voteBy: document['voteBy'],
-//                          voteType: document['voteType'])),
-//                );
-//              }),
+
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton:new FloatingActionButton(
+              heroTag: "btn1",
+              backgroundColor: Colors.white70,
+              child: new Image.asset(
+                "images/cast.png",
+                width: 18.0,
+                height: 18.0,
+              ),
+              mini: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new Polling(
+                          voteID: document.documentID,
+                          voteBy: document['voteBy'],
+                          voteType: document['voteType'])),
+                );
+              }),
           bottomNavigationBar: BottomAppBar(
 
             elevation: 0.5,

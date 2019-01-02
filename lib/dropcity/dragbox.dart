@@ -47,7 +47,7 @@ class _GameViewState extends State<GameView> {
   Widget _buildButton(String icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
-          heroTag: "btn1",
+          heroTag: "btn2",
           mini: true,
           backgroundColor: Colors.white70,
           child: Image(
@@ -63,7 +63,7 @@ class _GameViewState extends State<GameView> {
   Widget _buildButton1(String icon, VoidCallback onPress) => new Padding(
       padding: new EdgeInsets.all(10.0),
       child: new FloatingActionButton(
-          heroTag: "btn2",
+          heroTag: "btn4",
           mini: true,
           backgroundColor: Colors.white70,
           child: Image(

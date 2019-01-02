@@ -195,70 +195,70 @@ class _Trending extends State<Polling> {
   }
 }
 
-class NomineeGrid1 extends StatelessWidget {
-  const NomineeGrid1({
-    Key key,
-    @required this.nomineeList,
-  }) : super(key: key);
-
-  final List<NomineesEntityList> nomineeList;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        padding: const EdgeInsets.all(1.0),
-        itemCount: nomineeList.length,
-        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          childAspectRatio: 1.0,
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return new GestureDetector(
-            child: new Card(
-              elevation: 5.0,
-              child: new Container(
-                alignment: Alignment.center,
-                child: Image(
-                  image: new NetworkImage(
-                      nomineeList.elementAt(index).nomineeImage),
-                  color: null,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                ),
-                //  child: new Text('Item $index'),
-              ),
-            ),
-            onTap: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                child: new CupertinoAlertDialog(
-                  title: new Column(
-                    children: <Widget>[
-                      new Text("GridView"),
-                      new Icon(
-                        Icons.favorite,
-                        color: Colors.green,
-                      ),
-                    ],
-                  ),
-                  content: new Text("Selected Item $index"),
-                  actions: <Widget>[
-                    new FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: new Text("OK"))
-                  ],
-                ),
-              );
-            },
-          );
-        });
-  }
-}
+//class NomineeGrid1 extends StatelessWidget {
+//  const NomineeGrid1({
+//    Key key,
+//    @required this.nomineeList,
+//  }) : super(key: key);
+//
+//  final List<NomineesEntityList> nomineeList;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return GridView.builder(
+//        padding: const EdgeInsets.all(1.0),
+//        itemCount: nomineeList.length,
+//        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+//          crossAxisCount: 4,
+//          childAspectRatio: 1.0,
+//          mainAxisSpacing: 4.0,
+//          crossAxisSpacing: 4.0,
+//        ),
+//        itemBuilder: (BuildContext context, int index) {
+//          return new GestureDetector(
+//            child: new Card(
+//              elevation: 5.0,
+//              child: new Container(
+//                alignment: Alignment.center,
+//                child: Image(
+//                  image: new NetworkImage(
+//                      nomineeList.elementAt(index).nomineeImage),
+//                  color: null,
+//                  fit: BoxFit.cover,
+//                  alignment: Alignment.center,
+//                ),
+//                //  child: new Text('Item $index'),
+//              ),
+//            ),
+//            onTap: () {
+//              showDialog(
+//                barrierDismissible: false,
+//                context: context,
+//                child: new CupertinoAlertDialog(
+//                  title: new Column(
+//                    children: <Widget>[
+//                      new Text("GridView"),
+//                      new Icon(
+//                        Icons.favorite,
+//                        color: Colors.green,
+//                      ),
+//                    ],
+//                  ),
+//                  content: new Text("Selected Item $index"),
+//                  actions: <Widget>[
+//                    new FlatButton(
+//                        onPressed: () {
+//                          Navigator.of(context).pop();
+//                        },
+//                        child: new Text("OK"))
+//                  ],
+//                ),
+//              );
+//            },
+//          );
+//        });
+//  }
+//}
 
 class App extends StatefulWidget {
   @override
