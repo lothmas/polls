@@ -333,8 +333,8 @@ class Trending {
                 IconButton(
                   icon: Image.asset(
                     "images/trending.png",
-                    width: 18.0,
-                    height: 18.0,
+                    width: 22.0,
+                    height: 22.0,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -373,7 +373,7 @@ class Trending {
                       '12 hrs ago',
                       style: TextStyle(
                           color: Colors.blueGrey,
-                          fontSize: 8.0,
+                          fontSize: 10.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -381,8 +381,8 @@ class Trending {
                 IconButton(
                   icon: Image.asset(
                     "images/share.png",
-                    width: 18.0,
-                    height: 18.0,
+                    width: 22.0,
+                    height: 22.0,
                   ),
                   onPressed: () {},
                 ),
