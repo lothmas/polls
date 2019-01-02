@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
+import 'package:stats/dropcity/draggable_view1.dart';
 
 class DraggableImages extends StatefulWidget {
   final NomineesEntityList item;
@@ -16,8 +17,13 @@ class DraggableImages extends StatefulWidget {
 class _DraggableImages extends State<DraggableImages> {
   @override
   Widget build(BuildContext context) {
+    Widget images=Image.network(
+      widget.item.nomineeImage,
+      fit: BoxFit.fill,
+     // height:100.0,
+    );
     return new Padding(
-        padding: new EdgeInsets.all(5.0),
+        padding: new EdgeInsets.all(3.0),
         child: new LongPressDraggable<NomineesEntityList>(
             onDraggableCanceled: (velocity, offset) {
               setState(() {
@@ -27,16 +33,12 @@ class _DraggableImages extends State<DraggableImages> {
             },
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
                 color: Colors.white, size: widget.size),
-            child: Column(children: <Widget>[  new Card(
-              child:
+            child: new Card(child: Column(children: <Widget>[
+
 //              new Column(
 //                crossAxisAlignment: CrossAxisAlignment.start,
 //                children: <Widget>[
-                  new Image.network(
-                    widget.item.nomineeImage,
-                    fit: BoxFit.cover,
-                    height:100.0,
-                  ),
+              images,
 //                  new Container(
 //                      child: new Center(
 //                          child: new Column(
@@ -49,13 +51,13 @@ class _DraggableImages extends State<DraggableImages> {
 //                            ],
 //                          )))
             //    ],
-              ),
-]),
+
+],)),
 //              elevation: 2.0,
 //              margin: EdgeInsets.all(5.0),
          //   ),
             data: widget.item,
-            feedback: new DragAvatarBorder(
+            feedback: new DragAvatarBorder1(images,
               new Text(widget.item.nomineeName,
                   style: new TextStyle(
                       fontSize: 16.0,

@@ -216,10 +216,10 @@ class _Trending extends State<Home> {
                     snapshot.data.documents.map((DocumentSnapshot document) {
                       //imageBytes=null;
 
-                      return new Column(
+                      return new Card( child: Column(
                         children:
                         homeTrending.homeTrendingList(context, document),
-                      );
+                      ),);
                     }
                     ).toList(),
                   );

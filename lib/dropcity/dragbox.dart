@@ -145,7 +145,7 @@ class _GameViewState extends State<GameView> {
             primary: true,
             padding: const EdgeInsets.all(25.0),
 //                crossAxisSpacing: 2.0,
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             children: widget.items
                 .where((item) => !item.selected)
                 .map((item) => new DraggableImages(item, size: itemSize))

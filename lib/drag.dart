@@ -16,21 +16,21 @@ class DropCityApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: _getTheme(context),
         home: new Scaffold(
-            appBar: new AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    'images/long_press.png',
-                    fit: BoxFit.contain,
-                    height: 50,
-                  ),
-                  Container(
-                      padding: const EdgeInsets.all(8.0), child: Text('Long-Press Favourite, Drag then Drop  ',style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),))
-                ],
-
-              ),backgroundColor: Colors.white,
-            ),
+//            appBar: new AppBar(
+//              title: Row(
+//                mainAxisAlignment: MainAxisAlignment.start,
+//                children: [
+//                  Image.asset(
+//                    'images/long_press.png',
+//                    fit: BoxFit.contain,
+//                    height: 50,
+//                  ),
+//                  Container(
+//                      padding: const EdgeInsets.all(8.0), child: Text('Long-Press Favourite, Drag then Drop  ',style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),))
+//                ],
+//
+//              ),backgroundColor: Colors.white,
+//            ),
 
             body: new Stack(
           children: <Widget>[
