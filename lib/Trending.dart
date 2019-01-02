@@ -319,27 +319,7 @@ class Trending {
 //        ]),
         child: new Scaffold(
 
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton:new FloatingActionButton(
-              heroTag: "btn1",
-              backgroundColor: Colors.white70,
-              child: new Image.asset(
-                "images/cast.png",
-                width: 18.0,
-                height: 18.0,
-              ),
-              mini: true,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new Polling(
-                          voteID: document.documentID,
-                          voteBy: document['voteBy'],
-                          voteType: document['voteType'])),
-                );
-              }),
+
           bottomNavigationBar: BottomAppBar(
 
             elevation: 0.5,
@@ -369,14 +349,31 @@ class Trending {
                 ),
                 Column(
                   children: <Widget>[
+                    IconButton(
+                      icon: Image.asset(
+                        "images/cast.png",
+                        width: 22.0,
+                        height: 22.0,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new Polling(
+                                  voteID: document.documentID,
+                                  voteBy: document['voteBy'],
+                                  voteType: document['voteType'])),
+                        );
+                      },
+                    ),
                     Container(
-                      height: 30.0,
+                      //height: 10.0,
                     ),
                     Text(
                       '12 hrs ago',
                       style: TextStyle(
                           color: Colors.blueGrey,
-                          fontSize: 11.0,
+                          fontSize: 8.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
