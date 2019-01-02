@@ -84,6 +84,18 @@ flutter:
     - images/assets/newyork.png
     - images/assets/paris.png
     - images/assets/vancouver.png
+    - images/nominee_images/nominee0.jpg
+    - images/nominee_images/nominee1.jpg
+    - images/nominee_images/nominee2.jpg
+    - images/nominee_images/nominee3.jpg
+    - images/nominee_images/nominee4.jpg
+    - images/nominee_images/nominee5.jpg
+    - images/nominee_images/nominee6.jpg
+    - images/nominee_images/nominee7.jpg
+    - images/nominee_images/nominee8.jpg
+    - images/nominee_images/nominee9.jpg
+    - images/nominee_images/nominee10.jpg
+
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -19,11 +19,12 @@ class _DraggableImages extends State<DraggableImages> {
   Widget build(BuildContext context) {
     Widget images=Image.network(
       widget.item.nomineeImage,
-      fit: BoxFit.fill,
-     // height:100.0,
+      fit: BoxFit.cover,
+
+    height:80.0,
     );
     return new Padding(
-        padding: new EdgeInsets.all(3.0),
+        padding: new EdgeInsets.all(0.6),
         child: new LongPressDraggable<NomineesEntityList>(
             onDraggableCanceled: (velocity, offset) {
               setState(() {
@@ -39,17 +40,17 @@ class _DraggableImages extends State<DraggableImages> {
 //                crossAxisAlignment: CrossAxisAlignment.start,
 //                children: <Widget>[
               images,
-//                  new Container(
-//                      child: new Center(
-//                          child: new Column(
-//                            children: <Widget>[
-//                              new SizedBox(height: 1.0),
-//                              Text(widget.item.nomineeName,textAlign: TextAlign.center,
-//                                  style: new TextStyle(color: Colors.black,fontSize: 14.0,
-//                                      fontWeight: FontWeight.bold))
-////                          new Text('Population: ${item.population}')
-//                            ],
-//                          )))
+                  new Container(
+                      child: new Center(
+                          child: new Column(
+                            children: <Widget>[
+                            //  new SizedBox(height: 0),
+                              Text(widget.item.nomineeName,textAlign: TextAlign.center,
+                                  style: new TextStyle(color: Colors.black,fontSize: 10.0,
+                                      fontWeight: FontWeight.bold))
+//                          new Text('Population: ${item.population}')
+                            ],
+                          )))
             //    ],
 
 ],)),
@@ -60,7 +61,7 @@ class _DraggableImages extends State<DraggableImages> {
             feedback: new DragAvatarBorder1(images,
               new Text(widget.item.nomineeName,
                   style: new TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 12.0,
                       color: Colors.blueGrey,
                       decoration: TextDecoration.none)),
               size: widget.size,
