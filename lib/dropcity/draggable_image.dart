@@ -3,6 +3,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 import 'package:stats/dropcity/draggable_view1.dart';
+import 'package:stats/image_display.dart';
 
 class DraggableImages extends StatefulWidget {
   final NomineesEntityList item;
@@ -49,54 +50,8 @@ class _DraggableImages extends State<DraggableImages> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) =>   new Scaffold(
-//                    backgroundColor: Colors.white,
-                          appBar: new AppBar(
-                            backgroundColor: Colors.blueGrey,
-                            elevation: 2,
-                            title: new Text(
-                              widget.item.nomineeName,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: Colors.black,fontSize: 11),
-                            ),
-                            leading: GestureDetector(
-                                child: Image(
-                                  image: new AssetImage("images/exit.png"),
-                                  width: 14,
-                                  height: 14,
-                                  color: null,
-                                  fit: BoxFit.scaleDown,
-                                  alignment: Alignment.center,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(
-                                      context);
-                                }),
-                          ),
-                          body: SafeArea(child:
-                          Container(
-                            child: PhotoView(
-                                imageProvider:image.image),
-                          )
-                          ),
-
-
-                        ),
-
-//              new Image.network(
-//                document['postPath'],
-//                fit: BoxFit.none,
-////                height: MediaQuery.of(context).size.width,
-////                width: MediaQuery.of(context).size.width,
-//                alignment: Alignment.center,
-//              ),
-                      )
-                  );
-
-
-
-
-
+                          builder: (context) =>   new ImageScreen(widget.item.nomineeName,image)
+                  ));
                 },
                 child: new Card(
                     child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
+import 'package:stats/image_display.dart';
 import 'package:stats/viewnominies/model/city.dart';
 
 //void main() => runApp(new MyApp());
@@ -13,13 +14,7 @@ class MultipleSelection1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'NonStopIO',
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: new MyHomePage(),
-    );
+    return  new MyHomePage();
   }
 }
 
@@ -117,14 +112,6 @@ class _CustomWidgetState extends State<CustomWidget> {
         });
         widget.callback();
       },
-      onTap: () {
-        if (widget.longPressEnabled) {
-          setState(() {
-            selected = !selected;
-          });
-          widget.callback();
-        }
-      },
       child: Card(child:  new Container(
         margin: new EdgeInsets.all(5.0),
         child: new ListTile(
@@ -158,8 +145,15 @@ class _CustomWidgetState extends State<CustomWidget> {
                         fontSize: 11.0, fontWeight: FontWeight.normal)),
               ]),
           onTap: () {
-//            _showSnackBar(context, nomineesList[index]);
-          },
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) =>   new ImageScreen(nomineesList[index].nomineeName,Image.network(
+                      nomineesList[index].nomineeImage,
+//        fit: BoxFit.fitHeight,
+//        width: 100,
+                    ))
+                ));          },
         ),
         decoration: selected
             ? new BoxDecoration(color: Colors.grey[300], border: new Border.all(color: Colors.blue))

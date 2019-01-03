@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/viewnominies/model/city.dart';
+import 'package:stats/image_display.dart';
 
 class DraggableReOrderImage extends StatefulWidget {
   List<NomineesEntityList> nomineesList;
@@ -117,7 +118,11 @@ class MyAppState extends State<DraggableReOrderImage> {
                                     fontWeight: FontWeight.normal)),
                           ]),
                       onTap: () {
-                        Navigator.push(context, buildMaterialPageRoute(index));
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) =>   new ImageScreen(nomineesList[index].nomineeName,Image.network(nomineesList[index].nomineeImage))
+                            ));
                       },
                     )
                   ],
@@ -128,48 +133,6 @@ class MyAppState extends State<DraggableReOrderImage> {
     }
   }
 
-  MaterialPageRoute buildMaterialPageRoute(int index) {
-    return new MaterialPageRoute(
-      builder: (context) => new Scaffold(
-//                    backgroundColor: Colors.white,
-            appBar: new AppBar(
-              backgroundColor: Colors.blueGrey,
-              elevation: 2,
-              title: new Text(
-                nomineesList[index].nomineeName,
-                textAlign: TextAlign.left,
-                style: TextStyle(color: Colors.black, fontSize: 11),
-              ),
-              leading: GestureDetector(
-                  child: Image(
-                    image: new AssetImage("images/exit.png"),
-                    width: 14,
-                    height: 14,
-                    color: null,
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  }),
-            ),
-            body: SafeArea(
-                child: Container(
-              child: PhotoView(
-                  imageProvider:
-                      NetworkImage(nomineesList[index].nomineeImage)),
-            )),
-          ),
-
-//              new Image.network(
-//                document['postPath'],
-//                fit: BoxFit.none,
-////                height: MediaQuery.of(context).size.width,
-////                width: MediaQuery.of(context).size.width,
-//                alignment: Alignment.center,
-//              ),
-    );
-  }
 }
 
 _showSnackBar(BuildContext context, City item) {
