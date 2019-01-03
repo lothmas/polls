@@ -32,6 +32,7 @@ class _DraggableImages extends State<DraggableImages> {
                 widget.item.status = Status.none;
               });
             },
+
             childWhenDragging: new DragAvatarBorder(new Text(widget.item.nomineeName),
                 color: Colors.white, size: widget.size),
             child: new Card(child: Column(children: <Widget>[
@@ -39,7 +40,13 @@ class _DraggableImages extends State<DraggableImages> {
 //              new Column(
 //                crossAxisAlignment: CrossAxisAlignment.start,
 //                children: <Widget>[
-              images,
+              FadeInImage.assetNetwork(
+                placeholder: 'images/loader.gif',
+                image:widget.item.nomineeImage,
+                fit: BoxFit.cover,
+                height:80.0,
+
+              ),
                   new Container(
                       child: new Center(
                           child: new Column(

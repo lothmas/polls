@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/viewnominies/model/city.dart';
-
 
 class DraggableReOrderImage extends StatefulWidget {
   List<NomineesEntityList> nomineesList;
   int voteBy1;
+
   DraggableReOrderImage(this.nomineesList, this.voteBy1);
 
   @override
-  MyAppState createState() => new MyAppState(nomineesList,voteBy1);
+  MyAppState createState() => new MyAppState(nomineesList, voteBy1);
 }
 
 class MyAppState extends State<DraggableReOrderImage> {
   List<NomineesEntityList> nomineesList;
-  MyAppState(this.nomineesList,this.voteBy1);
+
+  MyAppState(this.nomineesList, this.voteBy1);
+
   int voteBy1;
 
   //final List<City> nomineesList = City.allCities();
@@ -23,7 +26,7 @@ class MyAppState extends State<DraggableReOrderImage> {
   Widget build(BuildContext context) {
     final title = 'Sortable ListView';
 
-    if(voteBy1==1) {
+    if (voteBy1 == 1) {
       return new MaterialApp(
         title: title,
         home: new Scaffold(
@@ -32,9 +35,8 @@ class MyAppState extends State<DraggableReOrderImage> {
 //        ),
           body: new SortableListView(
             items: nomineesList,
-            itemBuilder: (_, int index) =>
-            new Card(
-                child: new Column(
+            itemBuilder: (_, int index) => new Card(
+                    child: new Column(
                   children: <Widget>[
                     new ListTile(
                       leading: new Image.asset(
@@ -70,8 +72,7 @@ class MyAppState extends State<DraggableReOrderImage> {
           ),
         ),
       );
-    }
-    else if(voteBy1==2) {
+    } else if (voteBy1 == 2) {
       return new MaterialApp(
         title: title,
         home: new Scaffold(
@@ -80,9 +81,8 @@ class MyAppState extends State<DraggableReOrderImage> {
 //        ),
           body: new SortableListView(
             items: nomineesList,
-            itemBuilder: (_, int index) =>
-            new Card(
-                child: new Column(
+            itemBuilder: (_, int index) => new Card(
+                    child: new Column(
                   children: <Widget>[
                     new ListTile(
                       leading: new Container(
@@ -90,11 +90,10 @@ class MyAppState extends State<DraggableReOrderImage> {
                         height: 68.0,
                         alignment: Alignment.center,
                         decoration: new BoxDecoration(
-
                           image: DecorationImage(
-                              image: NetworkImage(nomineesList[index].nomineeImage),
-                              fit: BoxFit.fitHeight,
-
+                            image:
+                                NetworkImage(nomineesList[index].nomineeImage),
+                            fit: BoxFit.fitHeight,
                           ),
                         ),
                       ),
@@ -118,7 +117,7 @@ class MyAppState extends State<DraggableReOrderImage> {
                                     fontWeight: FontWeight.normal)),
                           ]),
                       onTap: () {
-                        // _showSnackBar(context, nomineesList[index].nomineeName);
+                        Navigator.push(context, buildMaterialPageRoute(index));
                       },
                     )
                   ],
@@ -127,9 +126,52 @@ class MyAppState extends State<DraggableReOrderImage> {
         ),
       );
     }
-    }
+  }
 
+  MaterialPageRoute buildMaterialPageRoute(int index) {
+    return new MaterialPageRoute(
+      builder: (context) => new Scaffold(
+//                    backgroundColor: Colors.white,
+            appBar: new AppBar(
+              backgroundColor: Colors.blueGrey,
+              elevation: 2,
+              title: new Text(
+                nomineesList[index].nomineeName,
+                textAlign: TextAlign.left,
+                style: TextStyle(color: Colors.black, fontSize: 11),
+              ),
+              leading: GestureDetector(
+                  child: Image(
+                    image: new AssetImage("images/exit.png"),
+                    width: 14,
+                    height: 14,
+                    color: null,
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  }),
+            ),
+            body: SafeArea(
+                child: Container(
+              child: PhotoView(
+                  imageProvider:
+                      NetworkImage(nomineesList[index].nomineeImage)),
+            )),
+          ),
+
+//              new Image.network(
+//                document['postPath'],
+//                fit: BoxFit.none,
+////                height: MediaQuery.of(context).size.width,
+////                width: MediaQuery.of(context).size.width,
+//                alignment: Alignment.center,
+//              ),
+    );
+  }
 }
+
 _showSnackBar(BuildContext context, City item) {
   final SnackBar objSnackbar = new SnackBar(
     content: new Text("${item.name} is a city in ${item.country}"),
@@ -138,6 +180,7 @@ _showSnackBar(BuildContext context, City item) {
 
   Scaffold.of(context).showSnackBar(objSnackbar);
 }
+
 class SortableListView extends StatefulWidget {
   final List items;
   final IndexedWidgetBuilder itemBuilder;
@@ -195,9 +238,9 @@ class SortableListViewState extends State<SortableListView> {
               ),
               onDragStarted: () {
                 Scaffold.of(context).showSnackBar(
-                      new SnackBar(
-                          content: new Text("Drag the row to change places")),
-                    );
+                  new SnackBar(
+                      content: new Text("Drag the row to change places")),
+                );
               },
               feedback: new Opacity(
                 opacity: 0.75,
