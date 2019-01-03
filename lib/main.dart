@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -26,7 +27,7 @@ void main() async {
   );
   final FirebaseStorage storage = FirebaseStorage(
       app: app, storageBucket: 'gs://polls-223422.appspot.com');
-  runApp(Home(storage: storage));
+  runApp(SplashView());
 }
 
 class Home extends StatefulWidget {

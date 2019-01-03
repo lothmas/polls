@@ -6,6 +6,11 @@ import 'package:stats/viewnominies/model/city.dart';
 //void main() => runApp(new MyApp());
 List<NomineesEntityList> nomineesList = new List();
 int voteBy;
+Map<int, NomineesEntityList> pairs = {};
+
+bool validated = false;
+
+int score = 0;
 class MultipleSelection1 extends StatelessWidget {
   MultipleSelection1(List<NomineesEntityList> nomineesList1,int voteBy1){
     nomineesList=nomineesList1;
@@ -44,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //      appBar: new AppBar(
 //        title: new Text('Selected ${indexList.length}  ' + indexList.toString()),
 //      ),
-      body: new ListView.builder(
+      body:new ListView.builder(
         itemCount: nomineesList.length,
         itemBuilder: (context, index,) {
           return new CustomWidget(
@@ -62,14 +67,92 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
+        //Column(children: <Widget>[
+//      Row(
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          mainAxisSize: MainAxisSize.max,
+//          children: [
+////                  Container(
+////                    color: Colors.transparent,
+////                    height: 5,
+////                    width: 5,
+////                  ),
+//
+//
+//            _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
+//            _buildButton1('images/vote.png',validated ? _onClear : _onValidate),
+//
+//
+//          ]),
+     // ],
+    );
 //      floatingActionButton: new FloatingActionButton(
 //        onPressed: () {},
 //        tooltip: 'Increment',
 //        child: new Icon(Icons.add),
 //      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+//    );
   }
 }
+
+void _onValidate() {
+  //setState(() {
+    score = 0;
+    pairs.forEach((index, item) {
+      if (item.id == index) {
+        item.status = Status.correct;
+        score++;
+      } else
+        item.status = Status.wrong;
+    });
+    validated = true;
+//  }
+ // );
+}
+
+void _onClear() {
+//  setState(() {
+    pairs.forEach((index, item) {
+      item.status = Status.none;
+      item.selected = false;
+    });
+    pairs.clear();
+    validated = false;
+//  }
+//  );
+}
+Widget _buildButton(String icon, VoidCallback onPress) => new Padding(
+    padding: new EdgeInsets.all(10.0),
+    child: new FloatingActionButton(
+        heroTag: "btn2",
+        mini: true,
+        backgroundColor: Colors.blueGrey,
+        child: Image(
+          image: new AssetImage(icon),
+          width: 22,
+          height: 22,
+          color: null,
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.center,
+        ),
+        onPressed: onPress));
+
+Widget _buildButton1(String icon, VoidCallback onPress) => new Padding(
+    padding: new EdgeInsets.all(10.0),
+    child: new FloatingActionButton(
+        heroTag: "btn4",
+        mini: true,
+        backgroundColor: Colors.blueGrey,
+        child: Image(
+          image: new AssetImage(icon),
+          width: 32,
+          height: 32,
+          color: null,
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.center,
+        ),
+        onPressed: onPress));
+
 
 class CustomWidget extends StatefulWidget {
   final int index;
@@ -83,7 +166,11 @@ class CustomWidget extends StatefulWidget {
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
+  Map<int, NomineesEntityList> pairs = {};
 
+  bool validated = false;
+
+  int score = 0;
   bool selected = false;
   int index;
   _CustomWidgetState(this.index);
@@ -161,4 +248,9 @@ class _CustomWidgetState extends State<CustomWidget> {
       ),)
     );
   }
+
+
+
+
+
 }

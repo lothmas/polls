@@ -309,7 +309,7 @@ class Trending {
     //  image.height=
 
       list.add( GestureDetector(
-          onDoubleTap: () {
+          onTap: () {
             Navigator.push(
               context,
               new MaterialPageRoute(
