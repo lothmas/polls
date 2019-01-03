@@ -53,13 +53,8 @@ class _Trending extends State<Polling> {
         appBar: new AppBar(
           backgroundColor: Colors.blueGrey,
           elevation: 2,
-          title: new Text(
-            'Nominies',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black.withOpacity(0.6)),
-          ),
+          title: Text("Nominees",
+            textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0,color: Colors.black),),
           leading: GestureDetector(
               child: Image(
                 image: new AssetImage("images/exit.png"),

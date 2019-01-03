@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:quiver/async.dart';
 import 'package:super_tooltip/super_tooltip.dart';
+import 'package:photo_view/photo_view.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
@@ -18,15 +19,80 @@ class Trending {
       BuildContext context, DocumentSnapshot document) {
     double c_width = MediaQuery.of(context).size.width * 1;
     var assetImage = new AssetImage("images/cast.png");
-    var cast = new Image(
-      image: assetImage,
-      width: 18,
-      height: 18,
-      fit: BoxFit.fill,
-      alignment: Alignment.center,
-    );
+
 
     List<Widget> list = new List();
+
+
+    var bottomAppBar = BottomAppBar(
+
+      elevation: 0.5,
+      color: Colors.white,
+      shape: CircularNotchedRectangle(),
+      //notchMargin: 4.0,
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(
+            icon: Image.asset(
+              "images/trending.png",
+              width: 22.0,
+              height: 22.0,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new Polling(
+                        voteID: document.documentID,
+                        voteBy: document['voteBy'],
+                        voteType: document['voteType'])),
+              );
+            },
+          ),
+          Column(
+            children: <Widget>[
+              IconButton(
+                icon: Image.asset(
+                  "images/cast.png",
+                  width: 22.0,
+                  height: 22.0,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => new Polling(
+                            voteID: document.documentID,
+                            voteBy: document['voteBy'],
+                            voteType: document['voteType'])),
+                  );
+                },
+              ),
+              Container(
+                //height: 10.0,
+              ),
+              Text(
+                '12 hrs ago',
+                style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          IconButton(
+            icon: Image.asset(
+              "images/share.png",
+              width: 22.0,
+              height: 22.0,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
 
     list.add(Container(
       color: Colors.transparent,
@@ -49,12 +115,16 @@ class Trending {
 //          ]),
           color: Colors.transparent,
           child: ClipOval(
-              child: Image.network(
-            document['profile_pic'],
-            fit: BoxFit.fill,
-            width: 75.0,
-            height: 75.0,
-          )),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/loader.gif',
+                image:document['profile_pic'],
+                  fit: BoxFit.fill,
+                  width: 75.0,
+                  height: 75.0,
+
+              ),
+
+             ),
         ),
         Container(
           color: Colors.transparent,
@@ -203,7 +273,7 @@ class Trending {
       child: new Column(
         children: <Widget>[
           Text(document['description'],
-              textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0),),
+              textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0,),),
         ],
       ),
     ));
@@ -227,12 +297,73 @@ class Trending {
       height: 8.0,
     ));
     if (document['postType'] == 1) {
-      list.add(new Image.network(
+      Image image= new Image.network(
         document['postPath'],
-        height: 270,
-        color: null,
-        fit: BoxFit.fill,
-        alignment: Alignment.topLeft,
+        //height: 270,
+//        color: null,
+//        fit: BoxFit.fill,
+//        alignment: Alignment.topLeft,
+      );
+
+    //  image.height=
+
+      list.add( GestureDetector(
+          onDoubleTap: () {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) =>   new Scaffold(
+//                    backgroundColor: Colors.white,
+                    appBar: new AppBar(
+                      backgroundColor: Colors.blueGrey,
+                      elevation: 2,
+                      title: new Text(
+                        document['title'],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontSize: 11),
+                      ),
+                      leading: GestureDetector(
+                          child: Image(
+                            image: new AssetImage("images/exit.png"),
+                            width: 14,
+                            height: 14,
+                            color: null,
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.center,
+                          ),
+                          onTap: () {
+                            Navigator.pop(
+                                context);
+                          }),
+                    ),
+                  body: SafeArea(child:
+                   Container(
+                  child: PhotoView(
+                  imageProvider:image.image),
+                  )
+              ),
+
+
+                  ),
+
+//              new Image.network(
+//                document['postPath'],
+//                fit: BoxFit.none,
+////                height: MediaQuery.of(context).size.width,
+////                width: MediaQuery.of(context).size.width,
+//                alignment: Alignment.center,
+//              ),
+              )
+            );
+
+
+
+
+          },
+          child: FadeInImage.assetNetwork(
+        placeholder: 'images/loader.gif',
+        image:document['postPath'],
+      ),
       ));
     } else if (document['postType'] == 2 &&
         document['postPath'].contains("https://www.youtube.com")) {
@@ -306,6 +437,7 @@ class Trending {
       Divider(),
     );
 
+
     list.add(
       new Container(
         width: 500.0,
@@ -320,75 +452,7 @@ class Trending {
         child: new Scaffold(
 
 
-          bottomNavigationBar: BottomAppBar(
-
-            elevation: 0.5,
-            color: Colors.white,
-            shape: CircularNotchedRectangle(),
-            //notchMargin: 4.0,
-            child: new Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                  icon: Image.asset(
-                    "images/trending.png",
-                    width: 22.0,
-                    height: 22.0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new Polling(
-                              voteID: document.documentID,
-                              voteBy: document['voteBy'],
-                              voteType: document['voteType'])),
-                    );
-                  },
-                ),
-                Column(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Image.asset(
-                        "images/cast.png",
-                        width: 22.0,
-                        height: 22.0,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new Polling(
-                                  voteID: document.documentID,
-                                  voteBy: document['voteBy'],
-                                  voteType: document['voteType'])),
-                        );
-                      },
-                    ),
-                    Container(
-                      //height: 10.0,
-                    ),
-                    Text(
-                      '12 hrs ago',
-                      style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                IconButton(
-                  icon: Image.asset(
-                    "images/share.png",
-                    width: 22.0,
-                    height: 22.0,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
+          bottomNavigationBar: bottomAppBar,
         ),
 //        new BottomNavigationBar(
 //          currentIndex: 0, // this will be set when a new tab is tapped
