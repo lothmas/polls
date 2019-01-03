@@ -132,13 +132,15 @@ class _CustomWidgetState extends State<CustomWidget> {
           width: 100.0,
           height: 79.0,
           alignment: Alignment.center,
-          decoration: new BoxDecoration(
-
-            image: DecorationImage(
-                image: image,
-                fit: BoxFit.fill
-            ),
-          ),
+              foregroundDecoration: new BoxDecoration(
+                  color: Color.fromRGBO(155, 85, 250, 0.0)),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/loader.gif',
+                image:nomineesList[index].nomineeImage,
+                width: 100.0,
+                height: 79.0,
+                fit: BoxFit.fill,
+              )
         )),
           title: new Text(
             nomineesList[index].nomineeName,
@@ -156,7 +158,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                         fontSize: 11.0, fontWeight: FontWeight.normal)),
               ]),
           onTap: () {
-           // _showSnackBar(context, nomineesList[index]);
+//            _showSnackBar(context, nomineesList[index]);
           },
         ),
         decoration: selected
