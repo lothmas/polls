@@ -160,7 +160,7 @@ class _GameViewState extends State<GameView> {
         child:
         Container(
 
-               color: Colors.blueGrey,
+               color: Colors.grey[300],
             child:  Column(children: <Widget>[
           new Row(
 
