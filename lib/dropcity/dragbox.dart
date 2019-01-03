@@ -49,11 +49,11 @@ class _GameViewState extends State<GameView> {
       child: new FloatingActionButton(
           heroTag: "btn2",
           mini: true,
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.blueGrey,
           child: Image(
             image: new AssetImage(icon),
-            width: 18,
-            height: 18,
+            width: 22,
+            height: 22,
             color: null,
             fit: BoxFit.scaleDown,
             alignment: Alignment.center,
@@ -65,7 +65,7 @@ class _GameViewState extends State<GameView> {
       child: new FloatingActionButton(
           heroTag: "btn4",
           mini: true,
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.blueGrey,
           child: Image(
             image: new AssetImage(icon),
             width: 32,
@@ -160,7 +160,7 @@ class _GameViewState extends State<GameView> {
         child:
         Container(
 
-//                color: Colors.orange,
+               color: Colors.blueGrey,
             child:  Column(children: <Widget>[
           new Row(
 
