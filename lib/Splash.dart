@@ -60,8 +60,8 @@ class _SplashContentState extends State<_SplashContent>
     return new Center(
         child: new Image(
           image: new AssetImage("images/loader.gif"),
-//          width: _iconAnimation.value * 100,
-//          height: _iconAnimation.value * 100,
+          width: _iconAnimation.value * 300,
+          height: _iconAnimation.value * 300,
         )
     );
   }
