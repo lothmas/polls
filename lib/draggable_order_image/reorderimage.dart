@@ -90,13 +90,25 @@ class MyAppState extends State<DraggableReOrderImage> {
                         width: 100.0,
                         height: 68.0,
                         alignment: Alignment.center,
-                        decoration: new BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                NetworkImage(nomineesList[index].nomineeImage),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
+
+                        foregroundDecoration: new BoxDecoration(
+                            color: Color.fromRGBO(155, 85, 250, 0.0)),
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'images/loader.gif',
+                          image:nomineesList[index].nomineeImage,
+                          width: 100.0,
+                          height: 79.0,
+                          fit: BoxFit.fill,
+                        )
+
+
+//                        decoration: new BoxDecoration(
+//                          image: DecorationImage(
+//                            image:
+//                                NetworkImage(nomineesList[index].nomineeImage),
+//                            fit: BoxFit.fitHeight,
+//                          ),
+//                        ),
                       ),
                       title: new Text(
                         nomineesList[index].nomineeName,
