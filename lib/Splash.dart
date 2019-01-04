@@ -32,7 +32,7 @@ class _SplashContentState extends State<_SplashContent>
   var _iconAnimation;
 
   startTimeout() async {
-    var duration = const Duration(seconds: 10);
+    var duration = const Duration(seconds: 5);
     return new Timer(duration, handleTimeout);
   }
 
@@ -60,9 +60,9 @@ class _SplashContentState extends State<_SplashContent>
   Widget build(BuildContext context) {
     return new Center(
         child: new Image(
-          image: new AssetImage("images/loader.gif"),
-          width: _iconAnimation.value * 300,
-          height: _iconAnimation.value * 300,
+          image: new AssetImage("images/loader2.gif"),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
         )
     );
   }

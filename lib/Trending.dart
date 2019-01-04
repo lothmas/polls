@@ -350,18 +350,18 @@ class Trending {
     } else if (document['postType'] == 2) {
       list.add(new Chewie(
         new VideoPlayerController.network(document['postPath']),
-        //aspectRatio: 3 / 2,
+        aspectRatio: 1,
 
         autoPlay: false,
-        looping: true,
-        autoInitialize: true,
+        looping: false,
+        autoInitialize: false,
 
 //          placeholder: Image(
-//            image: new AssetImage("images/plan.jpg"),
-//            width: 18,
-//            height: 18,
+//            image: new NetworkImage(document['thumbnail']),
+////            width: 18,
+//                height: MediaQuery.of(context).size.height,
 //            color: null,
-//            fit: BoxFit.scaleDown,
+//            fit: BoxFit.fill,
 //            alignment: Alignment.center,
 //          ),
       ));

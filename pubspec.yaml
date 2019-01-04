@@ -32,7 +32,7 @@ dependencies:
   flutter_list_drag_and_drop: ^0.1.6
   flutter_multiple_image_picker: ^0.0.1
   meta: ^1.1.5
-
+#  youtube_api: ^0.2.1
  # flutter_facebook_login: ^1.1.1
 
 dev_dependencies:
@@ -97,6 +97,7 @@ flutter:
     - images/nominee_images/nominee9.jpg
     - images/nominee_images/nominee10.jpg
     - images/loader.gif
+    - images/loader2.gif
 
   #  - images/a_dot_ham.jpeg
 
