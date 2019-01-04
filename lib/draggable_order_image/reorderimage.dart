@@ -20,6 +20,10 @@ class MyAppState extends State<DraggableReOrderImage> {
   MyAppState(this.nomineesList, this.voteBy1);
 
   int voteBy1;
+  bool validated = false;
+
+  int score = 0;
+  Map<int, NomineesEntityList> pairs = {};
 
   //final List<City> nomineesList = City.allCities();
 
@@ -31,9 +35,68 @@ class MyAppState extends State<DraggableReOrderImage> {
       return new MaterialApp(
         title: title,
         home: new Scaffold(
-//        appBar: new AppBar(
-//          title: new Text(title),
-//        ),
+
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _buildButton(validated ? 'images/refresh.png' : 'images/yes.png',
+                  validated ? _onClear : _onValidate),
+              _buildButton1('images/vote.png', validated ? _onClear : _onValidate),
+            ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomNavigationBar(
+
+            type: BottomNavigationBarType.fixed,
+            fixedColor: Colors.blueGrey,
+
+//        onTap: onTabTapped, // new
+//        currentIndex: _currentIndex, // new
+            items: [
+              new BottomNavigationBarItem(
+
+                icon: new Image(
+                  image: new AssetImage("images/yes.png"),
+                  width: 0,
+                  height: 0,
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+
+                ),
+                title: new Text(
+                  '',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey.withOpacity(0.6)),
+                ),
+              ),
+              new BottomNavigationBarItem(
+                icon: new Image(
+                  image: new AssetImage("images/vote.png"),
+                  width: 0,
+                  height: 0,
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                ),
+                title: new Text(
+                  '',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey.withOpacity(0.6)),
+                ),
+              ),
+
+
+            ],
+          ),
           body: new SortableListView(
             items: nomineesList,
             itemBuilder: (_, int index) => new Card(
@@ -144,6 +207,67 @@ class MyAppState extends State<DraggableReOrderImage> {
       );
     }
   }
+
+
+  Widget _buildButton(String icon, VoidCallback onPress) => new Padding(
+      padding: new EdgeInsets.all(10.0),
+      child: new FloatingActionButton(
+          heroTag: "btn23",
+          mini: true,
+          backgroundColor: Colors.blueGrey,
+          child: Image(
+            image: new AssetImage(icon),
+            width: 22,
+            height: 22,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          onPressed: onPress));
+
+  Widget _buildButton1(String icon, VoidCallback onPress) => new Padding(
+      padding: new EdgeInsets.all(10.0),
+      child: new FloatingActionButton(
+          heroTag: "btn44",
+          mini: true,
+          backgroundColor: Colors.blueGrey,
+          child: Image(
+            image: new AssetImage(icon),
+            width: 32,
+            height: 32,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          onPressed: onPress));
+
+  void _onValidate() {
+    //setState(() {
+    score = 0;
+    pairs.forEach((index, item) {
+      if (item.id == index) {
+        item.status = Status.correct;
+        score++;
+      } else
+        item.status = Status.wrong;
+    });
+    validated = true;
+//  }
+    // );
+  }
+
+  void _onClear() {
+//  setState(() {
+    pairs.forEach((index, item) {
+      item.status = Status.none;
+      item.selected = false;
+    });
+    pairs.clear();
+    validated = false;
+//  }
+//  );
+  }
+
 
 }
 

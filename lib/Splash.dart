@@ -9,7 +9,9 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return new MaterialApp(
-      color: Colors.white,
+        debugShowCheckedModeBanner: false,
+
+        color: Colors.white,
         home: Builder(
           builder: (context) => new _SplashContent(),
         ),
