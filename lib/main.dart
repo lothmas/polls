@@ -100,7 +100,14 @@ class _Trending extends State<Home> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black.withOpacity(0.6)),
           ),
-          leading: new Image(
+          leading:
+    GestureDetector(
+                          onTap: () {
+
+
+                          },
+          child:
+          new Image(
             image: new AssetImage("images/menu.png"),
             width: 20,
             height: 20,
@@ -108,6 +115,8 @@ class _Trending extends State<Home> {
             fit: BoxFit.scaleDown,
             alignment: Alignment.center,
           ),
+    ),
+
           actions: [
             menuButton,
           ],
@@ -200,7 +209,6 @@ class _Trending extends State<Home> {
 //
 //        ],
 //        ),
-
         body: Center(
             child: new Container(
 //                child: new SingleChildScrollView(

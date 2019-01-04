@@ -354,7 +354,7 @@ class Trending {
 
         autoPlay: false,
         looping: false,
-        autoInitialize: false,
+        autoInitialize: true,
 
 //          placeholder: Image(
 //            image: new NetworkImage(document['thumbnail']),
