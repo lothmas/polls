@@ -34,7 +34,7 @@ class _SplashContentState extends State<_SplashContent>
   var _iconAnimation;
 
   startTimeout() async {
-    var duration = const Duration(seconds: 5);
+    var duration = const Duration(seconds: 1);
     return new Timer(duration, handleTimeout);
   }
 

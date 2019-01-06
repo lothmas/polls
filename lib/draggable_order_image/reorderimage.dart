@@ -32,7 +32,7 @@ class MyAppState extends State<DraggableReOrderImage> {
     final title = 'Sortable ListView';
 
     if (voteBy1 == 1) {
-      return new MaterialApp(
+      var main= new MaterialApp(
         title: title,
         home: new Scaffold(
 
@@ -136,13 +136,72 @@ class MyAppState extends State<DraggableReOrderImage> {
           ),
         ),
       );
+      return banner(main);
     } else if (voteBy1 == 2) {
-      return new MaterialApp(
+      var main = new MaterialApp(
         title: title,
         home: new Scaffold(
-//        appBar: new AppBar(
-//          title: new Text(title),
-//        ),
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _buildButton(validated ? 'images/refresh.png' : 'images/yes.png',
+                  validated ? _onClear : _onValidate),
+              _buildButton1('images/vote.png', validated ? _onClear : _onValidate),
+            ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomNavigationBar(
+
+            type: BottomNavigationBarType.fixed,
+            fixedColor: Colors.blueGrey,
+
+//        onTap: onTabTapped, // new
+//        currentIndex: _currentIndex, // new
+            items: [
+              new BottomNavigationBarItem(
+
+                icon: new Image(
+                  image: new AssetImage("images/yes.png"),
+                  width: 0,
+                  height: 0,
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+
+                ),
+                title: new Text(
+                  '',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey.withOpacity(0.6)),
+                ),
+              ),
+              new BottomNavigationBarItem(
+                icon: new Image(
+                  image: new AssetImage("images/vote.png"),
+                  width: 0,
+                  height: 0,
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                ),
+                title: new Text(
+                  '',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey.withOpacity(0.6)),
+                ),
+              ),
+
+
+            ],
+          ),
           body: new SortableListView(
             items: nomineesList,
             itemBuilder: (_, int index) => new Card(
@@ -205,7 +264,25 @@ class MyAppState extends State<DraggableReOrderImage> {
           ),
         ),
       );
+      return banner(main);
+
     }
+  }
+
+  Stack banner(MaterialApp main) {
+         return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        main,
+
+        Banner(
+          message: "ReOrder",
+          location: BannerLocation.topEnd,
+        ),
+
+
+      ],
+    );
   }
 
 
@@ -338,7 +415,7 @@ class SortableListViewState extends State<SortableListView> {
               onDragStarted: () {
                 Scaffold.of(context).showSnackBar(
                   new SnackBar(
-                      content: new Text("Drag the row to change places")),
+                      content: new Text("Drag Selected Nominee to Change Places")),
                 );
               },
               feedback: new Opacity(
