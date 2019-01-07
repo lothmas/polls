@@ -64,20 +64,14 @@ class _Trending extends State<Home> {
         ),
         Center(
             child: new Container(
-//                child: new SingleChildScrollView(
                 child:  StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection('votes').snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//                FirebaseStorage storage = new FirebaseStorage(
-//                    storageBucket: 'gs://osszefogasaszanhuzokert.appspot.com/'
-//                );
-//                StorageReference imageLink = storage.ref().child('giftShopItems');
+
                     if (snapshot.hasData) {
                       return new ListView(
                         children:
                         snapshot.data.documents.map((DocumentSnapshot document) {
-                          //imageBytes=null;
-
                           return new Card( child: Column(
                             children:
                             homeTrending.homeTrendingList(context, document),
@@ -172,199 +166,134 @@ class _Trending extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-   // imageCache.clear();
     Trending homeTrending=new Trending();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
       itemBuilder: (BuildContext ctx) {},
       child: new Image(
         image: new AssetImage("images/notification.png"),
-        width: 32,
-        height: 32,
+        width: 42,
+        height: 42,
         color: null,
         fit: BoxFit.scaleDown,
         alignment: Alignment.center,
       ),
-      //Logo
     );
 
-
-
-    var bottomNavigationBar2 = BottomNavigationBar(
-    //      fixedColor: Colors.deepPurple,
-          onTap: onTabTapped, // new
-          currentIndex: _currentIndex, // new
-          items: [
-            new BottomNavigationBarItem(
-              icon: new Image(
-                image: new AssetImage("images/home.png"),
-                width: 24,
-                height: 24,
-                color: null,
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-
-              ),
-              title: new Text(
-                'home',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey.withOpacity(0.6)),
-              ),
-            ),
-            new BottomNavigationBarItem(
-              icon: new Image(
-                image: new AssetImage("images/search.png"),
-                width: 24,
-                height: 24,
-                color: null,
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-              ),
-              title: new Text(
-                'search',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey.withOpacity(0.6)),
-              ),
-            ),
-            new BottomNavigationBarItem(
-              icon: new Image(
-                image: new AssetImage("images/createVote.png"),
-                width: 24,
-                height: 24,
-                color: null,
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-              ),
-              title: new Text(
-                'create_poll',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey.withOpacity(0.6)),
-              ),
-            ),
-            new BottomNavigationBarItem(
-              icon: new Image(
-                image: new AssetImage("images/profile.png"),
-                width: 32,
-                height: 32,
-                color: null,
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-              ),
-              title: new Text(
-                'profile',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey.withOpacity(0.6)),
-              ),
-            )
-          ],
-        );
-
+    var bottomNavigationBar2 = buildBottomNavigationBar();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-//        appBar: new AppBar(
-//          backgroundColor: Colors.white,
-//          elevation: 2,
-//          title: new Text(
-//            'Trending',
-//            textAlign: TextAlign.left,
-//            style: TextStyle(
-//                fontWeight: FontWeight.bold,
-//                color: Colors.black.withOpacity(0.6)),
-//          ),
-//          leading:
-//    GestureDetector(
-//                          onTap: () {
-//
-//
-//                          },
-//          child:
-//          new Image(
-//            image: new AssetImage("images/menu.png"),
-//            width: 20,
-//            height: 20,
-//            color: null,
-//            fit: BoxFit.scaleDown,
-//            alignment: Alignment.center,
-//          ),
-//    ),
-//
-//          actions: [
-//            menuButton,
-//          ],
-//        ),
-
         bottomNavigationBar: bottomNavigationBar2,
-
-//        body: Column(
-//        children: <Widget>[
-//          Image.asset('images/plan.jpg')
-//
-//        ],
-//        ),
         body:  new HiddenDrawerMenu(
         initPositionSelected: 0,
         screens: itens,
         backgroundColorMenu: Colors.white,
-            iconMenuAppBar: Image.asset("images/menu.png",),
+            iconMenuAppBar: Image(
+              image: new AssetImage("images/menu.png"),
+              width: 42,
+              height: 42,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+            ),
         //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
         //    whithAutoTittleName: true,
         //    styleAutoTittleName: TextStyle(color: Colors.red),
-        //    actionsAppBar: <Widget>[],
+            actionsAppBar: <Widget>[menuButton],
         //    backgroundColorContent: Colors.blue,
             backgroundColorAppBar: Colors.blueGrey,
         //    elevationAppBar: 4.0,
         //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
         //    enableShadowItensMenu: true,
-        //    backgroundMenu: DecorationImage(image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
+            backgroundMenu: DecorationImage(image: ExactAssetImage("images/background.jpg"),fit: BoxFit.cover),
       ),
       ),
     );
   }
 
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+        onTap: onTabTapped, // new
+        currentIndex: _currentIndex, // new
+        items: [
+          new BottomNavigationBarItem(
+            icon: new Image(
+              image: new AssetImage("images/home.png"),
+              width: 24,
+              height: 24,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
 
-
-//  color: Colors.transparent,
-//  child: ClipOval(
-//  child: Image.network(profilePic(storage,document),
-//  fit: BoxFit.fill,
-//  width: 75.0,
-//  height: 75.0,
-//  )),
-//
-//
-//  Image.memory(
-//  imageBytes,
-//  fit: BoxFit.cover,
-//  )
-
-  Uint8List imageBytes;
-
-  Widget name(DocumentSnapshot document, {UniqueKey key}) {
-
-
-    printUrl() async {
-      StorageReference ref = storage.ref().child(
-          document['memberID']).child(document['profile_pic']);
-      String url = (await ref.getDownloadURL()).toString();
-      print("url from firebase storage"+url);
-    }
+            ),
+            title: new Text(
+              'home',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey.withOpacity(0.6)),
+            ),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Image(
+              image: new AssetImage("images/search.png"),
+              width: 24,
+              height: 24,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+            ),
+            title: new Text(
+              'search',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey.withOpacity(0.6)),
+            ),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Image(
+              image: new AssetImage("images/createVote.png"),
+              width: 24,
+              height: 24,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+            ),
+            title: new Text(
+              'create_poll',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey.withOpacity(0.6)),
+            ),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Image(
+              image: new AssetImage("images/profile.png"),
+              width: 32,
+              height: 32,
+              color: null,
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+            ),
+            title: new Text(
+              'profile',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey.withOpacity(0.6)),
+            ),
+          )
+        ],
+      );
   }
-
-
 
   void onTabTapped(int index) {
     setState(() {

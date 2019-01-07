@@ -16,6 +16,8 @@ class Trending {
   int voteID;
   int voteBy;
 
+
+
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
     double c_width = MediaQuery.of(context).size.width * 1;
@@ -80,14 +82,26 @@ class Trending {
               ),
             ],
           ),
-          IconButton(
-            icon: Image.asset(
-              "images/share.png",
-              width: 22.0,
-              height: 22.0,
-            ),
-            onPressed: () {},
+
+          PopupMenuButton<Choice>(
+      //      onSelected: _select,
+            itemBuilder: (BuildContext context) {
+              return choices.skip(0).map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Row(children: <Widget>[
+                    IconButton(
+                      icon: Icon(choice.icon),
+                      onPressed: () {
+                      },
+                    ),
+
+                    Text(choice.title)],),
+                );
+              }).toList();
+            },
           ),
+
         ],
       ),
     );
@@ -350,49 +364,12 @@ class Trending {
         looping: false,
         autoInitialize: true,
 
-//          placeholder: Image(
-//            image: new NetworkImage(document['thumbnail']),
-////            width: 18,
-//                height: MediaQuery.of(context).size.height,
-//            color: null,
-//            fit: BoxFit.fill,
-//            alignment: Alignment.center,
-//          ),
       ));
     }
 
     list.add(
       new Container(
         width: 500.0,
-//        height: 22.0,
-        //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
-//            new BoxShadow(
-//              color: Colors.white,
-//              blurRadius: 20.0,
-//            ),
-//          ]),
-//        child: new Column(
-//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//            children: [
-//              new Row(
-//                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                children: [
-//                  Container(
-//                      //color: Colors.purple,
-//                      child: Badge.before(
-//                    color: Colors.transparent,
-//                    borderColor: Colors.transparent,
-//                    textStyle: TextStyle(
-//                        color: Colors.blueGrey,
-//                        fontSize: 11.0,
-//                        fontWeight: FontWeight.bold),
-//                    value: '23 hrs' + " :ago",
-//                    child: null,
-//                  )),
-//                ],
-//              ),
-//            ]),
       ),
     );
 
@@ -414,23 +391,6 @@ class Trending {
         child: new Scaffold(
           bottomNavigationBar: bottomAppBar,
         ),
-//        new BottomNavigationBar(
-//          currentIndex: 0, // this will be set when a new tab is tapped
-//          items: [
-//            BottomNavigationBarItem(
-//              icon: new Icon(Icons.home),
-//              title: new Text('Home'),
-//            ),
-//            BottomNavigationBarItem(
-//              icon: new Icon(Icons.mail),
-//              title: new Text('Messages'),
-//            ),
-//            BottomNavigationBarItem(
-//                icon: Icon(Icons.person),
-//                title: Text('Profile')
-//            )
-//          ],
-//        ),
       ),
     );
 
@@ -483,4 +443,45 @@ class TooltipText extends StatelessWidget {
   }
 
   void castClick() {}
+}
+
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'favourite', icon: Icons.favorite),
+  const Choice(title: 'share', icon: Icons.share),
+//  const Choice(title: 'block', icon: Icons.block),
+  const Choice(title: 'not-interested', icon: Icons.not_interested),
+//  const Choice(title: 'Train', icon: Icons.directions_railway),
+//  const Choice(title: 'Walk', icon: Icons.directions_walk),
+];
+
+class ChoiceCard extends StatelessWidget {
+  const ChoiceCard({Key key, this.choice}) : super(key: key);
+
+  final Choice choice;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle textStyle = Theme.of(context).textTheme.display1;
+    return Card(
+      color: Colors.white,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(choice.icon, size: 128.0, color: textStyle.color),
+            Text(choice.title, style: textStyle),
+          ],
+        ),
+      ),
+    );
+  }
 }
