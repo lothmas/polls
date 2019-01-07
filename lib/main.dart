@@ -56,9 +56,11 @@ class _Trending extends State<Home> {
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Trending",
-          colorTextUnSelected: Colors.blueGrey.withOpacity(0.5),
+          colorTextUnSelected: Colors.grey,
           colorLineSelected: Colors.teal,
-        colorTextSelected: Colors.black,
+          colorTextSelected: Colors.blueGrey,
+          key: UniqueKey(),
+
         ),
         Center(
             child: new Container(
@@ -96,12 +98,35 @@ class _Trending extends State<Home> {
 
             ))));
 
+
+    itens.add(new ScreenHiddenDrawer(
+        new ItemHiddenMenu(
+          name: "History",
+          colorTextUnSelected: Colors.grey,
+          colorLineSelected: Colors.teal,
+          colorTextSelected: Colors.blueGrey,
+          key: UniqueKey(),
+
+        ),
+        Container(
+          color: Colors.blueAccent,
+          child: Center(
+            child: Text(
+              "History",
+              style: TextStyle(color: Colors.white, fontSize: 30.0),
+            ),
+          ),
+        )));
+
+
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Favourite",
-          colorTextUnSelected: Colors.white.withOpacity(0.5),
-          colorLineSelected: Colors.orange,
-         colorTextSelected: Colors.orange,
+          colorTextUnSelected: Colors.grey,
+          colorLineSelected: Colors.teal,
+          colorTextSelected: Colors.blueGrey,
+          key: UniqueKey(),
+
         ),
         Container(
           color: Colors.orange,
@@ -112,6 +137,26 @@ class _Trending extends State<Home> {
             ),
           ),
         )));
+
+    itens.add(new ScreenHiddenDrawer(
+        new ItemHiddenMenu(
+          name: "Notifications",
+          colorTextUnSelected: Colors.grey,
+          colorLineSelected: Colors.teal,
+          colorTextSelected: Colors.blueGrey,
+          key: UniqueKey(),
+        ),
+        Container(
+          color: Colors.red,
+          child: Center(
+            child: Text(
+              "Notifications",
+              style: TextStyle(color: Colors.white, fontSize: 30.0),
+            ),
+          ),
+        )));
+
+
 
     super.initState();
   }

@@ -21,12 +21,9 @@ class Trending {
     double c_width = MediaQuery.of(context).size.width * 1;
     var assetImage = new AssetImage("images/cast.png");
 
-
     List<Widget> list = new List();
 
-
     var bottomAppBar = BottomAppBar(
-
       elevation: 0.5,
       color: Colors.white,
       shape: CircularNotchedRectangle(),
@@ -72,8 +69,8 @@ class Trending {
                 },
               ),
               Container(
-                //height: 10.0,
-              ),
+                  //height: 10.0,
+                  ),
               Text(
                 '12 hrs ago',
                 style: TextStyle(
@@ -107,7 +104,7 @@ class Trending {
           width: 10.0,
         ),
         Container(
-                    //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
 //              color: Colors.white,
@@ -116,16 +113,14 @@ class Trending {
 //          ]),
           color: Colors.transparent,
           child: ClipOval(
-              child: FadeInImage.assetNetwork(
-                placeholder: 'images/loader.gif',
-                image:document['profile_pic'],
-                  fit: BoxFit.fill,
-                  width: 75.0,
-                  height: 75.0,
-
-              ),
-
-             ),
+            child: FadeInImage.assetNetwork(
+              placeholder: 'images/loader.gif',
+              image: document['profile_pic'],
+              fit: BoxFit.fill,
+              width: 75.0,
+              height: 75.0,
+            ),
+          ),
         ),
         Container(
           color: Colors.transparent,
@@ -246,18 +241,16 @@ class Trending {
           color: Colors.transparent,
           width: 30,
         ),
-        new Align(child:
-        Container(
-            color: Colors.black12,
-            child:
-
-
-            Badge.right(
+        new Align(
+            child: Container(
+                color: Colors.black12,
+                child: Badge.right(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                value: '0' + ' | ' + document['allowedVoteNumber'].toString(),
-                color: Colors.blueGrey, // value to show inside the badge
-                child: new Text("") // text to append (required)
-                ))),
+                    value:
+                        '0' + ' | ' + document['allowedVoteNumber'].toString(),
+                    color: Colors.blueGrey, // value to show inside the badge
+                    child: new Text("") // text to append (required)
+                    ))),
       ],
     ));
 
@@ -273,8 +266,13 @@ class Trending {
       width: c_width,
       child: new Column(
         children: <Widget>[
-          Text(document['description'],
-              textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0,),),
+          Text(
+            document['description'],
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: 12.0,
+            ),
+          ),
         ],
       ),
     ));
@@ -298,7 +296,7 @@ class Trending {
       height: 8.0,
     ));
     if (document['postType'] == 1) {
-      Image image= new Image.network(
+      Image image = new Image.network(
         document['postPath'],
         //height: 270,
 //        color: null,
@@ -306,14 +304,15 @@ class Trending {
 //        alignment: Alignment.topLeft,
       );
 
-    //  image.height=
+      //  image.height=
 
-      list.add( GestureDetector(
-          onTap: () {
-            Navigator.push(
+      list.add(GestureDetector(
+        onTap: () {
+          Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (context) =>   new ImageScreen(document['title'],image)
+                  builder: (context) =>
+                      new ImageScreen(document['title'], image)
 
 //              new Image.network(
 //                document['postPath'],
@@ -322,17 +321,12 @@ class Trending {
 ////                width: MediaQuery.of(context).size.width,
 //                alignment: Alignment.center,
 //              ),
-              )
-            );
-
-
-
-
-          },
-          child: FadeInImage.assetNetwork(
-        placeholder: 'images/loader.gif',
-        image:document['postPath'],
-      ),
+                  ));
+        },
+        child: FadeInImage.assetNetwork(
+          placeholder: 'images/loader.gif',
+          image: document['postPath'],
+        ),
       ));
     } else if (document['postType'] == 2 &&
         document['postPath'].contains("https://www.youtube.com")) {
@@ -406,7 +400,6 @@ class Trending {
       Divider(),
     );
 
-
     list.add(
       new Container(
         width: 500.0,
@@ -419,8 +412,6 @@ class Trending {
 //          ),
 //        ]),
         child: new Scaffold(
-
-
           bottomNavigationBar: bottomAppBar,
         ),
 //        new BottomNavigationBar(
@@ -442,8 +433,6 @@ class Trending {
 //        ),
       ),
     );
-
-
 
     return list;
   }
