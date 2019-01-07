@@ -8,11 +8,28 @@ class DropCityApp extends StatelessWidget {
   int voteBy;
   String backgroundImage;
 
-  DropCityApp(this.items, this.voteBy,this.backgroundImage);
+  DropCityApp(this.items, this.voteBy, this.backgroundImage);
 
   @override
   Widget build(BuildContext context) {
-    return new GameView(items, voteBy);
+    var main = new MaterialApp(
+        home: new Scaffold(
+      body: new GameView(items, voteBy),
+    ));
+    return banner(main);
+  }
+
+  Stack banner(MaterialApp main) {
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        main,
+        Banner(
+          message: "Single-Select",
+          location: BannerLocation.topEnd,
+        ),
+      ],
+    );
   }
 
   ThemeData _getTheme(BuildContext context) => Theme.of(context).copyWith(

@@ -276,7 +276,7 @@ class MyAppState extends State<DraggableReOrderImage> {
         main,
 
         Banner(
-          message: "ReOrder",
+          message: "Re-Order",
           location: BannerLocation.topEnd,
         ),
 

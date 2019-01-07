@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    var main = new Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
@@ -59,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.blueGrey,
 
@@ -67,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
 //        currentIndex: _currentIndex, // new
         items: [
           new BottomNavigationBarItem(
-
             icon: new Image(
               image: new AssetImage("images/yes.png"),
               width: 0,
@@ -75,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
               color: null,
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
-
             ),
             title: new Text(
               '',
@@ -104,8 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.blueGrey.withOpacity(0.6)),
             ),
           ),
-
-
         ],
       ),
       body: new ListView.builder(
@@ -147,6 +142,22 @@ class _MyHomePageState extends State<MyHomePage> {
 //          ]),
       // ],
     );
+
+    Stack banner(Scaffold main) {
+      return Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          main,
+          Banner(
+            message: "Multi-Select",
+            location: BannerLocation.topEnd,
+          ),
+        ],
+      );
+    }
+
+    return banner(main);
+
 //      floatingActionButton: new FloatingActionButton(
 //        onPressed: () {},
 //        tooltip: 'Increment',
