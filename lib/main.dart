@@ -3,6 +3,9 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
+import 'package:hidden_drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
+import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
 import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -43,6 +46,76 @@ class Home extends StatefulWidget {
 
 class _Trending extends State<Home> {
 
+
+  List<ScreenHiddenDrawer> itens = new List();
+
+  @override
+  void initState() {
+    Trending homeTrending=new Trending();
+
+    itens.add(new ScreenHiddenDrawer(
+        new ItemHiddenMenu(
+          name: "Trending",
+          colorTextUnSelected: Colors.blueGrey.withOpacity(0.5),
+          colorLineSelected: Colors.teal,
+        colorTextSelected: Colors.black,
+        ),
+        Center(
+            child: new Container(
+//                child: new SingleChildScrollView(
+                child:  StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection('votes').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//                FirebaseStorage storage = new FirebaseStorage(
+//                    storageBucket: 'gs://osszefogasaszanhuzokert.appspot.com/'
+//                );
+//                StorageReference imageLink = storage.ref().child('giftShopItems');
+                    if (snapshot.hasData) {
+                      return new ListView(
+                        children:
+                        snapshot.data.documents.map((DocumentSnapshot document) {
+                          //imageBytes=null;
+
+                          return new Card( child: Column(
+                            children:
+                            homeTrending.homeTrendingList(context, document),
+                          ),);
+                        }
+                        ).toList(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+
+                    // By default, show a loading spinner
+                    return CircularProgressIndicator();
+
+
+                  },
+                )
+
+            ))));
+
+    itens.add(new ScreenHiddenDrawer(
+        new ItemHiddenMenu(
+          name: "Favourite",
+          colorTextUnSelected: Colors.white.withOpacity(0.5),
+          colorLineSelected: Colors.orange,
+         colorTextSelected: Colors.orange,
+        ),
+        Container(
+          color: Colors.orange,
+          child: Center(
+            child: Text(
+              "Favourite",
+              style: TextStyle(color: Colors.white, fontSize: 30.0),
+            ),
+          ),
+        )));
+
+    super.initState();
+  }
+
   int _currentIndex = 0;
   _Trending({this.storage});
   final FirebaseStorage storage;
@@ -50,27 +123,9 @@ class _Trending extends State<Home> {
 
   String errorMsg;
 
-//  Uint8List profilePic( DocumentSnapshot document) {
-//    Uint8List imageBytes;
-//
-//    storage.ref().child(document['memberID']+"/profile_pic.jpg").getData(10000000).then((data) =>
-//        setState(() {
-//          imageBytes = data;
-//          return imageBytes;
-//        })
-//    ).catchError((e) =>
-//        setState(() {
-//          errorMsg = e.error;
-//        })
-//    );
-//  }
-
 
   @override
   Widget build(BuildContext context) {
-
-
-
 
    // imageCache.clear();
     Trending homeTrending=new Trending();
@@ -87,42 +142,10 @@ class _Trending extends State<Home> {
       ),
       //Logo
     );
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.white,
-          elevation: 2,
-          title: new Text(
-            'Trending',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black.withOpacity(0.6)),
-          ),
-          leading:
-    GestureDetector(
-                          onTap: () {
 
 
-                          },
-          child:
-          new Image(
-            image: new AssetImage("images/menu.png"),
-            width: 20,
-            height: 20,
-            color: null,
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.center,
-          ),
-    ),
 
-          actions: [
-            menuButton,
-          ],
-        ),
-
-        bottomNavigationBar: BottomNavigationBar(
+    var bottomNavigationBar2 = BottomNavigationBar(
     //      fixedColor: Colors.deepPurple,
           onTap: onTabTapped, // new
           currentIndex: _currentIndex, // new
@@ -201,7 +224,45 @@ class _Trending extends State<Home> {
               ),
             )
           ],
-        ),
+        );
+
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+//        appBar: new AppBar(
+//          backgroundColor: Colors.white,
+//          elevation: 2,
+//          title: new Text(
+//            'Trending',
+//            textAlign: TextAlign.left,
+//            style: TextStyle(
+//                fontWeight: FontWeight.bold,
+//                color: Colors.black.withOpacity(0.6)),
+//          ),
+//          leading:
+//    GestureDetector(
+//                          onTap: () {
+//
+//
+//                          },
+//          child:
+//          new Image(
+//            image: new AssetImage("images/menu.png"),
+//            width: 20,
+//            height: 20,
+//            color: null,
+//            fit: BoxFit.scaleDown,
+//            alignment: Alignment.center,
+//          ),
+//    ),
+//
+//          actions: [
+//            menuButton,
+//          ],
+//        ),
+
+        bottomNavigationBar: bottomNavigationBar2,
 
 //        body: Column(
 //        children: <Widget>[
@@ -209,41 +270,22 @@ class _Trending extends State<Home> {
 //
 //        ],
 //        ),
-        body: Center(
-            child: new Container(
-//                child: new SingleChildScrollView(
-          child:  StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection('votes').snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//                FirebaseStorage storage = new FirebaseStorage(
-//                    storageBucket: 'gs://osszefogasaszanhuzokert.appspot.com/'
-//                );
-//                StorageReference imageLink = storage.ref().child('giftShopItems');
-                if (snapshot.hasData) {
-                  return new ListView(
-                    children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                      //imageBytes=null;
-
-                      return new Card( child: Column(
-                        children:
-                        homeTrending.homeTrendingList(context, document),
-                      ),);
-                    }
-                    ).toList(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-
-                // By default, show a loading spinner
-                return CircularProgressIndicator();
-
-
-              },
-            )
-
-        )),
+        body:  new HiddenDrawerMenu(
+        initPositionSelected: 0,
+        screens: itens,
+        backgroundColorMenu: Colors.white,
+            iconMenuAppBar: Image.asset("images/menu.png",),
+        //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
+        //    whithAutoTittleName: true,
+        //    styleAutoTittleName: TextStyle(color: Colors.red),
+        //    actionsAppBar: <Widget>[],
+        //    backgroundColorContent: Colors.blue,
+            backgroundColorAppBar: Colors.blueGrey,
+        //    elevationAppBar: 4.0,
+        //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
+        //    enableShadowItensMenu: true,
+        //    backgroundMenu: DecorationImage(image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
+      ),
       ),
     );
   }
