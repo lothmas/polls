@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
-class DraggableCity extends StatefulWidget {
+class DraggableText extends StatefulWidget {
   final NomineesEntityList item;
   final Size size;
 
   bool enabled = true;
-  DraggableCity(this.item, {this.size});
+  DraggableText(this.item, {this.size});
 
   @override
   _DraggableCityState createState() => new _DraggableCityState();
 }
 
-class _DraggableCityState extends State<DraggableCity> {
+class _DraggableCityState extends State<DraggableText> {
   @override
   Widget build(BuildContext context) {
     return new Padding(

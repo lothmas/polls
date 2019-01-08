@@ -13,11 +13,6 @@ import 'package:photo_view/photo_view.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
-  int voteID;
-  int voteBy;
-
-
-
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
     double c_width = MediaQuery.of(context).size.width * 1;

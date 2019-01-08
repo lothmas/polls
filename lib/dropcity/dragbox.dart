@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
+import 'package:stats/cast_votes.dart';
 import 'package:stats/dropcity/draggable_image.dart';
 
 //import 'package:stats/dropcity/country.dart';
@@ -130,7 +131,7 @@ class _GameViewState extends State<GameView> {
             crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
-                .map((item) => new DraggableCity(item, size: itemSize))
+                .map((item) => new DraggableText(item, size: itemSize))
                 .toList(),
           ),
         )
@@ -177,16 +178,9 @@ class _GameViewState extends State<GameView> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-//                  Container(
-//                    color: Colors.transparent,
-//                    height: 5,
-//                    width: 5,
-//                  ),
-
-
                   _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
-                  _buildButton1('images/vote.png',validated ? _onClear : _onValidate),
 
+                  _buildButton1('images/vote.png',validated ? _approveVote:_doNothing  ),
 
                 ]),
        ]),
@@ -229,15 +223,54 @@ class _GameViewState extends State<GameView> {
 
   void _onValidate() {
     setState(() {
-      score = 0;
-      pairs.forEach((index, item) {
-        if (item.id == index) {
-          item.status = Status.correct;
-          score++;
-        } else
-          item.status = Status.wrong;
-      });
-      validated = true;
+      if(pairs.length!=0) {
+        score = 0;
+        pairs.forEach((index, item) {
+          if (item.id == index) {
+            item.status = Status.correct;
+            score++;
+          } else
+            item.status = Status.wrong;
+        });
+        validated = true;
+      }
+      else{
+        final SnackBar objSnackbar = new SnackBar(
+          content: new Text("No Nominee Selected. Long Press, Drag & Drop"),
+          backgroundColor: Colors.blueGrey,
+        );
+
+        Scaffold.of(context).showSnackBar(objSnackbar);
+      }
+
+    });
+  }
+
+  void _approveVote() {
+    setState(() {
+      if(pairs.length!=0 ) {
+        score = 0;
+        pairs.forEach((index, item) {
+          if (item.id == index) {
+            item.status = Status.correct;
+            score++;
+            validated = true;
+            CastVotes().singleSelectionVote(item, "dsf");
+          } else
+            item.status = Status.wrong;
+        });
+        Navigator.pop(context);
+
+      }
+      else{
+        final SnackBar objSnackbar = new SnackBar(
+          content: new Text("No Nominee Selected. Long Press, Drag & Drop"),
+          backgroundColor: Colors.blueGrey,
+        );
+
+        Scaffold.of(context).showSnackBar(objSnackbar);
+      }
+
     });
   }
 
@@ -249,6 +282,17 @@ class _GameViewState extends State<GameView> {
       });
       pairs.clear();
       validated = false;
+    });
+  }
+
+  void _doNothing() {
+    setState(() {
+      final SnackBar objSnackbar = new SnackBar(
+        content: new Text("Cn't Submit Vote No Nominee is Selected"),
+        backgroundColor: Colors.blueGrey,
+      );
+
+      Scaffold.of(context).showSnackBar(objSnackbar);
     });
   }
 }

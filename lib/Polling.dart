@@ -26,7 +26,7 @@ class Polling extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
- //   imageCache.clear();
+    //   imageCache.clear();
     return _Trending();
   }
 
@@ -53,8 +53,11 @@ class _Trending extends State<Polling> {
         appBar: new AppBar(
           backgroundColor: Colors.blueGrey,
           elevation: 2,
-          title: Text("Nominees",
-            textAlign: TextAlign.justify,style: TextStyle(fontSize: 12.0,color: Colors.black),),
+          title: Text(
+            "Nominees",
+            textAlign: TextAlign.justify,
+            style: TextStyle(fontSize: 12.0, color: Colors.black),
+          ),
           leading: GestureDetector(
               child: Image(
                 image: new AssetImage("images/exit.png"),
@@ -65,20 +68,13 @@ class _Trending extends State<Polling> {
                 alignment: Alignment.center,
               ),
               onTap: () {
-                Navigator.pop(
-                  context);
+                Navigator.pop(context);
               }),
         ),
-
         body:
 //
             new Stack(
           children: <Widget>[
-//              new Container(
-//                decoration: new BoxDecoration(
-//                  image: new DecorationImage(image: new AssetImage("images/background.jpg"), fit: BoxFit.cover,),
-//                ),
-//              ),
             Center(
                 child: StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance
@@ -108,49 +104,24 @@ class _Trending extends State<Polling> {
                   }
                   if (voteType1 == 2 && voteBy1 == 1) {
                     List<NomineesEntityList> nomineesList1 = new List();
-                    int count=0;
+                    int count = 0;
                     for (NomineesEntityList nominee in nomineesList) {
                       NomineesEntityList nominee1 = new NomineesEntityList();
                       nominee1.nomineeName = nominee.nomineeName;
                       nominee1.id = nominee.id;
-                      nominee1.nomineesDescription = nominee.nomineesDescription;
-                      nominee1.nomineeImage = "images/nominee_images/nominee"+count.toString()+".jpg";
+                      nominee1.nomineesDescription =
+                          nominee.nomineesDescription;
+                      nominee1.nomineeImage = "images/nominee_images/nominee" +
+                          count.toString() +
+                          ".jpg";
                       nomineesList1.add(nominee1);
                       count++;
                     }
                     return new DraggableReOrderImage(nomineesList1, voteBy1);
-
-//                    for (NomineesEntityList nominee in nomineesList) {
-//                      items.add(nominee.nomineeName);
-//                    }
-//                    return new DragAndDropList<String>(
-//                      items,
-//                      itemBuilder: (BuildContext context, item) {
-//                        return new SizedBox(
-//                          child: new Card(
-//                            child: new ListTile(
-//                              title: new Text(item),
-//                            ),
-//                          ),
-//                        );
-//                      },
-//                      onDragFinish: (before, after) {
-//                        String data = items[before];
-//                        items.removeAt(before);
-//                        items.insert(after, data);
-//                      },
-//                      canBeDraggedTo: (one, two) => true,
-//                      dragElevation: 8.0,
-//                    );
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
-                    //    return new MultipleSelection1();
-
-                    return new DropCityApp(
-                        nomineesList, voteBy1, "images/background.jpg");
+                    return new SingleSelectDrag(nomineesList, voteBy1, "images/background.jpg");
                   } else if (voteType1 == 3) {
                     return new MultipleSelection1(nomineesList, voteBy1);
-                    // return new DraggableReOrderImage();
-                    //return new OrderByDragging().drageableOrder(nomineesList, voteBy1);
                   }
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
@@ -159,18 +130,9 @@ class _Trending extends State<Polling> {
                 // By default, show a loading spinner
                 return CircularProgressIndicator();
               },
-            )
-
-//          ),
-                ),
+            )),
           ],
         ),
-
-//        floatingActionButtonLocation:
-//        FloatingActionButtonLocation.endDocked,
-//        floatingActionButton:  _buildButton(validated ? Icons.refresh : Icons.check,
-//                validated ? _onClear : _onValidate)
-        //  child: new Row(...),
       ), //
       //   gridView,
     );
@@ -189,71 +151,6 @@ class _Trending extends State<Polling> {
     });
   }
 }
-
-//class NomineeGrid1 extends StatelessWidget {
-//  const NomineeGrid1({
-//    Key key,
-//    @required this.nomineeList,
-//  }) : super(key: key);
-//
-//  final List<NomineesEntityList> nomineeList;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return GridView.builder(
-//        padding: const EdgeInsets.all(1.0),
-//        itemCount: nomineeList.length,
-//        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-//          crossAxisCount: 4,
-//          childAspectRatio: 1.0,
-//          mainAxisSpacing: 4.0,
-//          crossAxisSpacing: 4.0,
-//        ),
-//        itemBuilder: (BuildContext context, int index) {
-//          return new GestureDetector(
-//            child: new Card(
-//              elevation: 5.0,
-//              child: new Container(
-//                alignment: Alignment.center,
-//                child: Image(
-//                  image: new NetworkImage(
-//                      nomineeList.elementAt(index).nomineeImage),
-//                  color: null,
-//                  fit: BoxFit.cover,
-//                  alignment: Alignment.center,
-//                ),
-//                //  child: new Text('Item $index'),
-//              ),
-//            ),
-//            onTap: () {
-//              showDialog(
-//                barrierDismissible: false,
-//                context: context,
-//                child: new CupertinoAlertDialog(
-//                  title: new Column(
-//                    children: <Widget>[
-//                      new Text("GridView"),
-//                      new Icon(
-//                        Icons.favorite,
-//                        color: Colors.green,
-//                      ),
-//                    ],
-//                  ),
-//                  content: new Text("Selected Item $index"),
-//                  actions: <Widget>[
-//                    new FlatButton(
-//                        onPressed: () {
-//                          Navigator.of(context).pop();
-//                        },
-//                        child: new Text("OK"))
-//                  ],
-//                ),
-//              );
-//            },
-//          );
-//        });
-//  }
-//}
 
 class App extends StatefulWidget {
   @override

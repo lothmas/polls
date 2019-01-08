@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/dragbox.dart';
 
-class DropCityApp extends StatelessWidget {
+class SingleSelectDrag extends StatelessWidget {
   List<NomineesEntityList> items;
   int voteBy;
   String backgroundImage;
 
-  DropCityApp(this.items, this.voteBy, this.backgroundImage);
+  SingleSelectDrag(this.items, this.voteBy, this.backgroundImage);
 
   @override
   Widget build(BuildContext context) {

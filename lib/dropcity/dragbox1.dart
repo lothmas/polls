@@ -130,7 +130,7 @@ class _GameViewState extends State<GameView1> {
             crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
-                .map((item) => new DraggableCity(item, size: itemSize))
+                .map((item) => new DraggableText(item, size: itemSize))
                 .toList(),
           ),
         )
