@@ -207,6 +207,7 @@ class _Trending extends State<Home> {
         //    elevationAppBar: 4.0,
         //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
         //    enableShadowItensMenu: true,
+            isDraggable :false,
             backgroundMenu: DecorationImage(image: ExactAssetImage("images/background.jpg"),fit: BoxFit.cover),
       ),
       ),
