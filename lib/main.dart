@@ -9,7 +9,6 @@ import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
 import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:video_player/video_player.dart';
 
 const PrimaryColor = const Color(0x00000000);
@@ -34,6 +33,8 @@ void main() async {
 }
 
 class Home extends StatefulWidget {
+
+
   Home({this.storage});
   final FirebaseStorage storage;
   @override
@@ -46,11 +47,11 @@ class Home extends StatefulWidget {
 
 class _Trending extends State<Home> {
 
-
   List<ScreenHiddenDrawer> itens = new List();
 
   @override
   void initState() {
+//    initiateFacebookLogin();
     Trending homeTrending=new Trending();
 
     itens.add(new ScreenHiddenDrawer(
@@ -302,6 +303,8 @@ class _Trending extends State<Home> {
       _currentIndex = index;
     });
   }
+
+
 }
 
 
