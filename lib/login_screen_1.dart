@@ -33,7 +33,7 @@ class LoginScreen1 extends StatelessWidget {
                 ),
               ),
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: 150.0, bottom: 100.0),
+              padding: EdgeInsets.only(top: 50.0, bottom: 50.0),
               child: Column(
                 children: <Widget>[
                   Text(
@@ -176,7 +176,7 @@ class LoginScreen1 extends StatelessWidget {
                                   borderRadius:
                                   new BorderRadius.circular(28.0)),
                               splashColor: Colors.white,
-                              color: Colors.white,
+                              color: Colors.blue,
                               child: Icon(
                                 Icons.arrow_forward,
                                 color: this.primaryColor,
