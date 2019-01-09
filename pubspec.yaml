@@ -36,7 +36,7 @@ dependencies:
 #  youtube_api: ^0.2.1
 #  social_login: ^0.0.2
   firebase_auth: ^0.6.6
-
+  flutter_signin_button: ^0.2.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -102,6 +102,8 @@ flutter:
     - images/loader2.gif
     - images/full-bloom.png
     - images/facebook.png
+    - images/twitter_sign_in.png
+    - images/google_sign_in.png
 
   #  - images/a_dot_ham.jpeg
 

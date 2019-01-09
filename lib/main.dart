@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
 import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:stats/login_screen_1.dart';
 import 'package:video_player/video_player.dart';
 
 const PrimaryColor = const Color(0x00000000);
@@ -181,6 +184,43 @@ class _Trending extends State<Home> {
       ),
     );
 
+
+    Future<void> signOut1(BuildContext context) async {
+    }
+
+   final dropDownMenu= PopupMenuButton<DropDownMenuList>(
+     onSelected:  (DropDownMenuList i) async{
+       if(i.title=='log-out'){
+         await FirebaseAuth.instance.signOut();
+       Navigator.push(
+         context,
+         new MaterialPageRoute(
+             builder: (context) => new LoginScreen1()),
+       );
+       }
+
+     },
+
+      itemBuilder: (BuildContext context) {
+        return choices.skip(0).map((DropDownMenuList choice) {
+          return PopupMenuItem<DropDownMenuList>(
+            value: choice,
+            child: Row(children: <Widget>[
+              IconButton(
+                icon: Icon(choice.icon),
+                onPressed: () {
+
+                      },
+              ),
+
+              Text(choice.title)],),
+          );
+        }).toList();
+      },
+    );
+
+
+
     var bottomNavigationBar2 = buildBottomNavigationBar();
 
     return MaterialApp(
@@ -202,7 +242,7 @@ class _Trending extends State<Home> {
         //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
         //    whithAutoTittleName: true,
         //    styleAutoTittleName: TextStyle(color: Colors.red),
-            actionsAppBar: <Widget>[menuButton],
+            actionsAppBar: <Widget>[menuButton,dropDownMenu],
         //    backgroundColorContent: Colors.blue,
             backgroundColorAppBar: Colors.blueGrey,
         //    elevationAppBar: 4.0,
@@ -310,3 +350,42 @@ class _Trending extends State<Home> {
 
 
 
+class DropDownMenuList {
+  const DropDownMenuList({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<DropDownMenuList> choices = const <DropDownMenuList>[
+  const DropDownMenuList(title: 'log-out', icon: Icons.outlined_flag),
+ // const DropDownMenuList(title: 'share', icon: Icons.share),
+//  const DropDownMenuList(title: 'block', icon: Icons.block),
+ // const DropDownMenuList(title: 'not-interested', icon: Icons.not_interested),
+//  const DropDownMenuList(title: 'Train', icon: Icons.directions_railway),
+//  const DropDownMenuList(title: 'Walk', icon: Icons.directions_walk),
+];
+
+class DropDownMenuListCard extends StatelessWidget {
+  const DropDownMenuListCard({Key key, this.choice}) : super(key: key);
+
+  final DropDownMenuList choice;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle textStyle = Theme.of(context).textTheme.display1;
+    return Card(
+      color: Colors.white,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(choice.icon, size: 128.0, color: textStyle.color),
+            Text(choice.title, style: textStyle),
+          ],
+        ),
+      ),
+    );
+  }
+}
