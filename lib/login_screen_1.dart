@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:path/path.dart';
+import 'package:stats/facebook_custom.dart';
 import 'package:stats/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class LoginScreen1 extends StatelessWidget {
   final Color primaryColor;
@@ -70,18 +71,10 @@ class LoginScreen1 extends StatelessWidget {
            child:Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: <Widget>[
-               SignInButton(
-                 Buttons.Facebook,
-                 //mini: true,
-                 onPressed: () {
-                   initiateFacebookLogin(context);
-                 },
-               )
-             ,SignInButton(
-                 Buttons.Google,
-               //  mini: true,
-                 onPressed: () {},
-               )
+               FacebookSignInButton1(onPressed: () {initiateFacebookLogin(context);}),
+               TwitterSignInButton(onPressed: () {}),
+               GoogleSignInButton(onPressed: () {}),
+//               GoogleSignInButton(onPressed: () {}, darkMode: true),
              ],
            ),
           )

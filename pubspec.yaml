@@ -37,6 +37,7 @@ dependencies:
 #  social_login: ^0.0.2
   firebase_auth: ^0.6.6
   flutter_signin_button: ^0.2.5
+  flutter_auth_buttons: ^0.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
