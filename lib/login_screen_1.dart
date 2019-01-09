@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:path/path.dart';
 import 'package:stats/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen1 extends StatelessWidget {
   final Color primaryColor;
@@ -247,13 +248,14 @@ class LoginScreen1 extends StatelessWidget {
         //  onLoginStatusChanged(false);
         break;
       case FacebookLoginStatus.loggedIn:
-        print("LoggedIn");
-        Navigator.push(
+        FirebaseAuth.instance.signInWithFacebook(accessToken: facebookLoginResult.accessToken.token);
+        Navigator.pushReplacement(
           context,
           new MaterialPageRoute(
               builder: (context) => new Home()),
         );
-          //onLoginStatusChanged(true);
+
+        //onLoginStatusChanged(true);
         break;
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/login_screen_1.dart';
 import 'package:stats/main.dart';
@@ -8,7 +9,10 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    bool loggedIn =false;
+    if(FirebaseAuth.instance.currentUser()!=null){
+      loggedIn=true;
+    }
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
 
@@ -17,7 +21,7 @@ class SplashView extends StatelessWidget {
           builder: (context) => new _SplashContent(),
         ),
         routes: <String, WidgetBuilder>{
-          '/main': (BuildContext context) => Scaffold(body:SafeArea(child: new LoginScreen1()),)}
+          '/main': (BuildContext context) => loggedIn ? Home(): Scaffold(body:SafeArea(child: new LoginScreen1()),)}
     );
   }
 }
