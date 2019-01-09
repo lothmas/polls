@@ -44,7 +44,7 @@ class LoginScreen1 extends StatelessWidget {
                     width: 50,
                   ),
                   Container(
-                    height: 10,
+                    height: 18,
                   ),
                   Text(
                     "POLLS",
@@ -60,7 +60,7 @@ class LoginScreen1 extends StatelessWidget {
                     "providing needed data",
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                         color: this.primaryColor),
                   ),
                 ],
@@ -71,9 +71,9 @@ class LoginScreen1 extends StatelessWidget {
            child:Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: <Widget>[
-               FacebookSignInButton1(onPressed: () {initiateFacebookLogin(context);}),
                TwitterSignInButton(onPressed: () {}),
                GoogleSignInButton(onPressed: () {}),
+               FacebookSignInButton1(onPressed: () {initiateFacebookLogin(context);}),
 //               GoogleSignInButton(onPressed: () {}, darkMode: true),
              ],
            ),
