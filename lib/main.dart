@@ -192,7 +192,7 @@ class _Trending extends State<Home> {
      onSelected:  (DropDownMenuList i) async{
        if(i.title=='log-out'){
          await FirebaseAuth.instance.signOut();
-       Navigator.push(
+         Navigator.pushReplacement(
          context,
          new MaterialPageRoute(
              builder: (context) => new LoginScreen1()),

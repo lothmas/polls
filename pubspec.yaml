@@ -38,6 +38,8 @@ dependencies:
   firebase_auth: ^0.6.6
   flutter_signin_button: ^0.2.5
   flutter_auth_buttons: ^0.3.1
+  google_sign_in: 3.2.4
+  flutter_twitter_login: ^1.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
