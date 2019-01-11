@@ -33,8 +33,6 @@ dependencies:
   flutter_multiple_image_picker: ^0.0.1
   hidden_drawer_menu: ^0.2.0
   flutter_facebook_login: ^1.1.1
-#  youtube_api: ^0.2.1
-#  social_login: ^0.0.2
   firebase_auth: ^0.6.6
   flutter_signin_button: ^0.2.5
   flutter_auth_buttons: ^0.3.1
@@ -107,6 +105,9 @@ flutter:
     - images/facebook.png
     - images/twitter_sign_in.png
     - images/google_sign_in.png
+    - assets/van_on_beach.jpg
+    - assets/dusk_waves.jpg
+    - assets/board_walk.jpg
 
   #  - images/a_dot_ham.jpeg
 

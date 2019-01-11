@@ -11,6 +11,7 @@ import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
 import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:stats/create_vote.dart';
 import 'package:stats/login_screen_1.dart';
 import 'package:video_player/video_player.dart';
 
@@ -227,7 +228,7 @@ class _Trending extends State<Home> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         bottomNavigationBar: bottomNavigationBar2,
-        body:  new HiddenDrawerMenu(
+        body: _currentIndex==0? new HiddenDrawerMenu (
         initPositionSelected: 0,
         screens: itens,
         backgroundColorMenu: Colors.white,
@@ -250,7 +251,7 @@ class _Trending extends State<Home> {
         //    enableShadowItensMenu: true,
             isDraggable :false,
             backgroundMenu: DecorationImage(image: ExactAssetImage("images/background.jpg"),fit: BoxFit.cover),
-      ),
+      ):_currentIndex==2?CreateVote():null,
       ),
     );
   }
@@ -339,8 +340,15 @@ class _Trending extends State<Home> {
 
   void onTabTapped(int index) {
     setState(() {
-      if (index == 1) {}
       _currentIndex = index;
+
+//      if (index == 2) {
+//        Navigator.push(
+//          context,
+//          new MaterialPageRoute(
+//              builder: (context) => new CreateVote()),
+//        );
+//      }
     });
   }
 
