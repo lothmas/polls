@@ -52,12 +52,24 @@ class Home extends StatefulWidget {
 class _Trending extends State<Home> {
 
   List<ScreenHiddenDrawer> itens = new List();
+  List<ScreenHiddenDrawer> itens1 = new List();
+
 
   @override
   void initState() {
 //    initiateFacebookLogin();
     Trending homeTrending=new Trending();
+    itens1.add(new ScreenHiddenDrawer(
+        new ItemHiddenMenu(
+          name: "Create Poll",
+          colorTextUnSelected: Colors.grey,
+          colorLineSelected: Colors.teal,
+          colorTextSelected: Colors.blueGrey,
+          key: UniqueKey(),
 
+        ),
+        Center(
+            child: new CreateVote())));
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Trending",
@@ -155,7 +167,9 @@ class _Trending extends State<Home> {
           ),
         )));
 
-
+      for(int a=1;a<itens.length-1;a++){
+        itens1.add(itens.elementAt(a));
+      }
 
     super.initState();
   }
@@ -228,9 +242,9 @@ class _Trending extends State<Home> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         bottomNavigationBar: bottomNavigationBar2,
-        body: _currentIndex==0? new HiddenDrawerMenu (
+        body:  new HiddenDrawerMenu (
         initPositionSelected: 0,
-        screens: itens,
+        screens: _currentIndex==0? itens:_currentIndex==2?itens1:null,
         backgroundColorMenu: Colors.white,
             iconMenuAppBar: Image(
               image: new AssetImage("images/menu.png"),
@@ -251,7 +265,7 @@ class _Trending extends State<Home> {
         //    enableShadowItensMenu: true,
             isDraggable :false,
             backgroundMenu: DecorationImage(image: ExactAssetImage("images/background.jpg"),fit: BoxFit.cover),
-      ):_currentIndex==2?CreateVote():null,
+      ),
       ),
     );
   }
