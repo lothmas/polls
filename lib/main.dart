@@ -167,7 +167,7 @@ class _Trending extends State<Home> {
           ),
         )));
 
-      for(int a=1;a<itens.length-1;a++){
+      for(int a=1;a<itens.length;a++){
         itens1.add(itens.elementAt(a));
       }
 
