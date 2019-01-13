@@ -1,6 +1,6 @@
 final List<CardViewModel> demoCards = [
   new CardViewModel(
-    backdropAssetPath: 'assets/van_on_beach.jpg',
+    backdropAssetPath: 'images/assets/images.jpg',
     address: '10TH STREET',
     minHeightInFeet: 2,
     maxHeightInFeet: 3,

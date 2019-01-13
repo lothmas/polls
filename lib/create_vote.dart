@@ -1,11 +1,10 @@
 import 'dart:math';
 import 'dart:ui' show lerpDouble;
 
+import 'package:badge/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stats/card_data.dart';
-
-
 
 class CreateVote extends StatelessWidget {
   @override
@@ -74,7 +73,8 @@ class CardFlipper extends StatefulWidget {
   _CardFlipperState createState() => new _CardFlipperState();
 }
 
-class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin {
+class _CardFlipperState extends State<CardFlipper>
+    with TickerProviderStateMixin {
   double scrollPercent = 0.0;
   Offset startDrag;
   double startDragPercentScroll;
@@ -92,8 +92,8 @@ class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin
     )
       ..addListener(() {
         setState(() {
-          scrollPercent =
-              lerpDouble(finishScrollStart, finishScrollEnd, finishScrollController.value);
+          scrollPercent = lerpDouble(
+              finishScrollStart, finishScrollEnd, finishScrollController.value);
 
           if (widget.onScroll != null) {
             widget.onScroll(scrollPercent);
@@ -114,7 +114,8 @@ class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin
     final singleCardDragPercent = dragDistance / context.size.width;
 
     setState(() {
-      scrollPercent = (startDragPercentScroll + (-singleCardDragPercent / widget.cards.length))
+      scrollPercent = (startDragPercentScroll +
+              (-singleCardDragPercent / widget.cards.length))
           .clamp(0.0, 1.0 - (1 / widget.cards.length));
       print('percentScroll: $scrollPercent');
 
@@ -126,7 +127,8 @@ class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin
 
   void _onPanEnd(DragEndDetails details) {
     finishScrollStart = scrollPercent;
-    finishScrollEnd = (scrollPercent * widget.cards.length).round() / widget.cards.length;
+    finishScrollEnd =
+        (scrollPercent * widget.cards.length).round() / widget.cards.length;
     finishScrollController.forward(from: 0.0);
 
     setState(() {
@@ -177,10 +179,13 @@ class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin
     final rotationPointMultiplier = angle > 0.0 ? angle / angle.abs() : 1.0;
     print('Angle: $angle');
     projection *= new Matrix4.translationValues(
-            horizontalTranslation + (rotationPointMultiplier * 300.0), 0.0, 0.0) *
+            horizontalTranslation + (rotationPointMultiplier * 300.0),
+            0.0,
+            0.0) *
         new Matrix4.rotationY(angle) *
         new Matrix4.translationValues(0.0, 0.0, radius) *
-        new Matrix4.translationValues(-rotationPointMultiplier * 300.0, 0.0, 0.0);
+        new Matrix4.translationValues(
+            -rotationPointMultiplier * 300.0, 0.0, 0.0);
 
     return projection;
   }
@@ -225,7 +230,8 @@ class _CardFlipperState extends State<CardFlipper> with TickerProviderStateMixin
 
 class CreateVoteCard extends StatelessWidget {
   final CardViewModel viewModel;
-  final double parallaxPercent; // [0.0, 1.0] (0.0 for all the way right, 1.0 for all the way left)
+  final double
+      parallaxPercent; // [0.0, 1.0] (0.0 for all the way right, 1.0 for all the way left)
 
   CreateVoteCard({
     this.viewModel,
@@ -254,126 +260,167 @@ class CreateVoteCard extends StatelessWidget {
           ),
         ),
 
+
         // Content
         new Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            new Padding(
-              padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
-              child: new Text(
-                '${viewModel.address}'.toUpperCase(),
-                style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontFamily: 'petita',
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2.0,
-                ),
+          children: [Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                color: Colors.transparent,
+                width: 10.0,
               ),
-            ),
-            new Expanded(child: new Container()),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                new Text(
-                  '${viewModel.minHeightInFeet} - ${viewModel.maxHeightInFeet}',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontSize: 140.0,
-                    fontFamily: 'petita',
-                    letterSpacing: -5.0,
-                  ),
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 30.0),
-                  child: new Text(
-                    'FT',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: 22.0,
-                      fontFamily: 'petita',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                new Icon(
-                  Icons.wb_sunny,
-                  color: Colors.white,
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: new Text(
-                    '${viewModel.tempInDegrees.toStringAsFixed(1)}º',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'petita',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            new Expanded(child: new Container()),
-            new Padding(
-              padding: const EdgeInsets.only(top: 50.0, bottom: 50.0),
-              child: new Container(
-                decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(30.0),
-                  border: new Border.all(
-                    color: Colors.white,
-                    width: 1.5,
-                  ),
-                  color: Colors.black.withOpacity(0.3),
-                ),
-                child: new Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                    top: 10.0,
-                    bottom: 10.0,
-                  ),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      new Text(
-                        '${viewModel.weatherType}',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'petita',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      new Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: new Icon(
-                          Icons.wb_cloudy,
-                          color: Colors.white,
-                        ),
-                      ),
-                      new Text(
-                        '${viewModel.windSpeedInMph}mph ${viewModel.cardinalDirection}',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'petita',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ],
+              Container(
+                //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+                color: Colors.transparent,
+                child: ClipOval(
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'images/loader.gif',
+                    image: "",
+                    fit: BoxFit.fill,
+                    width: 75.0,
+                    height: 75.0,
                   ),
                 ),
               ),
-            ),
-          ],
+              Container(
+                color: Colors.transparent,
+                width: 10.0,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 1.0),
+                    color: Colors.transparent,
+                    child: Text(
+                      "Title",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 5.0,
+                  ),
+                  Container(
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            'owner:  ',
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            "type owner",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(color: Colors.teal),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 7,
+                  ),
+                  Container(
+//          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+                    child: new Column(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                color: Colors.transparent,
+                                width: 20,
+                              ),
+                              Container(
+//                          child: Image(
+//                            image: new AssetImage("images/lock.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: 58,
+                              ),
+                              Container(
+//                          child: Image(
+//                            image: new AssetImage("images/trending.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: 58,
+                              ),
+//                        GestureDetector(
+//                          onTap: () {
+//                            list.add(new Tooltip(
+//                                message: "Hello World",
+//                                child: new Text("foo")));
+//                          },
+//                          child: Image(
+//                            image: new AssetImage("images/info.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+//                        ),
+                            ],
+                          ),
+                        ]),
+                  ),
+                ],
+              ),
+              Container(
+                color: Colors.transparent,
+                width: 30,
+              ),
+              new Align(
+                  child: Container(
+                      color: Colors.black12,
+                      child: Badge.right(
+//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
+                          value: '0' + ' | ' + '4',
+                          color: Colors.blueGrey,
+                          // value to show inside the badge
+                          child: new Text("") // text to append (required)
+                      ))),
+            ],
+          ), ],
         ),
       ],
     );
