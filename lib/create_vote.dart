@@ -260,94 +260,87 @@ class CreateVoteCard extends StatelessWidget {
           ),
         ),
 
+
         // Content
         new Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  color: Colors.transparent,
-                  width: 10.0,
-                ),
-                Container(
-                  //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+          children: [Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                color: Colors.transparent,
+                width: 10.0,
+              ),
+              Container(
+                //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
 //              color: Colors.white,
 //              blurRadius: 20.0,
 //            ),
 //          ]),
-                  color: Colors.transparent,
-                  child: ClipOval(
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'images/picker.gif',
-                      image: "",
-                      fit: BoxFit.fill,
-                      width: 150.0,
-                      height: 150.0,
-                    ),
+                color: Colors.transparent,
+                child: ClipOval(
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'images/loader.gif',
+                    image: "",
+                    fit: BoxFit.fill,
+                    width: 75.0,
+                    height: 75.0,
                   ),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  width: 10.0,
-                ),
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 1.0),
-                      color: Colors.transparent,
-                      child: Text(
-                        "Title",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.bold),
-                      ),
+              ),
+              Container(
+                color: Colors.transparent,
+                width: 10.0,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 1.0),
+                    color: Colors.transparent,
+                    child: Text(
+                      "Title",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      color: Colors.transparent,
-                      height: 5.0,
-                    ),
-                    Container(
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            color: Colors.transparent,
-                            child: Text(
-                              'owner:  ',
-                              textAlign: TextAlign.left,
-                            ),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 5.0,
+                  ),
+                  Container(
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            'owner:  ',
+                            textAlign: TextAlign.left,
                           ),
-                          Container(
-                            color: Colors.transparent,
-                            child: Text(
-                              "type owner",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: Colors.teal),
-                            ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            "type owner",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(color: Colors.teal),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      color: Colors.transparent,
-                      height: 7,
-                    ),
-                    Container(
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'images/loader.gif',
-                        image: "",
-                        fit: BoxFit.fill,
-                        width: 75.0,
-                        height: 75.0,
-                      ),
-                    ),
-                    Container(
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 7,
+                  ),
+
+
+                  Container(
 //          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
@@ -355,17 +348,17 @@ class CreateVoteCard extends StatelessWidget {
 //              blurRadius: 20.0,
 //            ),
 //          ]),
-                      child: new Column(
+                    child: new Column(
 //                    mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  color: Colors.transparent,
-                                  width: 20,
-                                ),
-                                Container(
+                        children: [
+                          new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                color: Colors.transparent,
+                                width: 20,
+                              ),
+                              Container(
 //                          child: Image(
 //                            image: new AssetImage("images/lock.png"),
 //                            width: 18,
@@ -374,12 +367,12 @@ class CreateVoteCard extends StatelessWidget {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                                    ),
-                                Container(
-                                  color: Colors.transparent,
-                                  width: 58,
-                                ),
-                                Container(
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: 58,
+                              ),
+                              Container(
 //                          child: Image(
 //                            image: new AssetImage("images/trending.png"),
 //                            width: 18,
@@ -388,11 +381,11 @@ class CreateVoteCard extends StatelessWidget {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                                    ),
-                                Container(
-                                  color: Colors.transparent,
-                                  width: 58,
-                                ),
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: 58,
+                              ),
 //                        GestureDetector(
 //                          onTap: () {
 //                            list.add(new Tooltip(
@@ -408,31 +401,39 @@ class CreateVoteCard extends StatelessWidget {
 //                            alignment: Alignment.center,
 //                          ),
 //                        ),
-                              ],
-                            ),
-                          ]),
-                    ),
-                  ],
-                ),
-                Container(
-                  color: Colors.transparent,
-                  width: 30,
-                ),
-                new Align(
-                    child: Container(
-                        color: Colors.black12,
-                        child: Badge.right(
+                            ],
+                          ),
+                        ]),
+                  ),
+                ],
+              ),
+              Container(
+                color: Colors.transparent,
+                width: 30,
+              ),
+              new Align(
+                  child: Container(
+                      color: Colors.black12,
+                      child: Badge.right(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                            value: '0' + ' | ' + '4',
-                            color: Colors.blueGrey,
-                            // value to show inside the badge
-                            child: new Text("") // text to append (required)
-                            ))),
-              ],
-            ),
-          ],
+                          value: '0' + ' | ' + '4',
+                          color: Colors.blueGrey,
+                          // value to show inside the badge
+                          child: new Text("") // text to append (required)
+                      ))),
+            ],
+          ),
+    ],
         ),
-      ],
+        Container(
+          child: FadeInImage.assetNetwork(
+            placeholder: 'images/picker.gif',
+            image: "",
+            fit: BoxFit.fill,
+            width: 150.0,
+            height: 150.0,
+          ),
+        )],
     );
   }
 }
