@@ -339,6 +339,10 @@ class CreateVoteCard extends StatelessWidget {
                     height: 7,
                   ),
                   Container(
+
+                    child: Image.asset("images/pick.gif",height: 150,width: 150,),
+                  ),
+                  Container(
 //          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
