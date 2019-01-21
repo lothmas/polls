@@ -283,7 +283,7 @@ class CreateVoteCard extends StatelessWidget {
                 child: ClipOval(
                   child: FadeInImage.assetNetwork(
                     placeholder: 'images/loader.gif',
-                    image: "",
+                    image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
                     fit: BoxFit.fill,
                     width: 75.0,
                     height: 75.0,
@@ -326,7 +326,7 @@ class CreateVoteCard extends StatelessWidget {
                         Container(
                           color: Colors.transparent,
                           child: Text(
-                            "type owner",
+                            "fifa.world.cup",
                             textAlign: TextAlign.left,
                             style: TextStyle(color: Colors.teal),
                           ),
@@ -416,7 +416,7 @@ class CreateVoteCard extends StatelessWidget {
                       color: Colors.black12,
                       child: Badge.right(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                          value: '0' + ' | ' + '4',
+                          value: '0' + ' | ' + '0',
                           color: Colors.blueGrey,
                           // value to show inside the badge
                           child: new Text("") // text to append (required)
@@ -434,18 +434,18 @@ class CreateVoteCard extends StatelessWidget {
             ),
           ),
           new ListTile(
-            leading: const Icon(Icons.phone),
+            leading: const Icon(Icons.description),
             title: new TextField(
               decoration: new InputDecoration(
-                hintText: "Phone",
+                hintText: "Poll Description",
               ),
             ),
           ),
           new ListTile(
-            leading: const Icon(Icons.email),
+            leading: const Icon(Icons.confirmation_number),
             title: new TextField(
               decoration: new InputDecoration(
-                hintText: "Email",
+                hintText: "Allowed Number of Polls Per User",
               ),
             ),
           ),
@@ -457,17 +457,17 @@ class CreateVoteCard extends StatelessWidget {
             title: const Text('Nick'),
             subtitle: const Text('None'),
           ),
-          new ListTile(
-            leading: const Icon(Icons.today),
-            title: const Text('Birthday'),
-            subtitle: const Text('February 20, 1980'),
-          ),
-          new ListTile(
-            leading: const Icon(Icons.group),
-            title: const Text('Contact group'),
-            subtitle: const Text('Not specified'),
-          )
-
+//          new ListTile(
+//            leading: const Icon(Icons.today),
+//            title: const Text('Birthday'),
+//            subtitle: const Text('February 20, 1980'),
+//          ),
+//          new ListTile(
+//            leading: const Icon(Icons.group),
+//            title: const Text('Contact group'),
+//            subtitle: const Text('Not specified'),
+//          )
+//
 
 
           ],
