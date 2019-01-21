@@ -10,7 +10,7 @@ class CreateVote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flip Carousel',
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -454,8 +454,17 @@ class CreateVoteCard extends StatelessWidget {
           ),
           new ListTile(
             leading: const Icon(Icons.label),
-            title: const Text('Nick'),
-            subtitle: const Text('None'),
+            title: const Text('Upload Image / Video'),
+            subtitle:   Container(
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/picker.png',
+                image: "",
+                fit: BoxFit.fill,
+                width: 3.0,
+                height: 80.0,
+              ),
+            ),
+
           ),
 //          new ListTile(
 //            leading: const Icon(Icons.today),
@@ -472,15 +481,7 @@ class CreateVoteCard extends StatelessWidget {
 
           ],
         ),
-        Container(
-          child: FadeInImage.assetNetwork(
-            placeholder: 'images/picker.gif',
-            image: "",
-            fit: BoxFit.fill,
-            width: 150.0,
-            height: 150.0,
-          ),
-        )],
+       ],
     );
   }
 }

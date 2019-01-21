@@ -76,6 +76,7 @@ flutter:
     - images/vote.png
     - images/background.jpg
     - images/background1.jpg
+    - images/picker.png
 #    - images/background2.jpg
 #    - images/background3.jpg
     - images/pollBox.jpg
