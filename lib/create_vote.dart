@@ -296,22 +296,22 @@ class CreateVoteCard extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 1.0),
-                    color: Colors.transparent,
-                    child: Text(
-                      "Title",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.transparent,
-                    height: 5.0,
-                  ),
+//                  Container(
+//                    margin: const EdgeInsets.only(top: 1.0),
+//                    color: Colors.transparent,
+//                    child: Text(
+//                      "Title",
+//                      textAlign: TextAlign.left,
+//                      style: TextStyle(
+//                          color: Colors.black,
+//                          fontSize: 11.0,
+//                          fontWeight: FontWeight.bold),
+//                    ),
+//                  ),
+//                  Container(
+//                    color: Colors.transparent,
+//                    height: 5.0,
+//                  ),
                   Container(
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -423,7 +423,54 @@ class CreateVoteCard extends StatelessWidget {
                       ))),
             ],
           ),
-    ],
+
+
+          new ListTile(
+            leading: const Icon(Icons.person),
+            title: new TextField(
+              decoration: new InputDecoration(
+                hintText: "Poll Title",
+              ),
+            ),
+          ),
+          new ListTile(
+            leading: const Icon(Icons.phone),
+            title: new TextField(
+              decoration: new InputDecoration(
+                hintText: "Phone",
+              ),
+            ),
+          ),
+          new ListTile(
+            leading: const Icon(Icons.email),
+            title: new TextField(
+              decoration: new InputDecoration(
+                hintText: "Email",
+              ),
+            ),
+          ),
+          const Divider(
+            height: 1.0,
+          ),
+          new ListTile(
+            leading: const Icon(Icons.label),
+            title: const Text('Nick'),
+            subtitle: const Text('None'),
+          ),
+          new ListTile(
+            leading: const Icon(Icons.today),
+            title: const Text('Birthday'),
+            subtitle: const Text('February 20, 1980'),
+          ),
+          new ListTile(
+            leading: const Icon(Icons.group),
+            title: const Text('Contact group'),
+            subtitle: const Text('Not specified'),
+          )
+
+
+
+          ],
         ),
         Container(
           child: FadeInImage.assetNetwork(
