@@ -59,7 +59,7 @@ class LoginScreen1 extends StatelessWidget {
                     height: 15,
                   ),
                   Text(
-                    "providing needed data",
+                    "getting analytical data from polls",
                     style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.normal,
