@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
                       Column(
                         children: <Widget>[
-                          Text('Poll Statistics To Produce'),
+                          Text('Poll Statistics To Produce',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
                         ],
                       ),
                       Padding(

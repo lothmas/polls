@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage>
       children: <Widget>[
         Column(
           children: <Widget>[
-            Text('Text Nominees'),
+            Text('Text Nominees',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
           ],
         ),
         Padding(
