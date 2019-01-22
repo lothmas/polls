@@ -866,7 +866,7 @@ class CreateVoteCard extends StatelessWidget {
       ),
       new ListTile(
         leading: const Icon(Icons.cloud_upload),
-        title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),) ,
+        title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 14.0,fontWeight: FontWeight.bold),) ,
 
       ),
       Container(
