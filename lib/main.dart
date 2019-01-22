@@ -322,7 +322,7 @@ class _Trending extends State<Home> {
               alignment: Alignment.center,
             ),
             title: new Text(
-              'create_poll',
+              'create poll',
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontSize: 12,

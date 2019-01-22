@@ -8,7 +8,7 @@ final List<CardViewModel> demoCards = [
     pageNumber: 2
   ),
   new CardViewModel(
-      backdropAssetPath: 'images/createVoteBack3.jpg',
+      backdropAssetPath: 'images/createVoteBack2.jpg',
     pageNumber: 3
   ),
 ];
