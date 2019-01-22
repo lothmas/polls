@@ -108,9 +108,9 @@ flutter:
     - images/assets/images.jpg
     - images/google_sign_in.png
     - images/pick.gif
-    - assets/van_on_beach.jpg
-    - assets/dusk_waves.jpg
-    - assets/board_walk.jpg
+    - images/createVoteBack1.jpg
+    - images/createVoteBack2.jpg
+    - images/createVoteBack2.jpg
 
   #  - images/a_dot_ham.jpeg
 

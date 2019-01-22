@@ -5,6 +5,7 @@ import 'package:badge/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stats/card_data.dart';
+import 'package:stats/vote_by_dropdown.dart';
 
 class CreateVote extends StatelessWidget {
   @override
@@ -262,40 +263,225 @@ class CreateVoteCard extends StatelessWidget {
 
 
         // Content
-        new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                color: Colors.transparent,
-                width: 10.0,
-              ),
-              Container(
-                //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+        viewModel.pageNumber == 1 ? page1():viewModel.pageNumber== 2? page2():viewModel.pageNumber== 3? page3():true
+       ],
+    );
+  }
+
+  Column page1() {
+    return new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+//            Container(
+//              color: Colors.transparent,
+//              width: 10.0,
+//            ),
+            Container(
+              //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
 //              color: Colors.white,
 //              blurRadius: 20.0,
 //            ),
 //          ]),
-                color: Colors.transparent,
-                child: ClipOval(
-                  child: FadeInImage.assetNetwork(
-                    placeholder: 'images/loader.gif',
-                    image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
-                    fit: BoxFit.fill,
-                    width: 75.0,
-                    height: 75.0,
-                  ),
+              color: Colors.transparent,
+              child: ClipOval(
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'images/loader.gif',
+                  image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
+                  fit: BoxFit.fill,
+                  width: 50.0,
+                  height: 50.0,
                 ),
               ),
-              Container(
-                color: Colors.transparent,
-                width: 10.0,
+            ),
+            Container(
+              color: Colors.transparent,
+              width: 10.0,
+            ),
+            Column(
+              children: [
+                Container(
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        color: Colors.transparent,
+                        child: Text(
+                          'owner:  ',
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Container(
+                        color: Colors.transparent,
+                        child: Text(
+                          "fifa.world.cup",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.teal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.transparent,
+                  height: 7,
+                ),
+
+
+                Container(
+                  child: new Column(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              color: Colors.transparent,
+                              width: 20,
+                            ),
+                            Container(
+                              color: Colors.transparent,
+                              width: 58,
+                            ),
+                            Container(
+                              color: Colors.transparent,
+                              width: 58,
+                            ),
+                          ],
+                        ),
+                      ]),
+                ),
+              ],
+            ),
+            Container(
+              color: Colors.transparent,
+              width: 30,
+            ),
+            new Align(
+                child: Container(
+                    color: Colors.black12,
+                    child: Badge.right(
+//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
+                        value: '0' + ' | ' + '0',
+                        color: Colors.blueGrey,
+                        // value to show inside the badge
+                        child: new Text("") // text to append (required)
+                    ))),
+          ],
+        ),
+
+
+        new ListTile(
+          leading: const Icon(Icons.title),
+          title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            decoration: new InputDecoration(
+              hintText: "Poll Title",
+            ),
+          ),
+        ),
+        new ListTile(
+          leading: const Icon(Icons.description),
+          title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            decoration: new InputDecoration(
+              hintText: "Poll Description",
+            ),
+          ),
+        ),
+        new ListTile(
+          leading: const Icon(Icons.confirmation_number),
+          title: new TextField( style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            decoration: new InputDecoration(
+              hintText: "Allowed Number of Polls Per Voter",
+            ),
+          ),
+        ),
+        new ListTile(
+          leading: Text("vote by:",style: new TextStyle(  fontSize: 14.0,fontWeight: FontWeight.bold)),
+          title: SettingsWidget(),
+        ),
+        const Divider(
+          height: 1.0,
+        ),
+
+//
+//        new ListTile(
+//     //     leading: const Icon(Icons.cloud_upload),
+//          title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 8.0,fontWeight: FontWeight.bold),) ,
+//
+//        ),
+
+          Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 8.0,fontWeight: FontWeight.bold),),
+        Container(
+          width: 50.0,
+          height: 70.0,
+          child: FadeInImage.assetNetwork(
+            placeholder: 'images/picker.png',
+            image: "",
+              fit: BoxFit.fill,
+
+          ),
+        ),
+
+
+
+
+//          new ListTile(
+//            leading: const Icon(Icons.today),
+//            title: const Text('Birthday'),
+//            subtitle: const Text('February 20, 1980'),
+//          ),
+//          new ListTile(
+//            leading: const Icon(Icons.group),
+//            title: const Text('Contact group'),
+//            subtitle: const Text('Not specified'),
+//          )
+//
+
+
+        ],
+      );
+  }
+
+
+  Column page2() {
+    return new Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            color: Colors.transparent,
+            width: 10.0,
+          ),
+          Container(
+            //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+            color: Colors.transparent,
+            child: ClipOval(
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/loader.gif',
+                image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
+                fit: BoxFit.fill,
+                width: 75.0,
+                height: 75.0,
               ),
-              Column(
-                children: [
+            ),
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 10.0,
+          ),
+          Column(
+            children: [
 //                  Container(
 //                    margin: const EdgeInsets.only(top: 1.0),
 //                    color: Colors.transparent,
@@ -312,35 +498,35 @@ class CreateVoteCard extends StatelessWidget {
 //                    color: Colors.transparent,
 //                    height: 5.0,
 //                  ),
-                  Container(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          color: Colors.transparent,
-                          child: Text(
-                            'owner:  ',
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          child: Text(
-                            "fifa.world.cup",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(color: Colors.teal),
-                          ),
-                        ),
-                      ],
+              Container(
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      color: Colors.transparent,
+                      child: Text(
+                        'owner:  ',
+                        textAlign: TextAlign.left,
+                      ),
                     ),
-                  ),
-                  Container(
-                    color: Colors.transparent,
-                    height: 7,
-                  ),
+                    Container(
+                      color: Colors.transparent,
+                      child: Text(
+                        "fifa.world.cup",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.teal),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.transparent,
+                height: 7,
+              ),
 
 
-                  Container(
+              Container(
 //          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //            new BoxShadow(
@@ -348,17 +534,17 @@ class CreateVoteCard extends StatelessWidget {
 //              blurRadius: 20.0,
 //            ),
 //          ]),
-                    child: new Column(
+                child: new Column(
 //                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                color: Colors.transparent,
-                                width: 20,
-                              ),
-                              Container(
+                          Container(
+                            color: Colors.transparent,
+                            width: 20,
+                          ),
+                          Container(
 //                          child: Image(
 //                            image: new AssetImage("images/lock.png"),
 //                            width: 18,
@@ -367,12 +553,12 @@ class CreateVoteCard extends StatelessWidget {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                              ),
-                              Container(
-                                color: Colors.transparent,
-                                width: 58,
-                              ),
-                              Container(
+                          ),
+                          Container(
+                            color: Colors.transparent,
+                            width: 58,
+                          ),
+                          Container(
 //                          child: Image(
 //                            image: new AssetImage("images/trending.png"),
 //                            width: 18,
@@ -381,11 +567,11 @@ class CreateVoteCard extends StatelessWidget {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                              ),
-                              Container(
-                                color: Colors.transparent,
-                                width: 58,
-                              ),
+                          ),
+                          Container(
+                            color: Colors.transparent,
+                            width: 58,
+                          ),
 //                        GestureDetector(
 //                          onTap: () {
 //                            list.add(new Tooltip(
@@ -401,71 +587,74 @@ class CreateVoteCard extends StatelessWidget {
 //                            alignment: Alignment.center,
 //                          ),
 //                        ),
-                            ],
-                          ),
-                        ]),
-                  ),
-                ],
+                        ],
+                      ),
+                    ]),
               ),
-              Container(
-                color: Colors.transparent,
-                width: 30,
-              ),
-              new Align(
-                  child: Container(
-                      color: Colors.black12,
-                      child: Badge.right(
-//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                          value: '0' + ' | ' + '0',
-                          color: Colors.blueGrey,
-                          // value to show inside the badge
-                          child: new Text("") // text to append (required)
-                      ))),
             ],
           ),
+          Container(
+            color: Colors.transparent,
+            width: 30,
+          ),
+          new Align(
+              child: Container(
+                  color: Colors.black12,
+                  child: Badge.right(
+//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
+                      value: '0' + ' | ' + '0',
+                      color: Colors.blueGrey,
+                      // value to show inside the badge
+                      child: new Text("") // text to append (required)
+                  ))),
+        ],
+      ),
 
 
-          new ListTile(
-            leading: const Icon(Icons.person),
-            title: new TextField(
-              decoration: new InputDecoration(
-                hintText: "Poll Title",
-              ),
-            ),
+      new ListTile(
+        leading: const Icon(Icons.person),
+        title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Poll Title",
           ),
-          new ListTile(
-            leading: const Icon(Icons.description),
-            title: new TextField(
-              decoration: new InputDecoration(
-                hintText: "Poll Description",
-              ),
-            ),
+        ),
+      ),
+      new ListTile(
+        leading: const Icon(Icons.description),
+        title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Poll Description",
           ),
-          new ListTile(
-            leading: const Icon(Icons.confirmation_number),
-            title: new TextField(
-              decoration: new InputDecoration(
-                hintText: "Allowed Number of Polls Per User",
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1.0,
-          ),
-          new ListTile(
-            leading: const Icon(Icons.label),
-            title: const Text('Upload Image / Video'),
-            subtitle:   Container(
-              child: FadeInImage.assetNetwork(
-                placeholder: 'images/picker.png',
-                image: "",
-                fit: BoxFit.fill,
-                width: 3.0,
-                height: 80.0,
-              ),
-            ),
+        ),
+      ),
+      new ListTile(
+        leading: const Icon(Icons.confirmation_number),
+        title: new TextField( style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Allowed Number of Polls Per Voter",
 
           ),
+        ),
+      ),
+      const Divider(
+        height: 1.0,
+      ),
+      new ListTile(
+        leading: const Icon(Icons.cloud_upload),
+        title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),) ,
+
+      ),
+      Container(
+        width: 50.0,
+        height: 70.0,
+        child: FadeInImage.assetNetwork(
+          placeholder: 'images/picker.png',
+          image: "",
+          fit: BoxFit.fill,
+
+        ),
+      ),
+
 //          new ListTile(
 //            leading: const Icon(Icons.today),
 //            title: const Text('Birthday'),
@@ -479,9 +668,232 @@ class CreateVoteCard extends StatelessWidget {
 //
 
 
-          ],
+      ],
+    );
+  }
+
+  Column page3() {
+    return new Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            color: Colors.transparent,
+            width: 10.0,
+          ),
+          Container(
+            //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+            color: Colors.transparent,
+            child: ClipOval(
+              child: FadeInImage.assetNetwork(
+                placeholder: 'images/loader.gif',
+                image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
+                fit: BoxFit.fill,
+                width: 75.0,
+                height: 75.0,
+              ),
+            ),
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 10.0,
+          ),
+          Column(
+            children: [
+//                  Container(
+//                    margin: const EdgeInsets.only(top: 1.0),
+//                    color: Colors.transparent,
+//                    child: Text(
+//                      "Title",
+//                      textAlign: TextAlign.left,
+//                      style: TextStyle(
+//                          color: Colors.black,
+//                          fontSize: 11.0,
+//                          fontWeight: FontWeight.bold),
+//                    ),
+//                  ),
+//                  Container(
+//                    color: Colors.transparent,
+//                    height: 5.0,
+//                  ),
+              Container(
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      color: Colors.transparent,
+                      child: Text(
+                        'owner:  ',
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Container(
+                      color: Colors.transparent,
+                      child: Text(
+                        "fifa.world.cup",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.teal),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.transparent,
+                height: 7,
+              ),
+
+
+              Container(
+//          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
+//            new BoxShadow(
+//              color: Colors.white,
+//              blurRadius: 20.0,
+//            ),
+//          ]),
+                child: new Column(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            color: Colors.transparent,
+                            width: 20,
+                          ),
+                          Container(
+//                          child: Image(
+//                            image: new AssetImage("images/lock.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+                          ),
+                          Container(
+                            color: Colors.transparent,
+                            width: 58,
+                          ),
+                          Container(
+//                          child: Image(
+//                            image: new AssetImage("images/trending.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+                          ),
+                          Container(
+                            color: Colors.transparent,
+                            width: 58,
+                          ),
+//                        GestureDetector(
+//                          onTap: () {
+//                            list.add(new Tooltip(
+//                                message: "Hello World",
+//                                child: new Text("foo")));
+//                          },
+//                          child: Image(
+//                            image: new AssetImage("images/info.png"),
+//                            width: 18,
+//                            height: 18,
+//                            color: null,
+//                            fit: BoxFit.scaleDown,
+//                            alignment: Alignment.center,
+//                          ),
+//                        ),
+                        ],
+                      ),
+                    ]),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.transparent,
+            width: 30,
+          ),
+          new Align(
+              child: Container(
+                  color: Colors.black12,
+                  child: Badge.right(
+//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
+                      value: '0' + ' | ' + '0',
+                      color: Colors.blueGrey,
+                      // value to show inside the badge
+                      child: new Text("") // text to append (required)
+                  ))),
+        ],
+      ),
+
+
+      new ListTile(
+        leading: const Icon(Icons.person),
+        title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Poll Title",
+          ),
         ),
-       ],
+      ),
+      new ListTile(
+        leading: const Icon(Icons.description),
+        title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Poll Description",
+          ),
+        ),
+      ),
+      new ListTile(
+        leading: const Icon(Icons.confirmation_number),
+        title: new TextField( style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+          decoration: new InputDecoration(
+            hintText: "Allowed Number of Polls Per Voter",
+
+          ),
+        ),
+      ),
+      const Divider(
+        height: 1.0,
+      ),
+      new ListTile(
+        leading: const Icon(Icons.cloud_upload),
+        title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),) ,
+
+      ),
+      Container(
+        width: 50.0,
+        height: 70.0,
+        child: FadeInImage.assetNetwork(
+          placeholder: 'images/picker.png',
+          image: "",
+          fit: BoxFit.fill,
+
+        ),
+      ),
+
+//          new ListTile(
+//            leading: const Icon(Icons.today),
+//            title: const Text('Birthday'),
+//            subtitle: const Text('February 20, 1980'),
+//          ),
+//          new ListTile(
+//            leading: const Icon(Icons.group),
+//            title: const Text('Contact group'),
+//            subtitle: const Text('Not specified'),
+//          )
+//
+
+
+      ],
     );
   }
 }
@@ -569,10 +981,10 @@ class ScrollIndicatorPainter extends CustomPainter {
     this.cardCount,
     this.scrollPercent,
   })  : trackPaint = new Paint()
-          ..color = const Color(0xFF444444)
+          ..color = Colors.amber
           ..style = PaintingStyle.fill,
         thumbPaint = new Paint()
-          ..color = Colors.white
+          ..color = Colors.blueGrey
           ..style = PaintingStyle.fill;
 
   @override
