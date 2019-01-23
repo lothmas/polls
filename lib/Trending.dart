@@ -451,8 +451,8 @@ class Trending {
       list.add(
 
           Container(
-            height: 500,
-            child:YesNoMaybe()
+            height: 100,
+            child:CustomRadio()
 
             ),
       );

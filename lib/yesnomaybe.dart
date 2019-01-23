@@ -1,70 +1,98 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-
-
-class YesNoMaybe extends StatefulWidget {
+class CustomRadio extends StatefulWidget {
   @override
-  _State createState() => new _State();
+  createState() {
+    return new CustomRadioState();
+  }
 }
 
-enum Answers{YES,NO,MAYBE}
+class CustomRadioState extends State<CustomRadio> {
+  List<RadioModel> sampleData = new List<RadioModel>();
 
-//State is information of the application that can change over time or when some actions are taken.
-class _State extends State<YesNoMaybe>{
-
-  String _value = '';
-
-  void _setValue(String value) => setState(() => _value = value);
-
-  Future _askUser() async {
-    switch(
-    await showDialog(
-        context: context,
-        /*it shows a popup with few options which you can select, for option we
-        created enums which we can use with switch statement, in this first switch
-        will wait for the user to select the option which it can use with switch cases*/
-        child: new SimpleDialog(
-          title: new Text('Do you like Flutter?'),
-          children: <Widget>[
-            new SimpleDialogOption(child: new Text('Yes!!!'),onPressed: (){Navigator.pop(context, Answers.YES);},),
-            new SimpleDialogOption(child: new Text('NO :('),onPressed: (){Navigator.pop(context, Answers.NO);},),
-            new SimpleDialogOption(child: new Text('Maybe :|'),onPressed: (){Navigator.pop(context, Answers.MAYBE);},),
-          ],
-        )
-    )
-    ) {
-      case Answers.YES:
-        _setValue('Yes');
-        break;
-      case Answers.NO:
-        _setValue('No');
-        break;
-      case Answers.MAYBE:
-        _setValue('Maybe');
-        break;
-    }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sampleData.add(new RadioModel(false, 'A', 'April 18'));
+    sampleData.add(new RadioModel(false, 'B', 'April 17'));
+    sampleData.add(new RadioModel(false, 'C', 'April 16'));
+    sampleData.add(new RadioModel(false, 'D', 'April 15'));
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-//      appBar: new AppBar(
-//        title: new Text('Name here'),
-//        backgroundColor: Colors.red,
-//      ),
-      //hit Ctrl+space in intellij to know what are the options you can use in flutter widgets
-      body: new Container(
-        padding: new EdgeInsets.all(32.0),
-        child: new Center(
-          child: new Column(
-            children: <Widget>[
-              new Text(_value),
-              new RaisedButton(onPressed: _askUser, child: new Text('Click me'),)
-            ],
-          ),
-        ),
+      appBar: new AppBar(
+        title: new Text("ListItem"),
+      ),
+      body: new ListView.builder(
+        itemCount: sampleData.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new InkWell(
+            //highlightColor: Colors.red,
+            splashColor: Colors.blueAccent,
+            onTap: () {
+              setState(() {
+                sampleData.forEach((element) => element.isSelected = false);
+                sampleData[index].isSelected = true;
+              });
+            },
+            child: new RadioItem(sampleData[index]),
+          );
+        },
       ),
     );
   }
+}
+
+class RadioItem extends StatelessWidget {
+  final RadioModel _item;
+  RadioItem(this._item);
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: new EdgeInsets.all(15.0),
+      child: new Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          new Container(
+            height: 50.0,
+            width: 50.0,
+            child: new Center(
+              child: new Text(_item.buttonText,
+                  style: new TextStyle(
+                      color:
+                      _item.isSelected ? Colors.white : Colors.black,
+                      //fontWeight: FontWeight.bold,
+                      fontSize: 18.0)),
+            ),
+            decoration: new BoxDecoration(
+              color: _item.isSelected
+                  ? Colors.blueAccent
+                  : Colors.transparent,
+              border: new Border.all(
+                  width: 1.0,
+                  color: _item.isSelected
+                      ? Colors.blueAccent
+                      : Colors.grey),
+              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+            ),
+          ),
+          new Container(
+            margin: new EdgeInsets.only(left: 10.0),
+            child: new Text(_item.text),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RadioModel {
+  bool isSelected;
+  final String buttonText;
+  final String text;
+
+  RadioModel(this.isSelected, this.buttonText, this.text);
 }
