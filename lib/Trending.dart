@@ -396,7 +396,7 @@ class Trending {
       list.add(
 
           Container(
-            height: 60,
+            height: 70,
             child:
 
             FormBuilder(
