@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:stats/Polling.dart';
 import 'package:stats/TrendingMasterObject.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:stats/image_display.dart';
+import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:quiver/async.dart';
@@ -48,7 +50,8 @@ class Trending {
           ),
           Column(
             children: <Widget>[
-              IconButton(
+              document['voteBy']!= 4 && document['voteBy']!= 5 && document['voteBy']!= 6?
+      IconButton(
                 icon: Image.asset(
                   "images/cast.png",
                   width: 22.0,
@@ -64,7 +67,7 @@ class Trending {
                             voteType: document['voteType'])),
                   );
                 },
-              ),
+              ):Text(""),
               Container(
                   //height: 10.0,
                   ),
@@ -360,6 +363,99 @@ class Trending {
         autoInitialize: true,
 
       ));
+    }
+    if (document['voteBy']== 4) {
+      list.add(
+
+          Container(
+            height: 60,
+            child:
+
+            FormBuilder(
+              context,
+              autovalidate: true,
+              controls: [
+                FormBuilderInput.rate(
+
+                  label: "Rate out of 5 stars",
+                  attribute: "rate",
+
+                  iconSize: 25.0,
+                  value: 1,
+                  max: 5,
+//          hint: "Hint",
+                ),
+
+              ],
+
+
+            ),)
+      );
+    }
+    if (document['voteBy']== 5) {
+      list.add(
+
+          Container(
+            height: 60,
+            child:
+
+            FormBuilder(
+              context,
+              autovalidate: true,
+              controls: [
+                FormBuilderInput.segmentedControl(
+                    label: "Rate out of 10",
+                    attribute: "movie_rating",
+                    require: true,
+                    options: [
+                      FormBuilderInputOption(
+                        value: 1,
+                      ),
+                      FormBuilderInputOption(
+                        value: 2,
+                      ),
+                      FormBuilderInputOption(
+                        value: 3,
+                      ),
+                      FormBuilderInputOption(
+                        value: 4,
+                      ),
+                      FormBuilderInputOption(
+                        value: 5,
+                      ),
+                      FormBuilderInputOption(
+                        value: 6,
+                      ),
+                      FormBuilderInputOption(
+                        value: 7,
+                      ),
+                      FormBuilderInputOption(
+                        value: 8,
+                      ),
+                      FormBuilderInputOption(
+                        value: 9,
+                      ),
+                      FormBuilderInputOption(
+                        value: 10,
+                      ),
+                    ]),
+
+              ],
+
+
+            ),)
+      );
+    }
+
+    if (document['voteBy']== 6) {
+      list.add(
+
+          Container(
+            height: 500,
+            child:YesNoMaybe()
+
+            ),
+      );
     }
 
     list.add(

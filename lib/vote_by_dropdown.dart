@@ -10,8 +10,8 @@ class SettingsWidget extends StatefulWidget {
 
 class SettingsWidgetState extends State<SettingsWidget> {
 
-  List _cities =
-  ["text", "image", "video"];
+  List _voteby =
+  ["star rating", "number rating","like / dislike","yes / no","text selection", "image selection", "video selection",];
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentCity;
@@ -25,7 +25,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
-    for (String city in _cities) {
+    for (String city in _voteby) {
       items.add(new DropdownMenuItem(
           value: city,
           child: new Text(city)

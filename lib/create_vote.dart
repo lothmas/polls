@@ -450,11 +450,11 @@ class CreateVoteCard extends StatelessWidget {
 
 
   Widget page2() {
-   return MyApp();
+   return new MyApp();
   }
 
   Widget page3() {
-    return VoteNeededData();
+    return new VoteNeededData();
   }
 }
 
