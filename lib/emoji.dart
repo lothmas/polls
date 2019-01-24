@@ -31,7 +31,6 @@ class HomePage extends StatelessWidget {
               //  crossAxisAlignment: CrossAxisAlignment.b,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-
                 Text('FeedBack:',
                     style: TextStyle(
                         fontSize: 12,

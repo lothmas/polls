@@ -149,7 +149,7 @@ class EmojiFeedbackState extends State<EmojiFeedback>
             ),
           ),
           Positioned(
-            left: posTween.transform(pos / 1),
+            left: posTween.transform(pos / 4),
             child: Container(
               width: ActiveEmojiSize,
               height: ActiveEmojiSize,
