@@ -102,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 32,
                     child: FloatingActionButton(
                       onPressed: _decrementHalfStar,
+                      heroTag: "Decrement",
                       tooltip: 'Decrement',
                       backgroundColor: Colors.blueGrey,
                       mini: true,
@@ -115,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 32,
                     width: 32,
                     child: FloatingActionButton(
+                      heroTag: "increment",
                       onPressed: _incrementHalfStar,
                       backgroundColor: Colors.blueGrey,
                       tooltip: 'Increment',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:emoji_feedback/emoji_feedback.dart';
+import 'package:stats/emojiConfig.dart';
+//import 'package:emoji_feedback/emoji_feedback.dart';
 
 
 class Emoji extends StatelessWidget {

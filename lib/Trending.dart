@@ -2,19 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:stats/Polling.dart';
-import 'package:stats/TrendingMasterObject.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:stats/emoji.dart';
 import 'package:stats/image_display.dart';
 import 'package:stats/rate.dart';
-import 'package:stats/start_rating.dart';
-import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:quiver/async.dart';
-import 'package:super_tooltip/super_tooltip.dart';
-import 'package:photo_view/photo_view.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
