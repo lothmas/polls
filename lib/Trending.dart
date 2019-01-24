@@ -5,7 +5,10 @@ import 'package:stats/Polling.dart';
 import 'package:stats/TrendingMasterObject.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
+import 'package:stats/emoji.dart';
 import 'package:stats/image_display.dart';
+import 'package:stats/rate.dart';
+import 'package:stats/start_rating.dart';
 import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
@@ -368,35 +371,17 @@ class Trending {
       list.add(
 
           Container(
-            height: 60,
+            height: 55,
             child:
 
-            FormBuilder(
-              context,
-              autovalidate: true,
-              controls: [
-                FormBuilderInput.rate(
-
-                  label: "Rate out of 5 stars",
-                  attribute: "rate",
-
-                  iconSize: 25.0,
-                  value: 1,
-                  max: 5,
-//          hint: "Hint",
-                ),
-
-              ],
-
-
-            ),)
+            StarRatingDemo(),)
       );
     }
     if (document['voteBy']== 5) {
       list.add(
 
           Container(
-            height: 70,
+            height: 80,
             child:
 
             FormBuilder(
@@ -451,8 +436,8 @@ class Trending {
       list.add(
 
           Container(
-            height: 100,
-            child:CustomRadio()
+            height: 110,
+            child:Emoji()
 
             ),
       );

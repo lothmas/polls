@@ -1,59 +1,57 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-class RatingBar extends StatelessWidget {
-  RatingBar({this.numStars = 5, this.rating = 0.0, this.onChanged});
+typedef void RatingTapCallback(double rating);
 
-  final int numStars;
+class StarRating extends StatelessWidget {
+  final int length;
   final double rating;
-  final ValueChanged<double> onChanged;
+  final double between;
+  final double starSize;
+  final RatingTapCallback onRaitingTap;
+  final Color color;
+  final MainAxisAlignment mainAxisAlignment;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  final Icon _full, _half, _empty;
+
+  StarRating({
+    this.length: 1,
+    this.rating: 0,
+    this.between: 0.0,
+    this.starSize: 20.0,
+    this.color: Colors.blueAccent,
+    this.onRaitingTap,
+    this.mainAxisAlignment,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+  })  : _full = Icon(Icons.star, color: color, size: starSize),
+        _half = Icon(Icons.star_half, color: color, size: starSize),
+        _empty = Icon(Icons.star_border, color: color, size: starSize);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragDown: (dragDown) {
-        RenderBox box = context.findRenderObject();
-        var local = box.globalToLocal(dragDown.globalPosition);
-        var rating = (local.dx / box.size.width * numStars * 2).ceilToDouble() / 2;
-        rating = max(0.0, rating);
-        rating = min(numStars.toDouble(), rating);
-        onChanged(rating);
-      },
-      onHorizontalDragUpdate: (dragUpdate) {
-        RenderBox box = context.findRenderObject();
-        var local = box.globalToLocal(dragUpdate.globalPosition);
-        var rating = (local.dx / box.size.width * numStars * 2).ceilToDouble() / 2;
-        rating = max(0.0, rating);
-        rating = min(numStars.toDouble(), rating);
-        onChanged(rating);
-      },
-      child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-              numStars, (index) => _buildStar(context, index),
-              growable: false)),
+    List<Widget> stars = List(2 * length - 1);
+    final SizedBox space = SizedBox(width: between);
+
+    for (int i = 0; i < length; i++) {
+      if (i > 0) {
+        stars[2 * i - 1] = space;
+      }
+      stars[2 * i] = GestureDetector(
+        onTap: () {
+          onRaitingTap((i + 1).toDouble());
+
+        },
+        child: chooseStar(i),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment,
+      children: stars,
     );
   }
 
-  Widget _buildStar(BuildContext context, int index) {
-    Icon icon;
-    if (index >= rating) {
-      icon = Icon(
-        Icons.star_border,
-        color: Theme.of(context).primaryColor,
-      );
-    } else if (index > rating - 1 && index < rating) {
-      icon = Icon(
-        Icons.star_half,
-        color: Theme.of(context).primaryColor,
-      );
-    } else {
-      icon = Icon(
-        Icons.star,
-        color: Theme.of(context).primaryColor,
-      );
-    }
-    return icon;
-  }
+  Icon chooseStar(int index) =>
+      (rating >= index + 1) ? _full : (rating >= index + 0.5) ? _half : _empty;
 }
