@@ -33,6 +33,12 @@ void main() async {
   );
   final FirebaseStorage storage = FirebaseStorage(
       app: app, storageBucket: 'gs://polls-223422.appspot.com');
+  bool loggedIn =false;
+  FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+    if(user!=null) {
+      loggedIn = true;
+    }
+  });
   runApp(SplashView());
 }
 

@@ -43,6 +43,8 @@ dependencies:
   flutter_rating: ^0.0.2
   smooth_star_rating: ^1.0.1
   emoji_feedback: ^0.1.0
+  custom_radio: ^0.1.2
+
 
 dev_dependencies:
   flutter_test:
@@ -117,6 +119,7 @@ flutter:
     - images/createVoteBack1.jpg
     - images/createVoteBack2.jpg
     - images/createVoteBack2.jpg
+    - images/currencies.png
 
   #  - images/a_dot_ham.jpeg
 

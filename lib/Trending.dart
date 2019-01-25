@@ -6,7 +6,10 @@ import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:stats/emoji.dart';
 import 'package:stats/image_display.dart';
+import 'package:stats/radio.dart';
+import 'package:stats/radio_yes_no.dart';
 import 'package:stats/rate.dart';
+import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
@@ -47,7 +50,8 @@ class Trending {
           ),
           Column(
             children: <Widget>[
-              document['voteBy']!= 4 && document['voteBy']!= 5 && document['voteBy']!= 6?
+              document['voteBy']!= 4 && document['voteBy']!= 5 && document['voteBy']!= 6
+                  && document['voteBy']!= 7?
       IconButton(
                 icon: Image.asset(
                   "images/cast.png",
@@ -375,54 +379,8 @@ class Trending {
       list.add(
 
           Container(
-            height: 80,
-            child:
-
-            FormBuilder(
-              context,
-              autovalidate: true,
-              controls: [
-                FormBuilderInput.segmentedControl(
-                    label: "Rate out of 10",
-                    attribute: "movie_rating",
-                    require: true,
-                    options: [
-                      FormBuilderInputOption(
-                        value: 1,
-                      ),
-                      FormBuilderInputOption(
-                        value: 2,
-                      ),
-                      FormBuilderInputOption(
-                        value: 3,
-                      ),
-                      FormBuilderInputOption(
-                        value: 4,
-                      ),
-                      FormBuilderInputOption(
-                        value: 5,
-                      ),
-                      FormBuilderInputOption(
-                        value: 6,
-                      ),
-                      FormBuilderInputOption(
-                        value: 7,
-                      ),
-                      FormBuilderInputOption(
-                        value: 8,
-                      ),
-                      FormBuilderInputOption(
-                        value: 9,
-                      ),
-                      FormBuilderInputOption(
-                        value: 10,
-                      ),
-                    ]),
-
-              ],
-
-
-            ),)
+            height: 40,
+            child:CustomRadio(),)
       );
     }
 
@@ -436,7 +394,16 @@ class Trending {
             ),
       );
     }
+    if (document['voteBy']== 7) {
+      list.add(
 
+        Container(
+            height: 65,
+            child: new YesNoMaybe()
+
+        ),
+      );
+    }
     list.add(
       new Container(
         width: 500.0,

@@ -14,19 +14,24 @@ class CustomRadioState extends State<CustomRadio> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    sampleData.add(new RadioModel(false, 'A', 'April 18'));
-    sampleData.add(new RadioModel(false, 'B', 'April 17'));
-    sampleData.add(new RadioModel(false, 'C', 'April 16'));
-    sampleData.add(new RadioModel(false, 'D', 'April 15'));
+    sampleData.add(new RadioModel(false, '1'));
+    sampleData.add(new RadioModel(false, '2'));
+    sampleData.add(new RadioModel(false, '3'));
+    sampleData.add(new RadioModel(false, '4'));
+    sampleData.add(new RadioModel(false, '5'));
+    sampleData.add(new RadioModel(false, '6'));
+    sampleData.add(new RadioModel(false, '7'));
+    sampleData.add(new RadioModel(false, '8'));
+    sampleData.add(new RadioModel(false, '9'));
+    sampleData.add(new RadioModel(false, '10'));
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("ListItem"),
-      ),
+
       body: new ListView.builder(
+        scrollDirection: Axis.horizontal,
         itemCount: sampleData.length,
         itemBuilder: (BuildContext context, int index) {
           return new InkWell(
@@ -52,37 +57,37 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.all(15.0),
+//      margin: new EdgeInsets.all(1.0),
       child: new Row(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Container(
-            height: 50.0,
-            width: 50.0,
+            height: 35.0,
+            width: 35.0,
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
                       color:
                       _item.isSelected ? Colors.white : Colors.black,
                       //fontWeight: FontWeight.bold,
-                      fontSize: 18.0)),
+                      fontSize: 11.0)),
             ),
             decoration: new BoxDecoration(
               color: _item.isSelected
-                  ? Colors.blueAccent
+                  ? Colors.amber
                   : Colors.transparent,
               border: new Border.all(
                   width: 1.0,
                   color: _item.isSelected
                       ? Colors.blueAccent
-                      : Colors.grey),
+                      : Colors.blueGrey),
               borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
             ),
           ),
-          new Container(
-            margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text),
-          )
+//          new Container(
+//            margin: new EdgeInsets.only(left: 10.0),
+//            child: new Text(_item.text),
+//          )
         ],
       ),
     );
@@ -92,7 +97,7 @@ class RadioItem extends StatelessWidget {
 class RadioModel {
   bool isSelected;
   final String buttonText;
-  final String text;
 
-  RadioModel(this.isSelected, this.buttonText, this.text);
+
+  RadioModel(this.isSelected, this.buttonText);
 }
