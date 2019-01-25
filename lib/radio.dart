@@ -25,23 +25,28 @@ class _CurrencyState extends State<YesNoMaybe> {
         case 0:
           _result = _currencyCalculate(_currencyController.text, EURO_MUL);
           if (_result > -1.0) {
-            _textResult = '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
           } else {
-            _textResult = 'Cannot convert USD to Euro\nPlease check the Amount!';
+            _textResult =
+                'Cannot convert USD to Euro\nPlease check the Amount!';
           }
           break;
         case 1:
           _result = _currencyCalculate(_currencyController.text, POUND_MUL);
           if (_result > -1.0) {
-            _textResult = '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
           } else {
-            _textResult = 'Cannot convert USD to Pound\nPlease check the Amount!';
+            _textResult =
+                'Cannot convert USD to Pound\nPlease check the Amount!';
           }
           break;
         case 2:
           _result = _currencyCalculate(_currencyController.text, YEN_MUL);
           if (_result > -1.0) {
-            _textResult = '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
           } else {
             _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
           }
@@ -58,7 +63,8 @@ class _CurrencyState extends State<YesNoMaybe> {
           if (_result > -1.0) {
             _textResult = '$amount USD = ${_result.toStringAsFixed(3)} Euro';
           } else {
-            _textResult = 'Cannot convert USD to Euro\nPlease check the Amount!';
+            _textResult =
+                'Cannot convert USD to Euro\nPlease check the Amount!';
           }
           break;
         case 1:
@@ -66,7 +72,8 @@ class _CurrencyState extends State<YesNoMaybe> {
           if (_result > -1.0) {
             _textResult = '$amount USD = ${_result.toStringAsFixed(3)} Pound';
           } else {
-            _textResult = 'Cannot convert USD to Pound\nPlease check the Amount!';
+            _textResult =
+                'Cannot convert USD to Pound\nPlease check the Amount!';
           }
           break;
         case 2:
@@ -89,44 +96,60 @@ class _CurrencyState extends State<YesNoMaybe> {
           child: new ListView(
 //            padding: const EdgeInsets.all(25.0),
             children: <Widget>[
-
               new Container(
 //                margin: const EdgeInsets.all(3.0),
                 alignment: Alignment.center,
                 child: new Column(
+
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: <Widget>[
 //                    new Padding(padding: new EdgeInsets.all(5.0)),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Column(children: <Widget>[   new Radio(
-                          value: 0,
-                          groupValue: _radioValue,
-                          onChanged: _handleRadioValueChange,
-                        ),
-                        new Text('Yes',style: TextStyle(fontSize: 11),),],),
-
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[ new Radio(
-                          value: 1,
-                          groupValue: _radioValue,
-                          onChanged: _handleRadioValueChange,
+                          children: <Widget>[
+                            new Radio(
+                              value: 1,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'No',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
                         ),
-                        new Text('No',style: TextStyle(fontSize: 11),),],),
-
-
-                        Column(children: <Widget>[new Radio(
-                          value: 2,
-                          groupValue: _radioValue,
-                          onChanged: _handleRadioValueChange,
+                        Column(
+                          children: <Widget>[
+                            new Radio(
+                              value: 0,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'Yes',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
                         ),
-                        new Text('Maybe',style: TextStyle(fontSize: 11),),],)
-
-
+                        Column(
+                          children: <Widget>[
+                            new Radio(
+                              value: 2,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'Maybe',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-
                   ],
                 ),
               )
