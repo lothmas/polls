@@ -25,31 +25,33 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: 3,
+              height: 2,
             ),
-            Row(
-              //  crossAxisAlignment: CrossAxisAlignment.b,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('FeedBack:',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey)),
-                Text('polls: 5448',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey)),
-              ],),
-            Container(
-              height: 3,
-            ),
+
             EmojiFeedback(
               onChange: (index) {
                 print(index);
               },
             ),
+            Container(
+              height: 5,
+            ),
+//            Row(
+//              //  crossAxisAlignment: CrossAxisAlignment.b,
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Text('FeedBack:',
+//                    style: TextStyle(
+//                        fontSize: 12,
+//                        fontWeight: FontWeight.bold,
+//                        color: Colors.grey)),
+//                Text('polls: 5448',
+//                    style: TextStyle(
+//                        fontSize: 12,
+//                        fontWeight: FontWeight.bold,
+//                        color: Colors.grey)),
+//              ],),
+
           ],
         ),
       ),

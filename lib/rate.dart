@@ -3,7 +3,7 @@ import 'package:stats/start_rating.dart';
 
 //void main() => runApp(StarRatingDemo());
 
-class StarRatingDemo extends StatelessWidget {
+class StarRatings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,28 +51,28 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 3,
+            height: 1,
           ),
-          Row(
-          //  crossAxisAlignment: CrossAxisAlignment.b,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
+//          Row(
+//          //  crossAxisAlignment: CrossAxisAlignment.b,
+//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//            children: <Widget>[
+//
+//            Text('Star Rating: $_rating / ${starLength.toDouble()}',
+//                style: TextStyle(
+//                    fontSize: 12,
+//                    fontWeight: FontWeight.bold,
+//                    color: Colors.grey)),
+//            Text('polls: 5448',
+//                style: TextStyle(
+//                    fontSize: 12,
+//                    fontWeight: FontWeight.bold,
+//                    color: Colors.grey)),
+//          ],),
 
-            Text('Star Rating: $_rating / ${starLength.toDouble()}',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey)),
-            Text('polls: 5448',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey)),
-          ],),
-
-          Container(
-            height: 3,
-          ),
+//          Container(
+//            height: 3,
+//          ),
           Row(
             children: <Widget>[
               StarRating(

@@ -370,7 +370,7 @@ class Trending {
     if (document['voteBy'] == 4) {
       list.add(Container(
         height: 55,
-        child: StarRatingDemo(),
+        child: StarRatings(),
       ));
     }
     if (document['voteBy'] == 5) {
@@ -382,7 +382,7 @@ class Trending {
 
     if (document['voteBy'] == 6) {
       list.add(
-        Container(height: 110, child: Emoji()),
+        Container(height: 78, child: Emoji()),
       );
     }
     if (document['voteBy'] == 7) {

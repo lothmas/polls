@@ -31,9 +31,9 @@ final List<EmojiModel> reactions = <EmojiModel>[
       activeSrc: 'assets/surprised_big.png'),
 ].toList();
 
-const EmojiSize = 32.0;
+const EmojiSize = 28.0;
 const EmojiRadius = EmojiSize / 2.0;
-const ActiveEmojiSize = EmojiSize * 1.5;
+const ActiveEmojiSize = EmojiSize * 1.3;
 const ActiveEmojiRadius = ActiveEmojiSize / 2.0;
 const HalfDiffSize = (ActiveEmojiSize - EmojiSize) / 2.0;
 
@@ -138,7 +138,7 @@ class EmojiFeedbackState extends State<EmojiFeedback>
             right: ActiveEmojiRadius,
             child: Container(
               height: 1.0,
-              color: Colors.grey,
+              color: Colors.blueGrey,
             ),
           ),
           Container(
@@ -190,7 +190,7 @@ class _EmojiButton extends StatelessWidget {
     final offsetTop = Tween<double>(begin: 16.0, end: 6.0).transform(scale);
     final realScale = Tween<double>(begin: 0.25, end: 1.0).transform(scale);
     final color =
-    ColorTween(begin: Colors.black, end: Colors.grey).transform(scale);
+    ColorTween(begin: Colors.teal, end: Colors.grey).transform(scale);
     return Container(
       width: ActiveEmojiSize,
       padding: EdgeInsets.only(top: HalfDiffSize),
@@ -217,7 +217,7 @@ class _EmojiButton extends StatelessWidget {
             padding: EdgeInsets.only(top: offsetTop),
             child: Text(
               label,
-              style: Theme.of(context).textTheme.caption.copyWith(color: color),
+              style: TextStyle(fontSize: 9,fontWeight: FontWeight.bold),
             ),
           ),
         ],
