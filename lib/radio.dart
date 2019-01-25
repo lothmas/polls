@@ -109,9 +109,10 @@ class _CurrencyState extends State<YesNoMaybe> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             new Radio(
+                              activeColor: Colors.amber,
                               value: 1,
                               groupValue: _radioValue,
                               onChanged: _handleRadioValueChange,
@@ -125,6 +126,7 @@ class _CurrencyState extends State<YesNoMaybe> {
                         Column(
                           children: <Widget>[
                             new Radio(
+                              activeColor: Colors.amber,
                               value: 0,
                               groupValue: _radioValue,
                               onChanged: _handleRadioValueChange,
@@ -138,6 +140,7 @@ class _CurrencyState extends State<YesNoMaybe> {
                         Column(
                           children: <Widget>[
                             new Radio(
+                              activeColor: Colors.amber,
                               value: 2,
                               groupValue: _radioValue,
                               onChanged: _handleRadioValueChange,
