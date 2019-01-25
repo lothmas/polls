@@ -419,7 +419,7 @@ class CreateVoteCard extends StatelessWidget {
               color: Colors.transparent,
               height: 30,
             ),
-          Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.white70, fontSize: 11.0,fontWeight: FontWeight.bold),),
+          Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.black, fontSize: 11.0,fontWeight: FontWeight.bold),),
         Container(
           width: 50.0,
           height: 70.0,
@@ -547,7 +547,7 @@ class ScrollIndicatorPainter extends CustomPainter {
           ..color = Colors.amber
           ..style = PaintingStyle.fill,
         thumbPaint = new Paint()
-          ..color = Colors.white70
+          ..color = Colors.blueGrey
           ..style = PaintingStyle.fill;
 
   @override
