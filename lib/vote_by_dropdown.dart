@@ -11,7 +11,11 @@ class SettingsWidget extends StatefulWidget {
 class SettingsWidgetState extends State<SettingsWidget> {
 
   List _voteby =
-  ["star rating", "number rating","like / dislike","yes / no","text selection", "image selection", "video selection",];
+  ["star rating", "number rating","emoji feedback","like / dislike","yes / no / maybe","text nomination", "image nomination", "video nomination",];
+
+  //voteBy
+  //["4 star rating", "5 number rating","6 emoji feedback","8 like / dislike","7 yes / no / maybe","1 text nomination", "2 image nomination", "3 video nomination",];
+
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentCity;
