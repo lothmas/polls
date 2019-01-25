@@ -15,6 +15,7 @@ import 'package:flutter_youtube/flutter_youtube.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
+
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
     double c_width = MediaQuery.of(context).size.width * 1;
@@ -50,25 +51,29 @@ class Trending {
           ),
           Column(
             children: <Widget>[
-              document['voteBy']!= 4 && document['voteBy']!= 5 && document['voteBy']!= 6
-                  && document['voteBy']!= 7?
-      IconButton(
-                icon: Image.asset(
-                  "images/cast.png",
-                  width: 22.0,
-                  height: 22.0,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new Polling(
-                            voteID: document.documentID,
-                            voteBy: document['voteBy'],
-                            voteType: document['voteType'])),
-                  );
-                },
-              ):Text(""),
+              document['voteBy'] != 4 &&
+                      document['voteBy'] != 5 &&
+                      document['voteBy'] != 6 &&
+                      document['voteBy'] != 7 &&
+                      document['voteBy'] != 8
+                  ? IconButton(
+                      icon: Image.asset(
+                        "images/cast.png",
+                        width: 22.0,
+                        height: 22.0,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new Polling(
+                                  voteID: document.documentID,
+                                  voteBy: document['voteBy'],
+                                  voteType: document['voteType'])),
+                        );
+                      },
+                    )
+                  : Text(""),
               Container(
                   //height: 10.0,
                   ),
@@ -81,26 +86,25 @@ class Trending {
               ),
             ],
           ),
-
           PopupMenuButton<Choice>(
-      //      onSelected: _select,
+            //      onSelected: _select,
             itemBuilder: (BuildContext context) {
               return choices.skip(0).map((Choice choice) {
                 return PopupMenuItem<Choice>(
                   value: choice,
-                  child: Row(children: <Widget>[
-                    IconButton(
-                      icon: Icon(choice.icon),
-                      onPressed: () {
-                      },
-                    ),
-
-                    Text(choice.title)],),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(choice.icon),
+                        onPressed: () {},
+                      ),
+                      Text(choice.title)
+                    ],
+                  ),
                 );
               }).toList();
             },
           ),
-
         ],
       ),
     );
@@ -358,50 +362,37 @@ class Trending {
       list.add(new Chewie(
         new VideoPlayerController.network(document['postPath']),
         aspectRatio: 1,
-
         autoPlay: false,
         looping: false,
         autoInitialize: true,
-
       ));
     }
-    if (document['voteBy']== 4) {
-      list.add(
-
-          Container(
-            height: 55,
-            child:
-
-            StarRatingDemo(),)
-      );
+    if (document['voteBy'] == 4) {
+      list.add(Container(
+        height: 55,
+        child: StarRatingDemo(),
+      ));
     }
-    if (document['voteBy']== 5) {
-      list.add(
-
-          Container(
-            height: 40,
-            child:CustomRadio(),)
-      );
+    if (document['voteBy'] == 5) {
+      list.add(Container(
+        height: 40,
+        child: CustomRadio(),
+      ));
     }
 
-    if (document['voteBy']== 6) {
+    if (document['voteBy'] == 6) {
       list.add(
-
-          Container(
-            height: 110,
-            child:Emoji()
-
-            ),
+        Container(height: 110, child: Emoji()),
       );
     }
-    if (document['voteBy']== 7) {
+    if (document['voteBy'] == 7) {
       list.add(
-
-        Container(
-            height: 65,
-            child: new YesNoMaybe()
-
-        ),
+        Container(height: 65, child: new YesNoMaybe()),
+      );
+    }
+    if (document['voteBy'] == 8) {
+      list.add(
+        Container(height: 55, child: new LikeDisLike()),
       );
     }
     list.add(
@@ -481,7 +472,6 @@ class TooltipText extends StatelessWidget {
 
   void castClick() {}
 }
-
 
 class Choice {
   const Choice({this.title, this.icon});
