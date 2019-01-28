@@ -44,7 +44,8 @@ dependencies:
   smooth_star_rating: ^1.0.1
   emoji_feedback: ^0.1.0
   custom_radio: ^0.1.2
-
+  flutter_circular_chart: ^0.1.0
+  random_color: ^1.0.3
 
 dev_dependencies:
   flutter_test:

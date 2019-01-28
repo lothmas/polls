@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:stats/card_data.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/tag1.dart';
+import 'package:stats/text_focus_helper.dart';
 import 'package:stats/vote_by_dropdown.dart';
 
 class CreateVote extends StatelessWidget {
@@ -271,6 +272,7 @@ class CreateVoteCard extends StatelessWidget {
   }
 
   Column page1() {
+    FocusNode _focusNodeFirstName = new FocusNode();
     return new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -377,13 +379,27 @@ class CreateVoteCard extends StatelessWidget {
 //        ),
 
 
-        new ListTile(
+
+         ListTile(
           leading: const Icon(Icons.title),
-          title: new TextField(style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
-            decoration: new InputDecoration(
-              hintText: "Poll Title",
-            ),
+          title:  new EnsureVisibleWhenFocused(
+          focusNode: _focusNodeFirstName,
+          child: new TextFormField(
+          decoration: const InputDecoration(
+          border: const UnderlineInputBorder(),
+          filled: true,
+          hintText: 'Enter Poll Title',
+          labelText: 'Poll Title *',
           ),
+          onSaved: (String value) {
+          //TODO
+          },
+          //  controller: _firstNameController,
+          focusNode: _focusNodeFirstName,
+          ),
+          ),
+
+
         ),
         new ListTile(
           leading: const Icon(Icons.description),
@@ -453,11 +469,11 @@ class CreateVoteCard extends StatelessWidget {
 
 
   Widget page2() {
-   return new MyApp();
+    new MyApp();
   }
 
   Widget page3() {
-    return new VoteNeededData();
+     new VoteNeededData();
   }
 }
 

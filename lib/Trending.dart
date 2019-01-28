@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:stats/Graph.dart';
 import 'package:stats/Polling.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
@@ -42,10 +43,7 @@ class Trending {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (context) => new Polling(
-                        voteID: document.documentID,
-                        voteBy: document['voteBy'],
-                        voteType: document['voteType'])),
+                    builder: (context) => new RandomizedRadialChartExample()),
               );
             },
           ),
