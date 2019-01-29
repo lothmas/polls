@@ -46,7 +46,7 @@ dependencies:
   custom_radio: ^0.1.2
   flutter_circular_chart: ^0.1.0
   random_color: ^1.0.3
-
+  intro_views_flutter: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

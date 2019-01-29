@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stats/intro.dart';
 import 'package:stats/login_screen_1.dart';
 import 'package:stats/main.dart';
 
@@ -23,7 +24,7 @@ class SplashView extends StatelessWidget {
           builder: (context) => new _SplashContent(),
         ),
         routes: <String, WidgetBuilder>{
-          '/main': (BuildContext context) => loggedIn ? Home(): Scaffold(body: new LoginScreen1())}
+          '/main': (BuildContext context) => loggedIn ? Intro(): Scaffold(body: new LoginScreen1())}
     );
   }
 }
