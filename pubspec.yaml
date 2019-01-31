@@ -47,11 +47,14 @@ dependencies:
   flutter_circular_chart: ^0.1.0
   random_color: ^1.0.3
   intro_views_flutter: ^2.4.0
+  multi_page_form: ^1.0.4
+  toggle_button: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
+dependency_overrides:
+  badge: ^0.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

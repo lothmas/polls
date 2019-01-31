@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/Polling.dart';
 import 'package:stats/TrendingMasterObject.dart';
-import 'package:badge/badge.dart';
+//import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';

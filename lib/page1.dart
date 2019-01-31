@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stats/on_off.dart';
 import 'package:stats/vote_by_dropdown.dart';
-
+import 'package:toggle_button/toggle_button.dart';
 class Page1 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -8,11 +9,14 @@ class Page1 extends StatefulWidget {
   }
 }
 
-class _CurrencyState extends State<Page1> {
+class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
+
+  bool _enabled;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: Column(
+      resizeToAvoidBottomPadding: true,
+      body:   Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 //          Row(
@@ -117,28 +121,56 @@ class _CurrencyState extends State<Page1> {
 //          ],
 //        ),
 
+      ListView(
+      children: <Widget>[
 
           new ListTile(
             leading: const Icon(Icons.title),
-            title: new TextField(style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
+            title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
               decoration: new InputDecoration(
                 hintText: "Poll Title",
               ),
             ),
-          ),
+          ),]),
           new ListTile(
             leading: const Icon(Icons.description),
-            title: new TextField(style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
+            title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
               decoration: new InputDecoration(
                 hintText: "Poll Description",
               ),
             ),
           ),
+
           new ListTile(
             leading: const Icon(Icons.confirmation_number),
-            title: new TextField( style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
+            title: new TextField( style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
               decoration: new InputDecoration(
                 hintText: "Allowed Number of Polls Per Voter",
+              ),
+            ),
+          ),
+          new ListTile(
+            leading: const Icon(Icons.lock),
+            title: new Container(
+              alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Poll is Private",style: TextStyle(  fontSize: 12.0,)),
+                  Container(width: 5,)
+                  ,
+                  Container(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: ToggleButton(
+                      borderRadius: 40.0,
+                      size: 9.0,
+                      onChange: (sta) {
+                        print(sta);
+                      },
+                      axis: ToggleButtonAlignment.horizontal,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -146,6 +178,7 @@ class _CurrencyState extends State<Page1> {
             leading: Text("vote by:",style: new TextStyle(  fontSize: 14.0,fontWeight: FontWeight.bold)),
             title: SettingsWidget(),
           ),
+
           const Divider(
             height: 1.0,
           ),
@@ -158,7 +191,7 @@ class _CurrencyState extends State<Page1> {
 //        ),
           Container(
             color: Colors.transparent,
-            height: 10,
+            height: 30,
           ),
           Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.black, fontSize: 11.0,fontWeight: FontWeight.bold),),
           Container(

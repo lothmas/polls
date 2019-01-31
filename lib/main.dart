@@ -12,6 +12,7 @@ import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:stats/create_vote.dart';
+import 'package:stats/create_vote_pages.dart';
 import 'package:stats/login_screen_1.dart';
 import 'package:video_player/video_player.dart';
 
@@ -75,7 +76,7 @@ class _Trending extends State<Home> {
 
         ),
         Center(
-            child: new CreateVote())));
+            child:     new Test())));
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Trending",

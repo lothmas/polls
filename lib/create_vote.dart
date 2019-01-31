@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui' show lerpDouble;
 
-import 'package:badge/badge.dart';
+//import 'package:badge/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stats/card_data.dart';
@@ -380,27 +380,14 @@ class CreateVoteCard extends StatelessWidget {
 
 
 
-         ListTile(
-          leading: const Icon(Icons.title),
-          title:  new EnsureVisibleWhenFocused(
-          focusNode: _focusNodeFirstName,
-          child: new TextFormField(
-          decoration: const InputDecoration(
-          border: const UnderlineInputBorder(),
-          filled: true,
-          hintText: 'Enter Poll Title',
-          labelText: 'Poll Title *',
+          new ListTile(
+            leading: const Icon(Icons.title),
+            title: new TextField(style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
+              decoration: new InputDecoration(
+                hintText: "Poll Title",
+              ),
+            ),
           ),
-          onSaved: (String value) {
-          //TODO
-          },
-          //  controller: _firstNameController,
-          focusNode: _focusNodeFirstName,
-          ),
-          ),
-
-
-        ),
         new ListTile(
           leading: const Icon(Icons.description),
           title: new TextField(style: new TextStyle( color: Colors.white70, fontSize: 12.0,),
