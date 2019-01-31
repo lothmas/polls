@@ -14,9 +14,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
   bool _enabled;
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      resizeToAvoidBottomPadding: true,
-      body:   Column(
+     return  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 //          Row(
@@ -121,8 +119,6 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
 //          ],
 //        ),
 
-      ListView(
-      children: <Widget>[
 
           new ListTile(
             leading: const Icon(Icons.title),
@@ -131,7 +127,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
                 hintText: "Poll Title",
               ),
             ),
-          ),]),
+          ),
           new ListTile(
             leading: const Icon(Icons.description),
             title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
@@ -222,8 +218,8 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
 
 
         ],
-      )
-    );
+      );
+
   }
 
   double _currencyCalculate(String amount, double multiplier) {

@@ -18,23 +18,11 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return MultiPageForm(
       totalPage: 3,
-      pageList: <Widget>[page1(), page2(), page3()],
+      pageList: <Widget>[Page1(), MyApp(), VoteNeededData()],
       onFormSubmitted: () {
         print("Form is submitted");
       },
     );
   }
-  Widget page1() {
-    return Page1();
-  }
 
-  Widget page2() {
-   return new MyApp();
-
-  }
-
-  Widget page3() {
-   return new VoteNeededData();
-
-  }
 }
