@@ -14,7 +14,9 @@ class SingleSelectDrag extends StatelessWidget {
   Widget build(BuildContext context) {
     var main = new MaterialApp(
         home: new Scaffold(
-      body: new GameView(items, voteBy),
+          resizeToAvoidBottomPadding: false,
+
+          body: new GameView(items, voteBy),
     ));
     return banner(main);
   }

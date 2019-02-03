@@ -248,7 +248,7 @@ class _Trending extends State<Home> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomPadding: false,
         bottomNavigationBar: bottomNavigationBar2,
         body:  new HiddenDrawerMenu (
         initPositionSelected: 0,

@@ -156,6 +156,8 @@ class _DragAndDropListState<T> extends State<DragAndDropList<T>> {
       builder: (BuildContext context3, constr) {
 
         return Scaffold(
+            resizeToAvoidBottomPadding: false,
+
 //          appBar: new AppBar(
 //            title: Row(
 //              mainAxisAlignment: MainAxisAlignment.center,

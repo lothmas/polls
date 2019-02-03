@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
+
       backgroundColor: Colors.white,
       body: new Column(
         mainAxisAlignment: MainAxisAlignment.center,

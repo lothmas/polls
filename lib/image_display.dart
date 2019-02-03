@@ -13,6 +13,8 @@ class ImageScreen extends StatelessWidget {
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
         home: new Scaffold(
+          resizeToAvoidBottomPadding: false,
+
 //                    backgroundColor: Colors.white,
           appBar: new AppBar(
             backgroundColor: Colors.blueGrey,

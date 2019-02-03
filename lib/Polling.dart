@@ -50,6 +50,7 @@ class _Trending extends State<Polling> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: new AppBar(
           backgroundColor: Colors.blueGrey,
           elevation: 2,

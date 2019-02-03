@@ -97,7 +97,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   //   home: Home();
+        resizeToAvoidBottomPadding: false,
+
+        //   home: Home();
 //      appBar: AppBar(
 //        title: Text('Home'),
 //      ), //Appbar

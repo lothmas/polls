@@ -14,6 +14,8 @@ class ReOrderGrid {
       debugShowCheckedModeBanner: false,
 
       home: new Scaffold(
+        resizeToAvoidBottomPadding: false,
+
         appBar: new AppBar(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,

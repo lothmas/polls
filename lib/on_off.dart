@@ -18,6 +18,8 @@ class _MyAppState extends State<OnOff> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+          resizeToAvoidBottomPadding: false,
+
           appBar: AppBar(
             title: const Text('Toggle Button example '),
           ),

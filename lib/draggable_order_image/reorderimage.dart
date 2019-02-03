@@ -35,6 +35,7 @@ class MyAppState extends State<DraggableReOrderImage> {
       var main= new MaterialApp(
         title: title,
         home: new Scaffold(
+          resizeToAvoidBottomPadding: false,
 
           floatingActionButton: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,6 +142,8 @@ class MyAppState extends State<DraggableReOrderImage> {
       var main = new MaterialApp(
         title: title,
         home: new Scaffold(
+          resizeToAvoidBottomPadding: false,
+
           floatingActionButton: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,

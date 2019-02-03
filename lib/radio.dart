@@ -91,6 +91,8 @@ class _CurrencyState extends State<YesNoMaybe> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
+
       body: new Container(
           alignment: Alignment.center,
           child: new ListView(

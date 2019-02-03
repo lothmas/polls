@@ -415,6 +415,7 @@ class Trending {
 //          ),
 //        ]),
         child: new Scaffold(
+          resizeToAvoidBottomPadding: false,
           bottomNavigationBar: bottomAppBar,
         ),
       ),

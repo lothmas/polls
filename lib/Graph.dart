@@ -53,6 +53,8 @@ class _RandomizedRadialChartExampleState
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
+
       appBar: new AppBar(
         title: const Text('Randomized radial data'),
       ),

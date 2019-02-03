@@ -24,7 +24,10 @@ class SplashView extends StatelessWidget {
           builder: (context) => new _SplashContent(),
         ),
         routes: <String, WidgetBuilder>{
-          '/main': (BuildContext context) => loggedIn ? Home(): Scaffold(body: new LoginScreen1())}
+          '/main': (BuildContext context) => loggedIn ? Home(): Scaffold(
+              resizeToAvoidBottomPadding: false,
+
+              body: new LoginScreen1())}
     );
   }
 }

@@ -123,10 +123,9 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
           new ListTile(
             leading: const Icon(Icons.title),
             title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
-              obscureText: true,
-              decoration: new InputDecoration(
-                hintText: "Poll Title",
-              ),
+            decoration: new InputDecoration(
+            hintText: "Poll Title",
+            ),
             ),
           ),
           new ListTile(
@@ -144,6 +143,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
               decoration: new InputDecoration(
                 hintText: "Allowed Number of Polls Per Voter",
               ),
+              keyboardType: TextInputType.number,
             ),
           ),
           new ListTile(

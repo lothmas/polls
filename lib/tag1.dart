@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   Widget build(BuildContext context)
   {
     return Scaffold(
-
+        resizeToAvoidBottomPadding: false,
           body: TabBarView(
             controller: _tabController,
             children:  [

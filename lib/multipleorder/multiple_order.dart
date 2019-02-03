@@ -66,6 +66,8 @@ class _MyAppState extends State<MultipleSelect> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
+        resizeToAvoidBottomPadding: false,
+
         appBar: new AppBar(
           title: const Text('Plugin example app'),
         ),

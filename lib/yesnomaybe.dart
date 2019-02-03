@@ -29,6 +29,7 @@ class CustomRadioState extends State<CustomRadio> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
 
       body: new ListView.builder(
         scrollDirection: Axis.horizontal,
