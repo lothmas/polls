@@ -124,6 +124,8 @@ flutter:
     - images/createVoteBack2.jpg
     - images/createVoteBack2.jpg
     - images/currencies.png
+    - images/next.png
+    - images/previous.png
 
   #  - images/a_dot_ham.jpeg
 

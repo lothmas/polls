@@ -51,7 +51,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
 //                padding: new EdgeInsets.all(0.0),
 //              ),
               new DropdownButton(
-                style: new TextStyle( color: Colors.black, fontSize: 14.0,fontWeight: FontWeight.bold),
+                style: new TextStyle( color: Colors.blueGrey, fontSize: 14.0,fontWeight: FontWeight.bold),
                 value: _currentCity,
                 items: _dropDownMenuItems,
                 onChanged: changedDropDownItem,

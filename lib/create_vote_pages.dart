@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multi_page_form/multi_page_form.dart';
+import 'package:stats/MultiplePages.dart';
 import 'package:stats/page1.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/tag1.dart';
@@ -36,7 +36,26 @@ class _TestState extends State<Test> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                  Page1(),
+
+                new Opacity(
+                    opacity: 1.0,
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                        border: Border.all(color: Colors.transparent),
+                        shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    image: new AssetImage("images/background.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                      ),
+                      transform: new Matrix4.identity()..scale(1.0),
+//                      width: size.width,
+//                      height: size.height,
+//        color: color ?? Colors.transparent,
+                      child: Page1(),
+                    ))
+
+
 
             ],
             ),

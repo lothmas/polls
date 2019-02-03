@@ -121,39 +121,42 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
 
 
           new ListTile(
-            leading: const Icon(Icons.title),
-            title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            leading: const Icon(Icons.title,color: Colors.blueGrey,size: 20,),
+            title: new TextField(style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
             decoration: new InputDecoration(
-            hintText: "Poll Title",
+            hintText: "Poll Title*",
+              hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70,fontWeight: FontWeight.bold),
             ),
             ),
           ),
           new ListTile(
-            leading: const Icon(Icons.description),
-            title: new TextField(style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            leading: const Icon(Icons.description,color: Colors.blueGrey,size: 20,),
+            title: new TextField(style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
               decoration: new InputDecoration(
-                hintText: "Poll Description",
+                hintText: "Poll Description*",
+                hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70),
               ),
             ),
           ),
 
           new ListTile(
-            leading: const Icon(Icons.confirmation_number),
-            title: new TextField( style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,),
+            leading: const Icon(Icons.confirmation_number,color: Colors.blueGrey,size: 20,),
+            title: new TextField( style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
               decoration: new InputDecoration(
-                hintText: "Allowed Number of Polls Per Voter",
+                hintText: "Allowed Number of Polls Per Voter*",
+                hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70),
               ),
               keyboardType: TextInputType.number,
             ),
           ),
           new ListTile(
-            leading: const Icon(Icons.lock),
+            leading: const Icon(Icons.lock,color: Colors.blueGrey,size:20 ,),
             title: new Container(
               alignment: Alignment.center,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Poll is Private",style: TextStyle(  fontSize: 12.0,)),
+                  Text("Poll is Private",style: TextStyle(  fontSize: 12.0,color: Colors.white70)),
                   Container(width: 5,)
                   ,
                   Container(
@@ -172,7 +175,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
             ),
           ),
           new ListTile(
-            leading: Text("vote by:",style: new TextStyle(  fontSize: 14.0,fontWeight: FontWeight.bold)),
+            leading: Text("vote by*:",style: new TextStyle(  fontSize: 14.0,fontWeight: FontWeight.bold,)),
             title: SettingsWidget(),
           ),
 
