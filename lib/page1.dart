@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stats/date_time.dart';
 import 'package:stats/on_off.dart';
 import 'package:stats/vote_by_dropdown.dart';
 import 'package:toggle_button/toggle_button.dart';
@@ -17,114 +18,11 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
      return  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-//          Row(
-//          crossAxisAlignment: CrossAxisAlignment.end,
-//          children: [
-////            Container(
-////              color: Colors.transparent,
-////              width: 10.0,
-////            ),
-//            Container(
-//              //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-////          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
-////            new BoxShadow(
-////              color: Colors.white,
-////              blurRadius: 20.0,
-////            ),
-////          ]),
-//              color: Colors.transparent,
-//              child: ClipOval(
-//                child: FadeInImage.assetNetwork(
-//                  placeholder: 'images/loader.gif',
-//                  image: "https://www.goldderby.com/wp-content/uploads/2016/12/Voice-Logo.jpg",
-//                  fit: BoxFit.fill,
-//                  width: 50.0,
-//                  height: 50.0,
-//                ),
-//              ),
-//            ),
-//            Container(
-//              color: Colors.transparent,
-//              width: 10.0,
-//            ),
-//            Column(
-//              children: [
-//                Container(
-//                  child: new Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                    children: [
-//                      Container(
-//                        color: Colors.transparent,
-//                        child: Text(
-//                          'owner:  ',
-//                          textAlign: TextAlign.left,
-//                        ),
-//                      ),
-//                      Container(
-//                        color: Colors.transparent,
-//                        child: Text(
-//                          "fifa.world.cup",
-//                          textAlign: TextAlign.left,
-//                          style: TextStyle(color: Colors.teal),
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//                Container(
-//                  color: Colors.transparent,
-//                  height: 7,
-//                ),
-//
-//
-//                Container(
-//                  child: new Column(
-////                    mainAxisAlignment: MainAxisAlignment.center,
-//                      children: [
-//                        new Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                          children: [
-//                            Container(
-//                              color: Colors.transparent,
-//                              width: 20,
-//                            ),
-//                            Container(
-//                              color: Colors.transparent,
-//                              width: 58,
-//                            ),
-//                            Container(
-//                              color: Colors.transparent,
-//                              width: 58,
-//                            ),
-//                          ],
-//                        ),
-//                      ]),
-//                ),
-//              ],
-//            ),
-//            Container(
-//              color: Colors.transparent,
-//              width: 30,
-//            ),
-//            new Align(
-//                child: Container(
-//                    color: Colors.black12,
-//                    child: Badge.right(
-////                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-//                        value: '0' + ' | ' + '0',
-//                        color: Colors.white70,
-//                        // value to show inside the badge
-//                        child: new Text("") // text to append (required)
-//                    ))),
-//          ],
-//        ),
-
-
           new ListTile(
             leading: const Icon(Icons.title,color: Colors.blueGrey,size: 20,),
             title: new TextField(style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
             decoration: new InputDecoration(
-            hintText: "Poll Title*",
+            hintText: "Poll Title *",
               hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70,fontWeight: FontWeight.bold),
             ),
             ),
@@ -133,7 +31,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
             leading: const Icon(Icons.description,color: Colors.blueGrey,size: 20,),
             title: new TextField(style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
               decoration: new InputDecoration(
-                hintText: "Poll Description*",
+                hintText: "Poll Description *",
                 hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70),
               ),
             ),
@@ -143,7 +41,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
             leading: const Icon(Icons.confirmation_number,color: Colors.blueGrey,size: 20,),
             title: new TextField( style: new TextStyle( color: Colors.black, fontSize: 12.0,fontWeight: FontWeight.bold),
               decoration: new InputDecoration(
-                hintText: "Allowed Number of Polls Per Voter*",
+                hintText: "Allowed Number of Polls Per Voter *",
                 hintStyle: TextStyle(fontSize: 12.0, color: Colors.white70),
               ),
               keyboardType: TextInputType.number,
@@ -156,7 +54,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Poll is Private",style: TextStyle(  fontSize: 12.0,color: Colors.white70)),
+                  Text("Poll is Private",style: TextStyle(  fontSize: 12.0,color: Colors.white70,fontWeight: FontWeight.bold)),
                   Container(width: 5,)
                   ,
                   Container(
@@ -175,7 +73,26 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
             ),
           ),
           new ListTile(
-            leading: Text("vote by*:",style: new TextStyle(  fontSize: 14.0,fontWeight: FontWeight.bold,)),
+            leading: const Icon(Icons.timer,color: Colors.blueGrey,size:20 ,),
+            title: new Container(
+              alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Poll Duration",style: TextStyle(  fontSize: 12.0,color: Colors.white70,fontWeight: FontWeight.bold)),
+                  Container(width: 5,)
+                  ,
+//                  Container(
+//                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+//                    child: new MyHomePage(),
+//                  ),
+                ],
+              ),
+            ),
+          ),
+
+          new ListTile(
+            leading: Text("vote by*:",style: new TextStyle(  fontSize: 14.0,color: Colors.white70,fontWeight: FontWeight.bold,)),
             title: SettingsWidget(),
           ),
 
@@ -191,7 +108,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
 //        ),
           Container(
             color: Colors.transparent,
-            height: 30,
+            height: 5,
           ),
           Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.black, fontSize: 11.0,fontWeight: FontWeight.bold),),
           Container(

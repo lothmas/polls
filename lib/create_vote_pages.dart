@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stats/MultiplePages.dart';
+import 'package:stats/age_range.dart';
 import 'package:stats/page1.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/tag1.dart';
@@ -103,6 +104,7 @@ class _TestState extends State<Test> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                  VoteNeededData(),
+//                 AgeRange(),
 
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:stats/age_range.dart';
 
 //void main() => runApp(MyApp());
 
@@ -124,6 +125,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             height: 15,
                           ),
                           Text('Poll Restrictions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                          Container(
+                            child: new AgeRange(),
+                          )
                         ],
                       ),
                       Padding(

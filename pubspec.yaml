@@ -49,6 +49,9 @@ dependencies:
   intro_views_flutter: ^2.4.0
   multi_page_form: ^1.0.4
   toggle_button: ^1.0.0
+  flutter_range_slider: ^1.0.1
+  date_range_picker: ^1.0.3
+  datetime_picker_formfield: ^0.1.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
