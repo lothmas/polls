@@ -4,14 +4,20 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const appName = 'DateTimePickerFormField Example';
 
+//void main() => runApp(MaterialApp(
+//  title: appName,
+//  home: MyHomePage(),
+//  theme: ThemeData.light().copyWith(
+//      inputDecorationTheme:
+//      InputDecorationTheme(border: OutlineInputBorder())),
+//));
 
-
-class MyHomePage extends StatefulWidget {
+class DateTimePicker extends StatefulWidget {
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<DateTimePicker> {
   // Show some different formats.
   final formats = {
     InputType.both: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
@@ -26,6 +32,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+      appBar: AppBar(title: Text(appName)),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: ListView(
@@ -72,4 +79,3 @@ class MyHomePageState extends State<MyHomePage> {
     date ? time ? InputType.both : InputType.date : InputType.time);
   }
 }
-
