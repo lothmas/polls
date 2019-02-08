@@ -19,7 +19,7 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return MultiPageForm(
       totalPage: 3,
-      pageList: <Widget>[page1(), MyApp(), VoteNeededData()],
+      pageList: <Widget>[page1(), page2(), VoteNeededData()],
       onFormSubmitted: () {
         print("Form is submitted");
       },
@@ -79,6 +79,30 @@ class _TestState extends State<Test> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
+                //
+        new ListTile(
+     //     leading: const Icon(Icons.cloud_upload),
+          title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.white70, fontSize: 8.0,fontWeight: FontWeight.bold),) ,
+
+        ),
+        Container(
+          color: Colors.transparent,
+          height: 5,
+        ),
+        Text(
+          'Upload Poll Image / Video',
+          style: TextStyle(
+              color: Colors.grey, fontSize: 11.0, fontWeight: FontWeight.bold),
+        ),
+        Container(
+          width: 70.0,
+          height: 90.0,
+          child: FadeInImage.assetNetwork(
+            placeholder: 'images/picker.png',
+            image: "",
+            fit: BoxFit.fill,
+          ),
+        ),
                  MyApp(),
 
               ],
