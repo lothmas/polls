@@ -41,7 +41,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      color: Colors.transparent,
+      color: Colors.grey,
       child: new Center(
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +51,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
 //                padding: new EdgeInsets.all(0.0),
 //              ),
               new DropdownButton(
-                style: new TextStyle( color: Colors.grey, fontSize: 12.0,fontWeight: FontWeight.bold),
+                style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),
                 value: _currentCity,
                 items: _dropDownMenuItems,
                 onChanged: changedDropDownItem,

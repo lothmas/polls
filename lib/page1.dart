@@ -128,7 +128,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
         ),
 
         new ListTile(
-          leading: Text("vote by*:",
+          leading: Text("Vote By *",
               style: new TextStyle(
                 fontSize: 11.0,
                 color: Colors.white70,
@@ -139,7 +139,7 @@ class _CurrencyState extends State<Page1> with TickerProviderStateMixin {
         new ListTile(
           leading: const Icon(
             Icons.lock,
-            color: Colors.grey,
+            color: Colors.grey[350],
             size: 20,
           ),
           title: new Container(
