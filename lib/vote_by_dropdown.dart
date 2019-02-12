@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class SettingsWidget extends StatefulWidget {
   SettingsWidget({Key key}) : super(key: key);
 
@@ -9,21 +8,22 @@ class SettingsWidget extends StatefulWidget {
 }
 
 class SettingsWidgetState extends State<SettingsWidget> {
+  String votess;
 
   List _voteby =
   ["star rating", "number rating","emoji feedback","like / dislike","yes / no / maybe","text nomination", "image nomination", "video nomination",];
 
-  //voteBy
+  //votess
   //["4 star rating", "5 number rating","6 emoji feedback","8 like / dislike","7 yes / no / maybe","1 text nomination", "2 image nomination", "3 video nomination",];
 
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentCity;
+  String currentCity;
 
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
-    _currentCity = _dropDownMenuItems[0].value;
+    currentCity = _dropDownMenuItems[0].value;
     super.initState();
   }
 
@@ -52,7 +52,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
 //              ),
               new DropdownButton(
                 style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),
-                value: _currentCity,
+                value: currentCity,
                 items: _dropDownMenuItems,
                 onChanged: changedDropDownItem,
               )
@@ -64,7 +64,8 @@ class SettingsWidgetState extends State<SettingsWidget> {
 
   void changedDropDownItem(String selectedCity) {
     setState(() {
-      _currentCity = selectedCity;
+      currentCity = selectedCity;
+      votess=selectedCity;
     });
   }
 

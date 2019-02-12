@@ -1,5 +1,6 @@
 library multi_page_form;
 import 'package:flutter/material.dart';
+import 'package:stats/vote_by_dropdown.dart';
 
 class MultiPageForm extends StatefulWidget {
   final VoidCallback onFormSubmitted;
@@ -96,7 +97,9 @@ class _MultiPageFormState extends State<MultiPageForm> {
                   child: getNextButtonWrapper(widget.nextButtonStyle),
                   onPressed: () {
                     setState(() {
+                      BuildContext voteBy= SettingsWidgetState().context;
                       currentPage = currentPage + 1;
+
                     });
                   },
                 ),

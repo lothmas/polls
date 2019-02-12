@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/screen_hidden_drawer.dart';
 import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
@@ -14,7 +13,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:stats/create_vote.dart';
 import 'package:stats/create_vote_pages.dart';
 import 'package:stats/login_screen_1.dart';
-import 'package:video_player/video_player.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -32,11 +30,11 @@ void main() async {
       projectID: 'polls-223422',
     ),
   );
-  final FirebaseStorage storage = FirebaseStorage(
-      app: app, storageBucket: 'gs://polls-223422.appspot.com');
-  bool loggedIn =false;
+  final FirebaseStorage storage =
+      FirebaseStorage(app: app, storageBucket: 'gs://polls-223422.appspot.com');
+  bool loggedIn = false;
   FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
-    if(user!=null) {
+    if (user != null) {
       loggedIn = true;
     }
   });
@@ -44,28 +42,26 @@ void main() async {
 }
 
 class Home extends StatefulWidget {
-
-
   Home({this.storage});
+
   final FirebaseStorage storage;
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-   // imageCache.clear();
+    // imageCache.clear();
     return _Trending(storage: storage);
   }
 }
 
 class _Trending extends State<Home> {
-
   List<ScreenHiddenDrawer> itens = new List();
   List<ScreenHiddenDrawer> itens1 = new List();
-
 
   @override
   void initState() {
 //    initiateFacebookLogin();
-    Trending homeTrending=new Trending();
+    Trending homeTrending = new Trending();
     itens1.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Create Poll",
@@ -73,10 +69,8 @@ class _Trending extends State<Home> {
           colorLineSelected: Colors.teal,
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
-
         ),
-        Center(
-            child:     new Test())));
+        Center(child: new CreateVote())));
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Trending",
@@ -84,38 +78,33 @@ class _Trending extends State<Home> {
           colorLineSelected: Colors.teal,
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
-
         ),
         Center(
             child: new Container(
-                child:  StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection('votes').snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                child: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('votes').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              return new ListView(
+                children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                  return new Card(
+                    child: Column(
+                      children:
+                          homeTrending.homeTrendingList(context, document),
+                    ),
+                  );
+                }).toList(),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
 
-                    if (snapshot.hasData) {
-                      return new ListView(
-                        children:
-                        snapshot.data.documents.map((DocumentSnapshot document) {
-                          return new Card( child: Column(
-                            children:
-                            homeTrending.homeTrendingList(context, document),
-                          ),);
-                        }
-                        ).toList(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-
-                    // By default, show a loading spinner
-                    return CircularProgressIndicator();
-
-
-                  },
-                )
-
-            ))));
-
+            // By default, show a loading spinner
+            return CircularProgressIndicator();
+          },
+        )))));
 
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
@@ -124,7 +113,6 @@ class _Trending extends State<Home> {
           colorLineSelected: Colors.teal,
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
-
         ),
         Container(
           color: Colors.blueAccent,
@@ -136,7 +124,6 @@ class _Trending extends State<Home> {
           ),
         )));
 
-
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Favourite",
@@ -144,7 +131,6 @@ class _Trending extends State<Home> {
           colorLineSelected: Colors.teal,
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
-
         ),
         Container(
           color: Colors.orange,
@@ -174,25 +160,24 @@ class _Trending extends State<Home> {
           ),
         )));
 
-      for(int a=1;a<itens.length;a++){
-        itens1.add(itens.elementAt(a));
-      }
+    for (int a = 1; a < itens.length; a++) {
+      itens1.add(itens.elementAt(a));
+    }
 
     super.initState();
   }
 
   int _currentIndex = 0;
-  _Trending({this.storage});
-  final FirebaseStorage storage;
 
+  _Trending({this.storage});
+
+  final FirebaseStorage storage;
 
   String errorMsg;
 
-
   @override
   Widget build(BuildContext context) {
-
-    Trending homeTrending=new Trending();
+    Trending homeTrending = new Trending();
     final menuButton = new PopupMenuButton<int>(
       onSelected: (int i) {},
       itemBuilder: (BuildContext ctx) {},
@@ -206,42 +191,35 @@ class _Trending extends State<Home> {
       ),
     );
 
+    Future<void> signOut1(BuildContext context) async {}
 
-    Future<void> signOut1(BuildContext context) async {
-    }
-
-   final dropDownMenu= PopupMenuButton<DropDownMenuList>(
-     onSelected:  (DropDownMenuList i) async{
-       if(i.title=='log-out'){
-         await FirebaseAuth.instance.signOut();
-         Navigator.pushReplacement(
-         context,
-         new MaterialPageRoute(
-             builder: (context) => new LoginScreen1()),
-       );
-       }
-
-     },
-
+    final dropDownMenu = PopupMenuButton<DropDownMenuList>(
+      onSelected: (DropDownMenuList i) async {
+        if (i.title == 'log-out') {
+          await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+            context,
+            new MaterialPageRoute(builder: (context) => new LoginScreen1()),
+          );
+        }
+      },
       itemBuilder: (BuildContext context) {
         return choices.skip(0).map((DropDownMenuList choice) {
           return PopupMenuItem<DropDownMenuList>(
             value: choice,
-            child: Row(children: <Widget>[
-              IconButton(
-                icon: Icon(choice.icon),
-                onPressed: () {
-
-                      },
-              ),
-
-              Text(choice.title)],),
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(choice.icon),
+                  onPressed: () {},
+                ),
+                Text(choice.title)
+              ],
+            ),
           );
         }).toList();
       },
     );
-
-
 
     var bottomNavigationBar2 = buildBottomNavigationBar();
 
@@ -250,114 +228,116 @@ class _Trending extends State<Home> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         bottomNavigationBar: bottomNavigationBar2,
-        body:  new HiddenDrawerMenu (
-        initPositionSelected: 0,
-        screens: _currentIndex==0? itens:_currentIndex==2?itens1:null,
-        backgroundColorMenu: Colors.white,
-            iconMenuAppBar: Image(
-              image: new AssetImage("images/menu.png"),
-              width: 42,
-              height: 42,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-            ),
-        //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
-        //    whithAutoTittleName: true,
-        //    styleAutoTittleName: TextStyle(color: Colors.red),
-            actionsAppBar: <Widget>[menuButton,dropDownMenu],
-        //    backgroundColorContent: Colors.blue,
-            backgroundColorAppBar: Colors.blueGrey,
-        //    elevationAppBar: 4.0,
-        //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
-        //    enableShadowItensMenu: true,
-            isDraggable :false,
-            backgroundMenu: DecorationImage(image: ExactAssetImage("images/background.jpg"),fit: BoxFit.cover),
-      ),
+        body: new HiddenDrawerMenu(
+          initPositionSelected: 0,
+          screens:
+              _currentIndex == 0 ? itens : _currentIndex == 2 ? itens1 : null,
+          backgroundColorMenu: Colors.white,
+          iconMenuAppBar: Image(
+            image: new AssetImage("images/menu.png"),
+            width: 42,
+            height: 42,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          //    backgroundContent: DecorationImage((image: ExactAssetImage('assets/bg_news.jpg'),fit: BoxFit.cover),
+          //    whithAutoTittleName: true,
+          //    styleAutoTittleName: TextStyle(color: Colors.red),
+          actionsAppBar: <Widget>[menuButton, dropDownMenu],
+          //    backgroundColorContent: Colors.blue,
+          backgroundColorAppBar: Colors.blueGrey,
+          //    elevationAppBar: 4.0,
+          //    tittleAppBar: Center(child: Icon(Icons.ac_unit),),
+          //    enableShadowItensMenu: true,
+          isDraggable: false,
+          backgroundMenu: DecorationImage(
+              image: ExactAssetImage("images/background.jpg"),
+              fit: BoxFit.cover),
+        ),
       ),
     );
   }
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
-        onTap: onTabTapped, // new
-        currentIndex: _currentIndex, // new
-        items: [
-          new BottomNavigationBarItem(
-            icon: new Image(
-              image: new AssetImage("images/home.png"),
-              width: 24,
-              height: 24,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-
-            ),
-            title: new Text(
-              'home',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey.withOpacity(0.6)),
-            ),
+      onTap: onTabTapped, // new
+      currentIndex: _currentIndex, // new
+      items: [
+        new BottomNavigationBarItem(
+          icon: new Image(
+            image: new AssetImage("images/home.png"),
+            width: 24,
+            height: 24,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
           ),
-          new BottomNavigationBarItem(
-            icon: new Image(
-              image: new AssetImage("images/search.png"),
-              width: 24,
-              height: 24,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-            ),
-            title: new Text(
-              'search',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey.withOpacity(0.6)),
-            ),
+          title: new Text(
+            'home',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.withOpacity(0.6)),
           ),
-          new BottomNavigationBarItem(
-            icon: new Image(
-              image: new AssetImage("images/createVote.png"),
-              width: 24,
-              height: 24,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-            ),
-            title: new Text(
-              'create poll',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey.withOpacity(0.6)),
-            ),
+        ),
+        new BottomNavigationBarItem(
+          icon: new Image(
+            image: new AssetImage("images/search.png"),
+            width: 24,
+            height: 24,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
           ),
-          new BottomNavigationBarItem(
-            icon: new Image(
-              image: new AssetImage("images/profile.png"),
-              width: 32,
-              height: 32,
-              color: null,
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
-            ),
-            title: new Text(
-              'profile',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey.withOpacity(0.6)),
-            ),
-          )
-        ],
-      );
+          title: new Text(
+            'search',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.withOpacity(0.6)),
+          ),
+        ),
+        new BottomNavigationBarItem(
+          icon: new Image(
+            image: new AssetImage("images/createVote.png"),
+            width: 24,
+            height: 24,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          title: new Text(
+            'create poll',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.withOpacity(0.6)),
+          ),
+        ),
+        new BottomNavigationBarItem(
+          icon: new Image(
+            image: new AssetImage("images/profile.png"),
+            width: 32,
+            height: 32,
+            color: null,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ),
+          title: new Text(
+            'profile',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.withOpacity(0.6)),
+          ),
+        )
+      ],
+    );
   }
 
   void onTabTapped(int index) {
@@ -373,12 +353,7 @@ class _Trending extends State<Home> {
 //      }
     });
   }
-
-
 }
-
-
-
 
 class DropDownMenuList {
   const DropDownMenuList({this.title, this.icon});
@@ -389,9 +364,9 @@ class DropDownMenuList {
 
 const List<DropDownMenuList> choices = const <DropDownMenuList>[
   const DropDownMenuList(title: 'log-out', icon: Icons.outlined_flag),
- // const DropDownMenuList(title: 'share', icon: Icons.share),
+  // const DropDownMenuList(title: 'share', icon: Icons.share),
 //  const DropDownMenuList(title: 'block', icon: Icons.block),
- // const DropDownMenuList(title: 'not-interested', icon: Icons.not_interested),
+  // const DropDownMenuList(title: 'not-interested', icon: Icons.not_interested),
 //  const DropDownMenuList(title: 'Train', icon: Icons.directions_railway),
 //  const DropDownMenuList(title: 'Walk', icon: Icons.directions_walk),
 ];
