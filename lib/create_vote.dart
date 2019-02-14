@@ -300,14 +300,14 @@ class CreateVoteCard extends StatelessWidget {
 //                        shape: BoxShape.rectangle,
 //                        image: new DecorationImage(
 //                          image: new AssetImage("images/background.jpg"),
-//                          fit: BoxFit.cover,
+//                1          fit: BoxFit.cover,
 //                        ),
 //                      ),
                       transform: new Matrix4.identity()..scale(1.0),
 //                      width: size.width,
 //                      height: size.height,
 //        color: color ?? Colors.transparent,
-                      child: Page1(),
+//                      child: Page1(),
                     ))
               ],
             ),

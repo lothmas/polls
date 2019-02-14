@@ -70,7 +70,7 @@ class _Trending extends State<Home> {
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
         ),
-        Center(child: new CreateVote())));
+        Center(child: new CreateVotes())));
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
           name: "Trending",
