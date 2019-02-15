@@ -280,9 +280,11 @@ class TestState extends State<CreateVotes> {
                             title: Column(
                               children: <Widget>[
                                 DateTimePickerFormField(
+                                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Colors.blueGrey),
+
                                   inputType: inputType,
                                   format: formats[inputType],
-                                  editable: editable,
+                                  editable: false,
                                   decoration: InputDecoration(
                                       labelStyle: TextStyle(
                                           fontSize: 11,
@@ -295,7 +297,8 @@ class TestState extends State<CreateVotes> {
                                 DateTimePickerFormField(
                                   inputType: inputType,
                                   format: formats[inputType],
-                                  editable: editable,
+                                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Colors.blueGrey),
+                                  editable: false,
                                   decoration: InputDecoration(
                                       labelStyle: TextStyle(
                                           fontSize: 11,
@@ -317,7 +320,7 @@ class TestState extends State<CreateVotes> {
                                   fontWeight: FontWeight.bold,
                                 )),
                             title: Container(
-                              color: Colors.grey,
+                              color: Colors.transparent,
                               child: new Center(
                                   child: new Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
