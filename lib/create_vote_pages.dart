@@ -11,22 +11,9 @@ import 'package:stats/vote_by_dropdown.dart';
 import 'package:toggle_button/toggle_button.dart';
 
 class CreateVotes extends StatefulWidget {
-//  final VoidCallback onFormSubmitted;
-//  final int totalPage;
-//  final Widget nextButtonStyle;
-//  final Widget previousButtonStyle;
-//  final Widget submitButtonStyle;
-//  final List<Widget> pageList;
+  CreateVotes({Key key}) : super(key: key);
 
-//  CreateVotes(
-//      {this.totalPage,
-//      this.pageList,
-//       this.onFormSubmitted,
-//      this.nextButtonStyle,
-//      this.previousButtonStyle,
-//      this.submitButtonStyle});
-
-  TestState createState() => TestState();
+  TestState createState() => new TestState();
 }
 
 class TestState extends State<CreateVotes> {
@@ -57,12 +44,12 @@ class TestState extends State<CreateVotes> {
   //["4 star rating", "5 number rating","6 emoji feedback","8 like / dislike","7 yes / no / maybe","1 text nomination", "2 image nomination", "3 video nomination",];
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String currentCity;
+  String _currentCity;
 
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
-    currentCity = _dropDownMenuItems[0].value;
+    _currentCity = _dropDownMenuItems[0].value;
     super.initState();
     totalPage = 3;
     pageList = <Widget>[page1(), page2(), VoteNeededData()];
@@ -71,7 +58,10 @@ class TestState extends State<CreateVotes> {
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String city in _voteby) {
-      items.add(new DropdownMenuItem(value: city, child: new Text(city)));
+      items.add(new DropdownMenuItem(
+          value: city,
+          child: new Text(city)
+      ));
     }
     return items;
   }
@@ -100,7 +90,7 @@ class TestState extends State<CreateVotes> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-            height: 50.0,
+//            height: MediaQuery.of(context).size.,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -339,7 +329,7 @@ class TestState extends State<CreateVotes> {
                                         color: Colors.blueGrey,
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold),
-                                    value: currentCity,
+                                    value: _currentCity,
                                     items: _dropDownMenuItems,
                                     onChanged: changedDropDownItem,
                                   )
@@ -508,30 +498,31 @@ class TestState extends State<CreateVotes> {
 
   void changedDropDownItem(String selectedCity) {
     setState(() {
-      currentCity = selectedCity;
-      votess = selectedCity;
       pageList.removeAt(1);
 
-      if (currentCity == "star rating") {
+      if (_currentCity == "star rating") {
         pageList.insert(1, Text("star rating"));
-      } else if (currentCity == "number rating") {
+      } else if (_currentCity == "number rating") {
         pageList.insert(1, Text("number rating"));
-      } else if (currentCity == "emoji feedback") {
+      } else if (_currentCity == "emoji feedback") {
         pageList.insert(1, Text("emoji feedback"));
-      } else if (currentCity == "like / dislike") {
+      } else if (_currentCity == "like / dislike") {
         pageList.insert(1, Text("like / dislike"));
-      } else if (currentCity == "yes / no / maybe") {
+      } else if (_currentCity == "yes / no / maybe") {
         pageList.insert(1, Text("yes / no / maybe"));
-      } else if (currentCity == "text nomination") {
+      } else if (_currentCity == "text nomination") {
         pageList.insert(1, page2());
       }
-      else if (currentCity == "image nomination") {
+      else if (_currentCity == "image nomination") {
         pageList.insert(1, Text("image nomination"));
       }
-    else if (currentCity == "video nomination") {
+    else if (_currentCity == "video nomination") {
         pageList.insert(1, Text("video nomination"));
       }
-    });
+
+        _currentCity = selectedCity;
+    }
+    );
   }
 
   Widget pageHolder() {
