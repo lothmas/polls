@@ -44,12 +44,12 @@ class TestState extends State<CreateVotes> {
   //["4 star rating", "5 number rating","6 emoji feedback","8 like / dislike","7 yes / no / maybe","1 text nomination", "2 image nomination", "3 video nomination",];
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentCity;
+  String currentCity;
 
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
-    _currentCity = _dropDownMenuItems[0].value;
+    currentCity = _dropDownMenuItems[0].value;
     super.initState();
     totalPage = 3;
     pageList = <Widget>[page1(), page2(), VoteNeededData()];
@@ -65,7 +65,10 @@ class TestState extends State<CreateVotes> {
     }
     return items;
   }
-
+  VoidCallback onFormSubmitted;
+  Widget nextButtonStyle;
+  Widget previousButtonStyle;
+  Widget submitButtonStyle;
   // Changeable in demo
   InputType inputType = InputType.both;
   bool editable = true;
@@ -74,11 +77,7 @@ class TestState extends State<CreateVotes> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback onFormSubmitted;
-    int totalPage;
-    Widget nextButtonStyle;
-    Widget previousButtonStyle;
-    Widget submitButtonStyle;
+
     List<Widget> pageList = <Widget>[page1(), page2(), VoteNeededData()];
 
     return Column(
@@ -90,7 +89,7 @@ class TestState extends State<CreateVotes> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-//            height: MediaQuery.of(context).size.,
+            height: 50.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -163,7 +162,10 @@ class TestState extends State<CreateVotes> {
   }
 
   Widget getSubmitButtonWrapper(Widget child) {
-    {
+    if(previousButtonStyle !=null){
+      return child;
+    }
+   else {
       return Row(
         children: <Widget>[
           Text(
@@ -329,7 +331,7 @@ class TestState extends State<CreateVotes> {
                                         color: Colors.blueGrey,
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.bold),
-                                    value: _currentCity,
+                                    value: currentCity,
                                     items: _dropDownMenuItems,
                                     onChanged: changedDropDownItem,
                                   )
@@ -500,29 +502,29 @@ class TestState extends State<CreateVotes> {
     setState(() {
       pageList.removeAt(1);
 
-      if (_currentCity == "star rating") {
+      if (currentCity == "star rating") {
         pageList.insert(1, Text("star rating"));
-      } else if (_currentCity == "number rating") {
+      } else if (currentCity == "number rating") {
         pageList.insert(1, Text("number rating"));
-      } else if (_currentCity == "emoji feedback") {
+      } else if (currentCity == "emoji feedback") {
         pageList.insert(1, Text("emoji feedback"));
-      } else if (_currentCity == "like / dislike") {
+      } else if (currentCity == "like / dislike") {
         pageList.insert(1, Text("like / dislike"));
-      } else if (_currentCity == "yes / no / maybe") {
+      } else if (currentCity == "yes / no / maybe") {
         pageList.insert(1, Text("yes / no / maybe"));
-      } else if (_currentCity == "text nomination") {
+      } else if (currentCity == "text nomination") {
         pageList.insert(1, page2());
       }
-      else if (_currentCity == "image nomination") {
+      else if (currentCity == "image nomination") {
         pageList.insert(1, Text("image nomination"));
       }
-    else if (_currentCity == "video nomination") {
+    else if (currentCity == "video nomination") {
         pageList.insert(1, Text("video nomination"));
       }
 
-        _currentCity = selectedCity;
-    }
-    );
+      currentCity = selectedCity;
+
+    });
   }
 
   Widget pageHolder() {
