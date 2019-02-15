@@ -11,10 +11,27 @@ import 'package:stats/vote_by_dropdown.dart';
 import 'package:toggle_button/toggle_button.dart';
 
 class CreateVotes extends StatefulWidget {
-  _TestState createState() => _TestState();
+//  final VoidCallback onFormSubmitted;
+//  final int totalPage;
+//  final Widget nextButtonStyle;
+//  final Widget previousButtonStyle;
+//  final Widget submitButtonStyle;
+//  final List<Widget> pageList;
+
+//  CreateVotes(
+//      {this.totalPage,
+//      this.pageList,
+//       this.onFormSubmitted,
+//      this.nextButtonStyle,
+//      this.previousButtonStyle,
+//      this.submitButtonStyle});
+
+  TestState createState() => TestState();
 }
 
-class _TestState extends State<CreateVotes> {
+class TestState extends State<CreateVotes> {
+  int totalPage;
+  int currentPage = 1;
   FocusNode _focusNodeFirstName = new FocusNode();
   final formats = {
     InputType.both: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
@@ -25,12 +42,19 @@ class _TestState extends State<CreateVotes> {
   List<Widget> pageList;
   String votess;
 
-  List _voteby =
-  ["star rating", "number rating","emoji feedback","like / dislike","yes / no / maybe","text nomination", "image nomination", "video nomination",];
+  List _voteby = [
+    "star rating",
+    "number rating",
+    "emoji feedback",
+    "like / dislike",
+    "yes / no / maybe",
+    "text nomination",
+    "image nomination",
+    "video nomination",
+  ];
 
   //votess
   //["4 star rating", "5 number rating","6 emoji feedback","8 like / dislike","7 yes / no / maybe","1 text nomination", "2 image nomination", "3 video nomination",];
-
 
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String currentCity;
@@ -40,33 +64,130 @@ class _TestState extends State<CreateVotes> {
     _dropDownMenuItems = getDropDownMenuItems();
     currentCity = _dropDownMenuItems[0].value;
     super.initState();
+    totalPage = 3;
+    pageList = <Widget>[page1(), page2(), VoteNeededData()];
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String city in _voteby) {
-      items.add(new DropdownMenuItem(
-          value: city,
-          child: new Text(city)
-      ));
+      items.add(new DropdownMenuItem(value: city, child: new Text(city)));
     }
     return items;
   }
+
   // Changeable in demo
   InputType inputType = InputType.both;
   bool editable = true;
   DateTime date;
   bool _enabled;
+
   @override
   Widget build(BuildContext context) {
-    pageList=<Widget>[page1(), page2(), VoteNeededData()];
-    return MultiPageForm(
-      totalPage: 3,
-      pageList:pageList ,
-      onFormSubmitted: () {
-        print("Form is submitted");
-      },
+    VoidCallback onFormSubmitted;
+    int totalPage;
+    Widget nextButtonStyle;
+    Widget previousButtonStyle;
+    Widget submitButtonStyle;
+    List<Widget> pageList = <Widget>[page1(), page2(), VoteNeededData()];
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: pageHolder(),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Container(
+            height: 50.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                currentPage == 1
+                    ? Container()
+                    : FlatButton(
+                        child: getPreviousButtonWrapper(previousButtonStyle),
+                        onPressed: () {
+                          setState(() {
+                            currentPage = currentPage - 1;
+                          });
+                        },
+                      ),
+                currentPage == totalPage
+                    ? FlatButton(
+                        child: getSubmitButtonWrapper(submitButtonStyle),
+                        onPressed: onFormSubmitted,
+                      )
+                    : FlatButton(
+                        child: getNextButtonWrapper(nextButtonStyle),
+                        onPressed: () {
+                          setState(() {
+                            BuildContext voteBy = SettingsWidgetState().context;
+                            currentPage = currentPage + 1;
+                          });
+                        },
+                      ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
+  }
+
+  Widget getNextButtonWrapper(Widget child) {
+    {
+      return Row(
+        children: <Widget>[
+          Text(
+            "Next  ",
+            style: TextStyle(color: Colors.blueGrey),
+          ),
+          Image.asset(
+            "images/next.png",
+            height: 24,
+            width: 24,
+          )
+        ],
+      );
+    }
+  }
+
+  Widget getPreviousButtonWrapper(Widget child) {
+    {
+      return Row(
+        children: <Widget>[
+          Image.asset(
+            "images/previous.png",
+            height: 24,
+            width: 24,
+          ),
+          Text(
+            "  Previous",
+            style: TextStyle(color: Colors.blueGrey),
+          )
+        ],
+      );
+    }
+  }
+
+  Widget getSubmitButtonWrapper(Widget child) {
+    {
+      return Row(
+        children: <Widget>[
+          Text(
+            "Submit  ",
+            style: TextStyle(color: Colors.blueGrey),
+          ),
+          Image.asset(
+            "images/submit.png",
+            height: 24,
+            width: 24,
+          )
+        ],
+      );
+    }
   }
 
   Widget page1() {
@@ -132,7 +253,8 @@ class _TestState extends State<CreateVotes> {
                                   fontWeight: FontWeight.bold),
                               decoration: new InputDecoration(
                                 hintText: "Poll Description *",
-                                hintStyle: TextStyle(fontSize: 11.0, color: Colors.white70),
+                                hintStyle: TextStyle(
+                                    fontSize: 11.0, color: Colors.white70),
                               ),
                             ),
                           ),
@@ -150,12 +272,12 @@ class _TestState extends State<CreateVotes> {
                                   fontWeight: FontWeight.bold),
                               decoration: new InputDecoration(
                                 hintText: "Allowed Number of Polls Per Voter *",
-                                hintStyle: TextStyle(fontSize: 11.0, color: Colors.white70),
+                                hintStyle: TextStyle(
+                                    fontSize: 11.0, color: Colors.white70),
                               ),
                               keyboardType: TextInputType.number,
                             ),
                           ),
-
 
                           new ListTile(
                             leading: const Icon(
@@ -206,21 +328,23 @@ class _TestState extends State<CreateVotes> {
                               color: Colors.grey,
                               child: new Center(
                                   child: new Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
 //              new Container(
 //                padding: new EdgeInsets.all(0.0),
 //              ),
-                                      new DropdownButton(
-                                        style: new TextStyle( color: Colors.blueGrey, fontSize: 12.0,fontWeight: FontWeight.bold),
-                                        value: currentCity,
-                                        items: _dropDownMenuItems,
-                                        onChanged: changedDropDownItem,
-                                      )
-                                    ],
+                                  new DropdownButton(
+                                    style: new TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold),
+                                    value: currentCity,
+                                    items: _dropDownMenuItems,
+                                    onChanged: changedDropDownItem,
                                   )
-                              ),
+                                ],
+                              )),
                             ),
                           ),
                           new ListTile(
@@ -243,7 +367,8 @@ class _TestState extends State<CreateVotes> {
                                     width: 5,
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(top: 11.0, bottom: 11.0),
+                                    padding: EdgeInsets.only(
+                                        top: 11.0, bottom: 11.0),
                                     child: ToggleButton(
                                       borderRadius: 40.0,
                                       size: 9.0,
@@ -260,7 +385,6 @@ class _TestState extends State<CreateVotes> {
                           const Divider(
                             height: 2.0,
                           ),
-
 
 //
 //        new ListTile(
@@ -310,9 +434,8 @@ class _TestState extends State<CreateVotes> {
   }
 
   Widget page2() {
-
 //      if()
-    String voteBy=SettingsWidgetState().votess;
+    String voteBy = SettingsWidgetState().votess;
 
     return MyApp();
     return LayoutBuilder(
@@ -386,9 +509,37 @@ class _TestState extends State<CreateVotes> {
   void changedDropDownItem(String selectedCity) {
     setState(() {
       currentCity = selectedCity;
-      votess=selectedCity;
-      List<Widget> dd=MultiPageForm().pageList;
-      String ssdsd="as";
+      votess = selectedCity;
+      pageList.removeAt(1);
+
+      if (currentCity == "star rating") {
+        pageList.insert(1, Text("star rating"));
+      } else if (currentCity == "number rating") {
+        pageList.insert(1, Text("number rating"));
+      } else if (currentCity == "emoji feedback") {
+        pageList.insert(1, Text("emoji feedback"));
+      } else if (currentCity == "like / dislike") {
+        pageList.insert(1, Text("like / dislike"));
+      } else if (currentCity == "yes / no / maybe") {
+        pageList.insert(1, Text("yes / no / maybe"));
+      } else if (currentCity == "text nomination") {
+        pageList.insert(1, page2());
+      }
+      else if (currentCity == "image nomination") {
+        pageList.insert(1, Text("image nomination"));
+      }
+    else if (currentCity == "video nomination") {
+        pageList.insert(1, Text("video nomination"));
+      }
     });
+  }
+
+  Widget pageHolder() {
+    for (int i = 1; i <= totalPage; i++) {
+      if (currentPage == i) {
+        return pageList[i - 1];
+      }
+    }
+    return Container();
   }
 }

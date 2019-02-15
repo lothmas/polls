@@ -17,10 +17,12 @@ class MultiPageForm extends StatefulWidget {
         this.nextButtonStyle,
         this.previousButtonStyle,
         this.submitButtonStyle});
-  _MultiPageFormState createState() => _MultiPageFormState();
+
+
+  MultiPageFormState createState() => MultiPageFormState();
 }
 
-class _MultiPageFormState extends State<MultiPageForm> {
+class MultiPageFormState extends State<MultiPageForm> {
   int totalPage;
   int currentPage = 1;
 
@@ -59,9 +61,12 @@ class _MultiPageFormState extends State<MultiPageForm> {
       return child;
     }
     else{
-      return Text("Submit");
+      return Row(children: <Widget>[
+        Text("Submit  ",style: TextStyle(color: Colors.blueGrey),),
+        Image.asset("images/submit.png",height: 24,width: 24,)],);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
