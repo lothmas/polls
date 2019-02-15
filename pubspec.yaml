@@ -48,7 +48,7 @@ dependencies:
   random_color: ^1.0.3
   intro_views_flutter: ^2.4.0
   multi_page_form: ^1.0.4
-  toggle_button: ^1.0.0
+  toggle_button: ^1.0.1
   flutter_range_slider: ^1.0.1
   date_range_picker: ^1.0.3
   datetime_picker_formfield: ^0.1.8
@@ -124,6 +124,7 @@ flutter:
     - images/google_sign_in.png
     - images/pick.gif
     - images/createVoteBack1.jpg
+    - images/createVoteBack11.png
     - images/createVoteBack2.jpg
     - images/createVoteBack2.jpg
     - images/currencies.png

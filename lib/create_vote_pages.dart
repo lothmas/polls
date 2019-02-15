@@ -201,7 +201,7 @@ class TestState extends State<CreateVotes> {
                         border: Border.all(color: Colors.transparent),
                         shape: BoxShape.rectangle,
                         image: new DecorationImage(
-                          image: new AssetImage("images/background.jpg"),
+                          image: new AssetImage("images/createVoteBack1.jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -358,18 +358,18 @@ class TestState extends State<CreateVotes> {
                                   Container(
                                     width: 5,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        top: 11.0, bottom: 11.0),
-                                    child: ToggleButton(
-                                      borderRadius: 40.0,
-                                      size: 9.0,
-                                      onChange: (sta) {
-                                        print(sta);
-                                      },
-                                      axis: ToggleButtonAlignment.horizontal,
-                                    ),
-                                  ),
+//                                  Container(
+//                                    padding: EdgeInsets.only(
+//                                        top: 11.0, bottom: 11.0),
+//                                    child: ToggleButton(
+//                                      borderRadius: 40.0,
+//                                      size: 9.0,
+//                                      onChange: (sta) {
+//                                        print(sta);
+//                                      },
+//                                      axis: ToggleButtonAlignment.horizontal,
+//                                    ),
+//                                  ),
                                 ],
                               ),
                             ),
