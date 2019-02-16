@@ -503,6 +503,8 @@ class TestState extends State<CreateVotes> {
 
   void changedDropDownItem(String selectedCity) {
     setState(() {
+      currentCity = selectedCity;
+
       pageList.removeAt(1);
 
       if (currentCity == "star rating") {
@@ -525,7 +527,6 @@ class TestState extends State<CreateVotes> {
         pageList.insert(1, Text("video nomination"));
       }
 
-      currentCity = selectedCity;
 
     });
   }
