@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:stats/MultiplePages.dart';
 import 'package:stats/age_range.dart';
@@ -16,7 +17,42 @@ class CreateVotes extends StatefulWidget {
   TestState createState() => new TestState();
 }
 
-class TestState extends State<CreateVotes> {
+class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
+
+
+  ///////page3
+
+  TabController _tabController;
+  ScrollController _scrollViewController;
+
+  final List<String> _list = [
+    'gender','location','race','age',
+    'occupation','views',
+  ];
+
+
+
+  bool _symmetry = true;
+  int _column = 4;
+  double _fontSize = 12;
+
+  String _selectableOnPressed = '';
+  String _inputOnPressed = '';
+
+  List<Tag> _selectableTags = [];
+  List<String> _inputTags = [];
+
+  List _icon=[
+    Icons.home,
+    Icons.language,
+    Icons.headset
+  ];
+
+  /////////
+
+
+
+
   int totalPage;
   int currentPage = 1;
   FocusNode _focusNodeFirstName = new FocusNode();
@@ -52,7 +88,21 @@ class TestState extends State<CreateVotes> {
     currentCity = _dropDownMenuItems[0].value;
     super.initState();
     totalPage = 3;
-    pageList = <Widget>[page1(), page2(), VoteNeededData()];
+    pageList = <Widget>[page1(), page2(), page3()];
+
+
+    ////page3
+
+    _tabController = TabController(length: 2, vsync: this);
+    _scrollViewController = ScrollController();
+
+    _list.forEach((item) =>
+        _selectableTags.add(
+            Tag(title: item, active: true,icon: (item=='0' || item=='1' || item=='2')? _icon[ int.parse(item) ]:null )
+        )
+    );
+
+    //////////
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
@@ -78,7 +128,7 @@ class TestState extends State<CreateVotes> {
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> pageList = <Widget>[page1(), page2(), VoteNeededData()];
+    List<Widget> pageList = <Widget>[page1(), page2(), page3()];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -219,6 +269,7 @@ class TestState extends State<CreateVotes> {
                               size: 20,
                             ),
                             title: new TextField(
+                            //  autofocus: true,
                               style: new TextStyle(
                                   color: Colors.grey,
                                   fontSize: 11.0,
@@ -478,27 +529,20 @@ class TestState extends State<CreateVotes> {
   }
 
   Widget page3() {
-    return VoteNeededData();
+  return Tags();
 
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                VoteNeededData(),
-//                 AgeRange(),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+//    return LayoutBuilder(
+//      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+//        return SingleChildScrollView(
+//          child: ConstrainedBox(
+//            constraints: BoxConstraints(
+//              minHeight: viewportConstraints.maxHeight,
+//            ),
+//            child:
+//          ),
+//        );
+//      },
+//    );
   }
 
   void changedDropDownItem(String selectedCity) {
