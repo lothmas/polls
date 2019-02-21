@@ -5,7 +5,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:cupertino_range_slider/cupertino_range_slider.dart';
 import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stats/rangeSlide.dart';
+import 'package:stats/search.dart';
 import 'package:toggle_button/toggle_button.dart';
 import 'package:material_switch/material_switch.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
@@ -110,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   List<String> switchOptions = ["Male", "Female"];
   String selectedSwitchOption = "Male";
+  GoogleMapController mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +299,7 @@ class _MyHomePageState extends State<MyHomePage>
                                   activeTrackColor: Colors.blueGrey,
                                   activeColor: Colors.green,
                                 ),
-                               Text("Private"),
+                             new ExampleApp(),
                             ),
                             tabsContent(
                               Switch(
@@ -309,11 +312,39 @@ class _MyHomePageState extends State<MyHomePage>
                                 activeTrackColor: Colors.blueGrey,
                                 activeColor: Colors.green,
                               ),
-                              new Text("Location",
-                                  style: TextStyle(
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12)),
+                              new Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Center(
+                                      child: SizedBox(
+                                        width: 500.0,
+                                        height: 200.0,
+                                        child: GoogleMap(
+                                          onMapCreated: _onMapCreated,
+                                          initialCameraPosition: CameraPosition(
+                                            target: LatLng(35.715298, 	51.404343),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    RaisedButton(
+                                      child: const Text('Go to London'),
+                                      onPressed: mapController == null ? null : () {
+                                        mapController.animateCamera(CameraUpdate.newCameraPosition(
+                                          const CameraPosition(
+                                            bearing: 270.0,
+                                            target: LatLng(51.5160895, -0.1294527),
+                                            tilt: 30.0,
+                                            zoom: 17.0,
+                                          ),
+                                        ));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -369,5 +400,9 @@ class _MyHomePageState extends State<MyHomePage>
       );
 
     return list;
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() { mapController = controller; });
   }
 }
