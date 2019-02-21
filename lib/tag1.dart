@@ -102,8 +102,8 @@ class _MyHomePageState extends State<MyHomePage>
     });
   }
 
-  bool isSwitched = false;
-  bool isSwitched1 = false;
+  bool isAgeRange = false;
+  bool isGender = false;
   bool isLocation = false;
   bool isPrivate = false;
 
@@ -204,27 +204,27 @@ class _MyHomePageState extends State<MyHomePage>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     new ListTile(
-                                      leading: Text("Age-Range",
-                                          style: TextStyle(
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold)),
+                                      leading: Switch(
+                                        value: isAgeRange,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isAgeRange = value;
+                                          });
+                                        },
+                                        activeTrackColor: Colors.blueGrey,
+                                        activeColor: Colors.green,
+                                      ),
                                       title: new ExpandablePanel(
-                                        header: Switch(
-                                          value: isSwitched,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              isSwitched = value;
-                                            });
-                                          },
-                                          activeTrackColor: Colors.blueGrey,
-                                          activeColor: Colors.green,
-                                        ),
-                                        expanded:  RangeSliderItem(
+                                        header: Text("Age-Range",
+                                            style: TextStyle(
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,fontSize: 12),),
+                                        expanded: RangeSliderItem(
                                           title: '',
                                           initialMinValue: 12,
                                           initialMaxValue: 80,
-                                          onMinValueChanged: (v){},
-                                          onMaxValueChanged: (v){},
+                                          onMinValueChanged: (v) {},
+                                          onMaxValueChanged: (v) {},
                                         ),
                                         tapHeaderToExpand: true,
                                         hasIcon: true,
@@ -233,44 +233,98 @@ class _MyHomePageState extends State<MyHomePage>
                                     const Divider(
                                       height: 2.0,
                                     ),
-                                  ],
-                                ),
-                              )),
-                          new Opacity(
-                              opacity: 1.0,
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  border: Border.all(color: Colors.transparent),
-                                  shape: BoxShape.rectangle,
-                                  image: new DecorationImage(
-                                    image: new AssetImage(
-                                        "images/createVoteBack1.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                transform: new Matrix4.identity()..scale(1.0),
-//                      width: size.width,
-//                      height: size.height,
-//        color: color ?? Colors.transparent,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
                                     new ListTile(
-                                      leading: Text("Gender",
-                                          style: TextStyle(
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold)),
+                                      leading: Switch(
+                                        value: isGender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isGender = value;
+                                          });
+                                        },
+                                        activeTrackColor: Colors.blueGrey,
+                                        activeColor: Colors.green,
+                                      ),
                                       title: new ExpandablePanel(
-                                        header: Switch(
-                                          value: isSwitched1,
-                                          onChanged: (value) {
+                                        header: Text("Gender",
+                                            style: TextStyle(
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,fontSize: 12)),
+                                        expanded: MaterialSwitch(
+                                          padding: const EdgeInsets.all(5.0),
+                                          margin: const EdgeInsets.all(5.0),
+                                          selectedOption: selectedSwitchOption,
+                                          options: switchOptions,
+                                          selectedBackgroundColor:
+                                              Colors.blueGrey,
+                                          selectedTextColor: Colors.white,
+                                          onSelect: (String selectedOption) {
                                             setState(() {
-                                              isSwitched1 = value;
+                                              selectedSwitchOption =
+                                                  selectedOption;
                                             });
                                           },
-                                          activeTrackColor: Colors.blueGrey,
-                                          activeColor: Colors.green,
                                         ),
+                                        tapHeaderToExpand: true,
+                                        hasIcon: true,
+                                      ),
+                                    ),
+                                    const Divider(
+                                      height: 2.0,
+                                    ),
+                                    new ListTile(
+                                      leading: Switch(
+                                        value: isPrivate,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isPrivate = value;
+                                          });
+                                        },
+                                        activeTrackColor: Colors.blueGrey,
+                                        activeColor: Colors.green,
+                                      ),
+                                      title: new ExpandablePanel(
+                                        header: Text("Private Poll",
+                                            style: TextStyle(
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,fontSize: 12)),
+                                        expanded: MaterialSwitch(
+                                          padding: const EdgeInsets.all(5.0),
+                                          margin: const EdgeInsets.all(5.0),
+                                          selectedOption: selectedSwitchOption,
+                                          options: switchOptions,
+                                          selectedBackgroundColor:
+                                              Colors.blueGrey,
+                                          selectedTextColor: Colors.white,
+                                          onSelect: (String selectedOption) {
+                                            setState(() {
+                                              selectedSwitchOption =
+                                                  selectedOption;
+                                            });
+                                          },
+                                        ),
+                                        tapHeaderToExpand: true,
+                                        hasIcon: true,
+                                      ),
+                                    ),
+                                    const Divider(
+                                      height: 2.0,
+                                    ),
+                                    new ListTile(
+                                      leading: Switch(
+                                        value: isLocation,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isLocation = value;
+                                          });
+                                        },
+                                        activeTrackColor: Colors.blueGrey,
+                                        activeColor: Colors.green,
+                                      ),
+                                      title: new ExpandablePanel(
+                                        header: Text("Location",
+                                            style: TextStyle(
+                                                color: Colors.white70,
+                                                fontWeight: FontWeight.bold,fontSize: 12)),
                                         expanded: MaterialSwitch(
                                           padding: const EdgeInsets.all(5.0),
                                           margin: const EdgeInsets.all(5.0),
@@ -296,126 +350,6 @@ class _MyHomePageState extends State<MyHomePage>
                                   ],
                                 ),
                               )),
-                          new Opacity(
-                              opacity: 1.0,
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  border: Border.all(color: Colors.transparent),
-                                  shape: BoxShape.rectangle,
-                                  image: new DecorationImage(
-                                    image: new AssetImage(
-                                        "images/createVoteBack1.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                transform: new Matrix4.identity()..scale(1.0),
-//                      width: size.width,
-//                      height: size.height,
-//        color: color ?? Colors.transparent,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    new ListTile(
-                                      leading: Text("Private Poll",
-                                          style: TextStyle(
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold)),
-                                      title: new ExpandablePanel(
-                                        header: Switch(
-                                          value: isPrivate,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              isPrivate = value;
-                                            });
-                                          },
-                                          activeTrackColor: Colors.blueGrey,
-                                          activeColor: Colors.green,
-                                        ),
-                                        expanded: MaterialSwitch(
-                                          padding: const EdgeInsets.all(5.0),
-                                          margin: const EdgeInsets.all(5.0),
-                                          selectedOption: selectedSwitchOption,
-                                          options: switchOptions,
-                                          selectedBackgroundColor:
-                                          Colors.blueGrey,
-                                          selectedTextColor: Colors.white,
-                                          onSelect: (String selectedOption) {
-                                            setState(() {
-                                              selectedSwitchOption =
-                                                  selectedOption;
-                                            });
-                                          },
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          new Opacity(
-                              opacity: 1.0,
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  border: Border.all(color: Colors.transparent),
-                                  shape: BoxShape.rectangle,
-                                  image: new DecorationImage(
-                                    image: new AssetImage(
-                                        "images/createVoteBack1.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                transform: new Matrix4.identity()..scale(1.0),
-//                      width: size.width,
-//                      height: size.height,
-//        color: color ?? Colors.transparent,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    new ListTile(
-                                      leading: Text("Location",
-                                          style: TextStyle(
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold)),
-                                      title: new ExpandablePanel(
-                                        header: Switch(
-                                          value: isLocation,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              isLocation = value;
-                                            });
-                                          },
-                                          activeTrackColor: Colors.blueGrey,
-                                          activeColor: Colors.green,
-                                        ),
-                                        expanded: MaterialSwitch(
-                                          padding: const EdgeInsets.all(5.0),
-                                          margin: const EdgeInsets.all(5.0),
-                                          selectedOption: selectedSwitchOption,
-                                          options: switchOptions,
-                                          selectedBackgroundColor:
-                                          Colors.blueGrey,
-                                          selectedTextColor: Colors.white,
-                                          onSelect: (String selectedOption) {
-                                            setState(() {
-                                              selectedSwitchOption =
-                                                  selectedOption;
-                                            });
-                                          },
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
-                                  ],
-                                ),
-                              ))
                         ],
                       ),
                     ),

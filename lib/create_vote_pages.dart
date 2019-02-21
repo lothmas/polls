@@ -393,41 +393,41 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
                               )),
                             ),
                           ),
-                          new ListTile(
-                            leading: const Icon(
-                              Icons.lock,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            title: new Container(
-                              alignment: Alignment.center,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("Poll is Private",
-                                      style: TextStyle(
-                                          fontSize: 11.0,
-                                          color: Colors.white70,
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    width: 5,
-                                  ),
+//                          new ListTile(
+//                            leading: const Icon(
+//                              Icons.lock,
+//                              color: Colors.grey,
+//                              size: 20,
+//                            ),
+//                            title: new Container(
+//                              alignment: Alignment.center,
+//                              child: Row(
+//                                crossAxisAlignment: CrossAxisAlignment.center,
+//                                children: <Widget>[
+//                                  Text("Poll is Private",
+//                                      style: TextStyle(
+//                                          fontSize: 11.0,
+//                                          color: Colors.white70,
+//                                          fontWeight: FontWeight.bold)),
 //                                  Container(
-//                                    padding: EdgeInsets.only(
-//                                        top: 11.0, bottom: 11.0),
-//                                    child: ToggleButton(
-//                                      borderRadius: 40.0,
-//                                      size: 9.0,
-//                                      onChange: (sta) {
-//                                        print(sta);
-//                                      },
-//                                      axis: ToggleButtonAlignment.horizontal,
-//                                    ),
+//                                    width: 5,
 //                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+////                                  Container(
+////                                    padding: EdgeInsets.only(
+////                                        top: 11.0, bottom: 11.0),
+////                                    child: ToggleButton(
+////                                      borderRadius: 40.0,
+////                                      size: 9.0,
+////                                      onChange: (sta) {
+////                                        print(sta);
+////                                      },
+////                                      axis: ToggleButtonAlignment.horizontal,
+////                                    ),
+////                                  ),
+//                                ],
+//                              ),
+//                            ),
+//                          ),
                           const Divider(
                             height: 2.0,
                           ),
