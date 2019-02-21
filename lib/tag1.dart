@@ -8,6 +8,7 @@ import 'package:flutter_tags/selectable_tags.dart';
 import 'package:stats/rangeSlide.dart';
 import 'package:toggle_button/toggle_button.dart';
 import 'package:material_switch/material_switch.dart';
+import 'package:vertical_tabs/vertical_tabs.dart';
 //void main() => runApp(MyApp());
 
 class Tags extends StatelessWidget {
@@ -172,193 +173,186 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ],
               ),
-              LayoutBuilder(
-                builder:
-                    (BuildContext context, BoxConstraints viewportConstraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          new Opacity(
-                              opacity: 1.0,
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  border: Border.all(color: Colors.transparent),
-                                  shape: BoxShape.rectangle,
-                                  image: new DecorationImage(
-                                    image: new AssetImage(
-                                        "images/createVoteBack1.jpg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                transform: new Matrix4.identity()..scale(1.0),
-//                      width: size.width,
-//                      height: size.height,
-//        color: color ?? Colors.transparent,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    new ListTile(
-                                      leading: Switch(
-                                        value: isAgeRange,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isAgeRange = value;
-                                          });
-                                        },
-                                        activeTrackColor: Colors.blueGrey,
-                                        activeColor: Colors.green,
-                                      ),
-                                      title: new ExpandablePanel(
-                                        header: Text("Age-Range",
-                                            style: TextStyle(
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,fontSize: 12),),
-                                        expanded: RangeSliderItem(
-                                          title: '',
-                                          initialMinValue: 12,
-                                          initialMaxValue: 80,
-                                          onMinValueChanged: (v) {},
-                                          onMaxValueChanged: (v) {},
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
-                                    new ListTile(
-                                      leading: Switch(
-                                        value: isGender,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isGender = value;
-                                          });
-                                        },
-                                        activeTrackColor: Colors.blueGrey,
-                                        activeColor: Colors.green,
-                                      ),
-                                      title: new ExpandablePanel(
-                                        header: Text("Gender",
-                                            style: TextStyle(
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,fontSize: 12)),
-                                        expanded: MaterialSwitch(
-                                          padding: const EdgeInsets.all(5.0),
-                                          margin: const EdgeInsets.all(5.0),
-                                          selectedOption: selectedSwitchOption,
-                                          options: switchOptions,
-                                          selectedBackgroundColor:
-                                              Colors.blueGrey,
-                                          selectedTextColor: Colors.white,
-                                          onSelect: (String selectedOption) {
-                                            setState(() {
-                                              selectedSwitchOption =
-                                                  selectedOption;
-                                            });
-                                          },
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
-                                    new ListTile(
-                                      leading: Switch(
-                                        value: isPrivate,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isPrivate = value;
-                                          });
-                                        },
-                                        activeTrackColor: Colors.blueGrey,
-                                        activeColor: Colors.green,
-                                      ),
-                                      title: new ExpandablePanel(
-                                        header: Text("Private Poll",
-                                            style: TextStyle(
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,fontSize: 12)),
-                                        expanded: MaterialSwitch(
-                                          padding: const EdgeInsets.all(5.0),
-                                          margin: const EdgeInsets.all(5.0),
-                                          selectedOption: selectedSwitchOption,
-                                          options: switchOptions,
-                                          selectedBackgroundColor:
-                                              Colors.blueGrey,
-                                          selectedTextColor: Colors.white,
-                                          onSelect: (String selectedOption) {
-                                            setState(() {
-                                              selectedSwitchOption =
-                                                  selectedOption;
-                                            });
-                                          },
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
-                                    new ListTile(
-                                      leading: Switch(
-                                        value: isLocation,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isLocation = value;
-                                          });
-                                        },
-                                        activeTrackColor: Colors.blueGrey,
-                                        activeColor: Colors.green,
-                                      ),
-                                      title: new ExpandablePanel(
-                                        header: Text("Location",
-                                            style: TextStyle(
-                                                color: Colors.white70,
-                                                fontWeight: FontWeight.bold,fontSize: 12)),
-                                        expanded: MaterialSwitch(
-                                          padding: const EdgeInsets.all(5.0),
-                                          margin: const EdgeInsets.all(5.0),
-                                          selectedOption: selectedSwitchOption,
-                                          options: switchOptions,
-                                          selectedBackgroundColor:
-                                              Colors.blueGrey,
-                                          selectedTextColor: Colors.white,
-                                          onSelect: (String selectedOption) {
-                                            setState(() {
-                                              selectedSwitchOption =
-                                                  selectedOption;
-                                            });
-                                          },
-                                        ),
-                                        tapHeaderToExpand: true,
-                                        hasIcon: true,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 2.0,
-                                    ),
+              SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: VerticalTabs(
+                          tabsWidth: 110,
+                          tabs: <Tab>[
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.date_range),
+                                    SizedBox(width: 10),
+                                    Text('Age-Range',
+                                      style: TextStyle(fontSize: 11),),
                                   ],
                                 ),
-                              )),
-                        ],
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.airline_seat_legroom_extra),
+                                    SizedBox(width: 10),
+                                    Text('Gender',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.lock_outline),
+                                    SizedBox(width: 10),
+                                    Text('Private Poll',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.location_on),
+                                    SizedBox(width: 10),
+                                    Text('Location',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                          contents: <Widget>[
+                            tabsContent(
+                                Switch(
+                                  value: isAgeRange,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isAgeRange = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                                isAgeRange ? new RangeSliderItem(
+                                  title: '',
+                                  initialMinValue: 12,
+                                  initialMaxValue: 100,
+                                  onMinValueChanged: (v) {},
+                                  onMaxValueChanged: (v) {},
+                                ) : Text('Enable to set Age-Range',
+                                  style: TextStyle(fontSize: 12,
+                                      fontWeight: FontWeight.bold),)
+                            ),
+                            tabsContent(
+                              Switch(
+                                value: isGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isGender = value;
+                                  });
+                                },
+                                activeTrackColor: Colors.blueGrey,
+                                activeColor: Colors.green,
+                              ),
+                              isGender ? MaterialSwitch(
+                                padding: const EdgeInsets.all(5.0),
+                                margin: const EdgeInsets.all(5.0),
+                                selectedOption: selectedSwitchOption,
+                                options: switchOptions,
+                                selectedBackgroundColor: isGender ? Colors
+                                    .blueGrey : Colors.grey,
+                                selectedTextColor: isGender
+                                    ? Colors.white
+                                    : Colors.blueGrey,
+                                onSelect: isGender ? (String selectedOption) {
+                                  setState(() {
+                                    selectedSwitchOption = selectedOption;
+                                  });
+                                } : null,
+                              ) : Text('Enable to set Gender', style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),),
+                            ),
+                            tabsContent(
+                                Switch(
+                                  value: isPrivate,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isPrivate = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                               Text("Private"),
+                            ),
+                            tabsContent(
+                              Switch(
+                                value: isLocation,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isLocation = value;
+                                  });
+                                },
+                                activeTrackColor: Colors.blueGrey,
+                                activeColor: Colors.green,
+                              ),
+                              new Text("Location",
+                                  style: TextStyle(
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ],
+                ),
+
+              )
             ],
           )),
     );
+  }
+
+  Widget tabsContent(Widget switcher, Widget controller) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          switcher,
+          Divider(
+            height: 20,
+            color: Colors.black45,
+          ),
+          controller,
+        ],
+      ),
+    );
+  }
+
+  showGenderSnackBar(BuildContext context, String textMessage) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(textMessage),
+      backgroundColor: Colors.amber,
+    );
+
+    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 
   List<DropdownMenuItem> _buildItems() {
