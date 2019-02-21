@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage>
               SliverAppBar(
                 centerTitle: true,
                 pinned: true,
-                expandedHeight: 110.0,
+                expandedHeight: 1.0,
                 floating: true,
                 forceElevated: boxIsScrolled,
                 bottom: TabBar(
@@ -313,13 +313,13 @@ class _MyHomePageState extends State<MyHomePage>
                                 activeColor: Colors.green,
                               ),
                               new Padding(
-                                padding: EdgeInsets.all(15.0),
+                                padding: EdgeInsets.all(2.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Center(
                                       child: SizedBox(
-                                        width: 500.0,
+                                        width: 800.0,
                                         height: 200.0,
                                         child: GoogleMap(
                                           onMapCreated: _onMapCreated,
@@ -361,14 +361,14 @@ class _MyHomePageState extends State<MyHomePage>
 
   Widget tabsContent(Widget switcher, Widget controller) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
           switcher,
           Divider(
-            height: 20,
+            height: 5,
             color: Colors.black45,
           ),
           controller,
