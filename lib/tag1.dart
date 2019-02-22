@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage>
               SliverAppBar(
                 centerTitle: true,
                 pinned: true,
-                expandedHeight: 1.0,
+//                expandedHeight: 1.0,
                 floating: true,
                 forceElevated: boxIsScrolled,
                 bottom: TabBar(
