@@ -251,7 +251,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
                         border: Border.all(color: Colors.transparent),
                         shape: BoxShape.rectangle,
                         image: new DecorationImage(
-                          image: new AssetImage("images/createVoteBack1.jpg"),
+                          image: new AssetImage("images/background.jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
