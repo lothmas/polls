@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage>
                 floating: true,
                 forceElevated: boxIsScrolled,
                 bottom: TabBar(
-                  isScrollable: true,
+                  isScrollable: false,
                   indicatorSize: TabBarIndicatorSize.label,
                   labelStyle: TextStyle(fontSize: 14.0),
                   tabs: [
