@@ -223,19 +223,19 @@ class _MyHomePageState extends State<MyHomePage>
                                 ),
                               ),
                             ),
-                            Tab(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 1),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.location_on),
-                                    SizedBox(width: 10),
-                                    Text('Location',
-                                        style: TextStyle(fontSize: 11)),
-                                  ],
-                                ),
-                              ),
-                            ),
+//                            Tab(
+//                              child: Container(
+//                                margin: EdgeInsets.only(bottom: 1),
+//                                child: Row(
+//                                  children: <Widget>[
+//                                    Icon(Icons.location_on),
+//                                    SizedBox(width: 10),
+//                                    Text('Location',
+//                                        style: TextStyle(fontSize: 11)),
+//                                  ],
+//                                ),
+//                              ),
+//                            ),
                           ],
                           contents: <Widget>[
                             tabsContent(
@@ -299,53 +299,63 @@ class _MyHomePageState extends State<MyHomePage>
                                   activeTrackColor: Colors.blueGrey,
                                   activeColor: Colors.green,
                                 ),
-                             new ExampleApp(),
+
+                              isPrivate ? new MyHomePage() : Text('Enable to set Private_Poll', style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),),
+
+
+
+
+
+
+
+
                             ),
-                            tabsContent(
-                              Switch(
-                                value: isLocation,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isLocation = value;
-                                  });
-                                },
-                                activeTrackColor: Colors.blueGrey,
-                                activeColor: Colors.green,
-                              ),
-                              new Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Center(
-                                      child: SizedBox(
-                                        width: 800.0,
-                                        height: 200.0,
-                                        child: GoogleMap(
-                                          onMapCreated: _onMapCreated,
-                                          initialCameraPosition: CameraPosition(
-                                            target: LatLng(35.715298, 	51.404343),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    RaisedButton(
-                                      child: const Text('Go to London'),
-                                      onPressed: mapController == null ? null : () {
-                                        mapController.animateCamera(CameraUpdate.newCameraPosition(
-                                          const CameraPosition(
-                                            bearing: 270.0,
-                                            target: LatLng(51.5160895, -0.1294527),
-                                            tilt: 30.0,
-                                            zoom: 17.0,
-                                          ),
-                                        ));
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+//                            tabsContent(
+//                              Switch(
+//                                value: isLocation,
+//                                onChanged: (value) {
+//                                  setState(() {
+//                                    isLocation = value;
+//                                  });
+//                                },
+//                                activeTrackColor: Colors.blueGrey,
+//                                activeColor: Colors.green,
+//                              ),
+//                              new Padding(
+//                                padding: EdgeInsets.all(2.0),
+//                                child: Column(
+//                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                  children: <Widget>[
+//                                    Center(
+//                                      child: SizedBox(
+//                                        width: 800.0,
+//                                        height: 200.0,
+//                                        child: GoogleMap(
+//                                          onMapCreated: _onMapCreated,
+//                                          initialCameraPosition: CameraPosition(
+//                                            target: LatLng(35.715298, 	51.404343),
+//                                          ),
+//                                        ),
+//                                      ),
+//                                    ),
+//                                    RaisedButton(
+//                                      child: const Text('Go to London'),
+//                                      onPressed: mapController == null ? null : () {
+//                                        mapController.animateCamera(CameraUpdate.newCameraPosition(
+//                                          const CameraPosition(
+//                                            bearing: 270.0,
+//                                            target: LatLng(51.5160895, -0.1294527),
+//                                            tilt: 30.0,
+//                                            zoom: 17.0,
+//                                          ),
+//                                        ));
+//                                      },
+//                                    ),
+//                                  ],
+//                                ),
+//                              ),
+//                            ),
                           ],
                         ),
                       ),
