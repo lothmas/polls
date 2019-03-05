@@ -8,11 +8,12 @@ class ExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Material Search Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Users',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: new MyHomePage(title: 'Material Search Demo'),
+      home: new MyHomePage(title: 'Search Users to Add as Voters'),
     );
   }
 }
@@ -97,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
-              child: new Text("You found: ${_name ?? 'No one'}"),
-            ),
+//            new Padding(
+//              padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
+//              child: new Text("You found: ${_name ?? 'No one'}"),
+//            ),
             new Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: new Form(
@@ -124,12 +125,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       validator: (dynamic value) => value == null ? 'Required field' : null,
                       formatter: (dynamic v) => 'Hello, $v',
                     ),
-                    new MaterialButton(
-                        child: new Text('Validate'),
-                        onPressed: () {
-                          _formKey.currentState.validate();
-                        }
-                    ),
+//                    new MaterialButton(
+//                        child: new Text('Validate'),
+//                        onPressed: () {
+//                          _formKey.currentState.validate();
+//                        }
+//                    ),
                   ],
                 ),
               ),
@@ -142,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _showMaterialSearch(context);
         },
         tooltip: 'Search',
-        child: new Icon(Icons.search),
+        child: new Icon(Icons.add_circle),
       ),
     );
   }

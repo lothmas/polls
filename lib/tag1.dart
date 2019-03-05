@@ -1,15 +1,9 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:cupertino_range_slider/cupertino_range_slider.dart';
-import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stats/rangeSlide.dart';
-import 'package:stats/search.dart';
-import 'package:toggle_button/toggle_button.dart';
 import 'package:material_switch/material_switch.dart';
+import 'package:stats/search.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
 //void main() => runApp(MyApp());
 
@@ -191,8 +185,10 @@ class _MyHomePageState extends State<MyHomePage>
                                   children: <Widget>[
                                     Icon(Icons.date_range),
                                     SizedBox(width: 10),
-                                    Text('Age-Range',
-                                      style: TextStyle(fontSize: 11),),
+                                    Text(
+                                      'Age-Range',
+                                      style: TextStyle(fontSize: 11),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -249,16 +245,20 @@ class _MyHomePageState extends State<MyHomePage>
                                   activeTrackColor: Colors.blueGrey,
                                   activeColor: Colors.green,
                                 ),
-                                isAgeRange ? new RangeSliderItem(
-                                  title: '',
-                                  initialMinValue: 12,
-                                  initialMaxValue: 100,
-                                  onMinValueChanged: (v) {},
-                                  onMaxValueChanged: (v) {},
-                                ) : Text('Enable to set Age-Range',
-                                  style: TextStyle(fontSize: 12,
-                                      fontWeight: FontWeight.bold),)
-                            ),
+                                isAgeRange
+                                    ? new RangeSliderItem(
+                                        title: '',
+                                        initialMinValue: 12,
+                                        initialMaxValue: 100,
+                                        onMinValueChanged: (v) {},
+                                        onMaxValueChanged: (v) {},
+                                      )
+                                    : Text(
+                                        'Enable to set Age-Range',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      )),
                             tabsContent(
                               Switch(
                                 value: isGender,
@@ -270,46 +270,74 @@ class _MyHomePageState extends State<MyHomePage>
                                 activeTrackColor: Colors.blueGrey,
                                 activeColor: Colors.green,
                               ),
-                              isGender ? MaterialSwitch(
-                                padding: const EdgeInsets.all(5.0),
-                                margin: const EdgeInsets.all(5.0),
-                                selectedOption: selectedSwitchOption,
-                                options: switchOptions,
-                                selectedBackgroundColor: isGender ? Colors
-                                    .blueGrey : Colors.grey,
-                                selectedTextColor: isGender
-                                    ? Colors.white
-                                    : Colors.blueGrey,
-                                onSelect: isGender ? (String selectedOption) {
-                                  setState(() {
-                                    selectedSwitchOption = selectedOption;
-                                  });
-                                } : null,
-                              ) : Text('Enable to set Gender', style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),),
+                              isGender
+                                  ? MaterialSwitch(
+                                      padding: const EdgeInsets.all(5.0),
+                                      margin: const EdgeInsets.all(5.0),
+                                      selectedOption: selectedSwitchOption,
+                                      options: switchOptions,
+                                      selectedBackgroundColor: isGender
+                                          ? Colors.blueGrey
+                                          : Colors.grey,
+                                      selectedTextColor: isGender
+                                          ? Colors.white
+                                          : Colors.blueGrey,
+                                      onSelect: isGender
+                                          ? (String selectedOption) {
+                                              setState(() {
+                                                selectedSwitchOption =
+                                                    selectedOption;
+                                              });
+                                            }
+                                          : null,
+                                    )
+                                  : Text(
+                                      'Enable to set Gender',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ),
                             tabsContent(
-                                Switch(
-                                  value: isPrivate,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isPrivate = value;
-                                    });
-                                  },
-                                  activeTrackColor: Colors.blueGrey,
-                                  activeColor: Colors.green,
-                                ),
+                              Switch(
+                                value: isPrivate,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isPrivate = value;
+                                  });
+                                },
+                                activeTrackColor: Colors.blueGrey,
+                                activeColor: Colors.green,
+                              ),
+                              isPrivate
+                                  ? Container(
+                                      width: 93.0,
+                                      height: 25.0,
+                                      child: FloatingActionButton.extended(
+                                        onPressed: () {
 
-                              isPrivate ? new MyHomePage() : Text('Enable to set Private_Poll', style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),),
+                                          Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) => new ExampleApp()
+                                                  ),
+                                          );
 
-
-
-
-
-
-
-
+                                        },
+                                        icon: Icon(
+                                          Icons.add_circle,
+                                        ),
+                                        label: Text("Add Voter",
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold)),
+                                      ))
+                                  : Text(
+                                      'Enable to set Private_Poll',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ),
 //                            tabsContent(
 //                              Switch(
@@ -362,7 +390,6 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                   ],
                 ),
-
               )
             ],
           )),
@@ -413,6 +440,8 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    setState(() { mapController = controller; });
+    setState(() {
+      mapController = controller;
+    });
   }
 }
