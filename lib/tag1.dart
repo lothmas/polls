@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:stats/MaterialSwitch.dart';
 import 'package:stats/rangeSlide.dart';
-import 'package:material_switch/material_switch.dart';
+//import 'package:material_switch/material_switch.dart';
 import 'package:stats/search.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
 //void main() => runApp(MyApp());
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   List<String> switchOptions = ["Male", "Female"];
   String selectedSwitchOption = "Male";
-  GoogleMapController mapController;
+//  GoogleMapController mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
               SliverAppBar(
                 centerTitle: true,
                 pinned: true,
-//                expandedHeight: 1.0,
+                expandedHeight: 0.3,
                 floating: true,
                 forceElevated: boxIsScrolled,
                 bottom: TabBar(
@@ -272,6 +273,7 @@ class _MyHomePageState extends State<MyHomePage>
                               ),
                               isGender
                                   ? MaterialSwitch(
+
                                       padding: const EdgeInsets.all(5.0),
                                       margin: const EdgeInsets.all(5.0),
                                       selectedOption: selectedSwitchOption,
@@ -439,9 +441,9 @@ class _MyHomePageState extends State<MyHomePage>
     return list;
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      mapController = controller;
-    });
-  }
+//  void _onMapCreated(GoogleMapController controller) {
+//    setState(() {
+//      mapController = controller;
+//    });
+//  }
 }

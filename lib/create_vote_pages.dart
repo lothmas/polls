@@ -4,6 +4,7 @@ import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:stats/MultiplePages.dart';
 import 'package:stats/age_range.dart';
+import 'package:stats/multipleorder/multipicker.dart';
 import 'package:stats/page1.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/tag1.dart';
@@ -565,7 +566,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
         pageList.insert(1, page2());
       }
       else if (currentCity == "image nomination") {
-        pageList.insert(1, Text("image nomination"));
+        pageList.insert(1, MultiPicker());
       }
     else if (currentCity == "video nomination") {
         pageList.insert(1, Text("video nomination"));

@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:stats/multipleorder/asset.dart';
-import 'package:stats/multipleorder/asset_view.dart';
-import 'package:stats/multipleorder/cupertino_options.dart';
-import 'package:stats/multipleorder/picker.dart';
+import 'package:stats/multipleorder/assertview.dart';
+import 'package:stats/multipleorder/multi_image_picker.dart';
 
 
-//void main() => runApp(new MyApp());
 
-class MultipleSelect extends StatefulWidget {
+
+class MultiPicker extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();
 }
 
-class _MyAppState extends State<MultipleSelect> {
+class _MyAppState extends State<MultiPicker> {
   List<Asset> images = List<Asset>();
-  String _error;
+  String _error = 'No Error Dectected';
 
   @override
   void initState() {
@@ -28,9 +26,21 @@ class _MyAppState extends State<MultipleSelect> {
     return GridView.count(
       crossAxisCount: 3,
       children: List.generate(images.length, (index) {
-        return AssetView(index, images[index]);
+        Asset asset = images[index];
+        return AssetView(
+          index,
+          asset,
+          key: UniqueKey(),
+        );
       }),
     );
+  }
+
+  Future<void> deleteAssets() async {
+    await MultiImagePicker.deleteImages(assets: images);
+    setState(() {
+      images = List<Asset>();
+    });
   }
 
   Future<void> loadAssets() async {
@@ -38,8 +48,8 @@ class _MyAppState extends State<MultipleSelect> {
       images = List<Asset>();
     });
 
-    List<Asset> resultList;
-    String error;
+    List<Asset> resultList = List<Asset>();
+    String error = 'No Error Dectected';
 
     try {
       resultList = await MultiImagePicker.pickImages(
@@ -58,7 +68,7 @@ class _MyAppState extends State<MultipleSelect> {
 
     setState(() {
       images = resultList;
-      if (error == null) _error = 'No Error Dectected';
+      _error = error;
     });
   }
 
@@ -66,8 +76,6 @@ class _MyAppState extends State<MultipleSelect> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
-        resizeToAvoidBottomPadding: false,
-
         appBar: new AppBar(
           title: const Text('Plugin example app'),
         ),
@@ -78,6 +86,12 @@ class _MyAppState extends State<MultipleSelect> {
               child: Text("Pick images"),
               onPressed: loadAssets,
             ),
+            images.length > 0
+                ? RaisedButton(
+              child: Text("Delete images"),
+              onPressed: deleteAssets,
+            )
+                : Container(),
             Expanded(
               child: buildGridView(),
             )

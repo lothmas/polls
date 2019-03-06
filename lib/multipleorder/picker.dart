@@ -45,13 +45,18 @@ class MultiImagePicker {
     final List<dynamic> images =
         await _channel.invokeMethod('pickImages', <String, dynamic>{
       'maxImages': maxImages,
-      'enableCamera': false,
+      'enableCamera': enableCamera,
       'iosOptions': options.toJson(),
     });
 
     var assets = List<Asset>();
     for (var item in images) {
-      var asset = Asset(item['identifier'], item['width'], item['height']);
+      var asset = Asset(
+        item['identifier'],
+        item['name'],
+        item['width'],
+        item['height'],
+      );
       assets.add(asset);
     }
     return assets;
@@ -167,5 +172,18 @@ class MultiImagePicker {
     });
 
     return map;
+  }
+
+  /// Delete images from the gallery
+  /// [List<Asset>].
+  ///
+  /// Allows you to delete array of Asset objects from the filesystem.
+  static Future<bool> deleteImages({@required List<Asset> assets}) async {
+    assert(assets != null);
+    List<String> identifiers = assets.map((a) => a.identifier).toList();
+    bool result = await _channel.invokeMethod(
+        "deleteImages", <String, dynamic>{"identifiers": identifiers});
+
+    return result;
   }
 }

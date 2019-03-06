@@ -9,11 +9,10 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Users',
       theme: new ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: new MyHomePage(title: 'Search Users to Add as Voters'),
+      home: new MyHomePage(title: 'Search'),
     );
   }
 }
@@ -140,9 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          _showMaterialSearch(context);
-        },
-        tooltip: 'Search',
+          Navigator.of(context).pop();
+          },
+        tooltip: 'Add Searched User',
         child: new Icon(Icons.add_circle),
       ),
     );

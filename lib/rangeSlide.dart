@@ -96,13 +96,13 @@ class FilterItemHolder extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
+            borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
           ),
           child: Container(
-            height: 47.0,
+            height: 60.0,
             child: ConstrainedBox(
               constraints: BoxConstraints.expand(),
               child: child,

@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:stats/multipleorder/metadata.dart';
 import 'package:stats/multipleorder/picker.dart';
 
+
 class Asset {
   /// The resource identifier
   String _identifier;
+
+  /// The resource file name
+  String _name;
 
   /// Original image width
   int _originalWidth;
@@ -22,6 +26,7 @@ class Asset {
 
   Asset(
     this._identifier,
+    this._name,
     this._originalWidth,
     this._originalHeight,
   );
@@ -30,6 +35,10 @@ class Asset {
   String get _channel {
     return 'multi_image_picker/image/$_identifier';
   }
+
+  String get _thumbChannel => '$_channel.thumb';
+
+  String get _originalChannel => '$_channel.original';
 
   /// Returns the thumb data if it was loaded
   ByteData get thumbData {
@@ -64,6 +73,11 @@ class Asset {
   /// Returns the image identifier
   String get identifier {
     return _identifier;
+  }
+
+  /// Returns the image name
+  String get name {
+    return _name;
   }
 
   /// Releases the thumb data.
@@ -125,10 +139,10 @@ class Asset {
     }
 
     Completer completer = new Completer();
-    BinaryMessages.setMessageHandler(_channel, (ByteData message) {
+    BinaryMessages.setMessageHandler(_thumbChannel, (ByteData message) {
       _thumbData = message;
       completer.complete(message);
-      BinaryMessages.setMessageHandler(_channel, null);
+      BinaryMessages.setMessageHandler(_thumbChannel, null);
     });
 
     MultiImagePicker.requestThumbnail(_identifier, width, height, quality);
@@ -154,10 +168,10 @@ class Asset {
     }
 
     Completer completer = new Completer();
-    BinaryMessages.setMessageHandler(_channel, (ByteData message) {
+    BinaryMessages.setMessageHandler(_originalChannel, (ByteData message) {
       _imageData = message;
       completer.complete(message);
-      BinaryMessages.setMessageHandler(_channel, null);
+      BinaryMessages.setMessageHandler(_originalChannel, null);
     });
 
     MultiImagePicker.requestOriginal(_identifier, quality);
