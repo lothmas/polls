@@ -1,99 +1,59 @@
 import 'dart:io';
 
+import 'package:adv_image_picker/adv_image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_multiple_image_picker/flutter_multiple_image_picker.dart';
 
+//void main() => runApp(MyApp());
 
-class MultiPicker extends StatefulWidget {
+class MultiPicker extends StatelessWidget {
+  // This widget is the root of your application.
   @override
-  _MyAppState createState() => new _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Image Picker Demo Home Page'),
+    );
+  }
 }
 
-class _MyAppState extends State<MultiPicker> {
-  BuildContext context;
-  String _platformMessage = 'No Error';
-  List images;
-  int maxImageNo = 10;
-  bool selectSingleImage = false;
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
 
   @override
-  initState() {
-    super.initState();
-  }
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
-  initMultiPickUp() async {
-    setState(() {
-      images = null;
-      _platformMessage = 'No Error';
-    });
-    List resultList;
-    String error;
-    try {
-      resultList = await FlutterMultipleImagePicker.pickMultiImages(
-          maxImageNo, selectSingleImage);
-    } on PlatformException catch (e) {
-      error = e.message;
-    }
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+  List<File> files = [];
 
-    if (!mounted) return;
+  void _pickImage() async {
+    files.addAll(await AdvImagePicker.pickImagesToFile(context));
 
     setState(() {
-      images = resultList;
-      if (error == null) _platformMessage = 'No Error Dectected';
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-//        appBar: new AppBar(
-//          title: new Text('Nomination by Images'),
-//        ),
-        body: new Container(
-          padding: const EdgeInsets.all(8.0),
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              images == null
-                  ? new Container(
-                height: 200.0,
-                width: 400.0,
-                child: new Icon(
-                  Icons.image,
-                  size: 250.0,
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-                  : new SizedBox(
-                height: 200.0,
-                width: 400.0,
-                child: new ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) =>
-                  new Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: new Image.file(
-                      new File(images[index].toString()),
-                    ),
-                  ),
-                  itemCount: images.length,
-                ),
-              ),
-              new Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new Text(''),
-              ),
-              new RaisedButton.icon(
-                  onPressed: initMultiPickUp,
-                  icon: new Icon(Icons.image),
-                  label: new Text("Pick-Up Images",style: TextStyle(fontSize: 10),)),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: GridView.count(crossAxisCount: 4,
+          children: files.map((File f) => Image.file(f, fit: BoxFit.cover,)).toList(),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickImage,
+        child: Icon(Icons.add),
       ),
     );
   }
