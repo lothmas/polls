@@ -1,11 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:flutter/services.dart';
-import 'package:stats/multipleorder/assertview.dart';
-import 'package:stats/multipleorder/multi_image_picker.dart';
-
-
+import 'package:flutter_multiple_image_picker/flutter_multiple_image_picker.dart';
 
 
 class MultiPicker extends StatefulWidget {
@@ -14,88 +11,88 @@ class MultiPicker extends StatefulWidget {
 }
 
 class _MyAppState extends State<MultiPicker> {
-  List<Asset> images = List<Asset>();
-  String _error = 'No Error Dectected';
+  BuildContext context;
+  String _platformMessage = 'No Error';
+  List images;
+  int maxImageNo = 10;
+  bool selectSingleImage = false;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
   }
 
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetView(
-          index,
-          asset,
-          key: UniqueKey(),
-        );
-      }),
-    );
-  }
-
-  Future<void> deleteAssets() async {
-    await MultiImagePicker.deleteImages(assets: images);
+  initMultiPickUp() async {
     setState(() {
-      images = List<Asset>();
+      images = null;
+      _platformMessage = 'No Error';
     });
-  }
-
-  Future<void> loadAssets() async {
-    setState(() {
-      images = List<Asset>();
-    });
-
-    List<Asset> resultList = List<Asset>();
-    String error = 'No Error Dectected';
-
+    List resultList;
+    String error;
     try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        options: CupertinoOptions(takePhotoIcon: "chat"),
-      );
+      resultList = await FlutterMultipleImagePicker.pickMultiImages(
+          maxImageNo, selectSingleImage);
     } on PlatformException catch (e) {
       error = e.message;
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
       images = resultList;
-      _error = error;
+      if (error == null) _platformMessage = 'No Error Dectected';
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: new Scaffold(
         appBar: new AppBar(
-          title: const Text('Plugin example app'),
+          title: new Text('Nomination by Images'),
         ),
-        body: Column(
-          children: <Widget>[
-            Center(child: Text('Error: $_error')),
-            RaisedButton(
-              child: Text("Pick images"),
-              onPressed: loadAssets,
-            ),
-            images.length > 0
-                ? RaisedButton(
-              child: Text("Delete images"),
-              onPressed: deleteAssets,
-            )
-                : Container(),
-            Expanded(
-              child: buildGridView(),
-            )
-          ],
+        body: new Container(
+          padding: const EdgeInsets.all(8.0),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              images == null
+                  ? new Container(
+                height: 200.0,
+                width: 400.0,
+                child: new Icon(
+                  Icons.image,
+                  size: 250.0,
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+                  : new SizedBox(
+                height: 200.0,
+                width: 400.0,
+                child: new ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) =>
+                  new Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: new Image.file(
+                      new File(images[index].toString()),
+                    ),
+                  ),
+                  itemCount: images.length,
+                ),
+              ),
+              new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new Text(''),
+              ),
+              new RaisedButton.icon(
+                  onPressed: initMultiPickUp,
+                  icon: new Icon(Icons.image),
+                  label: new Text("Pick-Up Images",style: TextStyle(fontSize: 10),)),
+            ],
+          ),
         ),
       ),
     );
