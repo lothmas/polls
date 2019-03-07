@@ -49,9 +49,9 @@ class _MyAppState extends State<MultiPicker> {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Nomination by Images'),
-        ),
+//        appBar: new AppBar(
+//          title: new Text('Nomination by Images'),
+//        ),
         body: new Container(
           padding: const EdgeInsets.all(8.0),
           child: new Column(
