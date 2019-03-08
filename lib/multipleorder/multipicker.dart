@@ -10,11 +10,11 @@ class MultiPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Image Picker Demo Home Page'),
+      home: MyHomePage(title: 'Nomination by Image'),
     );
   }
 }
@@ -47,7 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: GridView.count(crossAxisCount: 4,
+        child: GridView.count(crossAxisCount: 3,
+          padding: const EdgeInsets.all(10.0),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
           children: files.map((File f) => Image.file(f, fit: BoxFit.cover,)).toList(),
         ),
       ),
