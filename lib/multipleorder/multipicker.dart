@@ -14,7 +14,7 @@ class MultiPicker extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Nomination by Image'),
+      home: MyHomePage(title: '' ),
     );
   }
 }
@@ -39,12 +39,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
     });
   }
-
+  String dropdownValue = 'Select Vote Type:';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Row(children: <Widget>[Text(widget.title+'     ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
+        Center(
+          child: DropdownButton<String>(
+            value: dropdownValue,
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['Select Vote Type:','Single Selection', 'Multiple Selection', 'Vote by Ordering']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: Colors.grey[450]),),
+              );
+            })
+                .toList(),
+          ),
+        )],),
       ),
       body: Center(
         child: GridView.count(crossAxisCount: 3,
@@ -57,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _pickImage,
         child: Icon(Icons.add),
+        mini: true,
       ),
     );
   }

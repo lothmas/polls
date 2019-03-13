@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:stats/MultiplePages.dart';
 import 'package:stats/age_range.dart';
+import 'package:stats/image_picker.dart';
 import 'package:stats/multipleorder/multipicker.dart';
 import 'package:stats/page1.dart';
 import 'package:stats/tag.dart';
@@ -11,6 +14,8 @@ import 'package:stats/tag1.dart';
 import 'package:stats/text_focus_helper.dart';
 import 'package:stats/vote_by_dropdown.dart';
 import 'package:toggle_button/toggle_button.dart';
+import 'package:flutter/services.dart';
+import 'package:medias_picker/medias_picker.dart';
 
 class CreateVotes extends StatefulWidget {
   CreateVotes({Key key}) : super(key: key);
@@ -18,20 +23,20 @@ class CreateVotes extends StatefulWidget {
   TestState createState() => new TestState();
 }
 
-class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
-
-
+class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   ///////page3
-
+  var focusNode = new FocusNode();
   TabController _tabController;
   ScrollController _scrollViewController;
 
   final List<String> _list = [
-    'gender','location','race','age',
-    'occupation','views',
+    'gender',
+    'location',
+    'race',
+    'age',
+    'occupation',
+    'views',
   ];
-
-
 
   bool _symmetry = true;
   int _column = 4;
@@ -43,16 +48,9 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
   List<Tag> _selectableTags = [];
   List<String> _inputTags = [];
 
-  List _icon=[
-    Icons.home,
-    Icons.language,
-    Icons.headset
-  ];
+  List _icon = [Icons.home, Icons.language, Icons.headset];
 
   /////////
-
-
-
 
   int totalPage;
   int currentPage = 1;
@@ -73,8 +71,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
     "like / dislike",
     "yes / no / maybe",
     "text nomination",
-    "image nomination",
-    "video nomination",
+    "image / video nomination",
   ];
 
   //votess
@@ -91,17 +88,17 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
     totalPage = 3;
     pageList = <Widget>[page1(), page2(), page3()];
 
-
     ////page3
 
     _tabController = TabController(length: 2, vsync: this);
     _scrollViewController = ScrollController();
 
-    _list.forEach((item) =>
-        _selectableTags.add(
-            Tag(title: item, active: true,icon: (item=='0' || item=='1' || item=='2')? _icon[ int.parse(item) ]:null )
-        )
-    );
+    _list.forEach((item) => _selectableTags.add(Tag(
+        title: item,
+        active: true,
+        icon: (item == '0' || item == '1' || item == '2')
+            ? _icon[int.parse(item)]
+            : null)));
 
     //////////
   }
@@ -109,17 +106,16 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String city in _voteby) {
-      items.add(new DropdownMenuItem(
-          value: city,
-          child: new Text(city)
-      ));
+      items.add(new DropdownMenuItem(value: city, child: new Text(city)));
     }
     return items;
   }
+
   VoidCallback onFormSubmitted;
   Widget nextButtonStyle;
   Widget previousButtonStyle;
   Widget submitButtonStyle;
+
   // Changeable in demo
   InputType inputType = InputType.both;
   bool editable = true;
@@ -128,7 +124,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> pageList = <Widget>[page1(), page2(), page3()];
 
     return Column(
@@ -186,8 +181,8 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
           ),
           Image.asset(
             "images/next.png",
-            height: 24,
-            width: 24,
+            height: 15,
+            width: 15,
           )
         ],
       );
@@ -200,8 +195,8 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
         children: <Widget>[
           Image.asset(
             "images/previous.png",
-            height: 24,
-            width: 24,
+            height: 15,
+            width: 15,
           ),
           Text(
             "  Previous",
@@ -213,10 +208,9 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
   }
 
   Widget getSubmitButtonWrapper(Widget child) {
-    if(previousButtonStyle !=null){
+    if (previousButtonStyle != null) {
       return child;
-    }
-   else {
+    } else {
       return Row(
         children: <Widget>[
           Text(
@@ -225,12 +219,52 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
           ),
           Image.asset(
             "images/submit.png",
-            height: 24,
-            width: 24,
+            height: 15,
+            width: 15,
           )
         ],
       );
     }
+  }
+
+  String _platformVersion = 'Unknown';
+  List<dynamic> docPaths;
+
+  pickImages() async {
+    try {
+      docPaths = await MediasPicker.pickImages(
+          quantity: 1, maxWidth: 1024, maxHeight: 1024, quality: 85);
+
+      String firstPath = docPaths[0] as String;
+
+      List<dynamic> listCompressed = await MediasPicker.compressImages(
+          imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
+      print(listCompressed);
+    } on PlatformException {}
+
+    setState(() {
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      FocusScope.of(context).requestFocus(focusNode);
+      String sf = "fds";
+    });
+
+    if (!mounted) return;
+  }
+
+  pickVideos() async {
+    try {
+      docPaths = await MediasPicker.pickVideos(quantity: 1);
+    } on PlatformException {}
+
+    setState(() {
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      FocusScope.of(context).requestFocus(focusNode);
+      String sf = "fds";
+    });
+
+    if (!mounted) return;
   }
 
   Widget page1() {
@@ -248,190 +282,235 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
                 new Opacity(
                     opacity: 1.0,
                     child: new Container(
-                      decoration: new BoxDecoration(
-                        border: Border.all(color: Colors.transparent),
-                        shape: BoxShape.rectangle,
-                        image: new DecorationImage(
-                          image: new AssetImage("images/background.jpg"),
-                          fit: BoxFit.cover,
+                        decoration: new BoxDecoration(
+                          border: Border.all(color: Colors.transparent),
+                          shape: BoxShape.rectangle,
+                          image: new DecorationImage(
+                            image: new AssetImage("images/createVoteBack1.jpg"),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      transform: new Matrix4.identity()..scale(1.0),
+                        transform: new Matrix4.identity()..scale(1.0),
 //                      width: size.width,
 //                      height: size.height,
 //        color: color ?? Colors.transparent,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new ListTile(
-                            leading: const Icon(
-                              Icons.title,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            title: new TextField(
-                            //  autofocus: true,
-                              style: new TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.bold),
-                              decoration: new InputDecoration(
-                                hintText: "Poll Title *",
-                                hintStyle: TextStyle(
-                                    fontSize: 11.0,
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          new ListTile(
-                            leading: const Icon(
-                              Icons.description,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            title: new TextField(
-                              style: new TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.bold),
-                              decoration: new InputDecoration(
-                                hintText: "Poll Description *",
-                                hintStyle: TextStyle(
-                                    fontSize: 11.0, color: Colors.white70),
-                              ),
-                            ),
-                          ),
-
-                          new ListTile(
-                            leading: const Icon(
-                              Icons.confirmation_number,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            title: new TextField(
-                              style: new TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.bold),
-                              decoration: new InputDecoration(
-                                hintText: "Allowed Number of Polls Per Voter *",
-                                hintStyle: TextStyle(
-                                    fontSize: 11.0, color: Colors.white70),
-                              ),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-
-                          new ListTile(
-                            leading: const Icon(
-                              Icons.timer,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            title: Column(
-                              children: <Widget>[
-                                DateTimePickerFormField(
-                                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Colors.blueGrey),
-
-                                  inputType: inputType,
-                                  format: formats[inputType],
-                                  editable: false,
-                                  decoration: InputDecoration(
-                                      labelStyle: TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.white70,
-                                          fontWeight: FontWeight.bold),
-                                      labelText: 'Start Poll Date & Time *',
-                                      hasFloatingPlaceholder: false),
-                                  onChanged: (dt) => setState(() => date = dt),
+                        child: new Padding(
+                          padding: const EdgeInsets.all(0.3),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              new ListTile(
+                                leading: const Icon(
+                                  Icons.title,
+                                  color: Colors.blueGrey,
+                                  size: 20,
                                 ),
-                                DateTimePickerFormField(
-                                  inputType: inputType,
-                                  format: formats[inputType],
-                                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Colors.blueGrey),
-                                  editable: false,
-                                  decoration: InputDecoration(
-                                      labelStyle: TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.white70,
-                                          fontWeight: FontWeight.bold),
-                                      labelText: 'End Poll Date & Time *',
-                                      hasFloatingPlaceholder: false),
-                                  onChanged: (dt) => setState(() => date = dt),
+                                title: new TextField(
+                                  focusNode: focusNode,
+                                  //  autofocus: true,
+                                  style: new TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.bold),
+                                  decoration: new InputDecoration(
+                                    hintText: "Poll Title *",
+                                    hintStyle: TextStyle(
+                                        fontSize: 11.0,
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                              new ListTile(
+                                leading: const Icon(
+                                  Icons.description,
+                                  color: Colors.blueGrey,
+                                  size: 20,
+                                ),
+                                title: new TextField(
+                                  style: new TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.bold),
+                                  decoration: new InputDecoration(
+                                    hintText: "Poll Description *",
+                                    hintStyle: TextStyle(
+                                        fontSize: 11.0, color: Colors.white70),
+                                  ),
+                                ),
+                              ),
 
-                          new ListTile(
-                            leading: Text("Vote By *",
-                                style: new TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            title: Container(
-                              color: Colors.transparent,
-                              child: new Center(
-                                  child: new Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
+                              new ListTile(
+                                leading: const Icon(
+                                  Icons.confirmation_number,
+                                  color: Colors.blueGrey,
+                                  size: 20,
+                                ),
+                                title: new TextField(
+                                  style: new TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.bold),
+                                  decoration: new InputDecoration(
+                                    hintText:
+                                        "Allowed Number of Polls Per Voter *",
+                                    hintStyle: TextStyle(
+                                        fontSize: 11.0, color: Colors.white70),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+
+                              new ListTile(
+                                leading: const Icon(
+                                  Icons.timer,
+                                  color: Colors.blueGrey,
+                                  size: 20,
+                                ),
+                                title: Column(
+                                  children: <Widget>[
+                                    DateTimePickerFormField(
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blueGrey),
+                                      inputType: inputType,
+                                      format: formats[inputType],
+                                      editable: false,
+                                      decoration: InputDecoration(
+                                          labelStyle: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.white70,
+                                              fontWeight: FontWeight.bold),
+                                          labelText: 'Start Poll Date & Time *',
+                                          hasFloatingPlaceholder: false),
+                                      onChanged: (dt) =>
+                                          setState(() => date = dt),
+                                    ),
+                                    DateTimePickerFormField(
+                                      inputType: inputType,
+                                      format: formats[inputType],
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blueGrey),
+                                      editable: false,
+                                      decoration: InputDecoration(
+                                          labelStyle: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.white70,
+                                              fontWeight: FontWeight.bold),
+                                          labelText: 'End Poll Date & Time *',
+                                          hasFloatingPlaceholder: false),
+                                      onChanged: (dt) =>
+                                          setState(() => date = dt),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              new ListTile(
+                                leading: Text("Vote By *",
+                                    style: new TextStyle(
+                                      fontSize: 11.0,
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                title: Container(
+                                  color: Colors.transparent,
+                                  child: new Center(
+                                      child: new Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
 //              new Container(
 //                padding: new EdgeInsets.all(0.0),
 //              ),
-                                  new DropdownButton(
+                                      new DropdownButton(
+                                        style: new TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.bold),
+                                        value: currentCity,
+                                        items: _dropDownMenuItems,
+                                        onChanged: changedDropDownItem,
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+                              new ListTile(
+                                leading: Text("Poll Main Display:",
                                     style: new TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold),
-                                    value: currentCity,
-                                    items: _dropDownMenuItems,
-                                    onChanged: changedDropDownItem,
-                                  )
-                                ],
+                                      fontSize: 11.0,
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                title: Container(
+                                  color: Colors.transparent,
+                                  child: new Center(
+                                      child: new Row(
+//                                    crossAxisAlignment: CrossAxisAlignment.sp,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Image',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.blueGrey),
+                                              ),
+                                              new IconButton(
+                                                icon: Icon(
+                                                  Icons.image,
+                                                  color: Colors.white70,
+                                                ),
+                                                onPressed: () {
+                                                  pickImages();
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Video',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.blueGrey),
+                                              ),
+                                              new IconButton(
+                                                icon: Icon(
+                                                  Icons.video_library,
+                                                  color: Colors.white70,
+                                                ),
+                                                onPressed: () {
+                                                  pickVideos();
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+
+                              Container(
+                                  child: new Image.file(
+                                new File(_platformVersion),
+                                height: 80,
+                                width: 400,
                               )),
-                            ),
-                          ),
-//                          new ListTile(
-//                            leading: const Icon(
-//                              Icons.lock,
-//                              color: Colors.grey,
-//                              size: 20,
-//                            ),
-//                            title: new Container(
-//                              alignment: Alignment.center,
-//                              child: Row(
-//                                crossAxisAlignment: CrossAxisAlignment.center,
-//                                children: <Widget>[
-//                                  Text("Poll is Private",
-//                                      style: TextStyle(
-//                                          fontSize: 11.0,
-//                                          color: Colors.white70,
-//                                          fontWeight: FontWeight.bold)),
-//                                  Container(
-//                                    width: 5,
-//                                  ),
-////                                  Container(
-////                                    padding: EdgeInsets.only(
-////                                        top: 11.0, bottom: 11.0),
-////                                    child: ToggleButton(
-////                                      borderRadius: 40.0,
-////                                      size: 9.0,
-////                                      onChange: (sta) {
-////                                        print(sta);
-////                                      },
-////                                      axis: ToggleButtonAlignment.horizontal,
-////                                    ),
-////                                  ),
-//                                ],
-//                              ),
-//                            ),
-//                          ),
-                          const Divider(
-                            height: 2.0,
-                          ),
+                              const Divider(
+                                height: 2.0,
+                              ),
 
 //
 //        new ListTile(
@@ -469,9 +548,9 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
 //            subtitle: const Text('Not specified'),
 //          )
 //
-                        ],
-                      ),
-                    ))
+                            ],
+                          ),
+                        )))
               ],
             ),
           ),
@@ -530,7 +609,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
   }
 
   Widget page3() {
-  return Tags();
+    return Tags();
 
 //    return LayoutBuilder(
 //      builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -553,26 +632,26 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin{
       pageList.removeAt(1);
 
       if (currentCity == "star rating") {
-        pageList.insert(1, Text("star rating"));
-      } else if (currentCity == "number rating") {
-        pageList.insert(1, Text("number rating"));
-      } else if (currentCity == "emoji feedback") {
-        pageList.insert(1, Text("emoji feedback"));
-      } else if (currentCity == "like / dislike") {
-        pageList.insert(1, Text("like / dislike"));
-      } else if (currentCity == "yes / no / maybe") {
-        pageList.insert(1, Text("yes / no / maybe"));
-      } else if (currentCity == "text nomination") {
-        pageList.insert(1, page2());
+        pageList.insert(1, ImagePickers());
       }
-      else if (currentCity == "image nomination") {
+// else if (currentCity == "number rating") {
+//        pageList.insert(1, Text("number rating"));
+//      } else if (currentCity == "emoji feedback") {
+//        pageList.insert(1, Text("emoji feedback"));
+//      } else if (currentCity == "like / dislike") {
+//        pageList.insert(1, Text("like / dislike"));
+//      } else if (currentCity == "yes / no / maybe") {
+//        pageList.insert(1, Text("yes / no / maybe"));
+//      } else
+
+      else if (currentCity == "text nomination") {
+        pageList.insert(1, page2());
+      } else if (currentCity == "image / video nomination") {
         pageList.insert(1, MultiPicker());
       }
-    else if (currentCity == "video nomination") {
-        pageList.insert(1, Text("video nomination"));
-      }
-
-
+//    else if (currentCity == "video nomination") {
+//        pageList.insert(1, Text("video nomination"));
+//      }
     });
   }
 
