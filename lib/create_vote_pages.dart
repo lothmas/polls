@@ -135,7 +135,15 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-            height: 50.0,
+            decoration: new BoxDecoration(
+              border: Border.all(color: Colors.transparent),
+//              shape: BoxShape.rectangle,
+//              image: new DecorationImage(
+//                image: new AssetImage("images/createVoteBack1.jpg"),
+//                fit: BoxFit.cover,
+//              ),
+            ),
+            height: 45.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
