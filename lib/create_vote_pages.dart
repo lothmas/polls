@@ -253,7 +253,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     setState(() {
       _platformVersion =
           docPaths.toString().replaceAll("[", "").replaceAll("]", "");
-      FocusScope.of(context).requestFocus(focusNode);
       String sf = "fds";
     });
 
@@ -448,74 +447,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                   )),
                                 ),
                               ),
-                              new ListTile(
-                                leading: Text("Poll Main Display:",
-                                    style: new TextStyle(
-                                      fontSize: 11.0,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                title: Container(
-                                  color: Colors.transparent,
-                                  child: new Center(
-                                      child: new Row(
-//                                    crossAxisAlignment: CrossAxisAlignment.sp,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Text(
-                                                'Image',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.blueGrey),
-                                              ),
-                                              new IconButton(
-                                                icon: Icon(
-                                                  Icons.image,
-                                                  color: Colors.white70,
-                                                ),
-                                                onPressed: () {
-                                                  pickImages();
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: <Widget>[
-                                              Text(
-                                                'Video',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.blueGrey),
-                                              ),
-                                              new IconButton(
-                                                icon: Icon(
-                                                  Icons.video_library,
-                                                  color: Colors.white70,
-                                                ),
-                                                onPressed: () {
-                                                  pickVideos();
-                                                },
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  )),
-                                ),
-                              ),
-
-                              Container(
-                                  child: new Image.file(
-                                new File(_platformVersion),
-                                height: 80,
-                                width: 400,
-                              )),
                               const Divider(
                                 height: 2.0,
                               ),
@@ -636,6 +567,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   void changedDropDownItem(String selectedCity) {
     setState(() {
       currentCity = selectedCity;
+      FocusScope.of(context).requestFocus(focusNode);
 
       pageList.removeAt(1);
 

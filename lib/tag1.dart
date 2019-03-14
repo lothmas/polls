@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
+import 'package:medias_picker/medias_picker.dart';
+
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stats/MaterialSwitch.dart';
 import 'package:stats/rangeSlide.dart';
+
 //import 'package:material_switch/material_switch.dart';
 import 'package:stats/search.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
@@ -36,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage>
   ScrollController _scrollViewController;
 
   final List<String> _list = [
-    'Poll Winner',
+//    'Poll Winner',
     'Age',
     'Gender',
     'Race',
@@ -107,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   List<String> switchOptions = ["Male", "Female"];
   String selectedSwitchOption = "Male";
+
 //  GoogleMapController mapController;
 
   @override
@@ -143,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage>
                   Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0.1),
                       ),
                       Container(
                         child: SelectableTags(
@@ -163,10 +169,72 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                       ),
                       Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(2),
                           child: Divider(
                             color: Colors.blueGrey,
                           )),
+                      Text("Poll Main Display",
+                          style: new TextStyle(
+                            fontSize: 11.0,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      new ListTile(
+//                        leading: ),
+                        title: Container(
+                          color: Colors.transparent,
+                          child: new Center(
+                              child: new Row(
+//                                    crossAxisAlignment: CrossAxisAlignment.sp,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton.icon(
+                                        color: Colors.blueGrey[200],
+                                        icon: Icon(Icons.add_photo_alternate,color: Colors.blueGrey,),
+                                        //`Icon` to display
+                                        label: Text('Add a Photo',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
+                                        //`Text` to display
+                                        onPressed: () {
+                                          pickImages();
+                                          //Code to execute when Floating Action Button is clicked
+                                          //...
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton.icon(
+                                        color: Colors.blueGrey[200],
+                                        icon: Icon(Icons.video_library,color: Colors.blueGrey,),
+                                        //`Icon` to display
+                                        label: Text('Add a Video',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
+                                        //`Text` to display
+                                        onPressed: () {
+                                          pickVideos();
+                                          //Code to execute when Floating Action Button is clicked
+                                          //...
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          )),
+                        ),
+                      ),
+                      Container(
+                          child: new Image.file(
+                        new File(_platformVersion),
+//                        height: 80,
+//                        width: 400,
+                      ))
+
                     ],
                   ),
                 ],
@@ -273,7 +341,6 @@ class _MyHomePageState extends State<MyHomePage>
                               ),
                               isGender
                                   ? MaterialSwitch(
-
                                       padding: const EdgeInsets.all(5.0),
                                       margin: const EdgeInsets.all(5.0),
                                       selectedOption: selectedSwitchOption,
@@ -317,14 +384,12 @@ class _MyHomePageState extends State<MyHomePage>
                                       height: 25.0,
                                       child: FloatingActionButton.extended(
                                         onPressed: () {
-
                                           Navigator.push(
                                             context,
                                             new MaterialPageRoute(
-                                                builder: (context) => new ExampleApp()
-                                                  ),
+                                                builder: (context) =>
+                                                    new ExampleApp()),
                                           );
-
                                         },
                                         icon: Icon(
                                           Icons.add_circle,
@@ -396,6 +461,42 @@ class _MyHomePageState extends State<MyHomePage>
             ],
           )),
     );
+  }
+
+  String _platformVersion = 'Unknown';
+  List<dynamic> docPaths;
+
+  pickImages() async {
+    docPaths = await MediasPicker.pickImages(
+        quantity: 1, maxWidth: 1024, maxHeight: 1024, quality: 85);
+
+    String firstPath = docPaths[0] as String;
+
+    List<dynamic> listCompressed = await MediasPicker.compressImages(
+        imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
+    print(listCompressed);
+
+    setState(() {
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      // FocusScope.of(context).requestFocus(focusNode);
+      String sf = "fds";
+    });
+
+    if (!mounted) return;
+  }
+
+  pickVideos() async {
+    docPaths = await MediasPicker.pickVideos(quantity: 1);
+
+    setState(() {
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      //     FocusScope.of(context).requestFocus(focusNode);
+      String sf = "fds";
+    });
+
+    if (!mounted) return;
   }
 
   Widget tabsContent(Widget switcher, Widget controller) {
