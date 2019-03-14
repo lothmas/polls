@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -37,7 +36,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
 
   List<Tag> _selectableTags = [];
 
-
   List _icon = [Icons.home, Icons.language, Icons.headset];
   var pollTitle = new TextEditingController();
   var pollDescription = new TextEditingController();
@@ -75,7 +73,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String currentCity;
 
-
   //////////////////tag
   TabController _tabController1;
   ScrollController __scrollViewController1;
@@ -109,7 +106,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   List<Tag> _selectableTags22 = [];
   List<Tag> _selectableTags33 = [];
 
-
   /////////////
   @override
   void initState() {
@@ -129,7 +125,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
             : null)));
 
     //////////
-
 
     _tabController1 = TabController(length: 2, vsync: this);
     __scrollViewController1 = ScrollController();
@@ -156,9 +151,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
               : null));
       cnt++;
     });
-
-
-
   }
 
   bool isAgeRange = false;
@@ -231,24 +223,26 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                     : FlatButton(
                         child: getNextButtonWrapper(nextButtonStyle),
                         onPressed: () {
-                          if(pollTitle.value.text==""){
-                            validationSnackBar(context,'Poll Title Cant be left empty');
+                          if (pollTitle.value.text == "") {
+                            validationSnackBar(
+                                context, 'Poll Title Cant be left empty');
+                          } else if (pollDescription.value.text == "") {
+                            validationSnackBar(
+                                context, 'Poll Description Cant be left empty');
+                          } else if (pollAllowedNumber.value.text == "") {
+                            validationSnackBar(context,
+                                'Poll Allowed Vote Numbers Cant be left empty');
+                          } else if (pollAllowedNumber.value.text == "0") {
+                            validationSnackBar(
+                                context, '0 isn\'t an accepted number');
+                          } else {
+                            setState(() {
+                              BuildContext voteBy =
+                                  SettingsWidgetState().context;
+                              currentPage = currentPage + 1;
+                            });
                           }
-                          else if(pollDescription.value.text==""){
-                            validationSnackBar(context,'Poll Description Cant be left empty');
-                          }
-                          else if(pollAllowedNumber.value.text==""){
-                            validationSnackBar(context,'Poll Allowed Vote Numbers Cant be left empty');
-                          }
-                          else if(pollAllowedNumber.value.text=="0"){
-                            validationSnackBar(context,'0 isn\'t an accepted number');
-                          }
-                          else{
-                          setState(() {
-                            BuildContext voteBy = SettingsWidgetState().context;
-                            currentPage = currentPage + 1;
-                          });
-                        }},
+                        },
                       ),
               ],
             ),
@@ -258,7 +252,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     );
   }
 
-  void validationSnackBar(BuildContext context,String validationMessage) {
+  void validationSnackBar(BuildContext context, String validationMessage) {
     Scaffold.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.blueGrey,
       content: Text(validationMessage),
@@ -707,55 +701,70 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                           child: new Center(
                               child: new Row(
 //                                    crossAxisAlignment: CrossAxisAlignment.sp,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          FlatButton.icon(
-                                            color: Colors.blueGrey[200],
-                                            icon: Icon(Icons.add_photo_alternate,color: Colors.blueGrey,),
-                                            //`Icon` to display
-                                            label: Text('Add a Photo',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
-                                            //`Text` to display
-                                            onPressed: () {
-                                              pickImages();
-                                              //Code to execute when Floating Action Button is clicked
-                                              //...
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          FlatButton.icon(
-                                            color: Colors.blueGrey[200],
-                                            icon: Icon(Icons.video_library,color: Colors.blueGrey,),
-                                            //`Icon` to display
-                                            label: Text('Add a Video',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
-                                            //`Text` to display
-                                            onPressed: () {
-                                              pickVideos();
-                                              //Code to execute when Floating Action Button is clicked
-                                              //...
-                                            },
-                                          ),
-                                        ],
+                                      FlatButton.icon(
+                                        color: Colors.blueGrey[200],
+                                        icon: Icon(
+                                          Icons.add_photo_alternate,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        //`Icon` to display
+                                        label: Text(
+                                          'Add a Photo',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 9),
+                                        ),
+                                        //`Text` to display
+                                        onPressed: () {
+                                          pickImages();
+                                          //Code to execute when Floating Action Button is clicked
+                                          //...
+                                        },
                                       ),
                                     ],
-                                  )
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton.icon(
+                                        color: Colors.blueGrey[200],
+                                        icon: Icon(
+                                          Icons.video_library,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        //`Icon` to display
+                                        label: Text(
+                                          'Add a Video',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 9),
+                                        ),
+                                        //`Text` to display
+                                        onPressed: () {
+                                          pickVideos();
+                                          //Code to execute when Floating Action Button is clicked
+                                          //...
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                              )),
+                              )
+                            ],
+                          )),
                         ),
                       ),
                       Container(
                           child: new Image.file(
-                            new File(_platformVersion),
+                        new File(_platformVersion),
 //                        height: 80,
 //                        width: 400,
-                          ))
-
+                      ))
                     ],
                   ),
                 ],
@@ -837,18 +846,18 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                 ),
                                 isAgeRange
                                     ? new RangeSliderItem(
-                                  title: '',
-                                  initialMinValue: 12,
-                                  initialMaxValue: 100,
-                                  onMinValueChanged: (v) {},
-                                  onMaxValueChanged: (v) {},
-                                )
+                                        title: '',
+                                        initialMinValue: 12,
+                                        initialMaxValue: 100,
+                                        onMinValueChanged: (v) {},
+                                        onMaxValueChanged: (v) {},
+                                      )
                                     : Text(
-                                  'Enable to set Age-Range',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                                        'Enable to set Age-Range',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      )),
                             tabsContent(
                               Switch(
                                 value: isGender,
@@ -862,31 +871,31 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                               ),
                               isGender
                                   ? MaterialSwitch(
-                                padding: const EdgeInsets.all(5.0),
-                                margin: const EdgeInsets.all(5.0),
-                                selectedOption: selectedSwitchOption,
-                                options: switchOptions,
-                                selectedBackgroundColor: isGender
-                                    ? Colors.blueGrey
-                                    : Colors.grey,
-                                selectedTextColor: isGender
-                                    ? Colors.white
-                                    : Colors.blueGrey,
-                                onSelect: isGender
-                                    ? (String selectedOption) {
-                                  setState(() {
-                                    selectedSwitchOption =
-                                        selectedOption;
-                                  });
-                                }
-                                    : null,
-                              )
+                                      padding: const EdgeInsets.all(5.0),
+                                      margin: const EdgeInsets.all(5.0),
+                                      selectedOption: selectedSwitchOption,
+                                      options: switchOptions,
+                                      selectedBackgroundColor: isGender
+                                          ? Colors.blueGrey
+                                          : Colors.grey,
+                                      selectedTextColor: isGender
+                                          ? Colors.white
+                                          : Colors.blueGrey,
+                                      onSelect: isGender
+                                          ? (String selectedOption) {
+                                              setState(() {
+                                                selectedSwitchOption =
+                                                    selectedOption;
+                                              });
+                                            }
+                                          : null,
+                                    )
                                   : Text(
-                                'Enable to set Gender',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                      'Enable to set Gender',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ),
                             tabsContent(
                               Switch(
@@ -901,31 +910,31 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                               ),
                               isPrivate
                                   ? Container(
-                                  width: 93.0,
-                                  height: 25.0,
-                                  child: FloatingActionButton.extended(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                            new ExampleApp()),
-                                      );
-                                    },
-                                    icon: Icon(
-                                      Icons.add_circle,
-                                    ),
-                                    label: Text("Add Voter",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold)),
-                                  ))
+                                      width: 93.0,
+                                      height: 25.0,
+                                      child: FloatingActionButton.extended(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    new ExampleApp()),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add_circle,
+                                        ),
+                                        label: Text("Add Voter",
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold)),
+                                      ))
                                   : Text(
-                                'Enable to set Private_Poll',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                      'Enable to set Private_Poll',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ),
 //                            tabsContent(
 //                              Switch(
@@ -1014,6 +1023,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
 //      }
     });
   }
+
   Widget tabsContent(Widget switcher, Widget controller) {
     return Container(
       margin: EdgeInsets.all(1),
