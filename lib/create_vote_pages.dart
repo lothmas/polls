@@ -1,19 +1,13 @@
-import 'dart:io';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
-import 'package:stats/MultiplePages.dart';
-import 'package:stats/age_range.dart';
 import 'package:stats/image_picker.dart';
 import 'package:stats/multipleorder/multipicker.dart';
-import 'package:stats/page1.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/tag1.dart';
-import 'package:stats/text_focus_helper.dart';
 import 'package:stats/vote_by_dropdown.dart';
-import 'package:toggle_button/toggle_button.dart';
 import 'package:flutter/services.dart';
 import 'package:medias_picker/medias_picker.dart';
 
@@ -49,6 +43,11 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   List<String> _inputTags = [];
 
   List _icon = [Icons.home, Icons.language, Icons.headset];
+  var pollTitle = new TextEditingController();
+  var pollDescription = new TextEditingController();
+  var pollAllowedNumber = new TextEditingController();
+  var pollStartDate = new TextEditingController();
+  var pollEndDate = new TextEditingController();
 
   /////////
 
@@ -165,11 +164,24 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                     : FlatButton(
                         child: getNextButtonWrapper(nextButtonStyle),
                         onPressed: () {
+                          if(pollTitle.value.text==""){
+                            validationSnackBar(context,'Poll Title Cant be left empty');
+                          }
+                          else if(pollDescription.value.text==""){
+                            validationSnackBar(context,'Poll Description Cant be left empty');
+                          }
+                          else if(pollAllowedNumber.value.text==""){
+                            validationSnackBar(context,'Poll Allowed Vote Numbers Cant be left empty');
+                          }
+                          else if(pollAllowedNumber.value.text=="0"){
+                            validationSnackBar(context,'0 isn\'t an accepted number');
+                          }
+                          else{
                           setState(() {
                             BuildContext voteBy = SettingsWidgetState().context;
                             currentPage = currentPage + 1;
                           });
-                        },
+                        }},
                       ),
               ],
             ),
@@ -177,6 +189,14 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
         )
       ],
     );
+  }
+
+  void validationSnackBar(BuildContext context,String validationMessage) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.blueGrey,
+      content: Text(validationMessage),
+      duration: Duration(seconds: 3),
+    ));
   }
 
   Widget getNextButtonWrapper(Widget child) {
@@ -313,11 +333,12 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                   size: 20,
                                 ),
                                 title: new TextField(
+                                  controller: pollTitle,
                                   focusNode: focusNode,
                                   //  autofocus: true,
                                   style: new TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 11.0,
+                                      color: Colors.blueGrey,
+                                      fontSize: 13.0,
                                       fontWeight: FontWeight.bold),
                                   decoration: new InputDecoration(
                                     hintText: "Poll Title *",
@@ -335,9 +356,10 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                   size: 20,
                                 ),
                                 title: new TextField(
+                                  controller: pollDescription,
                                   style: new TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 11.0,
+                                      color: Colors.blueGrey,
+                                      fontSize: 13.0,
                                       fontWeight: FontWeight.bold),
                                   decoration: new InputDecoration(
                                     hintText: "Poll Description *",
@@ -354,9 +376,10 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                   size: 20,
                                 ),
                                 title: new TextField(
+                                  controller: pollAllowedNumber,
                                   style: new TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 11.0,
+                                      color: Colors.blueGrey,
+                                      fontSize: 13.0,
                                       fontWeight: FontWeight.bold),
                                   decoration: new InputDecoration(
                                     hintText:
@@ -378,7 +401,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                   children: <Widget>[
                                     DateTimePickerFormField(
                                       style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blueGrey),
                                       inputType: inputType,
@@ -398,7 +421,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                       inputType: inputType,
                                       format: formats[inputType],
                                       style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blueGrey),
                                       editable: false,
