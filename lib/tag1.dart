@@ -37,10 +37,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  ScrollController _scrollViewController;
+  TabController _tabController1;
+  ScrollController __scrollViewController1;
 
-  final List<String> _list = [
+  final List<String> reportDataNeeded = [
 //    'Poll Winner',
     'Age',
     'Gender',
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage>
     'Educational-Level',
   ];
 
-  final List<String> _list1 = [
+  final List<String> restrictionData = [
     'Location',
     'Age Range',
     'Race',
@@ -68,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage>
   String _selectableOnPressed = '';
   String _inputOnPressed = '';
 
-  List<Tag> _selectableTags = [];
-  List<Tag> _selectableTags1 = [];
+  List<Tag> _selectableTags22 = [];
+  List<Tag> _selectableTags33 = [];
 
   List<String> _inputTags = [];
 
@@ -78,12 +78,12 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _scrollViewController = ScrollController();
+    _tabController1 = TabController(length: 2, vsync: this);
+    __scrollViewController1 = ScrollController();
 
     int cnt = 0;
-    _list.forEach((item) {
-      _selectableTags.add(Tag(
+    reportDataNeeded.forEach((item) {
+      _selectableTags22.add(Tag(
           id: cnt,
           title: item,
           active: (_singleItem) ? (cnt == 3 ? true : false) : true,
@@ -93,8 +93,8 @@ class _MyHomePageState extends State<MyHomePage>
       cnt++;
     });
 
-    _list1.forEach((item) {
-      _selectableTags1.add(Tag(
+    restrictionData.forEach((item) {
+      _selectableTags33.add(Tag(
           id: cnt,
           title: item,
           active: (_singleItem) ? (cnt == 3 ? true : false) : true,
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-          controller: _scrollViewController,
+          controller: __scrollViewController1,
           headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
             return <Widget>[
               SliverAppBar(
@@ -136,13 +136,13 @@ class _MyHomePageState extends State<MyHomePage>
                     Tab(text: "Expected Report Data"),
                     Tab(text: "Poll Restrictions"),
                   ],
-                  controller: _tabController,
+                  controller: _tabController1,
                 ),
               )
             ];
           },
           body: TabBarView(
-            controller: _tabController,
+            controller: _tabController1,
             children: [
               ListView(
                 children: <Widget>[
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                       Container(
                         child: SelectableTags(
-                          tags: _selectableTags,
+                          tags: _selectableTags22,
                           columns: _column,
                           fontSize: _fontSize,
                           symmetry: _symmetry,

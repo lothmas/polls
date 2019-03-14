@@ -1,15 +1,20 @@
 
+import 'dart:io';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
+import 'package:stats/MaterialSwitch.dart';
 import 'package:stats/image_picker.dart';
 import 'package:stats/multipleorder/multipicker.dart';
+import 'package:stats/rangeSlide.dart';
+import 'package:stats/search.dart';
 import 'package:stats/tag.dart';
-import 'package:stats/tag1.dart';
 import 'package:stats/vote_by_dropdown.dart';
 import 'package:flutter/services.dart';
 import 'package:medias_picker/medias_picker.dart';
+import 'package:vertical_tabs/vertical_tabs.dart';
 
 class CreateVotes extends StatefulWidget {
   CreateVotes({Key key}) : super(key: key);
@@ -20,8 +25,6 @@ class CreateVotes extends StatefulWidget {
 class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   ///////page3
   var focusNode = new FocusNode();
-  TabController _tabController;
-  ScrollController _scrollViewController;
 
   final List<String> _list = [
     'gender',
@@ -32,15 +35,8 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     'views',
   ];
 
-  bool _symmetry = true;
-  int _column = 4;
-  double _fontSize = 12;
-
-  String _selectableOnPressed = '';
-  String _inputOnPressed = '';
-
   List<Tag> _selectableTags = [];
-  List<String> _inputTags = [];
+
 
   List _icon = [Icons.home, Icons.language, Icons.headset];
   var pollTitle = new TextEditingController();
@@ -79,6 +75,42 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String currentCity;
 
+
+  //////////////////tag
+  TabController _tabController1;
+  ScrollController __scrollViewController1;
+
+  final List<String> reportDataNeeded = [
+//    'Poll Winner',
+    'Age',
+    'Gender',
+    'Race',
+    'Location',
+    'Nationality',
+    'Marital-Status',
+    'Intrested but Non-Participant',
+    'Occupation',
+    'Employment-Status',
+    'Educational-Level',
+  ];
+
+  final List<String> restrictionData = [
+    'Location',
+    'Age Range',
+    'Race',
+  ];
+
+  bool _symmetry = false;
+  bool _singleItem = false;
+  int _column = 4;
+  double _fontSize = 13;
+  String _selectableOnPressed = '';
+  String _inputOnPressed = '';
+  List<Tag> _selectableTags22 = [];
+  List<Tag> _selectableTags33 = [];
+
+
+  /////////////
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
@@ -89,9 +121,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
 
     ////page3
 
-    _tabController = TabController(length: 2, vsync: this);
-    _scrollViewController = ScrollController();
-
     _list.forEach((item) => _selectableTags.add(Tag(
         title: item,
         active: true,
@@ -100,7 +129,45 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
             : null)));
 
     //////////
+
+
+    _tabController1 = TabController(length: 2, vsync: this);
+    __scrollViewController1 = ScrollController();
+
+    int cnt = 0;
+    reportDataNeeded.forEach((item) {
+      _selectableTags22.add(Tag(
+          id: cnt,
+          title: item,
+          active: (_singleItem) ? (cnt == 3 ? true : false) : true,
+          icon: (item == '0' || item == '1' || item == '2')
+              ? _icon[int.parse(item)]
+              : null));
+      cnt++;
+    });
+
+    restrictionData.forEach((item) {
+      _selectableTags33.add(Tag(
+          id: cnt,
+          title: item,
+          active: (_singleItem) ? (cnt == 3 ? true : false) : true,
+          icon: (item == '0' || item == '1' || item == '2')
+              ? _icon[int.parse(item)]
+              : null));
+      cnt++;
+    });
+
+
+
   }
+
+  bool isAgeRange = false;
+  bool isGender = false;
+  bool isLocation = false;
+  bool isPrivate = false;
+
+  List<String> switchOptions = ["Male", "Female"];
+  String selectedSwitchOption = "Male";
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
@@ -571,20 +638,350 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   }
 
   Widget page3() {
-    return Tags();
+    return Scaffold(
+      body: NestedScrollView(
+          controller: __scrollViewController1,
+          headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                centerTitle: true,
+                pinned: true,
+                expandedHeight: 0.3,
+                floating: true,
+                forceElevated: boxIsScrolled,
+                bottom: TabBar(
+                  isScrollable: false,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelStyle: TextStyle(fontSize: 14.0),
+                  tabs: [
+                    Tab(text: "Expected Report Data"),
+                    Tab(text: "Poll Restrictions"),
+                  ],
+                  controller: _tabController1,
+                ),
+              )
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController1,
+            children: [
+              ListView(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(0.1),
+                      ),
+                      Container(
+                        child: SelectableTags(
+                          tags: _selectableTags22,
+                          columns: _column,
+                          fontSize: _fontSize,
+                          symmetry: _symmetry,
+                          singleItem: _singleItem,
+                          //activeColor: Colors.deepPurple,
+                          //boxShadow: [],
+                          //margin: EdgeInsets.symmetric(horizontal: 3, vertical: 6),
+                          onPressed: (tag) {
+                            setState(() {
+                              _selectableOnPressed = tag.toString();
+                            });
+                          },
+                        ),
+                      ),
+                      Container(
+                          padding: EdgeInsets.all(2),
+                          child: Divider(
+                            color: Colors.blueGrey,
+                          )),
+                      Text("Poll Main Display",
+                          style: new TextStyle(
+                            fontSize: 11.0,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      new ListTile(
+//                        leading: ),
+                        title: Container(
+                          color: Colors.transparent,
+                          child: new Center(
+                              child: new Row(
+//                                    crossAxisAlignment: CrossAxisAlignment.sp,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          FlatButton.icon(
+                                            color: Colors.blueGrey[200],
+                                            icon: Icon(Icons.add_photo_alternate,color: Colors.blueGrey,),
+                                            //`Icon` to display
+                                            label: Text('Add a Photo',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
+                                            //`Text` to display
+                                            onPressed: () {
+                                              pickImages();
+                                              //Code to execute when Floating Action Button is clicked
+                                              //...
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          FlatButton.icon(
+                                            color: Colors.blueGrey[200],
+                                            icon: Icon(Icons.video_library,color: Colors.blueGrey,),
+                                            //`Icon` to display
+                                            label: Text('Add a Video',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 9),),
+                                            //`Text` to display
+                                            onPressed: () {
+                                              pickVideos();
+                                              //Code to execute when Floating Action Button is clicked
+                                              //...
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                      Container(
+                          child: new Image.file(
+                            new File(_platformVersion),
+//                        height: 80,
+//                        width: 400,
+                          ))
 
-//    return LayoutBuilder(
-//      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-//        return SingleChildScrollView(
-//          child: ConstrainedBox(
-//            constraints: BoxConstraints(
-//              minHeight: viewportConstraints.maxHeight,
-//            ),
-//            child:
-//          ),
-//        );
-//      },
-//    );
+                    ],
+                  ),
+                ],
+              ),
+              SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: VerticalTabs(
+                          tabsWidth: 110,
+                          tabs: <Tab>[
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.date_range),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Age-Range',
+                                      style: TextStyle(fontSize: 11),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.airline_seat_legroom_extra),
+                                    SizedBox(width: 10),
+                                    Text('Gender',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.lock_outline),
+                                    SizedBox(width: 10),
+                                    Text('Private Poll',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                              ),
+                            ),
+//                            Tab(
+//                              child: Container(
+//                                margin: EdgeInsets.only(bottom: 1),
+//                                child: Row(
+//                                  children: <Widget>[
+//                                    Icon(Icons.location_on),
+//                                    SizedBox(width: 10),
+//                                    Text('Location',
+//                                        style: TextStyle(fontSize: 11)),
+//                                  ],
+//                                ),
+//                              ),
+//                            ),
+                          ],
+                          contents: <Widget>[
+                            tabsContent(
+                                Switch(
+                                  value: isAgeRange,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isAgeRange = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                                isAgeRange
+                                    ? new RangeSliderItem(
+                                  title: '',
+                                  initialMinValue: 12,
+                                  initialMaxValue: 100,
+                                  onMinValueChanged: (v) {},
+                                  onMaxValueChanged: (v) {},
+                                )
+                                    : Text(
+                                  'Enable to set Age-Range',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                            tabsContent(
+                              Switch(
+                                value: isGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isGender = value;
+                                  });
+                                },
+                                activeTrackColor: Colors.blueGrey,
+                                activeColor: Colors.green,
+                              ),
+                              isGender
+                                  ? MaterialSwitch(
+                                padding: const EdgeInsets.all(5.0),
+                                margin: const EdgeInsets.all(5.0),
+                                selectedOption: selectedSwitchOption,
+                                options: switchOptions,
+                                selectedBackgroundColor: isGender
+                                    ? Colors.blueGrey
+                                    : Colors.grey,
+                                selectedTextColor: isGender
+                                    ? Colors.white
+                                    : Colors.blueGrey,
+                                onSelect: isGender
+                                    ? (String selectedOption) {
+                                  setState(() {
+                                    selectedSwitchOption =
+                                        selectedOption;
+                                  });
+                                }
+                                    : null,
+                              )
+                                  : Text(
+                                'Enable to set Gender',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            tabsContent(
+                              Switch(
+                                value: isPrivate,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isPrivate = value;
+                                  });
+                                },
+                                activeTrackColor: Colors.blueGrey,
+                                activeColor: Colors.green,
+                              ),
+                              isPrivate
+                                  ? Container(
+                                  width: 93.0,
+                                  height: 25.0,
+                                  child: FloatingActionButton.extended(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                            new ExampleApp()),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.add_circle,
+                                    ),
+                                    label: Text("Add Voter",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold)),
+                                  ))
+                                  : Text(
+                                'Enable to set Private_Poll',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+//                            tabsContent(
+//                              Switch(
+//                                value: isLocation,
+//                                onChanged: (value) {
+//                                  setState(() {
+//                                    isLocation = value;
+//                                  });
+//                                },
+//                                activeTrackColor: Colors.blueGrey,
+//                                activeColor: Colors.green,
+//                              ),
+//                              new Padding(
+//                                padding: EdgeInsets.all(2.0),
+//                                child: Column(
+//                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                  children: <Widget>[
+//                                    Center(
+//                                      child: SizedBox(
+//                                        width: 800.0,
+//                                        height: 200.0,
+//                                        child: GoogleMap(
+//                                          onMapCreated: _onMapCreated,
+//                                          initialCameraPosition: CameraPosition(
+//                                            target: LatLng(35.715298, 	51.404343),
+//                                          ),
+//                                        ),
+//                                      ),
+//                                    ),
+//                                    RaisedButton(
+//                                      child: const Text('Go to London'),
+//                                      onPressed: mapController == null ? null : () {
+//                                        mapController.animateCamera(CameraUpdate.newCameraPosition(
+//                                          const CameraPosition(
+//                                            bearing: 270.0,
+//                                            target: LatLng(51.5160895, -0.1294527),
+//                                            tilt: 30.0,
+//                                            zoom: 17.0,
+//                                          ),
+//                                        ));
+//                                      },
+//                                    ),
+//                                  ],
+//                                ),
+//                              ),
+//                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )),
+    );
   }
 
   void changedDropDownItem(String selectedCity) {
@@ -616,6 +1013,23 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
 //        pageList.insert(1, Text("video nomination"));
 //      }
     });
+  }
+  Widget tabsContent(Widget switcher, Widget controller) {
+    return Container(
+      margin: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          switcher,
+          Divider(
+            height: 5,
+            color: Colors.black45,
+          ),
+          controller,
+        ],
+      ),
+    );
   }
 
   Widget pageHolder() {
