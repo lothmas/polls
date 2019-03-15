@@ -21,7 +21,7 @@ class CreateVotes extends StatefulWidget {
   TestState createState() => new TestState();
 }
 
-class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
+class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   ///////page3
   var focusNode = new FocusNode();
 
@@ -37,6 +37,8 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   List<Tag> _selectableTags = [];
 
   List _icon = [Icons.home, Icons.language, Icons.headset];
+  List _icon1 = [Icons.home, Icons.language, Icons.headset];
+
   var pollTitle = new TextEditingController();
   var pollDescription = new TextEditingController();
   var pollAllowedNumber = new TextEditingController();
@@ -104,7 +106,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   String _selectableOnPressed = '';
   String _inputOnPressed = '';
   List<Tag> _selectableTags22 = [];
-  List<Tag> _selectableTags33 = [];
 
   /////////////
   @override
@@ -136,21 +137,12 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
           title: item,
           active: (_singleItem) ? (cnt == 3 ? true : false) : true,
           icon: (item == '0' || item == '1' || item == '2')
-              ? _icon[int.parse(item)]
+              ? _icon1[int.parse(item)]
               : null));
       cnt++;
     });
 
-    restrictionData.forEach((item) {
-      _selectableTags33.add(Tag(
-          id: cnt,
-          title: item,
-          active: (_singleItem) ? (cnt == 3 ? true : false) : true,
-          icon: (item == '0' || item == '1' || item == '2')
-              ? _icon[int.parse(item)]
-              : null));
-      cnt++;
-    });
+
   }
 
   bool isAgeRange = false;
@@ -179,6 +171,24 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   bool editable = true;
   DateTime date;
   bool _enabled;
+
+  Widget tabsContent(Widget switcher, Widget controller) {
+    return Container(
+      margin: EdgeInsets.all(1),
+      padding: EdgeInsets.all(1),
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          switcher,
+          Divider(
+            height: 5,
+            color: Colors.black45,
+          ),
+          controller,
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -332,8 +342,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
-      _platformVersion =
-          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      _platformVersion = docPaths.toString().replaceAll("[", "").replaceAll("]", "");
       String sf = "fds";
     });
 
@@ -346,9 +355,8 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
-      _platformVersion =
-          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
-      FocusScope.of(context).requestFocus(focusNode);
+      _platformVersion =  docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+//      FocusScope.of(context).requestFocus(focusNode);
       String sf = "fds";
     });
 
@@ -515,9 +523,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-//              new Container(
-//                padding: new EdgeInsets.all(0.0),
-//              ),
                                       new DropdownButton(
                                         style: new TextStyle(
                                             color: Colors.blueGrey,
@@ -534,43 +539,6 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                               const Divider(
                                 height: 2.0,
                               ),
-
-//
-//        new ListTile(
-//     //     leading: const Icon(Icons.cloud_upload),
-//          title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.white70, fontSize: 8.0,fontWeight: FontWeight.bold),) ,
-//
-//        ),
-//        Container(
-//          color: Colors.transparent,
-//          height: 5,
-//        ),
-//        Text(
-//          'Upload Poll Image / Video',
-//          style: TextStyle(
-//              color: Colors.grey, fontSize: 11.0, fontWeight: FontWeight.bold),
-//        ),
-//        Container(
-//          width: 70.0,
-//          height: 90.0,
-//          child: FadeInImage.assetNetwork(
-//            placeholder: 'images/picker.png',
-//            image: "",
-//            fit: BoxFit.fill,
-//          ),
-//        ),
-
-//          new ListTile(
-//            leading: const Icon(Icons.today),
-//            title: const Text('Birthday'),
-//            subtitle: const Text('February 20, 1980'),
-//          ),
-//          new ListTile(
-//            leading: const Icon(Icons.group),
-//            title: const Text('Contact group'),
-//            subtitle: const Text('Not specified'),
-//          )
-//
                             ],
                           ),
                         )))
@@ -583,58 +551,15 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
   }
 
   Widget page2() {
-//      if()
-    String voteBy = SettingsWidgetState().votess;
-
     return MyApp();
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                //
-//        new ListTile(
-//     //     leading: const Icon(Icons.cloud_upload),
-//          title: const Text('Upload Poll Image / Video',style:  TextStyle( color: Colors.white70, fontSize: 8.0,fontWeight: FontWeight.bold),) ,
-//
-//        ),
-//        Container(
-//          color: Colors.transparent,
-//          height: 5,
-//        ),
-//        Text(
-//          'Upload Poll Image / Video',
-//          style: TextStyle(
-//              color: Colors.grey, fontSize: 11.0, fontWeight: FontWeight.bold),
-//        ),
-//        Container(
-//          width: 70.0,
-//          height: 90.0,
-//          child: FadeInImage.assetNetwork(
-//            placeholder: 'images/picker.png',
-//            image: "",
-//            fit: BoxFit.fill,
-//          ),
-//        ),
-                MyApp(),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   Widget page3() {
-    return Scaffold(
+    return DefaultTabController(
+        length:2,
+    child: Scaffold(
       body: NestedScrollView(
-          controller: __scrollViewController1,
+//          controller: __scrollViewController1,
           headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
             return <Widget>[
               SliverAppBar(
@@ -651,13 +576,13 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                     Tab(text: "Expected Report Data"),
                     Tab(text: "Poll Restrictions"),
                   ],
-                  controller: _tabController1,
+//                  controller: _tabController1,
                 ),
               )
             ];
           },
           body: TabBarView(
-            controller: _tabController1,
+//            controller: _tabController1,
             children: [
               ListView(
                 children: <Widget>[
@@ -667,7 +592,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                         padding: EdgeInsets.all(0.1),
                       ),
                       Container(
-                        child: SelectableTags(
+                        child: new SelectableTags(
                           tags: _selectableTags22,
                           columns: _column,
                           fontSize: _fontSize,
@@ -760,10 +685,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                         ),
                       ),
                       Container(
-                          child: new Image.file(
-                        new File(_platformVersion),
-//                        height: 80,
-//                        width: 400,
+                          child: new Image.file(new File(_platformVersion),
                       ))
                     ],
                   ),
@@ -936,51 +858,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
                                           fontWeight: FontWeight.bold),
                                     ),
                             ),
-//                            tabsContent(
-//                              Switch(
-//                                value: isLocation,
-//                                onChanged: (value) {
-//                                  setState(() {
-//                                    isLocation = value;
-//                                  });
-//                                },
-//                                activeTrackColor: Colors.blueGrey,
-//                                activeColor: Colors.green,
-//                              ),
-//                              new Padding(
-//                                padding: EdgeInsets.all(2.0),
-//                                child: Column(
-//                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                  children: <Widget>[
-//                                    Center(
-//                                      child: SizedBox(
-//                                        width: 800.0,
-//                                        height: 200.0,
-//                                        child: GoogleMap(
-//                                          onMapCreated: _onMapCreated,
-//                                          initialCameraPosition: CameraPosition(
-//                                            target: LatLng(35.715298, 	51.404343),
-//                                          ),
-//                                        ),
-//                                      ),
-//                                    ),
-//                                    RaisedButton(
-//                                      child: const Text('Go to London'),
-//                                      onPressed: mapController == null ? null : () {
-//                                        mapController.animateCamera(CameraUpdate.newCameraPosition(
-//                                          const CameraPosition(
-//                                            bearing: 270.0,
-//                                            target: LatLng(51.5160895, -0.1294527),
-//                                            tilt: 30.0,
-//                                            zoom: 17.0,
-//                                          ),
-//                                        ));
-//                                      },
-//                                    ),
-//                                  ],
-//                                ),
-//                              ),
-//                            ),
+
                           ],
                         ),
                       ),
@@ -990,7 +868,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
               )
             ],
           )),
-    );
+    ),);
   }
 
   void changedDropDownItem(String selectedCity) {
@@ -1024,23 +902,7 @@ class TestState extends State<CreateVotes> with SingleTickerProviderStateMixin {
     });
   }
 
-  Widget tabsContent(Widget switcher, Widget controller) {
-    return Container(
-      margin: EdgeInsets.all(1),
-      padding: EdgeInsets.all(1),
-      color: Colors.transparent,
-      child: Column(
-        children: <Widget>[
-          switcher,
-          Divider(
-            height: 5,
-            color: Colors.black45,
-          ),
-          controller,
-        ],
-      ),
-    );
-  }
+
 
   Widget pageHolder() {
     for (int i = 1; i <= totalPage; i++) {
