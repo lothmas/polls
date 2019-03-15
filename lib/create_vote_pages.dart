@@ -24,7 +24,10 @@ class CreateVotes extends StatefulWidget {
 class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   ///////page3
   var focusNode = new FocusNode();
-
+  bool isAgeRange = false;
+  bool isGender = false;
+  bool isLocation = false;
+  bool isPrivate = false;
   final List<String> _list = [
     'gender',
     'location',
@@ -114,7 +117,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     currentCity = _dropDownMenuItems[0].value;
     super.initState();
     totalPage = 3;
-    pageList = <Widget>[page1(), page2(), page3()];
+   // pageList = <Widget>[page1(), page2(), page3()];
 
     ////page3
 
@@ -145,10 +148,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   }
 
-  bool isAgeRange = false;
-  bool isGender = false;
-  bool isLocation = false;
-  bool isPrivate = false;
+
 
   List<String> switchOptions = ["Male", "Female"];
   String selectedSwitchOption = "Male";
@@ -192,13 +192,13 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pageList = <Widget>[page1(), page2(), page3()];
+     pageList = <Widget>[page1(), page2(), page3()];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Expanded(
-          child: pageHolder(),
+          child: pageHolder(pageList),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -904,7 +904,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
 
 
-  Widget pageHolder() {
+  Widget pageHolder( List<Widget> pageList) {
     for (int i = 1; i <= totalPage; i++) {
       if (currentPage == i) {
         return pageList[i - 1];
