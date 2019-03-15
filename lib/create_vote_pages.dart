@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:stats/MaterialSwitch.dart';
@@ -109,7 +110,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   String _selectableOnPressed = '';
   String _inputOnPressed = '';
   List<Tag> _selectableTags22 = [];
+  String _inputOnPressedTextVote = '';
 
+  List<String> _inputTags = [];
   /////////////
   @override
   void initState() {
@@ -551,7 +554,47 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   }
 
   Widget page2() {
-    return MyApp();
+    return Scaffold(
+        resizeToAvoidBottomPadding: false,
+
+        body: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Text('Text Nominees',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: InputTags(
+                placeholder: "Add a Nominee",
+                color: null,
+                autofocus: false,
+                tags: _inputTags,
+                columns: 3,
+                fontSize: 13,
+                symmetry: _symmetry,
+                lowerCase: true,
+                onDelete: (tag) {
+                  print(tag);
+                },
+                onInsert: (tag) {
+                  print(tag);
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(_inputOnPressedTextVote),
+            ),
+          ],
+        ));
   }
 
   Widget page3() {

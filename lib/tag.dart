@@ -93,19 +93,5 @@ class _MyHomePageState extends State<MyHomePage>
     ));
   }
 
-  List<DropdownMenuItem> _buildItems() {
-    List<DropdownMenuItem> list = [];
 
-    int count = 15;
-
-    for (int i = 1; i < count; i++)
-      list.add(
-        DropdownMenuItem(
-          child: Text(i.toString()),
-          value: i,
-        ),
-      );
-
-    return list;
-  }
 }
