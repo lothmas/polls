@@ -571,11 +571,11 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: InputTags(
                 placeholder: "Add a Nominee",
-                color: null,
+                color: Colors.blueGrey,
                 autofocus: false,
                 tags: _inputTags,
                 columns: 3,
-                fontSize: 13,
+                fontSize: 14,
                 symmetry: _symmetry,
                 lowerCase: true,
                 onDelete: (tag) {
