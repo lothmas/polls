@@ -113,6 +113,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   String _inputOnPressedTextVote = '';
 
   List<String> _inputTags = [];
+
   /////////////
   @override
   void initState() {
@@ -120,7 +121,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     currentCity = _dropDownMenuItems[0].value;
     super.initState();
     totalPage = 3;
-   // pageList = <Widget>[page1(), page2(), page3()];
+    // pageList = <Widget>[page1(), page2(), page3()];
 
     ////page3
 
@@ -147,11 +148,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
               : null));
       cnt++;
     });
-
-
   }
-
-
 
   List<String> switchOptions = ["Male", "Female"];
   String selectedSwitchOption = "Male";
@@ -195,7 +192,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-     pageList = <Widget>[page1(), page2(), page3()];
+    pageList = <Widget>[page1(), page2(), page3()];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -345,7 +342,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
-      _platformVersion = docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
       String sf = "fds";
     });
 
@@ -358,7 +356,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
-      _platformVersion =  docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+      _platformVersion =
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
 //      FocusScope.of(context).requestFocus(focusNode);
       String sf = "fds";
     });
@@ -367,203 +366,236 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   }
 
   Widget page1() {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                new Opacity(
-                    opacity: 1.0,
-                    child: new Container(
-                        decoration: new BoxDecoration(
-                          border: Border.all(color: Colors.transparent),
-                          shape: BoxShape.rectangle,
-                          image: new DecorationImage(
-                            image: new AssetImage("images/createVoteBack1.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        transform: new Matrix4.identity()..scale(1.0),
+    return Scaffold(
+        appBar: new AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Add Poll Details',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ))
+            ],
+          ),
+          backgroundColor: Colors.white,
+        ),
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    new Opacity(
+                        opacity: 1.0,
+                        child: new Container(
+                            decoration: new BoxDecoration(
+                              border: Border.all(color: Colors.transparent),
+                              shape: BoxShape.rectangle,
+                              image: new DecorationImage(
+                                image: new AssetImage(
+                                    "images/createVoteBack1.jpg"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            transform: new Matrix4.identity()..scale(1.0),
 //                      width: size.width,
 //                      height: size.height,
 //        color: color ?? Colors.transparent,
-                        child: new Padding(
-                          padding: const EdgeInsets.all(0.3),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              new ListTile(
-                                leading: const Icon(
-                                  Icons.title,
-                                  color: Colors.blueGrey,
-                                  size: 20,
-                                ),
-                                title: new TextField(
-                                  controller: pollTitle,
-                                  focusNode: focusNode,
-                                  //  autofocus: true,
-                                  style: new TextStyle(
+                            child: new Padding(
+                              padding: const EdgeInsets.all(0.3),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  new ListTile(
+                                    leading: const Icon(
+                                      Icons.title,
                                       color: Colors.blueGrey,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                  decoration: new InputDecoration(
-                                    hintText: "Poll Title *",
-                                    hintStyle: TextStyle(
-                                        fontSize: 11.0,
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              new ListTile(
-                                leading: const Icon(
-                                  Icons.description,
-                                  color: Colors.blueGrey,
-                                  size: 20,
-                                ),
-                                title: new TextField(
-                                  controller: pollDescription,
-                                  style: new TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                  decoration: new InputDecoration(
-                                    hintText: "Poll Description *",
-                                    hintStyle: TextStyle(
-                                        fontSize: 11.0, color: Colors.white70),
-                                  ),
-                                ),
-                              ),
-
-                              new ListTile(
-                                leading: const Icon(
-                                  Icons.confirmation_number,
-                                  color: Colors.blueGrey,
-                                  size: 20,
-                                ),
-                                title: new TextField(
-                                  controller: pollAllowedNumber,
-                                  style: new TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                  decoration: new InputDecoration(
-                                    hintText:
-                                        "Allowed Number of Polls Per Voter *",
-                                    hintStyle: TextStyle(
-                                        fontSize: 11.0, color: Colors.white70),
-                                  ),
-                                  keyboardType: TextInputType.number,
-                                ),
-                              ),
-
-                              new ListTile(
-                                leading: const Icon(
-                                  Icons.timer,
-                                  color: Colors.blueGrey,
-                                  size: 20,
-                                ),
-                                title: Column(
-                                  children: <Widget>[
-                                    DateTimePickerFormField(
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blueGrey),
-                                      inputType: inputType,
-                                      format: formats[inputType],
-                                      editable: false,
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold),
-                                          labelText: 'Start Poll Date & Time *',
-                                          hasFloatingPlaceholder: false),
-                                      onChanged: (dt) =>
-                                          setState(() => date = dt),
+                                      size: 20,
                                     ),
-                                    DateTimePickerFormField(
-                                      inputType: inputType,
-                                      format: formats[inputType],
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blueGrey),
-                                      editable: false,
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.white70,
-                                              fontWeight: FontWeight.bold),
-                                          labelText: 'End Poll Date & Time *',
-                                          hasFloatingPlaceholder: false),
-                                      onChanged: (dt) =>
-                                          setState(() => date = dt),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              new ListTile(
-                                leading: Text("Vote By *",
-                                    style: new TextStyle(
-                                      fontSize: 11.0,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                title: Container(
-                                  color: Colors.transparent,
-                                  child: new Center(
-                                      child: new Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      new DropdownButton(
-                                        style: new TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontSize: 12.0,
+                                    title: new TextField(
+                                      controller: pollTitle,
+                                      focusNode: focusNode,
+                                      //  autofocus: true,
+                                      style: new TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: new InputDecoration(
+                                        hintText: "Poll Title *",
+                                        hintStyle: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.white70,
                                             fontWeight: FontWeight.bold),
-                                        value: currentCity,
-                                        items: _dropDownMenuItems,
-                                        onChanged: changedDropDownItem,
-                                      )
-                                    ],
-                                  )),
-                                ),
+                                      ),
+                                    ),
+                                  ),
+                                  new ListTile(
+                                    leading: const Icon(
+                                      Icons.description,
+                                      color: Colors.blueGrey,
+                                      size: 20,
+                                    ),
+                                    title: new TextField(
+                                      controller: pollDescription,
+                                      style: new TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: new InputDecoration(
+                                        hintText: "Poll Description *",
+                                        hintStyle: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.white70),
+                                      ),
+                                    ),
+                                  ),
+                                  new ListTile(
+                                    leading: const Icon(
+                                      Icons.confirmation_number,
+                                      color: Colors.blueGrey,
+                                      size: 20,
+                                    ),
+                                    title: new TextField(
+                                      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                                      controller: pollAllowedNumber,
+                                      style: new TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: new InputDecoration(
+                                        hintText:
+                                            "Allowed Number of Polls Per Voter *",
+                                        hintStyle: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.white70),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  new ListTile(
+                                    leading: const Icon(
+                                      Icons.timer,
+                                      color: Colors.blueGrey,
+                                      size: 20,
+                                    ),
+                                    title: Column(
+                                      children: <Widget>[
+                                        DateTimePickerFormField(
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blueGrey),
+                                          inputType: inputType,
+                                          format: formats[inputType],
+                                          editable: false,
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white70,
+                                                  fontWeight: FontWeight.bold),
+                                              labelText:
+                                                  'Start Poll Date & Time *',
+                                              hasFloatingPlaceholder: false),
+                                          onChanged: (dt) =>
+                                              setState(() => date = dt),
+                                        ),
+                                        DateTimePickerFormField(
+                                          inputType: inputType,
+                                          format: formats[inputType],
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blueGrey),
+                                          editable: false,
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white70,
+                                                  fontWeight: FontWeight.bold),
+                                              labelText:
+                                                  'End Poll Date & Time *',
+                                              hasFloatingPlaceholder: false),
+                                          onChanged: (dt) =>
+                                              setState(() => date = dt),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  new ListTile(
+                                    leading: Text("Vote By *",
+                                        style: new TextStyle(
+                                          fontSize: 11.0,
+                                          color: Colors.white70,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                    title: Container(
+                                      color: Colors.transparent,
+                                      child: new Center(
+                                          child: new Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          new DropdownButton(
+                                            style: new TextStyle(
+                                                color: Colors.blueGrey,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold),
+                                            value: currentCity,
+                                            items: _dropDownMenuItems,
+                                            onChanged: changedDropDownItem,
+                                          )
+                                        ],
+                                      )),
+                                    ),
+                                  ),
+                                  const Divider(
+                                    height: 2.0,
+                                  ),
+                                ],
                               ),
-                              const Divider(
-                                height: 2.0,
-                              ),
-                            ],
-                          ),
-                        )))
-              ],
-            ),
-          ),
-        );
-      },
-    );
+                            )))
+                  ],
+                ),
+              ),
+            );
+          },
+        ));
   }
 
   Widget page2() {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-
+        appBar: new AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Add Text Nominees',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ))
+            ],
+          ),
+          backgroundColor: Colors.white,
+        ),
         body: ListView(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text('Text Nominees',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-              ],
-            ),
             Padding(
               padding: EdgeInsets.all(10),
             ),
@@ -599,190 +631,189 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   Widget page3() {
     return DefaultTabController(
-        length:2,
-    child: Scaffold(
-      body: NestedScrollView(
+      length: 2,
+      child: Scaffold(
+        appBar: new AppBar(
+          title: TabBar(
+            labelColor: Colors.black,
+            isScrollable: false,
+            indicatorSize: TabBarIndicatorSize.label,
+            labelStyle: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),
+            tabs: [
+              Tab(text: "Expected Report Data"),
+              Tab(text: "Poll Restrictions"),
+            ],
+          ),
+          backgroundColor: Colors.white,
+        ),
+        body: NestedScrollView(
 //          controller: __scrollViewController1,
-          headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                centerTitle: true,
-                pinned: true,
-                expandedHeight: 0.3,
-                floating: true,
-                forceElevated: boxIsScrolled,
-                bottom: TabBar(
-                  isScrollable: false,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  labelStyle: TextStyle(fontSize: 14.0),
-                  tabs: [
-                    Tab(text: "Expected Report Data"),
-                    Tab(text: "Poll Restrictions"),
-                  ],
-//                  controller: _tabController1,
-                ),
-              )
-            ];
-          },
-          body: TabBarView(
+            headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
+              return <Widget>[];
+            },
+            body: TabBarView(
 //            controller: _tabController1,
-            children: [
-              ListView(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(0.1),
-                      ),
-                      Container(
-                        child: new SelectableTags(
-                          tags: _selectableTags22,
-                          columns: _column,
-                          fontSize: _fontSize,
-                          symmetry: _symmetry,
-                          singleItem: _singleItem,
-                          //activeColor: Colors.deepPurple,
-                          //boxShadow: [],
-                          //margin: EdgeInsets.symmetric(horizontal: 3, vertical: 6),
-                          onPressed: (tag) {
-                            setState(() {
-                              _selectableOnPressed = tag.toString();
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.all(2),
-                          child: Divider(
-                            color: Colors.blueGrey,
-                          )),
-                      Text("Poll Main Display",
-                          style: new TextStyle(
-                            fontSize: 11.0,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      new ListTile(
-//                        leading: ),
-                        title: Container(
-                          color: Colors.transparent,
-                          child: new Center(
-                              child: new Row(
-//                                    crossAxisAlignment: CrossAxisAlignment.sp,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      FlatButton.icon(
-                                        color: Colors.blueGrey[200],
-                                        icon: Icon(
-                                          Icons.add_photo_alternate,
-                                          color: Colors.blueGrey,
-                                        ),
-                                        //`Icon` to display
-                                        label: Text(
-                                          'Add a Photo',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 9),
-                                        ),
-                                        //`Text` to display
-                                        onPressed: () {
-                                          pickImages();
-                                          //Code to execute when Floating Action Button is clicked
-                                          //...
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      FlatButton.icon(
-                                        color: Colors.blueGrey[200],
-                                        icon: Icon(
-                                          Icons.video_library,
-                                          color: Colors.blueGrey,
-                                        ),
-                                        //`Icon` to display
-                                        label: Text(
-                                          'Add a Video',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 9),
-                                        ),
-                                        //`Text` to display
-                                        onPressed: () {
-                                          pickVideos();
-                                          //Code to execute when Floating Action Button is clicked
-                                          //...
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          )),
-                        ),
-                      ),
-                      Container(
-                          child: new Image.file(new File(_platformVersion),
-                      ))
-                    ],
-                  ),
-                ],
-              ),
-              SafeArea(
-                child: Column(
+              children: [
+                ListView(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: VerticalTabs(
-                          tabsWidth: 110,
-                          tabs: <Tab>[
-                            Tab(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 1),
-                                child: Row(
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(0.1),
+                        ),
+                        Container(
+                          child: new SelectableTags(
+                            tags: _selectableTags22,
+                            columns: _column,
+                            fontSize: _fontSize,
+                            symmetry: _symmetry,
+                            singleItem: _singleItem,
+                            //activeColor: Colors.deepPurple,
+                            //boxShadow: [],
+                            //margin: EdgeInsets.symmetric(horizontal: 3, vertical: 6),
+                            onPressed: (tag) {
+                              setState(() {
+                                _selectableOnPressed = tag.toString();
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                            padding: EdgeInsets.all(2),
+                            child: Divider(
+                              color: Colors.blueGrey,
+                            )),
+                        Text("Poll Main Display",
+                            style: new TextStyle(
+                              fontSize: 11.0,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        new ListTile(
+//                        leading: ),
+                          title: Container(
+                            color: Colors.transparent,
+                            child: new Center(
+                                child: new Row(
+//                                    crossAxisAlignment: CrossAxisAlignment.sp,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Row(
                                   children: <Widget>[
-                                    Icon(Icons.date_range),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      'Age-Range',
-                                      style: TextStyle(fontSize: 11),
+                                    Row(
+                                      children: <Widget>[
+                                        FlatButton.icon(
+                                          color: Colors.blueGrey[200],
+                                          icon: Icon(
+                                            Icons.add_photo_alternate,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          //`Icon` to display
+                                          label: Text(
+                                            'Add a Photo',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 9),
+                                          ),
+                                          //`Text` to display
+                                          onPressed: () {
+                                            pickImages();
+                                            //Code to execute when Floating Action Button is clicked
+                                            //...
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    new Container(
+                                      width: 5,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        FlatButton.icon(
+                                          color: Colors.blueGrey[200],
+                                          icon: Icon(
+                                            Icons.video_library,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          //`Icon` to display
+                                          label: Text(
+                                            'Add a Video',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 9),
+                                          ),
+                                          //`Text` to display
+                                          onPressed: () {
+                                            pickVideos();
+                                            //Code to execute when Floating Action Button is clicked
+                                            //...
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
+                                )
+                              ],
+                            )),
+                          ),
+                        ),
+                        Container(
+                            child: new Image.file(
+                          new File(_platformVersion),
+                        ))
+                      ],
+                    ),
+                  ],
+                ),
+                SafeArea(
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: VerticalTabs(
+                            tabsWidth: 110,
+                            tabs: <Tab>[
+                              Tab(
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 1),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.date_range),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Age-Range',
+                                        style: TextStyle(fontSize: 11),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Tab(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 1),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.airline_seat_legroom_extra),
-                                    SizedBox(width: 10),
-                                    Text('Gender',
-                                        style: TextStyle(fontSize: 11)),
-                                  ],
+                              Tab(
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 1),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.airline_seat_legroom_extra),
+                                      SizedBox(width: 10),
+                                      Text('Gender',
+                                          style: TextStyle(fontSize: 11)),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Tab(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 1),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.lock_outline),
-                                    SizedBox(width: 10),
-                                    Text('Private Poll',
-                                        style: TextStyle(fontSize: 11)),
-                                  ],
+                              Tab(
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 1),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.lock_outline),
+                                      SizedBox(width: 10),
+                                      Text('Private Poll',
+                                          style: TextStyle(fontSize: 11)),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
 //                            Tab(
 //                              child: Container(
 //                                margin: EdgeInsets.only(bottom: 1),
@@ -796,122 +827,122 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 //                                ),
 //                              ),
 //                            ),
-                          ],
-                          contents: <Widget>[
-                            tabsContent(
+                            ],
+                            contents: <Widget>[
+                              tabsContent(
+                                  Switch(
+                                    value: isAgeRange,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isAgeRange = value;
+                                      });
+                                    },
+                                    activeTrackColor: Colors.blueGrey,
+                                    activeColor: Colors.green,
+                                  ),
+                                  isAgeRange
+                                      ? new RangeSliderItem(
+                                          title: '',
+                                          initialMinValue: 12,
+                                          initialMaxValue: 100,
+                                          onMinValueChanged: (v) {},
+                                          onMaxValueChanged: (v) {},
+                                        )
+                                      : Text(
+                                          'Enable to set Age-Range',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                              tabsContent(
                                 Switch(
-                                  value: isAgeRange,
+                                  value: isGender,
                                   onChanged: (value) {
                                     setState(() {
-                                      isAgeRange = value;
+                                      isGender = value;
                                     });
                                   },
                                   activeTrackColor: Colors.blueGrey,
                                   activeColor: Colors.green,
                                 ),
-                                isAgeRange
-                                    ? new RangeSliderItem(
-                                        title: '',
-                                        initialMinValue: 12,
-                                        initialMaxValue: 100,
-                                        onMinValueChanged: (v) {},
-                                        onMaxValueChanged: (v) {},
+                                isGender
+                                    ? MaterialSwitch(
+                                        padding: const EdgeInsets.all(5.0),
+                                        margin: const EdgeInsets.all(5.0),
+                                        selectedOption: selectedSwitchOption,
+                                        options: switchOptions,
+                                        selectedBackgroundColor: isGender
+                                            ? Colors.blueGrey
+                                            : Colors.grey,
+                                        selectedTextColor: isGender
+                                            ? Colors.white
+                                            : Colors.blueGrey,
+                                        onSelect: isGender
+                                            ? (String selectedOption) {
+                                                setState(() {
+                                                  selectedSwitchOption =
+                                                      selectedOption;
+                                                });
+                                              }
+                                            : null,
                                       )
                                     : Text(
-                                        'Enable to set Age-Range',
+                                        'Enable to set Gender',
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold),
-                                      )),
-                            tabsContent(
-                              Switch(
-                                value: isGender,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isGender = value;
-                                  });
-                                },
-                                activeTrackColor: Colors.blueGrey,
-                                activeColor: Colors.green,
+                                      ),
                               ),
-                              isGender
-                                  ? MaterialSwitch(
-                                      padding: const EdgeInsets.all(5.0),
-                                      margin: const EdgeInsets.all(5.0),
-                                      selectedOption: selectedSwitchOption,
-                                      options: switchOptions,
-                                      selectedBackgroundColor: isGender
-                                          ? Colors.blueGrey
-                                          : Colors.grey,
-                                      selectedTextColor: isGender
-                                          ? Colors.white
-                                          : Colors.blueGrey,
-                                      onSelect: isGender
-                                          ? (String selectedOption) {
-                                              setState(() {
-                                                selectedSwitchOption =
-                                                    selectedOption;
-                                              });
-                                            }
-                                          : null,
-                                    )
-                                  : Text(
-                                      'Enable to set Gender',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                            ),
-                            tabsContent(
-                              Switch(
-                                value: isPrivate,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isPrivate = value;
-                                  });
-                                },
-                                activeTrackColor: Colors.blueGrey,
-                                activeColor: Colors.green,
+                              tabsContent(
+                                Switch(
+                                  value: isPrivate,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isPrivate = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                                isPrivate
+                                    ? Container(
+                                        width: 93.0,
+                                        height: 25.0,
+                                        child: FloatingActionButton.extended(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      new ExampleApp()),
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.add_circle,
+                                          ),
+                                          label: Text("Add Voter",
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold)),
+                                        ))
+                                    : Text(
+                                        'Enable to set Private_Poll',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                               ),
-                              isPrivate
-                                  ? Container(
-                                      width: 93.0,
-                                      height: 25.0,
-                                      child: FloatingActionButton.extended(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            new MaterialPageRoute(
-                                                builder: (context) =>
-                                                    new ExampleApp()),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.add_circle,
-                                        ),
-                                        label: Text("Add Voter",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold)),
-                                      ))
-                                  : Text(
-                                      'Enable to set Private_Poll',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                            ),
-
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )),
-    ),);
+                    ],
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
   }
 
   void changedDropDownItem(String selectedCity) {
@@ -945,9 +976,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     });
   }
 
-
-
-  Widget pageHolder( List<Widget> pageList) {
+  Widget pageHolder(List<Widget> pageList) {
     for (int i = 1; i <= totalPage; i++) {
       if (currentPage == i) {
         return pageList[i - 1];
