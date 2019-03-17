@@ -357,13 +357,26 @@ class Trending {
             )),
       );
     } else if (document['postType'] == 2) {
-      list.add(new Chewie(
-        new VideoPlayerController.network(document['postPath']),
+      VideoPlayerController videoPlayerController1 =
+          VideoPlayerController.network(document['postPath']);
+      ChewieController _chewieController = ChewieController(
+        videoPlayerController: videoPlayerController1,
         aspectRatio: 1,
         autoPlay: false,
-        looping: false,
+        looping: true,
         autoInitialize: true,
+      );
+      list.add(new Chewie(
+        controller: _chewieController,
       ));
+
+//      Chewie(
+//        new VideoPlayerController.network(document['postPath']),
+//        aspectRatio: 1,
+//        autoPlay: false,
+//        looping: false,
+//        autoInitialize: true,
+//      ));
     }
     if (document['voteBy'] == 4) {
       list.add(Container(

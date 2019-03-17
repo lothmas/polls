@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:adv_image_picker/adv_image_picker.dart';
+import 'package:chewie/chewie.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/input_tags.dart';
@@ -15,6 +17,7 @@ import 'package:stats/vote_by_dropdown.dart';
 import 'package:flutter/services.dart';
 import 'package:medias_picker/medias_picker.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
+import 'package:video_player/video_player.dart';
 
 class CreateVotes extends StatefulWidget {
   CreateVotes({Key key}) : super(key: key);
@@ -23,6 +26,12 @@ class CreateVotes extends StatefulWidget {
 }
 
 class TestState extends State<CreateVotes> with TickerProviderStateMixin {
+
+  TargetPlatform _platform;
+  VideoPlayerController _videoPlayerController1;
+  ChewieController _chewieController;
+
+
   ///////page3
   var focusNode = new FocusNode();
   bool isAgeRange = false;
@@ -59,8 +68,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     InputType.date: DateFormat('yyyy-MM-dd'),
     InputType.time: DateFormat("HH:mm"),
   };
-
-  List<Widget> pageList;
+  int pollDisplay = 0;
+  List<Widget> pageList = new List<Widget>();
   String votess;
 
   List _voteby = [
@@ -120,7 +129,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     _dropDownMenuItems = getDropDownMenuItems();
     currentCity = _dropDownMenuItems[0].value;
     super.initState();
-    totalPage = 3;
+    totalPage = 4;
     // pageList = <Widget>[page1(), page2(), page3()];
 
     ////page3
@@ -192,7 +201,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    pageList = <Widget>[page1(), page2(), page3()];
+    pageList = <Widget>[page1(), page2(), imageNominee(), page3()];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -221,7 +230,23 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                         child: getPreviousButtonWrapper(previousButtonStyle),
                         onPressed: () {
                           setState(() {
-                            currentPage = currentPage - 1;
+                            if (currentCity == "text nomination" &&
+                                currentPage == 2) {
+                              currentPage = 1;
+                            } else if (currentCity ==
+                                    "image / video nomination" &&
+                                currentPage == 3) {
+                              currentPage = 1;
+                            } else if (currentCity == "text nomination" &&
+                                currentPage == 4) {
+                              currentPage = 2;
+                            } else if (currentCity ==
+                                    "image / video nomination" &&
+                                currentPage == 4) {
+                              currentPage = 3;
+                            } else if (currentPage == 4) {
+                              currentPage = 1;
+                            }
                           });
                         },
                       ),
@@ -247,9 +272,22 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 context, '0 isn\'t an accepted number');
                           } else {
                             setState(() {
-                              BuildContext voteBy =
-                                  SettingsWidgetState().context;
-                              currentPage = currentPage + 1;
+                              if (currentCity == "text nomination" &&
+                                  currentPage == 2) {
+                                currentPage = 4;
+                              } else if (currentCity ==
+                                      "image / video nomination" &&
+                                  currentPage == 3) {
+                                currentPage = 4;
+                              } else if (currentCity == "text nomination") {
+                                currentPage = 2;
+                              } else if (currentCity ==
+                                  "image / video nomination") {
+                                currentPage = 3;
+                              } else {
+                                currentPage = 4;
+                              }
+                              //  currentPage = currentPage + 1;
                             });
                           }
                         },
@@ -342,6 +380,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
+      _videoPlayerController1.dispose();
+      _videoPlayerController1.pause();
+      pollDisplay = 1;
       _platformVersion =
           docPaths.toString().replaceAll("[", "").replaceAll("]", "");
       String sf = "fds";
@@ -356,13 +397,23 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } on PlatformException {}
 
     setState(() {
+      pollDisplay = 2;
       _platformVersion =
           docPaths.toString().replaceAll("[", "").replaceAll("]", "");
 //      FocusScope.of(context).requestFocus(focusNode);
       String sf = "fds";
+
+      _videoPlayerController1 = VideoPlayerController.file(new File(_platformVersion));
     });
 
     if (!mounted) return;
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController1.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   Widget page1() {
@@ -466,7 +517,10 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       size: 20,
                                     ),
                                     title: new TextField(
-                                      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                                      inputFormatters: [
+                                        WhitelistingTextInputFormatter
+                                            .digitsOnly
+                                      ],
                                       controller: pollAllowedNumber,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
@@ -574,6 +628,78 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         ));
   }
 
+  String dropdownValue = 'Select Vote Type:';
+  int _counter = 0;
+  List<File> files1 = [];
+
+  void _pickImage() async {
+    files1.addAll(await AdvImagePicker.pickImagesToFile(context));
+
+    setState(() {});
+  }
+
+  Widget imageNominee() {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: new AppBar(
+        title: Row(
+//          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'Select Vote Type:',
+                      'Single Selection',
+                      'Multiple Selection',
+                      'Vote by Ordering'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[450]),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ))
+          ],
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: Center(
+        child: GridView.count(
+          crossAxisCount: 3,
+          padding: const EdgeInsets.all(10.0),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+          children: files1
+              .map((File f) => Image.file(
+                    f,
+                    fit: BoxFit.cover,
+                  ))
+              .toList(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickImage,
+        child: Icon(Icons.add),
+        mini: true,
+      ),
+    );
+  }
+
   Widget page2() {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -598,6 +724,40 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(10),
+            ),
+            Row(
+              children: <Widget>[
+                Text(' ',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                Center(
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'Select Vote Type:',
+                      'Single Selection',
+                      'Multiple Selection',
+                      'Vote by Ordering'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[450]),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                )
+              ],
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -630,15 +790,36 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   }
 
   Widget page3() {
+    _videoPlayerController1 = VideoPlayerController.file(
+        new File(_platformVersion));
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController1,
+      aspectRatio: 1,
+      autoPlay: false,
+      looping: true,
+      // Try playing around with some of these other options:
+
+      // showControls: false,
+      // materialProgressColors: ChewieProgressColors(
+      //   playedColor: Colors.red,
+      //   handleColor: Colors.blue,
+      //   backgroundColor: Colors.grey,
+      //   bufferedColor: Colors.lightGreen,
+      // ),
+      // placeholder: Container(
+      //   color: Colors.grey,
+      // ),
+      autoInitialize: true,
+    );
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: new AppBar(
           title: TabBar(
             labelColor: Colors.black,
-            isScrollable: false,
+            isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,
-            labelStyle: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
             tabs: [
               Tab(text: "Expected Report Data"),
               Tab(text: "Poll Restrictions"),
@@ -649,7 +830,16 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         body: NestedScrollView(
 //          controller: __scrollViewController1,
             headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-              return <Widget>[];
+              return <Widget>[
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  centerTitle: true,
+                  pinned: false,
+                  expandedHeight: 0.0,
+                  floating: true,
+                  forceElevated: boxIsScrolled,
+                )
+              ];
             },
             body: TabBarView(
 //            controller: _tabController1,
@@ -758,9 +948,14 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                           ),
                         ),
                         Container(
-                            child: new Image.file(
-                          new File(_platformVersion),
-                        ))
+                            child: pollDisplay == 1
+                                ? new Image.file(
+                                    new File(_platformVersion),
+                                  )
+                                : pollDisplay == 2
+                                    ? Chewie(
+                              controller: _chewieController,
+                            ): null),
                       ],
                     ),
                   ],
@@ -948,31 +1143,31 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   void changedDropDownItem(String selectedCity) {
     setState(() {
       currentCity = selectedCity;
-      FocusScope.of(context).requestFocus(focusNode);
+      //  FocusScope.of(context).requestFocus(focusNode);
 
-      pageList.removeAt(1);
-
-      if (currentCity == "star rating") {
-        pageList.insert(1, ImagePickers());
-      }
-// else if (currentCity == "number rating") {
-//        pageList.insert(1, Text("number rating"));
-//      } else if (currentCity == "emoji feedback") {
-//        pageList.insert(1, Text("emoji feedback"));
-//      } else if (currentCity == "like / dislike") {
-//        pageList.insert(1, Text("like / dislike"));
-//      } else if (currentCity == "yes / no / maybe") {
-//        pageList.insert(1, Text("yes / no / maybe"));
-//      } else
-
-      else if (currentCity == "text nomination") {
-        pageList.insert(1, page2());
-      } else if (currentCity == "image / video nomination") {
-        pageList.insert(1, MultiPicker());
-      }
-//    else if (currentCity == "video nomination") {
-//        pageList.insert(1, Text("video nomination"));
+//      pageList.removeAt(1);
+//
+//      if (currentCity == "star rating") {
+//        pageList.insert(1, ImagePickers());
 //      }
+//// else if (currentCity == "number rating") {
+////        pageList.insert(1, Text("number rating"));
+////      } else if (currentCity == "emoji feedback") {
+////        pageList.insert(1, Text("emoji feedback"));
+////      } else if (currentCity == "like / dislike") {
+////        pageList.insert(1, Text("like / dislike"));
+////      } else if (currentCity == "yes / no / maybe") {
+////        pageList.insert(1, Text("yes / no / maybe"));
+////      } else
+//
+//      else if (currentCity == "text nomination") {
+//        pageList.insert(1, page2());
+//      } else if (currentCity == "image / video nomination") {
+//        pageList.insert(1, MultiPicker());
+//      }
+////    else if (currentCity == "video nomination") {
+////        pageList.insert(1, Text("video nomination"));
+////      }
     });
   }
 
