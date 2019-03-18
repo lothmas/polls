@@ -4,6 +4,7 @@ import 'package:adv_image_picker/adv_image_picker.dart';
 import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/input_tags.dart';
@@ -261,7 +262,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                     onPressed: () {
                       createVote(pollAllowedNumber.value.text,
                           pollDescription.value.text, "MMM111",
-                          dropdownValue, pollTitle.value.text, "");
+                          dropdownValue, pollTitle.value.text);
                     }
                 )
                     : FlatButton(
@@ -270,10 +271,12 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                     if (pollTitle.value.text == "") {
                       validationSnackBar(
                           context, 'Poll Title Cant be left empty');
-                    } else if (pollDescription.value.text == "") {
-                      validationSnackBar(
-                          context, 'Poll Description Cant be left empty');
-                    } else if (pollAllowedNumber.value.text == "") {
+                    }
+//                    else if (pollDescription.value.text == "") {
+//                      validationSnackBar(
+//                          context, 'Poll Description Cant be left empty');
+//                    }
+                    else if (pollAllowedNumber.value.text == "") {
                       validationSnackBar(context,
                           'Poll Allowed Vote Numbers Cant be left empty');
                     } else if (pollAllowedNumber.value.text == "0") {
@@ -375,6 +378,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
   String _platformVersion = 'Unknown';
   List<dynamic> docPaths;
+
 
   pickImages() async {
     try {
@@ -1193,22 +1197,22 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   }
 
   createVote(String voteNumberAllowed, String description, String memberID,
-      String voteType, String title, String owner) {
+      String voteType, String title) {
     int voteBy;
     if (currentCity == "star rating") {
-      voteBy = 1;
-    } else if (currentCity == "number rating") {
-      voteBy = 2;
-    } else if (currentCity == "emoji feedback") {
-      voteBy = 3;
-    } else if (currentCity == "like / dislike") {
       voteBy = 4;
-    } else if (currentCity == "yes / no / maybe") {
+    } else if (currentCity == "number rating") {
       voteBy = 5;
-    } else if (currentCity == "text nomination") {
+    } else if (currentCity == "emoji feedback") {
       voteBy = 6;
-    } else if (currentCity == "image / video nomination") {
+    } else if (currentCity == "like / dislike") {
+      voteBy = 8;
+    } else if (currentCity == "yes / no / maybe") {
       voteBy = 7;
+    } else if (currentCity == "text nomination") {
+      voteBy = 1;
+    } else if (currentCity == "image / video nomination") {
+      voteBy = 1;
     }
 //    else if (currentCity == "video nomination") {
 //        pageList.insert(1, Text("video nomination"));
@@ -1216,14 +1220,20 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
     var userData = Firestore.instance.collection('users').where('member_id', isEqualTo: memberID);
     String profilePic;
-
-    userData.getDocuments().then((data){
+    String owner;
+    userData.getDocuments().then((data) async {
       if (data.documents.length > 0){
         setState(() {
           profilePic = data.documents[0].data['profile_pic'];
+//          profilePic = data.documents[0].data['profile_pic'];
+
         });
       }
 
+
+      FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+        owner=user.displayName;
+      });
 
 
 
@@ -1236,47 +1246,55 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       'description': description,
       'enabled': false,
       'memberID': memberID,
-      'postType': 1,
+      'postType': pollDisplay,
       'voteBy': voteBy,
       'voteType': voteType,
 //      'postPath':postPath,
       'title': title,
-      'owner': owner,
+
       'profile_pic':profilePic
     });
 
+      final StorageReference ref = new FirebaseStorage().ref().child(memberID+"/votes/" + docReferance.documentID );
+      final StorageUploadTask uploadTask = ref.putFile(new File(_platformVersion));
+      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+      String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
+      Firestore.instance
+          .collection('votes')
+          .document(docReferance.documentID)
+          .updateData({"postPath":downloadUrl,
+        'owner': owner,
+        'enabled': true,});
 
-
-    uploadImageToFileStorage(memberID, docReferance.documentID);
 
     Navigator.push(
       context,
       new MaterialPageRoute(
           builder: (context) => Home()),
     );
-  }
+  });}
 
-
-  uploadImageToFileStorageonError: (String memberID, String voteID) async {
-    final StorageReference ref = new FirebaseStorage().ref().child(memberID+"/votes/" + voteID );
-    final StorageUploadTask uploadTask = ref.putFile(new File(_platformVersion));
-    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-    String dsf="fds";
-    Firestore.instance
-        .collection('votes')
-        .document(voteID)
-    .updateData({"postPath":downloadUrl,
-      'enabled': true,})
-        .catchError((e) {
-      print(e);
-    });
-//      return uploadTask;
-
-
-
-
-  }
+//
+//  uploadImageToFileStorageonError: (String memberID, String voteID) async {
+//    final StorageReference ref = new FirebaseStorage().ref().child(memberID+"/votes/" + voteID );
+//    final StorageUploadTask uploadTask = ref.putFile(new File(_platformVersion));
+//    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+//    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+//    String dsf="fds";
+//    Firestore.instance
+//        .collection('votes')
+//        .document(voteID)
+//    .updateData({"postPath":downloadUrl,
+//      'enabled': true,})
+//        .catchError((e) {
+//      print(e);
+//    });
+////      return uploadTask;
+//
+//
+//
+//
+//  }
 
 }
