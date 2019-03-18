@@ -19,7 +19,12 @@ class Trending {
 
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
-    double c_width = MediaQuery.of(context).size.width * 1;
+    if(document['enabled']==true){
+
+    double c_width = MediaQuery
+        .of(context)
+        .size
+        .width * 1;
     var assetImage = new AssetImage("images/cast.png");
 
     List<Widget> list = new List();
@@ -50,31 +55,32 @@ class Trending {
           Column(
             children: <Widget>[
               document['voteBy'] != 4 &&
-                      document['voteBy'] != 5 &&
-                      document['voteBy'] != 6 &&
-                      document['voteBy'] != 7 &&
-                      document['voteBy'] != 8
+                  document['voteBy'] != 5 &&
+                  document['voteBy'] != 6 &&
+                  document['voteBy'] != 7 &&
+                  document['voteBy'] != 8
                   ? IconButton(
-                      icon: Image.asset(
-                        "images/cast.png",
-                        width: 22.0,
-                        height: 22.0,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new Polling(
-                                  voteID: document.documentID,
-                                  voteBy: document['voteBy'],
-                                  voteType: document['voteType'])),
-                        );
-                      },
-                    )
+                icon: Image.asset(
+                  "images/cast.png",
+                  width: 22.0,
+                  height: 22.0,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) =>
+                        new Polling(
+                            voteID: document.documentID,
+                            voteBy: document['voteBy'],
+                            voteType: document['voteType'])),
+                  );
+                },
+              )
                   : Text(""),
               Container(
-                  //height: 10.0,
-                  ),
+                //height: 10.0,
+              ),
               Text(
                 '12 hrs ago',
                 style: TextStyle(
@@ -212,7 +218,7 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                            ),
+                        ),
                         Container(
                           color: Colors.transparent,
                           width: 58,
@@ -226,7 +232,7 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                            ),
+                        ),
                         Container(
                           color: Colors.transparent,
                           width: 58,
@@ -262,10 +268,10 @@ class Trending {
                 child: Badge.right(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                     value:
-                        '0' + ' | ' + document['allowedVoteNumber'].toString(),
+                    '0' + ' | ' + document['allowedVoteNumber'].toString(),
                     color: Colors.blueGrey, // value to show inside the badge
                     child: new Text("") // text to append (required)
-                    ))),
+                ))),
       ],
     ));
 
@@ -327,7 +333,7 @@ class Trending {
               context,
               new MaterialPageRoute(
                   builder: (context) =>
-                      new ImageScreen(document['title'], image)
+                  new ImageScreen(document['title'], image)
 
 //              new Image.network(
 //                document['postPath'],
@@ -336,7 +342,7 @@ class Trending {
 ////                width: MediaQuery.of(context).size.width,
 //                alignment: Alignment.center,
 //              ),
-                  ));
+              ));
         },
         child: FadeInImage.assetNetwork(
           placeholder: 'images/loader.gif',
@@ -358,7 +364,7 @@ class Trending {
       );
     } else if (document['postType'] == 2) {
       VideoPlayerController videoPlayerController1 =
-          VideoPlayerController.network(document['postPath']);
+      VideoPlayerController.network(document['postPath']);
       ChewieController _chewieController = ChewieController(
         videoPlayerController: videoPlayerController1,
         aspectRatio: 1,
@@ -435,6 +441,9 @@ class Trending {
     );
 
     return list;
+  }else{
+    return null;
+  }
   }
 
   String countdown(DateTime dateVoteCreated) {
