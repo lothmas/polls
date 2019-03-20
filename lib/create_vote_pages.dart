@@ -270,7 +270,7 @@ bool allowNumberEnabled=true;
                   onPressed: () {
                     if (pollTitle.value.text == "") {
                       validationSnackBar(
-                          context, 'Poll Title Cant be left empty');
+                          context, 'Poll Title Can\'t be left empty');
                     }
 //                    else if (pollDescription.value.text == "") {
 //                      validationSnackBar(
@@ -278,7 +278,7 @@ bool allowNumberEnabled=true;
 //                    }
                     else if (pollAllowedNumber.value.text == "") {
                       validationSnackBar(context,
-                          'Poll Allowed Vote Numbers Cant be left empty');
+                          'Poll Allowed Vote Numbers Can\'t be left empty');
                     } else if (pollAllowedNumber.value.text == "0") {
                       validationSnackBar(
                           context, '0 isn\'t an accepted number');
@@ -516,7 +516,7 @@ bool allowNumberEnabled=true;
                                           color: Colors.blueGrey,
                                           fontSize: 12.0),
                                       decoration: new InputDecoration(
-                                        hintText: "Poll Description *",
+                                        hintText: "Poll Description",
                                         hintStyle: TextStyle(
                                             fontSize: 12.0,
                                             color: Colors.blueGrey,fontWeight: FontWeight.bold),
@@ -545,7 +545,7 @@ bool allowNumberEnabled=true;
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
                                               labelText:
-                                              'Start Poll Date & Time *',
+                                              'Start Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
                                               setState(() => date = dt),
@@ -564,7 +564,7 @@ bool allowNumberEnabled=true;
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
                                               labelText:
-                                              'End Poll Date & Time *',
+                                              'End Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
                                               setState(() => date = dt),
@@ -576,7 +576,7 @@ bool allowNumberEnabled=true;
                                     leading: Text("Vote By *",
                                         style: new TextStyle(
                                           fontSize: 12.0,
-                                          color: Colors.blueGrey,
+                                          color: Colors.blueGrey,fontWeight: FontWeight.bold
                                         )),
                                     title: Container(
                                       color: Colors.transparent,
