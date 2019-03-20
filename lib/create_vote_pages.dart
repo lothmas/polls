@@ -1247,6 +1247,7 @@ bool allowNumberEnabled=true;
     var userData = Firestore.instance.collection('users').where('member_id', isEqualTo: memberID);
     String profilePic;
     String owner;
+    int loginProvider;
     userData.getDocuments().then((data) async {
       if (data.documents.length > 0){
         setState(() {
@@ -1260,7 +1261,16 @@ bool allowNumberEnabled=true;
       FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
         owner=user.displayName;
         profilePic=user.photoUrl;
-      });
+        if(user.photoUrl.contains('facebook')){
+          loginProvider=1;
+        }
+        else if(user.photoUrl.contains('google')) {
+          loginProvider=2;
+        }
+        else if(user.photoUrl.contains('twitter')){
+          loginProvider=3;
+        }
+        });
 
 
 
@@ -1294,6 +1304,7 @@ bool allowNumberEnabled=true;
           .updateData({"postPath":downloadUrl,
         'owner': owner,
         'profile_pic':profilePic,
+        'loginProvider':loginProvider,
         'enabled': true,});
 
 
