@@ -13,6 +13,9 @@ import 'package:stats/rate.dart';
 import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/avd.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Trending {
   var youtube = new FlutterYoutube();
@@ -171,15 +174,38 @@ class Trending {
                 children: [
                   Container(
                     color: Colors.transparent,
-                    child: Text(
-                      'owner:  ',
-                      textAlign: TextAlign.left,
-                    ),
+//                    child: Text(
+//                      'owner:  ',
+//                      textAlign: TextAlign.left,
+//                    ),
+                  ),
+    document['loginProvider']==1?
+                   SvgPicture.asset(
+                    'images/facebook.svg',
+                    height: 12.0,
+                    width: 12.0,
+                    allowDrawingOutsideViewBox: false,
+                  ):document['loginProvider']==2?
+                  SvgPicture.asset(
+                    'images/google.svg',
+                    height: 10.0,
+                    width: 10.0,
+                    allowDrawingOutsideViewBox: true,
+                  ):document['loginProvider']==3?
+                  SvgPicture.asset(
+                    'images/twitter.svg',
+                    height: 20.0,
+                    width: 20.0,
+                    allowDrawingOutsideViewBox: true,
+                  ):Text(''),
+                  Container(
+                    color: Colors.transparent,
+                    width: 5.0,
                   ),
                   Container(
                     color: Colors.transparent,
                     child: Text(
-                      document['owner'],
+                      document['owner'].toString().toLowerCase(),
                       textAlign: TextAlign.left,
                       style: TextStyle(color: Colors.teal),
                     ),
