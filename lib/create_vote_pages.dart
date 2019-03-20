@@ -525,32 +525,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  new ListTile(
-                                    leading: const Icon(
-                                      Icons.confirmation_number,
-                                      color: Colors.blueGrey,
-                                      size: 20,
-                                    ),
-                                    title: new TextField(
-                                      inputFormatters: [
-                                        WhitelistingTextInputFormatter
-                                            .digitsOnly
-                                      ],
-                                      controller: pollAllowedNumber,
-                                      style: new TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold),
-                                      decoration: new InputDecoration(
-                                        hintText:
-                                        "Allowed Number of Polls Per Voter *",
-                                        hintStyle: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.blueGrey),
-                                      ),
-                                      keyboardType: TextInputType.number,
-                                    ),
-                                  ),
+
                                   new ListTile(
                                     leading: const Icon(
                                       Icons.timer,
@@ -628,6 +603,32 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                               )
                                             ],
                                           )),
+                                    ),
+                                  ),
+                                  new ListTile(
+                                    leading: const Icon(
+                                      Icons.confirmation_number,
+                                      color: Colors.blueGrey,
+                                      size: 20,
+                                    ),
+                                    title: new TextField(
+                                      inputFormatters: [
+                                        WhitelistingTextInputFormatter
+                                            .digitsOnly
+                                      ],
+                                      controller: pollAllowedNumber,
+                                      style: new TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: new InputDecoration(
+                                        hintText:
+                                        "Allowed Number of Polls Per Voter *",
+                                        hintStyle: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.blueGrey),
+                                      ),
+                                      keyboardType: TextInputType.number,
                                     ),
                                   ),
 //                                  const Divider(
@@ -1249,6 +1250,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       'postType': pollDisplay,
       'voteBy': voteBy,
       'voteType': voteType,
+      'creationDateTime':new DateTime.now(),
 //      'postPath':postPath,
       'title': title,
 
