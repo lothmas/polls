@@ -616,7 +616,7 @@ bool allowNumberEnabled=true;
                                       controller: pollAllowedNumber,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
-                                          fontSize: 12.0),
+                                          fontSize: 14.0,fontWeight: FontWeight.bold),
                                       decoration: new InputDecoration(
                                         hintText:
                                         "Allowed Number of Polls Per Voter *",
