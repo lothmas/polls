@@ -1237,6 +1237,9 @@ bool allowNumberEnabled=true;
     } else if (currentCity == "image / video nomination") {
       voteBy = 1;
     }
+    else{
+      voteBy = 4;
+    }
 //    else if (currentCity == "video nomination") {
 //        pageList.insert(1, Text("video nomination"));
 //      }
@@ -1256,6 +1259,7 @@ bool allowNumberEnabled=true;
 
       FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
         owner=user.displayName;
+        profilePic=user.photoUrl;
       });
 
 
@@ -1276,7 +1280,7 @@ bool allowNumberEnabled=true;
 //      'postPath':postPath,
       'title': title,
 
-      'profile_pic':profilePic
+
     });
 
       final StorageReference ref = new FirebaseStorage().ref().child(memberID+"/votes/" + docReferance.documentID );
@@ -1289,6 +1293,7 @@ bool allowNumberEnabled=true;
           .document(docReferance.documentID)
           .updateData({"postPath":downloadUrl,
         'owner': owner,
+        'profile_pic':profilePic,
         'enabled': true,});
 
 
