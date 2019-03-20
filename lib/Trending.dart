@@ -155,14 +155,22 @@ class Trending {
             Container(
               margin: const EdgeInsets.only(top: 1.0),
               color: Colors.transparent,
-              child: Text(
+              child: Row(children: <Widget>[Text(
                 document['title'],
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 11.0,
                     fontWeight: FontWeight.bold),
-              ),
+              ),document['private']==null?Icon(
+                Icons.lock_open,
+                color: Colors.green,
+                size: 14,
+              ):Icon(
+                Icons.lock,
+                color: Colors.red,
+                size: 14,
+              )],),
             ),
             Container(
               color: Colors.transparent,
@@ -184,7 +192,7 @@ class Trending {
                     'images/facebook.svg',
                     height: 12.0,
                     width: 12.0,
-                    allowDrawingOutsideViewBox: false,
+                    allowDrawingOutsideViewBox: true,
                   ):document['loginProvider']==2?
                   SvgPicture.asset(
                     'images/google.svg',
@@ -207,7 +215,7 @@ class Trending {
                     child: Text(
                       document['owner'].toString().toLowerCase(),
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.teal),
+                      style: TextStyle(color: Colors.teal,fontSize: 11),
                     ),
                   ),
                 ],
@@ -295,7 +303,10 @@ class Trending {
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                     value:
                     '0' + ' | ' + document['allowedVoteNumber'].toString(),
-                    color: Colors.blueGrey, // value to show inside the badge
+                    textStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
+                    borderColor: Colors.grey,
+                    borderSize: 1.5,
+                    color: Colors.transparent, // value to show inside the badge
                     child: new Text("") // text to append (required)
                 ))),
       ],

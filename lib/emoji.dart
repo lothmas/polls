@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
             ),
 
             EmojiFeedback(
+              currentIndex: 5,
               onChange: (index) {
                 print(index);
               },

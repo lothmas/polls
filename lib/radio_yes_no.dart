@@ -6,6 +6,8 @@ class LikeDisLike extends StatefulWidget {
     return new CustomRadioState();
   }
 }
+Color thumpsUp=Colors.grey;
+Color thumpsdown=Colors.grey;
 
 class CustomRadioState extends State<LikeDisLike> {
   List<RadioModel> sampleData = new List<RadioModel>();
@@ -35,6 +37,33 @@ class CustomRadioState extends State<LikeDisLike> {
               setState(() {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
+                if(index==0&&thumpsUp==Colors.blueGrey){
+                  thumpsUp=Colors.grey;
+                  if(thumpsUp==Colors.blueGrey)
+                    {
+                      thumpsdown=Colors.grey;
+                    }
+
+                }
+               else if(index==0){
+                  thumpsUp=Colors.blueGrey;
+                  thumpsdown=Colors.grey;
+                }
+                if(index==1&&thumpsdown==Colors.blueGrey){
+                  thumpsdown=Colors.grey;
+                  if(thumpsdown==Colors.blueGrey)
+                  {
+                    thumpsUp=Colors.grey;
+                  }
+
+                }
+                else if(index==1){
+                  thumpsdown=Colors.blueGrey;
+                  thumpsUp=Colors.grey;
+
+                }
+
+
               });
             },
             child: new RadioItem(sampleData[index]),
@@ -62,10 +91,10 @@ class RadioItem extends StatelessWidget {
               child:  _item.buttonText=="Like"?
               Column(children: <Widget>[new Icon(
                 Icons.thumb_up,
-                color: Colors.blueGrey,
+                color:thumpsUp,
               ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
                 Icons.thumb_down,
-                color: Colors.blueGrey,
+                color: thumpsdown,
               ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
 
 //              Text(_item.buttonText,
@@ -75,17 +104,17 @@ class RadioItem extends StatelessWidget {
 //                      //fontWeight: FontWeight.bold,
 //                      fontSize: 11.0)),
             ),
-            decoration: new BoxDecoration(
-              color: _item.isSelected
-                  ? Colors.amber[200]
-                  : Colors.transparent,
-              border: new Border.all(
-                  width: 1.0,
-                  color: _item.isSelected
-                      ? Colors.blueAccent
-                      : Colors.blueGrey),
-              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-            ),
+//            decoration: new BoxDecoration(
+//              color: _item.isSelected
+//                  ? Colors.amber[200]
+//                  : Colors.transparent,
+//              border: new Border.all(
+//                  width: 1.0,
+//                  color: _item.isSelected
+//                      ? Colors.blueAccent
+//                      : Colors.grey),
+//              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+//            ),
           ),
 //          new Container(
 //            margin: new EdgeInsets.only(left: 10.0),
