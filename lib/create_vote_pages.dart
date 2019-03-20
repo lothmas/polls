@@ -36,7 +36,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   String dropdownValue = 'Select Vote Type:';
   int _counter = 0;
   List<File> files1 = [];
-
+bool allowNumberEnabled=true;
   ///////page3
   var focusNode = new FocusNode();
   bool isAgeRange = false;
@@ -261,7 +261,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                     child: getSubmitButtonWrapper(submitButtonStyle),
                     onPressed: () {
                       createVote(pollAllowedNumber.value.text,
-                          pollDescription.value.text, "MMM111",
+                          pollDescription.value.text, "MMM121",
                           dropdownValue, pollTitle.value.text);
                     }
                 )
@@ -494,12 +494,11 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       //  autofocus: true,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 12.0),
                                       decoration: new InputDecoration(
                                         hintText: "Poll Title *",
                                         hintStyle: TextStyle(
-                                            fontSize: 11.0,
+                                            fontSize: 12.0,
                                             color: Colors.blueGrey,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -515,13 +514,12 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       controller: pollDescription,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 12.0),
                                       decoration: new InputDecoration(
                                         hintText: "Poll Description *",
                                         hintStyle: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.blueGrey),
+                                            fontSize: 12.0,
+                                            color: Colors.blueGrey,fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
@@ -536,15 +534,14 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       children: <Widget>[
                                         DateTimePickerFormField(
                                           style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
                                               color: Colors.blueGrey),
                                           inputType: inputType,
                                           format: formats[inputType],
                                           editable: false,
                                           decoration: InputDecoration(
                                               labelStyle: TextStyle(
-                                                  fontSize: 11,
+                                                  fontSize: 12,
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
                                               labelText:
@@ -557,13 +554,13 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                           inputType: inputType,
                                           format: formats[inputType],
                                           style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+
                                               color: Colors.blueGrey),
                                           editable: false,
                                           decoration: InputDecoration(
                                               labelStyle: TextStyle(
-                                                  fontSize: 11,
+                                                  fontSize: 12,
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
                                               labelText:
@@ -578,9 +575,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   new ListTile(
                                     leading: Text("Vote By *",
                                         style: new TextStyle(
-                                          fontSize: 11.0,
+                                          fontSize: 12.0,
                                           color: Colors.blueGrey,
-                                          fontWeight: FontWeight.bold,
                                         )),
                                     title: Container(
                                       color: Colors.transparent,
@@ -612,6 +608,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       size: 20,
                                     ),
                                     title: new TextField(
+                                      enabled: allowNumberEnabled,
                                       inputFormatters: [
                                         WhitelistingTextInputFormatter
                                             .digitsOnly
@@ -619,13 +616,12 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       controller: pollAllowedNumber,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 12.0),
                                       decoration: new InputDecoration(
                                         hintText:
                                         "Allowed Number of Polls Per Voter *",
                                         hintStyle: TextStyle(
-                                            fontSize: 11.0,
+                                            fontSize: 12.0,
                                             color: Colors.blueGrey),
                                       ),
                                       keyboardType: TextInputType.number,
@@ -890,7 +886,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                             )),
                         Text("Poll Main Display",
                             style: new TextStyle(
-                              fontSize: 11.0,
+                              fontSize: 12.0,
                               color: Colors.blueGrey,
                               fontWeight: FontWeight.bold,
                             )),
@@ -983,7 +979,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                       Expanded(
                         child: Container(
                           child: VerticalTabs(
-                            tabsWidth: 110,
+                            tabsWidth: 120,
                             tabs: <Tab>[
                               Tab(
                                 child: Container(
@@ -994,7 +990,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       SizedBox(width: 10),
                                       Text(
                                         'Age-Range',
-                                        style: TextStyle(fontSize: 11),
+                                        style: TextStyle(fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -1008,7 +1004,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       Icon(Icons.airline_seat_legroom_extra),
                                       SizedBox(width: 10),
                                       Text('Gender',
-                                          style: TextStyle(fontSize: 11)),
+                                          style: TextStyle(fontSize: 12)),
                                     ],
                                   ),
                                 ),
@@ -1021,7 +1017,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       Icon(Icons.lock_outline),
                                       SizedBox(width: 10),
                                       Text('Private Poll',
-                                          style: TextStyle(fontSize: 11)),
+                                          style: TextStyle(fontSize: 12)),
                                     ],
                                   ),
                                 ),
@@ -1034,7 +1030,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 //                                    Icon(Icons.location_on),
 //                                    SizedBox(width: 10),
 //                                    Text('Location',
-//                                        style: TextStyle(fontSize: 11)),
+//                                        style: TextStyle(fontSize: 12)),
 //                                  ],
 //                                ),
 //                              ),
@@ -1160,6 +1156,32 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   void changedDropDownItem(String selectedCity) {
     setState(() {
       currentCity = selectedCity;
+      if (selectedCity == "star rating") {
+        allowNumberEnabled=false;
+        pollAllowedNumber.text='1';
+      } else if (selectedCity == "number rating") {
+        allowNumberEnabled=false;
+        pollAllowedNumber.text='1';
+
+      } else if (selectedCity == "emoji feedback") {
+        allowNumberEnabled=false;
+        pollAllowedNumber.text='1';
+
+      } else if (selectedCity == "like / dislike") {
+        allowNumberEnabled=false;
+        pollAllowedNumber.text='1';
+
+      } else if (selectedCity == "yes / no / maybe") {
+        allowNumberEnabled=false;
+        pollAllowedNumber.text='1';
+
+      } else if (selectedCity == "text nomination") {
+        allowNumberEnabled=true;
+
+      } else if (selectedCity == "image / video nomination") {
+        allowNumberEnabled=true;
+
+      }
       //  FocusScope.of(context).requestFocus(focusNode);
 
 //      pageList.removeAt(1);
