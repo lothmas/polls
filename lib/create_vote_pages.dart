@@ -1273,7 +1273,12 @@ bool allowNumberEnabled=true;
         });
 
 
-
+      var reportDataToExpect= new StringBuffer();
+      for(Tag reportData in _selectableTags22){
+          if(!reportData.active){
+            reportDataToExpect.write(reportData.id.toString()+',');
+          }
+      }
 
     CollectionReference collectionReference = Firestore.instance.collection(
         'votes');
@@ -1286,6 +1291,7 @@ bool allowNumberEnabled=true;
       'postType': pollDisplay,
       'voteBy': voteBy,
       'voteType': voteType,
+      'reportDataToExpect':reportDataToExpect,
       'creationDateTime':new DateTime.now(),
 //      'postPath':postPath,
       'title': title,

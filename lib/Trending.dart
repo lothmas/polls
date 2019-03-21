@@ -187,7 +187,7 @@ class Trending {
 //                      textAlign: TextAlign.left,
 //                    ),
                   ),
-    document['loginProvider']==1?
+              document['loginProvider']==1?
                    SvgPicture.asset(
                     'images/facebook.svg',
                     height: 12.0,
