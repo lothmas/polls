@@ -296,20 +296,23 @@ class Trending {
           color: Colors.transparent,
           width: 30,
         ),
-        new Align(
+        Column(children: <Widget>[ new Align(
             child: Container(
-                color: Colors.black12,
-                child: Badge.right(
+
+                color: Colors.blueGrey,
+                child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                     value:
                     '0' + ' | ' + document['allowedVoteNumber'].toString(),
-                    textStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 10),
                     borderColor: Colors.grey,
-                    borderSize: 1.5,
-                    color: Colors.transparent, // value to show inside the badge
+                    borderSize: 1.0,
+                    color: Colors.white, // value to show inside the badge
                     child: new Text("") // text to append (required)
-                ))),
-      ],
+                ))), Icon(Icons.lightbulb_outline,color: Colors.red,size: 13,) ],)
+       ,
+
+       ],
     ));
 
     list.add(Container(
