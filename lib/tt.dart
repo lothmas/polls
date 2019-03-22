@@ -1,127 +1,121 @@
-//import 'package:beautiful_list/model/lesson.dart';
 //import 'package:flutter/material.dart';
+//import 'package:flutter_one_signal/flutter_one_signal.dart';
 //
-//class DetailPage extends StatelessWidget {
-//  final Lesson lesson;
-//  DetailPage({Key key, this.lesson}) : super(key: key);
+//void main() => runApp(MyApp());
+//
+//class MyApp extends StatelessWidget {
 //  @override
 //  Widget build(BuildContext context) {
-//    final levelIndicator = Container(
-//      child: Container(
-//        child: LinearProgressIndicator(
-//            backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-//            value: lesson.indicatorValue,
-//            valueColor: AlwaysStoppedAnimation(Colors.green)),
+//    return MaterialApp(
+//      title: 'Flutter Demo',
+//      theme: ThemeData(
+//        primarySwatch: Colors.blue,
 //      ),
+//      home: Home(title: 'Flutter One Signal'),
+//      routes: {
+//        'pageTwo': (context) => PageTwo(title: 'Page Two'),
+//      },
 //    );
+//  }
+//}
 //
-//    final coursePrice = Container(
-//      padding: const EdgeInsets.all(7.0),
-//      decoration: new BoxDecoration(
-//          border: new Border.all(color: Colors.white),
-//          borderRadius: BorderRadius.circular(5.0)),
-//      child: new Text(
-//        "\$" + lesson.price.toString(),
-//        style: TextStyle(color: Colors.white),
-//      ),
-//    );
+//class Home extends StatefulWidget {
+//  final String title;
 //
-//    final topContentText = Column(
-//      crossAxisAlignment: CrossAxisAlignment.start,
-//      children: <Widget>[
-//        SizedBox(height: 120.0),
-//        Icon(
-//          Icons.directions_car,
-//          color: Colors.white,
-//          size: 40.0,
-//        ),
-//        Container(
-//          width: 90.0,
-//          child: new Divider(color: Colors.green),
-//        ),
-//        SizedBox(height: 10.0),
-//        Text(
-//          lesson.title,
-//          style: TextStyle(color: Colors.white, fontSize: 45.0),
-//        ),
-//        SizedBox(height: 30.0),
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.start,
-//          children: <Widget>[
-//            Expanded(flex: 1, child: levelIndicator),
-//            Expanded(
-//                flex: 6,
-//                child: Padding(
-//                    padding: EdgeInsets.only(left: 10.0),
-//                    child: Text(
-//                      lesson.level,
-//                      style: TextStyle(color: Colors.white),
-//                    ))),
-//            Expanded(flex: 1, child: coursePrice)
-//          ],
-//        ),
-//      ],
-//    );
+//  Home({Key key, this.title}) : super(key: key);
 //
-//    final topContent = Stack(
-//      children: <Widget>[
-//        Container(
-//            padding: EdgeInsets.only(left: 10.0),
-//            height: MediaQuery.of(context).size.height * 0.5,
-//            decoration: new BoxDecoration(
-//              image: new DecorationImage(
-//                image: new AssetImage("drive-steering-wheel.jpg"),
-//                fit: BoxFit.cover,
-//              ),
-//            )),
-//        Container(
-//          height: MediaQuery.of(context).size.height * 0.5,
-//          padding: EdgeInsets.all(40.0),
-//          width: MediaQuery.of(context).size.width,
-//          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
-//          child: Center(
-//            child: topContentText,
-//          ),
-//        ),
-//        Positioned(
-//          left: 8.0,
-//          top: 60.0,
-//          child: InkWell(
-//            onTap: () {
-//              Navigator.pop(context);
-//            },
-//            child: Icon(Icons.arrow_back, color: Colors.white),
-//          ),
-//        )
-//      ],
-//    );
+//  @override
+//  _HomeState createState() => new _HomeState();
+//}
 //
-//    final bottomContentText = Text(
-//      lesson.content,
-//      style: TextStyle(fontSize: 18.0),
-//    );
-//    final readButton = Container(
-//        padding: EdgeInsets.symmetric(vertical: 16.0),
-//        width: MediaQuery.of(context).size.width,
-//        child: RaisedButton(
-//          onPressed: () => {},
-//          color: Color.fromRGBO(58, 66, 86, 1.0),
-//          child:
-//          Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
-//        ));
-//    final bottomContent = Container(
-//      width: MediaQuery.of(context).size.width,
-//      padding: EdgeInsets.all(40.0),
-//      child: Center(
-//        child: Column(
-//          children: <Widget>[bottomContentText, readButton],
-//        ),
-//      ),
-//    );
+//class _HomeState extends State<Home> {
+//  static const String DEFAULT_APP_ID = '50c236d4-8355-451d-a140-3adf38b04c43';
+//  static const String TEST_APP_ID = '5e92b9ef-1336-4ca8-8357-7c8e3dd92e9c';
 //
+//  @override
+//  void initState() {
+//    super.initState();
+//    _initOneSignal();
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
 //    return Scaffold(
+//      appBar: AppBar(
+//        title: Text(widget.title),
+//      ),
 //      body: Column(
-//        children: <Widget>[topContent, bottomContent],
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        children: <Widget>[
+//          Align(
+//            alignment: Alignment.center,
+//            child: RaisedButton(
+//              onPressed: _unsubscribe,
+//              child: Text('Unsubscrbe'),
+//            ),
+//          ),
+//          SizedBox(height: 16.0),
+//          Align(
+//            alignment: Alignment.center,
+//            child: RaisedButton(
+//              onPressed: _logoutEmail,
+//              child: Text('Logout email'),
+//            ),
+//          )
+//        ],
+//      ),
+//    );
+//  }
+//
+//  _initOneSignal() async {
+//    var notificationsPermissionGranted = await FlutterOneSignal.startInit(
+//        appId: DEFAULT_APP_ID,
+//        // todo Replace with your own, this won't work for you
+//        notificationOpenedHandler: (notification) {
+//          print('opened notification: $notification');
+//          Navigator.of(context).pushNamed('pageTwo');
+//        },
+//        notificationReceivedHandler: (notification) {
+//          print('received notification: $notification');
+//        });
+//    print(
+//        'Push notification permission granted $notificationsPermissionGranted');
+//
+//    FlutterOneSignal.sendTag('userId', 'demoUserId');
+//
+////    FlutterOneSignal.setEmail('name@email.com');
+//
+//    var userId = await FlutterOneSignal.getUserId();
+//    print("User id : $userId");
+//  }
+//
+//  _logoutEmail() {
+//    FlutterOneSignal.logoutEmail();
+//  }
+//
+//  _unsubscribe() {
+//    FlutterOneSignal.setSubscription(false);
+//  }
+//}
+//
+//class PageTwo extends StatefulWidget {
+//  final String title;
+//
+//  PageTwo({Key key, this.title}) : super(key: key);
+//
+//  @override
+//  _PageTwoState createState() => new _PageTwoState();
+//}
+//
+//class _PageTwoState extends State<PageTwo> {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text(widget.title),
+//      ),
+//      body: Center(
+//        child: Text('Page two'),
 //      ),
 //    );
 //  }

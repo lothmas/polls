@@ -398,7 +398,6 @@ bool allowNumberEnabled=true;
       pollDisplay = 1;
       _platformVersion =
           docPaths.toString().replaceAll("[", "").replaceAll("]", "");
-      String sf = "fds";
     });
 
     if (!mounted) return;
@@ -412,14 +411,10 @@ bool allowNumberEnabled=true;
     setState(() {
       pollDisplay = 2;
       _platformVersion =
-          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
-//      FocusScope.of(context).requestFocus(focusNode);
-      String sf = "fds";
-
+      docPaths.toString().replaceAll("[", "").replaceAll("]", "");
       _videoPlayerController1 =
           VideoPlayerController.file(new File(_platformVersion));
     });
-
     if (!mounted) return;
   }
 
@@ -1310,8 +1305,22 @@ bool allowNumberEnabled=true;
           memberID + "/votes/" + docReferance.documentID);
       final StorageUploadTask uploadTask = ref.putFile(
           new File(_platformVersion));
-      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-       downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+      if(uploadTask.isComplete) {
+        if(uploadTask.isSuccessful) {
+          StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+          downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+          validationSnackBar(context,'Upload Successful');
+        } else if(uploadTask.isCanceled) {
+          validationSnackBar(context,'Upload Cancelled');
+        } else {
+          print('${uploadTask.lastSnapshot.error}');
+        }
+      } else if(uploadTask.isInProgress){
+        validationSnackBar(context,'Upload in Progress');
+      } else if(uploadTask.isPaused) {
+        print('Upload Paused');
+      }
+
     }
     catch(e){
 
