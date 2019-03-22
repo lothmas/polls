@@ -309,7 +309,7 @@ class Trending {
                     borderSize: 1.0,
                     color: Colors.white, // value to show inside the badge
                     child: new Text("") // text to append (required)
-                ))), Icon(Icons.lightbulb_outline,color: Colors.red,size: 13,) ],)
+                ))), Icon(Icons.lightbulb_outline,color: Colors.red,size: 15,) ],)
        ,
 
        ],
