@@ -353,7 +353,7 @@ class Trending {
       color: Colors.transparent,
       height: 8.0,
     ));
-    if (document['postType'] == 1) {
+    if (null!=document['postPath'] &&document['postType'] == 1) {
       Image image = new Image.network(
         document['postPath'],
         //height: 270,
@@ -386,7 +386,7 @@ class Trending {
           image: document['postPath'],
         ),
       ));
-    } else if (document['postType'] == 2 &&
+    } else if (null!=document['postPath']&&document['postType'] == 2 &&
         document['postPath'].contains("https://www.youtube.com")) {
       list.add(
         Container(
@@ -399,7 +399,7 @@ class Trending {
               //default false
             )),
       );
-    } else if (document['postType'] == 2) {
+    } else if (null!=document['postPath']&&document['postType'] == 2 ) {
       VideoPlayerController videoPlayerController1 =
       VideoPlayerController.network(document['postPath']);
       ChewieController _chewieController = ChewieController(

@@ -261,7 +261,7 @@ bool allowNumberEnabled=true;
                     child: getSubmitButtonWrapper(submitButtonStyle),
                     onPressed: () {
                       createVote(pollAllowedNumber.value.text,
-                          pollDescription.value.text, "MMM121",
+                          pollDescription.value.text, "MMM111",
                           dropdownValue, pollTitle.value.text);
                     }
                 )
@@ -315,7 +315,7 @@ bool allowNumberEnabled=true;
   void validationSnackBar(BuildContext context, String validationMessage) {
     Scaffold.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.blueGrey,
-      content: Text(validationMessage),
+      content: Text(validationMessage,style: TextStyle(fontSize: 11),),
       duration: Duration(seconds: 3),
     ));
   }
@@ -1280,6 +1280,11 @@ bool allowNumberEnabled=true;
           }
       }
 
+      if(_platformVersion=='Unknown'&& (null==description||description=="")){
+          validationSnackBar(context, "Poll Description & Poll Main Display cn\'t both be left empty.");
+          return;
+      }
+
     CollectionReference collectionReference = Firestore.instance.collection(
         'votes');
     DocumentReference docReferance = collectionReference.document();
@@ -1291,7 +1296,7 @@ bool allowNumberEnabled=true;
       'postType': pollDisplay,
       'voteBy': voteBy,
       'voteType': voteType,
-      'reportDataToExpect':reportDataToExpect,
+      'reportDataToExpect':removeLastChar(reportDataToExpect.toString()),
       'creationDateTime':new DateTime.now(),
 //      'postPath':postPath,
       'title': title,
@@ -1299,10 +1304,18 @@ bool allowNumberEnabled=true;
 
     });
 
-      final StorageReference ref = new FirebaseStorage().ref().child(memberID+"/votes/" + docReferance.documentID );
-      final StorageUploadTask uploadTask = ref.putFile(new File(_platformVersion));
+      String downloadUrl=null;
+    try {
+      final StorageReference ref = new FirebaseStorage().ref().child(
+          memberID + "/votes/" + docReferance.documentID);
+      final StorageUploadTask uploadTask = ref.putFile(
+          new File(_platformVersion));
       StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-      String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+       downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+    }
+    catch(e){
+
+    }
 
       Firestore.instance
           .collection('votes')
@@ -1342,5 +1355,9 @@ bool allowNumberEnabled=true;
 //
 //
 //  }
+
+  String removeLastChar(String str) {
+    return str.substring(0, str.length - 1);
+  }
 
 }
