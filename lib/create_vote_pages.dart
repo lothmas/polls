@@ -43,6 +43,7 @@ bool allowNumberEnabled=true;
   bool isGender = false;
   bool isLocation = false;
   bool isPrivate = false;
+  bool isReportPublic=false;
   final List<String> _list = [
     'gender',
     'location',
@@ -1017,6 +1018,19 @@ bool allowNumberEnabled=true;
                                   ),
                                 ),
                               ),
+                              Tab(
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 1),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.report),
+                                      SizedBox(width: 10),
+                                      Text('Private Report',
+                                          style: TextStyle(fontSize: 12)),
+                                    ],
+                                  ),
+                                ),
+                              ),
 //                            Tab(
 //                              child: Container(
 //                                margin: EdgeInsets.only(bottom: 1),
@@ -1130,6 +1144,45 @@ bool allowNumberEnabled=true;
                                     ))
                                     : Text(
                                   'Enable to set Private_Poll',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              tabsContent(
+                                Switch(
+                                  value: isReportPublic,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isReportPublic = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                                isReportPublic
+                                    ? MaterialSwitch(
+                                  padding: const EdgeInsets.all(5.0),
+                                  margin: const EdgeInsets.all(5.0),
+                                  selectedOption: selectedSwitchOption,
+                                  options: switchOptions,
+                                  selectedBackgroundColor: isReportPublic
+                                      ? Colors.blueGrey
+                                      : Colors.grey,
+                                  selectedTextColor: isReportPublic
+                                      ? Colors.white
+                                      : Colors.blueGrey,
+                                  onSelect: isReportPublic
+                                      ? (String selectedOption) {
+                                    setState(() {
+                                      selectedSwitchOption =
+                                          selectedOption;
+                                    });
+                                  }
+                                      : null,
+                                )
+                                    : Text(
+                                  'Public Report',
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
