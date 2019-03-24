@@ -37,10 +37,12 @@ void main() async {
     if (user != null) {
       loggedIn = true;
     }
+
   });
+
   if(loggedIn){
     Home();
-  }else {
+  }else{
     runApp(SplashView());
   }
 }
@@ -90,6 +92,7 @@ class _Trending extends State<Home> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
+
               return new ListView(
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {

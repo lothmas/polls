@@ -185,7 +185,8 @@ bool allowNumberEnabled=true;
   // Changeable in demo
   InputType inputType = InputType.both;
   bool editable = true;
-  DateTime date;
+  DateTime startDate;
+  DateTime endDate;
   bool _enabled;
 
   Widget tabsContent(Widget switcher, Widget controller) {
@@ -544,7 +545,7 @@ bool allowNumberEnabled=true;
                                               'Start Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
-                                              setState(() => date = dt),
+                                              setState(() => startDate = dt),
                                         ),
                                         DateTimePickerFormField(
                                           inputType: inputType,
@@ -563,7 +564,7 @@ bool allowNumberEnabled=true;
                                               'End Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
-                                              setState(() => date = dt),
+                                              setState(() => endDate = dt),
                                         ),
                                       ],
                                     ),
@@ -1338,6 +1339,7 @@ bool allowNumberEnabled=true;
         textNominee.write(nominiee+',');
       }
 
+
     CollectionReference collectionReference = Firestore.instance.collection(
         'votes');
     DocumentReference docReferance = collectionReference.document();
@@ -1352,7 +1354,9 @@ bool allowNumberEnabled=true;
       'reportDataToExpect':removeLastChar(reportDataToExpect.toString()),
       'creationDateTime':new DateTime.now(),
       'title': title,
-      'textNominee':removeLastChar(textNominee.toString()),
+      null!=textNominee.toString()?'textNominee':removeLastChar(textNominee.toString()):'',
+      'startDate':startDate,
+      'endDate':endDate
 
     });
 
@@ -1410,7 +1414,12 @@ bool allowNumberEnabled=true;
 //  }
 
   String removeLastChar(String str) {
-    return str.substring(0, str.length - 1);
+    if(str!=null || str!=''){
+      return str.substring(0, str.length - 1);
+    }
+    else{
+      return null;
+    }
   }
 
 }
