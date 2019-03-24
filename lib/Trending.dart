@@ -85,7 +85,7 @@ class Trending {
                 //height: 10.0,
               ),
               Text(
-                '12 hrs ago',
+                countdown(document['creationDateTime']) ,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 10.0,
@@ -491,32 +491,49 @@ class Trending {
   }
 
   String countdown(DateTime dateVoteCreated) {
-    if (DateTime.now().difference(dateVoteCreated).inMinutes < 60) {
+    if (DateTime.now().difference(dateVoteCreated).inMinutes <= 60) {
       int mins = DateTime.now().difference(dateVoteCreated).inMinutes;
-      if (mins < 0) {
-        mins = -mins;
-        if (mins < 60) {
-          mins = 60 - mins;
-        } else {
-          mins = mins % 60;
-        }
+      if (mins > 1) {
+        return mins.toString() + " mins ago";
       }
-      return mins.toString() + " mins";
-    } else if (DateTime.now().difference(dateVoteCreated).inHours < 24) {
-      return DateTime.now().difference(dateVoteCreated).inHours.toString() +
-          " hrs";
-    } else if (DateTime.now().difference(dateVoteCreated).inDays <= 6) {
-      return DateTime.now().difference(dateVoteCreated).inDays.toString() +
-          " days";
-    } else if (DateTime.now().difference(dateVoteCreated).inDays >= 7 &&
-        DateTime.now().difference(dateVoteCreated).inDays <= 31) {
+      else{
+        return mins.toString() + " min ago";
+      }
+    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 60 && DateTime.now().difference(dateVoteCreated).inMinutes <= 1440) {
+      int hrs= DateTime.now().difference(dateVoteCreated).inHours;
+      if(hrs>1){
+       return hrs.toString()+ " hrs ago";
+      }
+      else{
+        return hrs.toString()+ " hr ago";
+      }
+
+    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 1440  && DateTime.now().difference(dateVoteCreated).inMinutes <= 10080) {
       int days = DateTime.now().difference(dateVoteCreated).inDays;
-      return (days / 7).toString().substring(0, 1) + " weeks";
-    } else if (DateTime.now().difference(dateVoteCreated).inDays > 31) {
-      return (DateTime.now().difference(dateVoteCreated).inDays / 30)
-              .toString()
-              .substring(0, 2) +
-          " months";
+      if (days > 1) {
+        return days.toString() + " days ago";
+      }
+      else{
+        return days.toString() + " day ago";
+      }
+
+    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 10080  && DateTime.now().difference(dateVoteCreated).inMinutes <= 43800) {
+      int week = DateTime.now().difference(dateVoteCreated).inDays;
+      if (week % 7==0) {
+        return (week/7).toString() + " week ago";
+      }
+      else{
+        return (week/7).toString() + " weeks ago";
+      }
+
+    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 43800  && DateTime.now().difference(dateVoteCreated).inMinutes < 306600) {
+      int months = DateTime.now().difference(dateVoteCreated).inDays;
+      if ((months / 30).toInt()==1) {
+        return (months/30).toInt().toString() + " month ago";
+      }
+      else{
+        return (months/30).toInt().toString() + " months ago";
+      }
     }
   }
 }
