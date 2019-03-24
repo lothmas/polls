@@ -1025,7 +1025,7 @@ bool allowNumberEnabled=true;
                                     children: <Widget>[
                                       Icon(Icons.report),
                                       SizedBox(width: 10),
-                                      Text('Private Report',
+                                      Text('Report',
                                           style: TextStyle(fontSize: 12)),
                                     ],
                                   ),
@@ -1333,6 +1333,11 @@ bool allowNumberEnabled=true;
           return;
       }
 
+      var textNominee= new StringBuffer();
+      for(String nominiee in _inputTags){
+        textNominee.write(nominiee+',');
+      }
+
     CollectionReference collectionReference = Firestore.instance.collection(
         'votes');
     DocumentReference docReferance = collectionReference.document();
@@ -1346,9 +1351,8 @@ bool allowNumberEnabled=true;
       'voteType': voteType,
       'reportDataToExpect':removeLastChar(reportDataToExpect.toString()),
       'creationDateTime':new DateTime.now(),
-//      'postPath':postPath,
       'title': title,
-
+      'textNominee':removeLastChar(textNominee.toString()),
 
     });
 
@@ -1358,21 +1362,8 @@ bool allowNumberEnabled=true;
           memberID + "/votes/" + docReferance.documentID);
       final StorageUploadTask uploadTask = ref.putFile(
           new File(_platformVersion));
-      if(uploadTask.isComplete) {
-        if(uploadTask.isSuccessful) {
-          StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-          downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-          validationSnackBar(context,'Upload Successful');
-        } else if(uploadTask.isCanceled) {
-          validationSnackBar(context,'Upload Cancelled');
-        } else {
-          print('${uploadTask.lastSnapshot.error}');
-        }
-      } else if(uploadTask.isInProgress){
-        validationSnackBar(context,'Upload in Progress');
-      } else if(uploadTask.isPaused) {
-        print('Upload Paused');
-      }
+      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+      downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
     }
     catch(e){

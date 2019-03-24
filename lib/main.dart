@@ -38,7 +38,11 @@ void main() async {
       loggedIn = true;
     }
   });
-  runApp(SplashView());
+  if(loggedIn){
+    Home();
+  }else {
+    runApp(SplashView());
+  }
 }
 
 class Home extends StatefulWidget {

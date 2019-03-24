@@ -296,10 +296,10 @@ class Trending {
           color: Colors.transparent,
           width: 30,
         ),
-        Column(children: <Widget>[ new Align(
+        Column(children: <Widget>[ new Container(
             child: Container(
 
-                color: Colors.blueGrey,
+                color: Colors.transparent,
                 child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
                     value:
@@ -308,9 +308,13 @@ class Trending {
                     borderColor: Colors.grey,
                     borderSize: 1.0,
                     color: Colors.white, // value to show inside the badge
-                    child: new Text("") // text to append (required)
-                ))), Icon(Icons.lightbulb_outline,color: Colors.red,size: 15,) ],)
-       ,
+                    child: Container(
+                      width: 1,
+                      color: Colors.white,
+                      child: new IconButton(
+                          icon: new Icon(Icons.lightbulb_outline,color: Colors.red,size: 14,)),
+                    ) // text to append (required)
+                ))),  ],),
 
        ],
     ));
