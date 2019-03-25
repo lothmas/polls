@@ -40,7 +40,10 @@ class Trending {
 
 
     if (document['enabled'] == true) {
-      double c_width = MediaQuery.of(context).size.width * 1;
+      double c_width = MediaQuery
+          .of(context)
+          .size
+          .width * 1;
       var assetImage = new AssetImage("images/cast.png");
 
       List<Widget> list = new List();
@@ -71,31 +74,32 @@ class Trending {
             Column(
               children: <Widget>[
                 document['voteBy'] != 4 &&
-                        document['voteBy'] != 5 &&
-                        document['voteBy'] != 6 &&
-                        document['voteBy'] != 7 &&
-                        document['voteBy'] != 8
+                    document['voteBy'] != 5 &&
+                    document['voteBy'] != 6 &&
+                    document['voteBy'] != 7 &&
+                    document['voteBy'] != 8
                     ? IconButton(
-                        icon: Image.asset(
-                          "images/cast.png",
-                          width: 22.0,
-                          height: 22.0,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => new Polling(
-                                    voteID: document.documentID,
-                                    voteBy: document['voteBy'],
-                                    voteType: document['voteType'])),
-                          );
-                        },
-                      )
+                  icon: Image.asset(
+                    "images/cast.png",
+                    width: 22.0,
+                    height: 22.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                          new Polling(
+                              voteID: document.documentID,
+                              voteBy: document['voteBy'],
+                              voteType: document['voteType'])),
+                    );
+                  },
+                )
                     : Text(""),
                 Container(
-                    //height: 10.0,
-                    ),
+                  //height: 10.0,
+                ),
                 Text(
                   countdownlapsedTime(document['creationDateTime']),
                   style: TextStyle(
@@ -179,15 +183,15 @@ class Trending {
                     ),
                     document['private'] == null
                         ? Icon(
-                            Icons.lock_open,
-                            color: Colors.green,
-                            size: 14,
-                          )
+                      Icons.lock_open,
+                      color: Colors.green,
+                      size: 14,
+                    )
                         : Icon(
-                            Icons.lock,
-                            color: Colors.red,
-                            size: 14,
-                          )
+                      Icons.lock,
+                      color: Colors.red,
+                      size: 14,
+                    )
                   ],
                 ),
               ),
@@ -208,26 +212,26 @@ class Trending {
                     ),
                     document['loginProvider'] == 1
                         ? SvgPicture.asset(
-                            'images/facebook.svg',
-                            height: 12.0,
-                            width: 12.0,
-                            allowDrawingOutsideViewBox: true,
-                          )
+                      'images/facebook.svg',
+                      height: 12.0,
+                      width: 12.0,
+                      allowDrawingOutsideViewBox: true,
+                    )
                         : document['loginProvider'] == 2
-                            ? SvgPicture.asset(
-                                'images/google.svg',
-                                height: 10.0,
-                                width: 10.0,
-                                allowDrawingOutsideViewBox: true,
-                              )
-                            : document['loginProvider'] == 3
-                                ? SvgPicture.asset(
-                                    'images/twitter.svg',
-                                    height: 20.0,
-                                    width: 20.0,
-                                    allowDrawingOutsideViewBox: true,
-                                  )
-                                : Text(''),
+                        ? SvgPicture.asset(
+                      'images/google.svg',
+                      height: 10.0,
+                      width: 10.0,
+                      allowDrawingOutsideViewBox: true,
+                    )
+                        : document['loginProvider'] == 3
+                        ? SvgPicture.asset(
+                      'images/twitter.svg',
+                      height: 20.0,
+                      width: 20.0,
+                      allowDrawingOutsideViewBox: true,
+                    )
+                        : Text(''),
                     Container(
                       color: Colors.transparent,
                       width: 5.0,
@@ -274,7 +278,7 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                              ),
+                          ),
                           Container(
                             color: Colors.transparent,
                             width: 58,
@@ -288,7 +292,7 @@ class Trending {
 //                            fit: BoxFit.scaleDown,
 //                            alignment: Alignment.center,
 //                          ),
-                              ),
+                          ),
                           Container(
                             color: Colors.transparent,
                             width: 58,
@@ -338,12 +342,12 @@ class Trending {
                             color: Colors.white,
                             child: new IconButton(
                                 icon: new Icon(
-                              Icons.lightbulb_outline,
-                              color: Colors.red,
-                              size: 14,
-                            )),
+                                  Icons.lightbulb_outline,
+                                  color: Colors.red,
+                                  size: 14,
+                                )),
                           ) // text to append (required)
-                          ))),
+                      ))),
             ],
           ),
         ],
@@ -391,25 +395,28 @@ class Trending {
         height: 2.0,
       ));
 
-      if(null!=_duration) {
-        if(_duration.inSeconds!=0) {
-          list.add(Container(
-            child: Center(
-              child: FlipClock.reverseCountdown(
-                duration: _duration,
-                digitColor: Colors.white,
-                backgroundColor: Colors.blueGrey,
-                digitSize: 12.0,
-                height: 15,
-                width: 10,
-                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                //onDone: () => print('ih'),
-              ),
+      if (_duration.inSeconds != 0) {
+        list.add(Container(
+          child: Center(
+            child: FlipClock.reverseCountdown(
+
+              flipDirection: FlipDirection.down,
+              duration: _duration,
+              digitColor: Colors.white,
+              backgroundColor: Colors.blueGrey,
+              digitSize: 12.0,
+              height: 15,
+              width: 10,
+              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+              //onDone: () => print('ih'),
             ),
-          ));
-        }
+          ),
+        ));
       }
-      if (null != document['postPath'] && document['postType'] == 1) {
+
+      if(_duration.inSeconds==0) {
+
+        if (null != document['postPath'] && document['postType'] == 1) {
         Image image = new Image.network(
           document['postPath'],
           //height: 270,
@@ -426,7 +433,7 @@ class Trending {
                 context,
                 new MaterialPageRoute(
                     builder: (context) =>
-                        new ImageScreen(document['title'], image)
+                    new ImageScreen(document['title'], image)
 
 //              new Image.network(
 //                document['postPath'],
@@ -435,7 +442,7 @@ class Trending {
 ////                width: MediaQuery.of(context).size.width,
 //                alignment: Alignment.center,
 //              ),
-                    ));
+                ));
           },
           child: FadeInImage.assetNetwork(
             placeholder: 'images/loader.gif',
@@ -458,7 +465,7 @@ class Trending {
         );
       } else if (null != document['postPath'] && document['postType'] == 2) {
         VideoPlayerController videoPlayerController1 =
-            VideoPlayerController.network(document['postPath']);
+        VideoPlayerController.network(document['postPath']);
         ChewieController _chewieController = ChewieController(
           videoPlayerController: videoPlayerController1,
           aspectRatio: 1,
@@ -478,33 +485,40 @@ class Trending {
 //        autoInitialize: true,
 //      ));
       }
-      if (document['voteBy'] == 4) {
-        list.add(Container(
-          height: 55,
-          child: StarRatings(),
-        ));
-      }
-      if (document['voteBy'] == 5) {
-        list.add(Container(
-          height: 40,
-          child: CustomRadio(),
-        ));
+    }
+    else{
+      list.add(Image.asset("images/finalcountdown.jpg"));
       }
 
-      if (document['voteBy'] == 6) {
-        list.add(
-          Container(height: 78, child: Emoji()),
-        );
-      }
-      if (document['voteBy'] == 7) {
-        list.add(
-          Container(height: 65, child: new YesNoMaybe()),
-        );
-      }
-      if (document['voteBy'] == 8) {
-        list.add(
-          Container(height: 55, child: new LikeDisLike()),
-        );
+      if(_duration.inSeconds==0) {
+        if (document['voteBy'] == 4) {
+          list.add(Container(
+            height: 55,
+            child: StarRatings(),
+          ));
+        }
+        if (document['voteBy'] == 5) {
+          list.add(Container(
+            height: 40,
+            child: CustomRadio(),
+          ));
+        }
+
+        if (document['voteBy'] == 6) {
+          list.add(
+            Container(height: 78, child: Emoji()),
+          );
+        }
+        if (document['voteBy'] == 7) {
+          list.add(
+            Container(height: 65, child: new YesNoMaybe()),
+          );
+        }
+        if (document['voteBy'] == 8) {
+          list.add(
+            Container(height: 55, child: new LikeDisLike()),
+          );
+        }
       }
       list.add(
         new Container(
@@ -515,25 +529,25 @@ class Trending {
       list.add(
         Divider(),
       );
-
-      list.add(
-        new Container(
-          width: 500.0,
-          height: 60.0,
-          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+      if(_duration.inSeconds==0) {
+        list.add(
+          new Container(
+            width: 500.0,
+            height: 60.0,
+            //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
 //        decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
 //          new BoxShadow(
 //            color: Colors.black26,
 //            blurRadius: 20.0,
 //          ),
 //        ]),
-          child: new Scaffold(
-            resizeToAvoidBottomPadding: false,
-            bottomNavigationBar: bottomAppBar,
+            child: new Scaffold(
+              resizeToAvoidBottomPadding: false,
+              bottomNavigationBar: bottomAppBar,
+            ),
           ),
-        ),
-      );
-
+        );
+      }
       return list;
     } else {
       return null;
