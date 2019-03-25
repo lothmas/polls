@@ -399,7 +399,6 @@ class Trending {
         list.add(Container(
           child: Center(
             child: FlipClock.reverseCountdown(
-
               flipDirection: FlipDirection.down,
               duration: _duration,
               digitColor: Colors.white,
