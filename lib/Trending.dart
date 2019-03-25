@@ -29,9 +29,9 @@ class Trending {
 
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
-    Duration _duration;
+    Duration _duration=new Duration();
     try {
-      DateTime dDay = DateTime(document['startDate']);
+      DateTime dDay = document['startDate'];
       _duration = dDay.difference(DateTime.now());
     }
     catch(e){
@@ -398,8 +398,10 @@ class Trending {
               child: FlipClock.reverseCountdown(
                 duration: _duration,
                 digitColor: Colors.white,
-                backgroundColor: Colors.black,
-                digitSize: 30.0,
+                backgroundColor: Colors.blueGrey,
+                digitSize: 12.0,
+                height: 15,
+                width: 10,
                 borderRadius: const BorderRadius.all(Radius.circular(3.0)),
                 //onDone: () => print('ih'),
               ),

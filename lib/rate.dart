@@ -23,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final int starLength = 7;
+  final int starLength = 5;
   double _rating = 0.0;
 
   void _incrementHalfStar() {
@@ -100,8 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 20,
                   ),
                   Container(
-                    height: 32,
-                    width: 32,
+                    height: 28,
+                    width: 28,
                     child: FloatingActionButton(
                       onPressed: _decrementHalfStar,
                       heroTag: "Decrement",
@@ -115,8 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 10,
                   ),
                   Container(
-                    height: 32,
-                    width: 32,
+                    height: 28,
+                    width: 28,
                     child: FloatingActionButton(
                       heroTag: "increment",
                       onPressed: _incrementHalfStar,
