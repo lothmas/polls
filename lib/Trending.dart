@@ -1,7 +1,6 @@
 library flip_panel;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:stats/Graph.dart';
@@ -9,6 +8,7 @@ import 'package:stats/Polling.dart';
 import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:stats/emoji.dart';
+import 'package:stats/flip_clock.dart';
 import 'package:stats/image_display.dart';
 import 'package:stats/radio.dart';
 import 'package:stats/radio_yes_no.dart';
@@ -395,25 +395,9 @@ class Trending {
         height: 2.0,
       ));
 
-      if (_duration.inSeconds != 0) {
-        list.add(Container(
-          child: Center(
-            child: FlipClock.reverseCountdown(
-              flipDirection: FlipDirection.down,
-              duration: _duration,
-              digitColor: Colors.white,
-              backgroundColor: Colors.blueGrey,
-              digitSize: 12.0,
-              height: 15,
-              width: 10,
-              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-              //onDone: () => print('ih'),
-            ),
-          ),
-        ));
-      }
 
-      if(_duration.inSeconds==0) {
+
+//      if(_duration.inSeconds==0) {
 
         if (null != document['postPath'] && document['postType'] == 1) {
         Image image = new Image.network(
@@ -484,10 +468,10 @@ class Trending {
 //        autoInitialize: true,
 //      ));
       }
-    }
-    else{
-      list.add(Image.asset("images/finalcountdown.jpg"));
-      }
+//    }
+//    else{
+//    //  list.add(Image.asset("images/finalcountdown.jpg"));
+//      }
 
       if(_duration.inSeconds==0) {
         if (document['voteBy'] == 4) {
@@ -546,6 +530,24 @@ class Trending {
             ),
           ),
         );
+      }
+      else{
+        if (_duration.inSeconds != 0) {
+          list.add(Container(
+            child: FlipClock.reverseCountdown(
+              flipDirection: FlipDirection.down,
+              duration: _duration,
+              digitColor: Colors.white,
+              backgroundColor: Colors.blueGrey,
+              digitSize: 12.0,
+              height: 15,
+              width: 10,
+              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+              //onDone: () => print('ih'),
+            ),
+
+          ));
+        }
       }
       return list;
     } else {
