@@ -15,6 +15,7 @@ import 'package:stats/image_picker.dart';
 import 'package:stats/main.dart';
 import 'package:stats/multipleorder/multipicker.dart';
 import 'package:stats/rangeSlide.dart';
+import 'package:stats/requiredData.dart';
 import 'package:stats/search.dart';
 import 'package:stats/tag.dart';
 import 'package:stats/vote_by_dropdown.dart';
@@ -1123,26 +1124,26 @@ bool allowNumberEnabled=true;
                                   activeColor: Colors.green,
                                 ),
                                 isPrivate
-                                    ? Container(
-                                    width: 93.0,
-                                    height: 25.0,
-                                    child: FloatingActionButton.extended(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) =>
-                                              new ExampleApp()),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.add_circle,
-                                      ),
-                                      label: Text("Add Voter",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold)),
-                                    ))
+                                    ? Column(children: <Widget>[Container(
+    width: 93.0,
+    height: 25.0,
+    child: FloatingActionButton.extended(
+    onPressed: () {
+    Navigator.push(
+    context,
+    new MaterialPageRoute(
+    builder: (context) =>
+    new ExampleApp()),
+    );
+    },
+    icon: Icon(
+    Icons.add_circle,
+    ),
+    label: Text("Add Voter",
+    style: TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.bold)),
+    )),CustomCard()],)
                                     : Text(
                                   'Enable to set Private_Poll',
                                   style: TextStyle(
