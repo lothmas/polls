@@ -494,7 +494,7 @@ class Trending {
         }
         if (document['voteBy'] == 7) {
           list.add(
-            Container(height: 65, child: new YesNoMaybe()),
+            Container(height: 65, child: new YesNoMaybe(3)),
           );
         }
         if (document['voteBy'] == 8) {
@@ -534,7 +534,10 @@ class Trending {
       else{
         if (_duration.inSeconds != 0) {
           list.add(Container(
-            child: FlipClock.reverseCountdown(
+            child:Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[Image.asset("images/count.png",width: 120,),FlipClock.reverseCountdown(
               flipDirection: FlipDirection.down,
               duration: _duration,
               digitColor: Colors.white,
@@ -545,7 +548,7 @@ class Trending {
               borderRadius: const BorderRadius.all(Radius.circular(3.0)),
               //onDone: () => print('ih'),
             ),
-
+            ],) 
           ));
         }
       }

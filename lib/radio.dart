@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 
 class YesNoMaybe extends StatefulWidget {
+  int selectedYesNoMaybe;
+  YesNoMaybe(int i){
+    selectedYesNoMaybe=i;
+  }
+
   @override
   State<StatefulWidget> createState() {
-    return new _CurrencyState();
+    return new _CurrencyState(selectedYesNoMaybe);
   }
 }
 
 class _CurrencyState extends State<YesNoMaybe> {
   final TextEditingController _currencyController = new TextEditingController();
-  int _radioValue = 0;
+  int _radioValue ;
 
   static const EURO_MUL = 0.86;
   static const POUND_MUL = 0.75;
   static const YEN_MUL = 110.63;
   double _result = 0.0;
   String _textResult = '';
+
+  _CurrencyState(int selectedYesNoMaybe){
+    _radioValue=selectedYesNoMaybe;
+  }
 
   void _handleRadioValueChange(int value) {
     setState(() {
