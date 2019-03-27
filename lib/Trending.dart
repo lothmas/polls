@@ -2,6 +2,7 @@ library flip_panel;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:stats/Graph.dart';
 import 'package:stats/Polling.dart';
@@ -29,21 +30,14 @@ class Trending {
 
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document) {
-    Duration _duration=new Duration();
+    Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDate'];
       _duration = dDay.difference(DateTime.now());
-    }
-    catch(e){
-
-    }
-
+    } catch (e) {}
 
     if (document['enabled'] == true) {
-      double c_width = MediaQuery
-          .of(context)
-          .size
-          .width * 1;
+      double c_width = MediaQuery.of(context).size.width * 1;
       var assetImage = new AssetImage("images/cast.png");
 
       List<Widget> list = new List();
@@ -74,32 +68,31 @@ class Trending {
             Column(
               children: <Widget>[
                 document['voteBy'] != 4 &&
-                    document['voteBy'] != 5 &&
-                    document['voteBy'] != 6 &&
-                    document['voteBy'] != 7 &&
-                    document['voteBy'] != 8
+                        document['voteBy'] != 5 &&
+                        document['voteBy'] != 6 &&
+                        document['voteBy'] != 7 &&
+                        document['voteBy'] != 8
                     ? IconButton(
-                  icon: Image.asset(
-                    "images/cast.png",
-                    width: 22.0,
-                    height: 22.0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) =>
-                          new Polling(
-                              voteID: document.documentID,
-                              voteBy: document['voteBy'],
-                              voteType: document['voteType'])),
-                    );
-                  },
-                )
+                        icon: Image.asset(
+                          "images/cast.png",
+                          width: 22.0,
+                          height: 22.0,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new Polling(
+                                    voteID: document.documentID,
+                                    voteBy: document['voteBy'],
+                                    voteType: document['voteType'])),
+                          );
+                        },
+                      )
                     : Text(""),
                 Container(
-                  //height: 10.0,
-                ),
+                    //height: 10.0,
+                    ),
                 Text(
                   countdownlapsedTime(document['creationDateTime']),
                   style: TextStyle(
@@ -174,30 +167,31 @@ class Trending {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      document['title'],
+                      document['title'].toString().toUpperCase(),
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 11.0,
+                          fontSize: 10.0,
                           fontWeight: FontWeight.bold),
                     ),
                     document['private'] == null
-                        ? Icon(
-                      Icons.lock_open,
-                      color: Colors.green,
-                      size: 14,
-                    )
-                        : Icon(
-                      Icons.lock,
-                      color: Colors.red,
-                      size: 14,
-                    )
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.lock_open,
+                              color: Colors.green,
+                              size: 14,
+                            ),
+                            onPressed: () {toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Open green lock means open to the public", "Poll is Public");})
+                        : IconButton(
+                            icon: Icon(
+                              Icons.lock,
+                              color: Colors.red,
+                              size: 14,
+                            ),
+                      onPressed: (){toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Closed red lock means open to the public", "Poll is Private");},
+                          )
                   ],
                 ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 5.0,
               ),
               Container(
                 child: new Row(
@@ -212,151 +206,117 @@ class Trending {
                     ),
                     document['loginProvider'] == 1
                         ? SvgPicture.asset(
-                      'images/facebook.svg',
-                      height: 12.0,
-                      width: 12.0,
-                      allowDrawingOutsideViewBox: true,
-                    )
+                            'images/facebook.svg',
+                            height: 12.0,
+                            width: 12.0,
+                            allowDrawingOutsideViewBox: true,
+                          )
                         : document['loginProvider'] == 2
-                        ? SvgPicture.asset(
-                      'images/google.svg',
-                      height: 10.0,
-                      width: 10.0,
-                      allowDrawingOutsideViewBox: true,
-                    )
-                        : document['loginProvider'] == 3
-                        ? SvgPicture.asset(
-                      'images/twitter.svg',
-                      height: 20.0,
-                      width: 20.0,
-                      allowDrawingOutsideViewBox: true,
-                    )
-                        : Text(''),
+                            ? SvgPicture.asset(
+                                'images/google.svg',
+                                height: 10.0,
+                                width: 10.0,
+                                allowDrawingOutsideViewBox: true,
+                              )
+                            : document['loginProvider'] == 3
+                                ? SvgPicture.asset(
+                                    'images/twitter.svg',
+                                    height: 20.0,
+                                    width: 20.0,
+                                    allowDrawingOutsideViewBox: true,
+                                  )
+                                : Text(''),
                     Container(
                       color: Colors.transparent,
                       width: 5.0,
                     ),
-                    Container(
-                      color: Colors.transparent,
-                      child: Text(
-                        document['owner'].toString().toLowerCase(),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.teal, fontSize: 11),
-                      ),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            document['owner'].toString().toLowerCase(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(color: Colors.teal, fontSize: 11),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          width: 10.0,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            new Container(
+                                child: Container(
+                                    color: Colors.transparent,
+                                    child: GestureDetector(
+                                      child: Badge.before(
+
+//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
+                                          value: '0' +
+                                              ' | ' +
+                                              document['allowedVoteNumber']
+                                                  .toString(),
+                                          textStyle: TextStyle(fontSize: 10),
+                                          borderColor: Colors.grey,
+                                          borderSize: 1.0,
+                                          color: Colors.white,
+                                          // value to show inside the badge
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+//                            width: 1,
+                                                color: Colors.white,
+                                                child: new IconButton(
+                                                  icon: new Icon(
+                                                    Icons.report,
+                                                    color: Colors.red,
+                                                    size: 14,
+                                                  ),
+                                                  onPressed: () {
+                                                    toolTip(context,'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ','Private Poll Report');
+                                                  },
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  icon: Icon(
+                                                    Icons.play_circle_filled,
+                                                    color: Colors.black,
+                                                    size: 14,
+                                                  ),
+                                                  onPressed: () {
+                                                    toolTip(
+                                                        context,
+                                                        'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for','LIVE');
+                                                  })
+                                            ],
+                                          ) // text to append (required)
+                                          ),
+                                      onTap: () {
+                                        toolTip(
+                                            context,
+                                            'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+                                            'Allowed Polls: ' +
+                                                document['allowedVoteNumber']
+                                                    .toString());
+                                      },
+                                    ))),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 7,
-              ),
-              Container(
-//          //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-//          decoration: new BoxDecoration(color: Colors.white30, boxShadow: [
-//            new BoxShadow(
-//              color: Colors.white,
-//              blurRadius: 20.0,
-//            ),
-//          ]),
-                child: new Column(
-//                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            color: Colors.transparent,
-                            width: 20,
-                          ),
-                          Container(
-//                          child: Image(
-//                            image: new AssetImage("images/lock.png"),
-//                            width: 18,
-//                            height: 18,
-//                            color: null,
-//                            fit: BoxFit.scaleDown,
-//                            alignment: Alignment.center,
-//                          ),
-                          ),
-                          Container(
-                            color: Colors.transparent,
-                            width: 58,
-                          ),
-                          Container(
-//                          child: Image(
-//                            image: new AssetImage("images/trending.png"),
-//                            width: 18,
-//                            height: 18,
-//                            color: null,
-//                            fit: BoxFit.scaleDown,
-//                            alignment: Alignment.center,
-//                          ),
-                          ),
-                          Container(
-                            color: Colors.transparent,
-                            width: 58,
-                          ),
-//                        GestureDetector(
-//                          onTap: () {
-//                            list.add(new Tooltip(
-//                                message: "Hello World",
-//                                child: new Text("foo")));
-//                          },
-//                          child: Image(
-//                            image: new AssetImage("images/info.png"),
-//                            width: 18,
-//                            height: 18,
-//                            color: null,
-//                            fit: BoxFit.scaleDown,
-//                            alignment: Alignment.center,
-//                          ),
-//                        ),
-                        ],
-                      ),
-                    ]),
               ),
             ],
           ),
           Container(
             color: Colors.transparent,
-            width: 30,
-          ),
-          Column(
-            children: <Widget>[
-              new Container(
-                  child: Container(
-                      color: Colors.transparent,
-                      child: Badge.before(
-//                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                          value: '0' +
-                              ' | ' +
-                              document['allowedVoteNumber'].toString(),
-                          textStyle: TextStyle(fontSize: 10),
-                          borderColor: Colors.grey,
-                          borderSize: 1.0,
-                          color: Colors.white,
-                          // value to show inside the badge
-                          child: Container(
-                            width: 1,
-                            color: Colors.white,
-                            child: new IconButton(
-                                icon: new Icon(
-                                  Icons.lightbulb_outline,
-                                  color: Colors.red,
-                                  size: 14,
-                                )),
-                          ) // text to append (required)
-                      ))),
-            ],
+            width: 5,
           ),
         ],
       ));
 
-      list.add(Container(
-        color: Colors.transparent,
-        height: 8.0,
-      ));
       list.add(
         Divider(),
       );
@@ -395,11 +355,9 @@ class Trending {
         height: 2.0,
       ));
 
-
-
 //      if(_duration.inSeconds==0) {
 
-        if (null != document['postPath'] && document['postType'] == 1) {
+      if (null != document['postPath'] && document['postType'] == 1) {
         Image image = new Image.network(
           document['postPath'],
           //height: 270,
@@ -416,7 +374,7 @@ class Trending {
                 context,
                 new MaterialPageRoute(
                     builder: (context) =>
-                    new ImageScreen(document['title'], image)
+                        new ImageScreen(document['title'], image)
 
 //              new Image.network(
 //                document['postPath'],
@@ -425,7 +383,7 @@ class Trending {
 ////                width: MediaQuery.of(context).size.width,
 //                alignment: Alignment.center,
 //              ),
-                ));
+                    ));
           },
           child: FadeInImage.assetNetwork(
             placeholder: 'images/loader.gif',
@@ -448,7 +406,7 @@ class Trending {
         );
       } else if (null != document['postPath'] && document['postType'] == 2) {
         VideoPlayerController videoPlayerController1 =
-        VideoPlayerController.network(document['postPath']);
+            VideoPlayerController.network(document['postPath']);
         ChewieController _chewieController = ChewieController(
           videoPlayerController: videoPlayerController1,
           aspectRatio: 1,
@@ -473,7 +431,7 @@ class Trending {
 //    //  list.add(Image.asset("images/finalcountdown.jpg"));
 //      }
 
-      if(_duration.inSeconds<0) {
+      if (_duration.inSeconds == 0) {
         if (document['voteBy'] == 4) {
           list.add(Container(
             height: 55,
@@ -512,7 +470,7 @@ class Trending {
       list.add(
         Divider(),
       );
-      if(_duration.inSeconds<0) {
+      if (_duration.inSeconds <= 0) {
         list.add(
           new Container(
             width: 500.0,
@@ -530,26 +488,30 @@ class Trending {
             ),
           ),
         );
-      }
-      else{
-        if (_duration.inSeconds > 0) {
+      } else {
+        if (_duration.inSeconds != 0) {
           list.add(Container(
-            child:Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Image.asset("images/count.png",width: 120,),FlipClock.reverseCountdown(
-              flipDirection: FlipDirection.down,
-              duration: _duration,
-              digitColor: Colors.white,
-              backgroundColor: Colors.blueGrey,
-              digitSize: 12.0,
-              height: 15,
-              width: 10,
-              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-              //onDone: () => print('ih'),
-            ),
-            ],) 
-          ));
+              child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                "images/count.png",
+                width: 120,
+              ),
+              FlipClock.reverseCountdown(
+                flipDirection: FlipDirection.down,
+                duration: _duration,
+                digitColor: Colors.white,
+                backgroundColor: Colors.blueGrey,
+                digitSize: 12.0,
+                height: 15,
+                width: 10,
+                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+                //onDone: () => print('ih'),
+              ),
+            ],
+          )));
         }
       }
       return list;
@@ -599,6 +561,52 @@ class Trending {
         return (months / 30).toInt().toString() + " months ago";
       }
     }
+  }
+
+  void toolTip(BuildContext context, String message, String title) {
+    Flushbar(
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.FLOATING,
+      reverseAnimationCurve: Curves.decelerate,
+      forwardAnimationCurve: Curves.elasticOut,
+      backgroundColor: Colors.red,
+      boxShadow: BoxShadow(
+          color: Colors.blue[800], offset: Offset(0.0, 2.0), blurRadius: 3.0),
+      backgroundGradient:
+          LinearGradient(colors: [Colors.blueGrey, Colors.black]),
+      isDismissible: false,
+      duration: Duration(seconds: 6),
+      icon: Icon(
+        Icons.check,
+        color: Colors.greenAccent,
+      ),
+      mainButton: FlatButton(
+        onPressed: () {
+          return null;
+        },
+        child: Text(
+          title,
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
+      showProgressIndicator: true,
+      progressIndicatorBackgroundColor: Colors.blueGrey,
+      titleText: Text(
+        "what I do",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15.0,
+            color: Colors.yellow[600],
+            fontFamily: "ShadowsIntoLightTwo"),
+      ),
+      messageText: Text(
+        message,
+        style: TextStyle(
+            fontSize: 11.0,
+            color: Colors.green,
+            fontFamily: "ShadowsIntoLightTwo"),
+      ),
+    ).show(context);
   }
 }
 

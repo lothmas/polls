@@ -11,14 +11,10 @@ import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:stats/MaterialSwitch.dart';
-import 'package:stats/image_picker.dart';
 import 'package:stats/main.dart';
-import 'package:stats/multipleorder/multipicker.dart';
 import 'package:stats/rangeSlide.dart';
 import 'package:stats/requiredData.dart';
 import 'package:stats/search.dart';
-import 'package:stats/tag.dart';
-import 'package:stats/vote_by_dropdown.dart';
 import 'package:flutter/services.dart';
 import 'package:medias_picker/medias_picker.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
@@ -273,17 +269,24 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                     : FlatButton(
                         child: getNextButtonWrapper(nextButtonStyle),
                         onPressed: () {
+
+
+
                           if (pollTitle.value.text == "") {
                             validationSnackBar(
                                 context, 'Poll Title Can\'t be left empty');
                           }
+                         else if (pollAllowedNumber.value.text != "1" && "star rating"==currentCity){
+                            validationSnackBar(context, 'Poll Allowed Number\'s can only be 1 for \'star rating\'');
+                          }
+
+
 //                    else if (pollDescription.value.text == "") {
 //                      validationSnackBar(
 //                          context, 'Poll Description Cant be left empty');
 //                    }
                           else if (pollAllowedNumber.value.text == "") {
-                            validationSnackBar(context,
-                                'Poll Allowed Vote Numbers Can\'t be left empty');
+                            validationSnackBar(context,'Poll Allowed Vote Numbers Can\'t be left empty');
                           } else if (pollAllowedNumber.value.text == "0") {
                             validationSnackBar(
                                 context, '0 isn\'t an accepted number');

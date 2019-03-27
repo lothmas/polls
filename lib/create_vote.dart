@@ -3,13 +3,7 @@ import 'dart:ui' show lerpDouble;
 
 //import 'package:badge/badge.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:stats/card_data.dart';
-import 'package:stats/page1.dart';
-import 'package:stats/tag.dart';
-import 'package:stats/tag1.dart';
-import 'package:stats/text_focus_helper.dart';
-import 'package:stats/vote_by_dropdown.dart';
 
 //class CreateVote extends StatefulWidget {
 //  @override
