@@ -473,7 +473,7 @@ class Trending {
 //    //  list.add(Image.asset("images/finalcountdown.jpg"));
 //      }
 
-      if(_duration.inSeconds==0) {
+      if(_duration.inSeconds<0) {
         if (document['voteBy'] == 4) {
           list.add(Container(
             height: 55,
@@ -512,7 +512,7 @@ class Trending {
       list.add(
         Divider(),
       );
-      if(_duration.inSeconds==0) {
+      if(_duration.inSeconds<0) {
         list.add(
           new Container(
             width: 500.0,
@@ -532,7 +532,7 @@ class Trending {
         );
       }
       else{
-        if (_duration.inSeconds != 0) {
+        if (_duration.inSeconds > 0) {
           list.add(Container(
             child:Row(
               crossAxisAlignment: CrossAxisAlignment.start,

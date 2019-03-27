@@ -37,14 +37,15 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   String dropdownValue = 'Select Vote Type:';
   int _counter = 0;
   List<File> files1 = [];
-bool allowNumberEnabled=true;
+  bool allowNumberEnabled = true;
+
   ///////page3
   var focusNode = new FocusNode();
   bool isAgeRange = false;
   bool isGender = false;
   bool isLocation = false;
   bool isPrivate = false;
-  bool isReportPublic=false;
+  bool isReportPublic = false;
   final List<String> _list = [
     'gender',
     'location',
@@ -141,13 +142,12 @@ bool allowNumberEnabled=true;
 
     ////page3
 
-    _list.forEach((item) =>
-        _selectableTags.add(Tag(
-            title: item,
-            active: true,
-            icon: (item == '0' || item == '1' || item == '2')
-                ? _icon[int.parse(item)]
-                : null)));
+    _list.forEach((item) => _selectableTags.add(Tag(
+        title: item,
+        active: true,
+        icon: (item == '0' || item == '1' || item == '2')
+            ? _icon[int.parse(item)]
+            : null)));
 
     //////////
 
@@ -236,77 +236,79 @@ bool allowNumberEnabled=true;
                 currentPage == 1
                     ? Container()
                     : FlatButton(
-                  child: getPreviousButtonWrapper(previousButtonStyle),
-                  onPressed: () {
-                    setState(() {
-                      if (currentCity == "text nomination" &&
-                          currentPage == 2) {
-                        currentPage = 1;
-                      } else if (currentCity ==
-                          "image / video nomination" &&
-                          currentPage == 3) {
-                        currentPage = 1;
-                      } else if (currentCity == "text nomination" &&
-                          currentPage == 4) {
-                        currentPage = 2;
-                      } else if (currentCity ==
-                          "image / video nomination" &&
-                          currentPage == 4) {
-                        currentPage = 3;
-                      } else if (currentPage == 4) {
-                        currentPage = 1;
-                      }
-                    });
-                  },
-                ),
+                        child: getPreviousButtonWrapper(previousButtonStyle),
+                        onPressed: () {
+                          setState(() {
+                            if (currentCity == "text nomination" &&
+                                currentPage == 2) {
+                              currentPage = 1;
+                            } else if (currentCity ==
+                                    "image / video nomination" &&
+                                currentPage == 3) {
+                              currentPage = 1;
+                            } else if (currentCity == "text nomination" &&
+                                currentPage == 4) {
+                              currentPage = 2;
+                            } else if (currentCity ==
+                                    "image / video nomination" &&
+                                currentPage == 4) {
+                              currentPage = 3;
+                            } else if (currentPage == 4) {
+                              currentPage = 1;
+                            }
+                          });
+                        },
+                      ),
                 currentPage == 4
                     ? FlatButton(
-                    child: getSubmitButtonWrapper(submitButtonStyle),
-                    onPressed: () {
-                      createVote(pollAllowedNumber.value.text,
-                          pollDescription.value.text, "MMM111",
-                          dropdownValue, pollTitle.value.text);
-                    }
-                )
+                        child: getSubmitButtonWrapper(submitButtonStyle),
+                        onPressed: () {
+                          createVote(
+                              pollAllowedNumber.value.text,
+                              pollDescription.value.text,
+                              "MMM111",
+                              dropdownValue,
+                              pollTitle.value.text);
+                        })
                     : FlatButton(
-                  child: getNextButtonWrapper(nextButtonStyle),
-                  onPressed: () {
-                    if (pollTitle.value.text == "") {
-                      validationSnackBar(
-                          context, 'Poll Title Can\'t be left empty');
-                    }
+                        child: getNextButtonWrapper(nextButtonStyle),
+                        onPressed: () {
+                          if (pollTitle.value.text == "") {
+                            validationSnackBar(
+                                context, 'Poll Title Can\'t be left empty');
+                          }
 //                    else if (pollDescription.value.text == "") {
 //                      validationSnackBar(
 //                          context, 'Poll Description Cant be left empty');
 //                    }
-                    else if (pollAllowedNumber.value.text == "") {
-                      validationSnackBar(context,
-                          'Poll Allowed Vote Numbers Can\'t be left empty');
-                    } else if (pollAllowedNumber.value.text == "0") {
-                      validationSnackBar(
-                          context, '0 isn\'t an accepted number');
-                    } else {
-                      setState(() {
-                        if (currentCity == "text nomination" &&
-                            currentPage == 2) {
-                          currentPage = 4;
-                        } else if (currentCity ==
-                            "image / video nomination" &&
-                            currentPage == 3) {
-                          currentPage = 4;
-                        } else if (currentCity == "text nomination") {
-                          currentPage = 2;
-                        } else if (currentCity ==
-                            "image / video nomination") {
-                          currentPage = 3;
-                        } else {
-                          currentPage = 4;
-                        }
-                        //  currentPage = currentPage + 1;
-                      });
-                    }
-                  },
-                ),
+                          else if (pollAllowedNumber.value.text == "") {
+                            validationSnackBar(context,
+                                'Poll Allowed Vote Numbers Can\'t be left empty');
+                          } else if (pollAllowedNumber.value.text == "0") {
+                            validationSnackBar(
+                                context, '0 isn\'t an accepted number');
+                          } else {
+                            setState(() {
+                              if (currentCity == "text nomination" &&
+                                  currentPage == 2) {
+                                currentPage = 4;
+                              } else if (currentCity ==
+                                      "image / video nomination" &&
+                                  currentPage == 3) {
+                                currentPage = 4;
+                              } else if (currentCity == "text nomination") {
+                                currentPage = 2;
+                              } else if (currentCity ==
+                                  "image / video nomination") {
+                                currentPage = 3;
+                              } else {
+                                currentPage = 4;
+                              }
+                              //  currentPage = currentPage + 1;
+                            });
+                          }
+                        },
+                      ),
               ],
             ),
           ),
@@ -318,7 +320,10 @@ bool allowNumberEnabled=true;
   void validationSnackBar(BuildContext context, String validationMessage) {
     Scaffold.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.blueGrey,
-      content: Text(validationMessage,style: TextStyle(fontSize: 11),),
+      content: Text(
+        validationMessage,
+        style: TextStyle(fontSize: 11),
+      ),
       duration: Duration(seconds: 3),
     ));
   }
@@ -382,7 +387,6 @@ bool allowNumberEnabled=true;
   String _platformVersion = 'Unknown';
   List<dynamic> docPaths;
 
-
   pickImages() async {
     try {
       docPaths = await MediasPicker.pickImages(
@@ -414,7 +418,7 @@ bool allowNumberEnabled=true;
     setState(() {
       pollDisplay = 2;
       _platformVersion =
-      docPaths.toString().replaceAll("[", "").replaceAll("]", "");
+          docPaths.toString().replaceAll("[", "").replaceAll("]", "");
       _videoPlayerController1 =
           VideoPlayerController.file(new File(_platformVersion));
     });
@@ -470,8 +474,7 @@ bool allowNumberEnabled=true;
 //                                fit: BoxFit.cover,
 //                              ),
                             ),
-                            transform: new Matrix4.identity()
-                              ..scale(1.0),
+                            transform: new Matrix4.identity()..scale(1.0),
 //                      width: size.width,
 //                      height: size.height,
 //        color: color ?? Colors.transparent,
@@ -517,7 +520,8 @@ bool allowNumberEnabled=true;
                                         hintText: "Poll Description",
                                         hintStyle: TextStyle(
                                             fontSize: 12.0,
-                                            color: Colors.blueGrey,fontWeight: FontWeight.bold),
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
@@ -543,7 +547,7 @@ bool allowNumberEnabled=true;
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
                                               labelText:
-                                              'Start Poll Date & Time',
+                                                  'Start Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
                                               setState(() => startDate = dt),
@@ -553,7 +557,6 @@ bool allowNumberEnabled=true;
                                           format: formats[inputType],
                                           style: TextStyle(
                                               fontSize: 12,
-
                                               color: Colors.blueGrey),
                                           editable: false,
                                           decoration: InputDecoration(
@@ -561,8 +564,7 @@ bool allowNumberEnabled=true;
                                                   fontSize: 12,
                                                   color: Colors.blueGrey,
                                                   fontWeight: FontWeight.bold),
-                                              labelText:
-                                              'End Poll Date & Time',
+                                              labelText: 'End Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
                                               setState(() => endDate = dt),
@@ -573,30 +575,29 @@ bool allowNumberEnabled=true;
                                   new ListTile(
                                     leading: Text("Vote By *",
                                         style: new TextStyle(
-                                          fontSize: 12.0,
-                                          color: Colors.blueGrey,fontWeight: FontWeight.bold
-                                        )),
+                                            fontSize: 12.0,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold)),
                                     title: Container(
                                       color: Colors.transparent,
                                       child: new Center(
                                           child: new Column(
-                                            crossAxisAlignment:
+                                        crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                            mainAxisAlignment:
+                                        mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              new DropdownButton(
-                                                style: new TextStyle(
-                                                    color: Colors.blueGrey,
-                                                    fontSize: 12.0,
-                                                    fontWeight: FontWeight
-                                                        .bold),
-                                                value: currentCity,
-                                                items: _dropDownMenuItems,
-                                                onChanged: changedDropDownItem,
-                                              )
-                                            ],
-                                          )),
+                                        children: <Widget>[
+                                          new DropdownButton(
+                                            style: new TextStyle(
+                                                color: Colors.blueGrey,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold),
+                                            value: currentCity,
+                                            items: _dropDownMenuItems,
+                                            onChanged: changedDropDownItem,
+                                          )
+                                        ],
+                                      )),
                                     ),
                                   ),
                                   new ListTile(
@@ -614,10 +615,11 @@ bool allowNumberEnabled=true;
                                       controller: pollAllowedNumber,
                                       style: new TextStyle(
                                           color: Colors.blueGrey,
-                                          fontSize: 14.0,fontWeight: FontWeight.bold),
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.bold),
                                       decoration: new InputDecoration(
                                         hintText:
-                                        "Allowed Number of Polls Per Voter *",
+                                            "Allowed Number of Polls Per Voter *",
                                         hintStyle: TextStyle(
                                             fontSize: 12.0,
                                             color: Colors.blueGrey),
@@ -638,7 +640,6 @@ bool allowNumberEnabled=true;
           },
         ));
   }
-
 
   void _pickImage() async {
     files1.addAll(await AdvImagePicker.pickImagesToFile(context));
@@ -693,11 +694,10 @@ bool allowNumberEnabled=true;
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
           children: files1
-              .map((File f) =>
-              Image.file(
-                f,
-                fit: BoxFit.cover,
-              ))
+              .map((File f) => Image.file(
+                    f,
+                    fit: BoxFit.cover,
+                  ))
               .toList(),
         ),
       ),
@@ -738,7 +738,7 @@ bool allowNumberEnabled=true;
               children: <Widget>[
                 Text(' ',
                     style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Center(
                   child: DropdownButton<String>(
                     value: dropdownValue,
@@ -895,78 +895,77 @@ bool allowNumberEnabled=true;
                             child: new Center(
                                 child: new Row(
 //                                    crossAxisAlignment: CrossAxisAlignment.sp,
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Row(
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            FlatButton.icon(
-                                              color: Colors.blueGrey[200],
-                                              icon: Icon(
-                                                Icons.add_photo_alternate,
-                                                color: Colors.blueGrey,
-                                              ),
-                                              //`Icon` to display
-                                              label: Text(
-                                                'Add a Photo',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 9),
-                                              ),
-                                              //`Text` to display
-                                              onPressed: () {
-                                                pickImages();
-                                                //Code to execute when Floating Action Button is clicked
-                                                //...
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        new Container(
-                                          width: 5,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            FlatButton.icon(
-                                              color: Colors.blueGrey[200],
-                                              icon: Icon(
-                                                Icons.video_library,
-                                                color: Colors.blueGrey,
-                                              ),
-                                              //`Icon` to display
-                                              label: Text(
-                                                'Add a Video',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 9),
-                                              ),
-                                              //`Text` to display
-                                              onPressed: () {
-                                                pickVideos();
-                                                //Code to execute when Floating Action Button is clicked
-                                                //...
-                                              },
-                                            ),
-                                          ],
+                                        FlatButton.icon(
+                                          color: Colors.blueGrey[200],
+                                          icon: Icon(
+                                            Icons.add_photo_alternate,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          //`Icon` to display
+                                          label: Text(
+                                            'Add a Photo',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 9),
+                                          ),
+                                          //`Text` to display
+                                          onPressed: () {
+                                            pickImages();
+                                            //Code to execute when Floating Action Button is clicked
+                                            //...
+                                          },
                                         ),
                                       ],
-                                    )
+                                    ),
+                                    new Container(
+                                      width: 5,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        FlatButton.icon(
+                                          color: Colors.blueGrey[200],
+                                          icon: Icon(
+                                            Icons.video_library,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          //`Icon` to display
+                                          label: Text(
+                                            'Add a Video',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 9),
+                                          ),
+                                          //`Text` to display
+                                          onPressed: () {
+                                            pickVideos();
+                                            //Code to execute when Floating Action Button is clicked
+                                            //...
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ],
-                                )),
+                                )
+                              ],
+                            )),
                           ),
                         ),
                         Container(
                             child: pollDisplay == 1
                                 ? new Image.file(
-                              new File(_platformVersion),
-                            )
+                                    new File(_platformVersion),
+                                  )
                                 : pollDisplay == 2
-                                ? Chewie(
-                              controller: _chewieController,
-                            )
-                                : null),
+                                    ? Chewie(
+                                        controller: _chewieController,
+                                      )
+                                    : null),
                       ],
                     ),
                   ],
@@ -1061,18 +1060,18 @@ bool allowNumberEnabled=true;
                                   ),
                                   isAgeRange
                                       ? new RangeSliderItem(
-                                    title: '',
-                                    initialMinValue: 12,
-                                    initialMaxValue: 100,
-                                    onMinValueChanged: (v) {},
-                                    onMaxValueChanged: (v) {},
-                                  )
+                                          title: '',
+                                          initialMinValue: 12,
+                                          initialMaxValue: 100,
+                                          onMinValueChanged: (v) {},
+                                          onMaxValueChanged: (v) {},
+                                        )
                                       : Text(
-                                    'Enable to set Age-Range',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                                          'Enable to set Age-Range',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                               tabsContent(
                                 Switch(
                                   value: isGender,
@@ -1086,31 +1085,31 @@ bool allowNumberEnabled=true;
                                 ),
                                 isGender
                                     ? MaterialSwitch(
-                                  padding: const EdgeInsets.all(5.0),
-                                  margin: const EdgeInsets.all(5.0),
-                                  selectedOption: selectedSwitchOption,
-                                  options: switchOptions,
-                                  selectedBackgroundColor: isGender
-                                      ? Colors.blueGrey
-                                      : Colors.grey,
-                                  selectedTextColor: isGender
-                                      ? Colors.white
-                                      : Colors.blueGrey,
-                                  onSelect: isGender
-                                      ? (String selectedOption) {
-                                    setState(() {
-                                      selectedSwitchOption =
-                                          selectedOption;
-                                    });
-                                  }
-                                      : null,
-                                )
+                                        padding: const EdgeInsets.all(5.0),
+                                        margin: const EdgeInsets.all(5.0),
+                                        selectedOption: selectedSwitchOption,
+                                        options: switchOptions,
+                                        selectedBackgroundColor: isGender
+                                            ? Colors.blueGrey
+                                            : Colors.grey,
+                                        selectedTextColor: isGender
+                                            ? Colors.white
+                                            : Colors.blueGrey,
+                                        onSelect: isGender
+                                            ? (String selectedOption) {
+                                                setState(() {
+                                                  selectedSwitchOption =
+                                                      selectedOption;
+                                                });
+                                              }
+                                            : null,
+                                      )
                                     : Text(
-                                  'Enable to set Gender',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                        'Enable to set Gender',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                               ),
                               tabsContent(
                                 Switch(
@@ -1124,32 +1123,39 @@ bool allowNumberEnabled=true;
                                   activeColor: Colors.green,
                                 ),
                                 isPrivate
-                                    ? Column(children: <Widget>[Container(
-    width: 93.0,
-    height: 25.0,
-    child: FloatingActionButton.extended(
-    onPressed: () {
-    Navigator.push(
-    context,
-    new MaterialPageRoute(
-    builder: (context) =>
-    new ExampleApp()),
-    );
-    },
-    icon: Icon(
-    Icons.add_circle,
-    ),
-    label: Text("Add Voter",
-    style: TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.bold)),
-    )),CustomCard()],)
+                                    ? Column(
+                                        children: <Widget>[
+                                          Container(
+                                              width: 93.0,
+                                              height: 25.0,
+                                              child:
+                                                  FloatingActionButton.extended(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    new MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            new ExampleApp()),
+                                                  );
+                                                },
+                                                icon: Icon(
+                                                  Icons.add_circle,
+                                                ),
+                                                label: Text("Add Voter",
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              )),
+                                          CustomCard()
+                                        ],
+                                      )
                                     : Text(
-                                  'Enable to set Private_Poll',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                        'Enable to set Private_Poll',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                               ),
                               tabsContent(
                                 Switch(
@@ -1164,31 +1170,31 @@ bool allowNumberEnabled=true;
                                 ),
                                 isReportPublic
                                     ? MaterialSwitch(
-                                  padding: const EdgeInsets.all(5.0),
-                                  margin: const EdgeInsets.all(5.0),
-                                  selectedOption: selectedSwitchOption,
-                                  options: switchOptions,
-                                  selectedBackgroundColor: isReportPublic
-                                      ? Colors.blueGrey
-                                      : Colors.grey,
-                                  selectedTextColor: isReportPublic
-                                      ? Colors.white
-                                      : Colors.blueGrey,
-                                  onSelect: isReportPublic
-                                      ? (String selectedOption) {
-                                    setState(() {
-                                      selectedSwitchOption =
-                                          selectedOption;
-                                    });
-                                  }
-                                      : null,
-                                )
+                                        padding: const EdgeInsets.all(5.0),
+                                        margin: const EdgeInsets.all(5.0),
+                                        selectedOption: selectedSwitchOption,
+                                        options: switchOptions,
+                                        selectedBackgroundColor: isReportPublic
+                                            ? Colors.blueGrey
+                                            : Colors.grey,
+                                        selectedTextColor: isReportPublic
+                                            ? Colors.white
+                                            : Colors.blueGrey,
+                                        onSelect: isReportPublic
+                                            ? (String selectedOption) {
+                                                setState(() {
+                                                  selectedSwitchOption =
+                                                      selectedOption;
+                                                });
+                                              }
+                                            : null,
+                                      )
                                     : Text(
-                                  'Public Report',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                        'Public Report',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                               ),
                             ],
                           ),
@@ -1207,30 +1213,24 @@ bool allowNumberEnabled=true;
     setState(() {
       currentCity = selectedCity;
       if (selectedCity == "star rating") {
-        allowNumberEnabled=false;
-        pollAllowedNumber.text='1';
+        allowNumberEnabled = false;
+        pollAllowedNumber.text = '1';
       } else if (selectedCity == "number rating") {
-        allowNumberEnabled=false;
-        pollAllowedNumber.text='1';
-
+        allowNumberEnabled = false;
+        pollAllowedNumber.text = '1';
       } else if (selectedCity == "emoji feedback") {
-        allowNumberEnabled=false;
-        pollAllowedNumber.text='1';
-
+        allowNumberEnabled = false;
+        pollAllowedNumber.text = '1';
       } else if (selectedCity == "like / dislike") {
-        allowNumberEnabled=false;
-        pollAllowedNumber.text='1';
-
+        allowNumberEnabled = false;
+        pollAllowedNumber.text = '1';
       } else if (selectedCity == "yes / no / maybe") {
-        allowNumberEnabled=false;
-        pollAllowedNumber.text='1';
-
+        allowNumberEnabled = false;
+        pollAllowedNumber.text = '1';
       } else if (selectedCity == "text nomination") {
-        allowNumberEnabled=true;
-
+        allowNumberEnabled = true;
       } else if (selectedCity == "image / video nomination") {
-        allowNumberEnabled=true;
-
+        allowNumberEnabled = true;
       }
       //  FocusScope.of(context).requestFocus(focusNode);
 
@@ -1286,111 +1286,107 @@ bool allowNumberEnabled=true;
       voteBy = 1;
     } else if (currentCity == "image / video nomination") {
       voteBy = 1;
-    }
-    else{
+    } else {
       voteBy = 4;
     }
 //    else if (currentCity == "video nomination") {
 //        pageList.insert(1, Text("video nomination"));
 //      }
 
-    var userData = Firestore.instance.collection('users').where('member_id', isEqualTo: memberID);
+    var userData = Firestore.instance
+        .collection('users')
+        .where('member_id', isEqualTo: memberID);
     String profilePic;
     String owner;
     int loginProvider;
     userData.getDocuments().then((data) async {
-      if (data.documents.length > 0){
+      if (data.documents.length > 0) {
         setState(() {
           profilePic = data.documents[0].data['profile_pic'];
 //          profilePic = data.documents[0].data['profile_pic'];
-
         });
       }
-
 
       FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
-        owner=user.displayName;
-        profilePic=user.photoUrl;
-        if(user.photoUrl.contains('facebook')){
-          loginProvider=1;
+        owner = user.displayName;
+        profilePic = user.photoUrl;
+        if (user.photoUrl.contains('facebook')) {
+          loginProvider = 1;
+        } else if (user.photoUrl.contains('google')) {
+          loginProvider = 2;
+        } else if (user.photoUrl.contains('twitter')) {
+          loginProvider = 3;
         }
-        else if(user.photoUrl.contains('google')) {
-          loginProvider=2;
-        }
-        else if(user.photoUrl.contains('twitter')){
-          loginProvider=3;
-        }
-        });
+      });
 
-
-      var reportDataToExpect= new StringBuffer();
-      for(Tag reportData in _selectableTags22){
-          if(!reportData.active){
-            reportDataToExpect.write(reportData.id.toString()+',');
-          }
+      var reportDataToExpect = new StringBuffer();
+      for (Tag reportData in _selectableTags22) {
+        if (!reportData.active) {
+          reportDataToExpect.write(reportData.id.toString() + ',');
+        }
       }
 
-      if(_platformVersion=='Unknown'&& (null==description||description=="")){
-          validationSnackBar(context, "Poll Description & Poll Main Display cn\'t both be left empty.");
-          return;
+      if (_platformVersion == 'Unknown' &&
+          (null == description || description == "")) {
+        validationSnackBar(context,
+            "Poll Description & Poll Main Display cn\'t both be left empty.");
+        return;
       }
 
-      var textNominee= new StringBuffer();
-      for(String nominiee in _inputTags){
-        textNominee.write(nominiee+',');
+      var textNominee = new StringBuffer();
+      for (String nominiee in _inputTags) {
+        textNominee.write(nominiee + ',');
       }
 
+      CollectionReference collectionReference =
+          Firestore.instance.collection('votes');
+      DocumentReference docReferance = collectionReference.document();
+      docReferance.setData({
+        'allowedVoteNumber': voteNumberAllowed,
+        'description': description,
+        'enabled': false,
+        'memberID': memberID,
+        'postType': pollDisplay,
+        'voteBy': voteBy,
+        'voteType': voteType,
+        'reportDataToExpect': removeLastChar(reportDataToExpect.toString()),
+        'creationDateTime': new DateTime.now(),
+        'title': title,
+        null != textNominee.toString()
+            ? 'textNominee'
+            : removeLastChar(textNominee.toString()): '',
+        'startDate': startDate,
+        'endDate': endDate
+      });
 
-    CollectionReference collectionReference = Firestore.instance.collection(
-        'votes');
-    DocumentReference docReferance = collectionReference.document();
-    docReferance.setData({
-      'allowedVoteNumber': voteNumberAllowed,
-      'description': description,
-      'enabled': false,
-      'memberID': memberID,
-      'postType': pollDisplay,
-      'voteBy': voteBy,
-      'voteType': voteType,
-      'reportDataToExpect':removeLastChar(reportDataToExpect.toString()),
-      'creationDateTime':new DateTime.now(),
-      'title': title,
-      null!=textNominee.toString()?'textNominee':removeLastChar(textNominee.toString()):'',
-      'startDate':startDate,
-      'endDate':endDate
-
-    });
-
-      String downloadUrl=null;
-    try {
-      final StorageReference ref = new FirebaseStorage().ref().child(
-          memberID + "/votes/" + docReferance.documentID);
-      final StorageUploadTask uploadTask = ref.putFile(
-          new File(_platformVersion));
-      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-      downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-
-    }
-    catch(e){
-
-    }
+      String downloadUrl = null;
+      try {
+        final StorageReference ref = new FirebaseStorage()
+            .ref()
+            .child(memberID + "/votes/" + docReferance.documentID);
+        final StorageUploadTask uploadTask =
+            ref.putFile(new File(_platformVersion));
+        StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+        downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+      } catch (e) {}
 
       Firestore.instance
           .collection('votes')
           .document(docReferance.documentID)
-          .updateData({"postPath":downloadUrl,
+          .updateData({
+        "postPath": downloadUrl,
         'owner': owner,
-        'profile_pic':profilePic,
-        'loginProvider':loginProvider,
-        'enabled': true,});
+        'profile_pic': profilePic,
+        'loginProvider': loginProvider,
+        'enabled': true,
+      });
 
-
-    Navigator.push(
-      context,
-      new MaterialPageRoute(
-          builder: (context) => Home()),
-    );
-  });}
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => Home()),
+      );
+    });
+  }
 
 //
 //  uploadImageToFileStorageonError: (String memberID, String voteID) async {
@@ -1415,12 +1411,10 @@ bool allowNumberEnabled=true;
 //  }
 
   String removeLastChar(String str) {
-    if(str!=null || str!=''){
+    if (str != null || str != '') {
       return str.substring(0, str.length - 1);
-    }
-    else{
+    } else {
       return null;
     }
   }
-
 }
