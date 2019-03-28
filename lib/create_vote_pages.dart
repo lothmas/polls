@@ -839,21 +839,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           ),
           backgroundColor: Colors.white,
         ),
-        body: NestedScrollView(
-//          controller: __scrollViewController1,
-            headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  centerTitle: true,
-                  pinned: false,
-                  expandedHeight: 0.0,
-                  floating: true,
-                  forceElevated: boxIsScrolled,
-                )
-              ];
-            },
-            body: TabBarView(
+        body:  TabBarView(
 //            controller: _tabController1,
               children: [
                 ListView(
@@ -1150,7 +1136,6 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                                         fontWeight:
                                                             FontWeight.bold)),
                                               )),
-                                          CustomCard()
                                         ],
                                       )
                                     : Text(
@@ -1208,7 +1193,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                 )
               ],
             )),
-      ),
+
     );
   }
 
