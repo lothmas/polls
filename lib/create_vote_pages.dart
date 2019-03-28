@@ -116,6 +116,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     'Race',
   ];
 
+
+
   bool _symmetry = false;
   bool _singleItem = false;
   int _column = 4;
@@ -1136,6 +1138,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                                         fontWeight:
                                                             FontWeight.bold)),
                                               )),
+                                          CustomCard(),
                                         ],
                                       )
                                     : Text(
