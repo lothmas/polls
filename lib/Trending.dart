@@ -547,8 +547,11 @@ class Trending {
     } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 10080 &&
         DateTime.now().difference(dateVoteCreated).inMinutes <= 43800) {
       int week = DateTime.now().difference(dateVoteCreated).inDays;
-      if (week % 7 == 0) {
-        return (week / 7).toStringAsFixed(0) + " week ago";
+      if (week / 7 <= 2) {
+        if(week%7==0){
+          return (week / 7).toStringAsFixed(0) + " week ago";
+        }
+        return (week / 7).toStringAsFixed(1) + " weeks ago";
       } else {
         return (week / 7).toStringAsFixed(1) + " weeks ago";
       }
