@@ -1276,7 +1276,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } else if (currentCity == "text nomination") {
       voteBy = 1;
     } else if (currentCity == "image / video nomination") {
-      voteBy = 1;
+      voteBy = 2;
     } else {
       voteBy = 4;
     }
