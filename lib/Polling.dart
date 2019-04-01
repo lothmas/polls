@@ -79,11 +79,10 @@ class _Trending extends State<Polling> {
                 if (snapshot.hasData) {
                   snapshot.data.documents.map((DocumentSnapshot document) {
                     NomineesEntityList nominee = new NomineesEntityList();
-                    nominee.nomineeName = document['nominee_name'];
-                    nominee.id = document['id'];
-                    nominee.nomineesDescription =
-                        document['nominee_description'];
-                    nominee.nomineeImage = document['nominee_media'];
+                    nominee.nomineeName = null!=document['nominee_name']?document['nominee_name']:'';
+                    nominee.id = null!=document['id']?document['id']:0;
+                    nominee.nomineesDescription = null!=document['nominee_description']?document['nominee_description']:'';
+                    nominee.nomineeImage = null!=document['nominee_media']?document['nominee_media']:'';
                     nomineesList.add(nominee);
                   }).toList();
                   List<String> items = new List();

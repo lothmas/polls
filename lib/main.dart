@@ -10,7 +10,6 @@ import 'package:hidden_drawer_menu/menu/item_hidden_menu.dart';
 import 'package:stats/Splash.dart';
 import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:stats/create_vote.dart';
 import 'package:stats/create_vote_pages.dart';
 import 'package:stats/login_screen_1.dart';
 

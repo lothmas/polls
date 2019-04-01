@@ -1324,10 +1324,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         return;
       }
 
-      var textNominee = new StringBuffer();
-      for (String nominiee in _inputTags) {
-        textNominee.write(nominiee + ',');
-      }
+
 
       CollectionReference collectionReference =
           Firestore.instance.collection('votes');
@@ -1343,23 +1340,62 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'reportDataToExpect': removeLastChar(reportDataToExpect.toString()),
         'creationDateTime': new DateTime.now(),
         'title': title,
-        null != textNominee.toString()
-            ? 'textNominee'
-            : removeLastChar(textNominee.toString()): '',
         'startDate': startDate,
-        'endDate': endDate
+        'endDate': endDate,
       });
+
+      if(_inputTags.length>0) {
+        for (String nominiee in _inputTags) {
+          CollectionReference collectionReference =  Firestore.instance.collection('nominees');
+          DocumentReference docReferanceww = collectionReference.document();
+          docReferanceww.setData({
+            "vote_id": docReferance.documentID,
+            'selected': false,
+            'nominee_name': nominiee,
+            'enabled': true,
+          });
+        }
+      }
+
+      if(files1.length>0){
+        String nomineeUrl = null;
+        int count=0;
+        for (File nominiee in files1) {
+          try {
+            final StorageReference ref = new FirebaseStorage()
+                .ref()
+                .child(memberID + "/votes/" + docReferance.documentID+"/"+docReferance.documentID+count.toString());
+            final StorageUploadTask uploadTask =
+            ref.putFile(nominiee);
+            StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+            nomineeUrl = await storageTaskSnapshot.ref.getDownloadURL();
+
+
+            CollectionReference collectionReference = Firestore.instance.collection('nominees');
+            DocumentReference docReferancew = collectionReference.document();
+            docReferancew.setData({
+              "vote_id": docReferance.documentID,
+              'selected': false,
+              'nominee_media': nomineeUrl,
+              'enabled': true,
+            });
+
+          } catch (e) {}
+          count++;
+        }
+      }
 
       String downloadUrl = null;
       try {
         final StorageReference ref = new FirebaseStorage()
             .ref()
-            .child(memberID + "/votes/" + docReferance.documentID);
+            .child(memberID + "/votes/" + docReferance.documentID+"/"+docReferance.documentID);
         final StorageUploadTask uploadTask =
             ref.putFile(new File(_platformVersion));
         StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
         downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
       } catch (e) {}
+
 
       Firestore.instance
           .collection('votes')
@@ -1402,7 +1438,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 //  }
 
   String removeLastChar(String str) {
-    if (str != null || str != '') {
+    if (null != str  || str != '') {
       return str.substring(0, str.length - 1);
     } else {
       return null;
