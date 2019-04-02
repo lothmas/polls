@@ -161,12 +161,12 @@ class Trending {
           ),
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(bottom:  0.0),
+                padding: const EdgeInsets.only(bottom:  2.0),
                 child:
                 Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 0.0),
+                margin: const EdgeInsets.only(top: 1.0),
                 color: Colors.transparent,
                 child: Row(
                   children: <Widget>[
