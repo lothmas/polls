@@ -1280,9 +1280,30 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } else {
       voteBy = 4;
     }
-//    else if (currentCity == "video nomination") {
-//        pageList.insert(1, Text("video nomination"));
-//      }
+
+
+//    voteType 1(one_select) 2 (order) 3(multiple_select)
+    int voteTypeProcessed =0;
+    if (voteType == "Single Vote Type") {
+      voteTypeProcessed = 0;
+    } else if (voteType == "Single Selection") {
+      voteTypeProcessed = 1;
+    }
+    else if (voteType == "Vote by Ordering") {
+      voteTypeProcessed = 2;
+    }
+    else if (voteType == "Multiple Selection") {
+      voteTypeProcessed = 3;
+    }
+
+
+    if(voteBy==1 || voteBy==2){
+        if(voteTypeProcessed==0){
+          validationSnackBar(context, "Vote Type needs to be selected for chosen poll");
+          return;
+        }
+
+    }
 
     var userData = Firestore.instance
         .collection('users')
@@ -1311,6 +1332,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       });
 
       var reportDataToExpect = new StringBuffer();
+      reportDataToExpect.write('0,');
       for (Tag reportData in _selectableTags22) {
         if (!reportData.active) {
           reportDataToExpect.write(reportData.id.toString() + ',');
@@ -1326,6 +1348,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
 
 
+
       CollectionReference collectionReference =
           Firestore.instance.collection('votes');
       DocumentReference docReferance = collectionReference.document();
@@ -1336,7 +1359,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'memberID': memberID,
         'postType': pollDisplay,
         'voteBy': voteBy,
-        'voteType': voteType,
+        'voteType': voteTypeProcessed,
         'reportDataToExpect': removeLastChar(reportDataToExpect.toString()),
         'creationDateTime': new DateTime.now(),
         'title': title,
@@ -1395,6 +1418,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
         downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
       } catch (e) {}
+
+
+
 
 
       Firestore.instance
