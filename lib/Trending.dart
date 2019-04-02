@@ -201,41 +201,36 @@ class Trending {
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      color: Colors.transparent,
-//                    child: Text(
-//                      'owner:  ',
-//                      textAlign: TextAlign.left,
-//                    ),
-                    ),
-                    document['loginProvider'] == 1
-                        ? SvgPicture.asset(
-                            'images/facebook.svg',
-                            height: 15.0,
-                            width: 15.0,
-                            allowDrawingOutsideViewBox: true,
-                          )
-                        : document['loginProvider'] == 2
-                            ? SvgPicture.asset(
-                                'images/google.svg',
-                                height: 15.0,
-                                width: 15.0,
-                                allowDrawingOutsideViewBox: true,
-                              )
-                            : document['loginProvider'] == 3
-                                ? SvgPicture.asset(
-                                    'images/twitter.svg',
-                                    height: 25.0,
-                                    width: 25.0,
-                                    allowDrawingOutsideViewBox: true,
-                                  )
-                                : Text(''),
+
+
 //                    Container(
 //                      color: Colors.transparent,
 //                      width: 1.0,
 //                    ),
                     Row(
                       children: <Widget>[
+                        document['loginProvider'] == 1
+                            ? SvgPicture.asset(
+                          'images/facebook.svg',
+                          height: 15.0,
+                          width: 15.0,
+                          allowDrawingOutsideViewBox: true,
+                        )
+                            : document['loginProvider'] == 2
+                            ? SvgPicture.asset(
+                          'images/google.svg',
+                          height: 15.0,
+                          width: 15.0,
+                          allowDrawingOutsideViewBox: true,
+                        )
+                            : document['loginProvider'] == 3
+                            ? SvgPicture.asset(
+                          'images/twitter.svg',
+                          height: 25.0,
+                          width: 25.0,
+                          allowDrawingOutsideViewBox: true,
+                        )
+                            : Text(''),
                         Container(
                           color: Colors.transparent,
                           child: Text(
