@@ -42,6 +42,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   bool isLocation = false;
   bool isPrivate = false;
   bool isReportPublic = false;
+  bool isAnnonimous=false;
   final List<String> _list = [
     'gender',
     'location',
@@ -975,10 +976,10 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.date_range),
-                                      SizedBox(width: 10),
+                                      SizedBox(width: 5),
                                       Text(
                                         'Age-Range',
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(fontSize: 10),
                                       ),
                                     ],
                                   ),
@@ -990,9 +991,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.airline_seat_legroom_extra),
-                                      SizedBox(width: 10),
+                                      SizedBox(width: 5),
                                       Text('Gender',
-                                          style: TextStyle(fontSize: 12)),
+                                          style: TextStyle(fontSize: 10)),
                                     ],
                                   ),
                                 ),
@@ -1003,9 +1004,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.lock_outline),
-                                      SizedBox(width: 10),
+                                      SizedBox(width: 5),
                                       Text('Private Poll',
-                                          style: TextStyle(fontSize: 12)),
+                                          style: TextStyle(fontSize: 10)),
                                     ],
                                   ),
                                 ),
@@ -1016,26 +1017,26 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.report),
-                                      SizedBox(width: 10),
+                                      SizedBox(width: 5),
                                       Text('Report',
-                                          style: TextStyle(fontSize: 12)),
+                                          style: TextStyle(fontSize: 10)),
                                     ],
                                   ),
                                 ),
                               ),
-//                            Tab(
-//                              child: Container(
-//                                margin: EdgeInsets.only(bottom: 1),
-//                                child: Row(
-//                                  children: <Widget>[
-//                                    Icon(Icons.location_on),
-//                                    SizedBox(width: 10),
-//                                    Text('Location',
-//                                        style: TextStyle(fontSize: 12)),
-//                                  ],
-//                                ),
-//                              ),
-//                            ),
+                            Tab(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.security),
+                                    SizedBox(width: 5),
+                                    Text('Annonimous',
+                                        style: TextStyle(fontSize: 10)),
+                                  ],
+                                ),
+                              ),
+                            ),
                             ],
                             contents: <Widget>[
                               tabsContent(
@@ -1187,6 +1188,26 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold),
                                       ),
                               ),
+                              tabsContent(
+                                Switch(
+                                  value: isAnnonimous,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isAnnonimous = value;
+                                    });
+                                  },
+                                  activeTrackColor: Colors.blueGrey,
+                                  activeColor: Colors.green,
+                                ),
+                                isAnnonimous
+                                    ? Text('Users votes will now be annonimous, no one will know what individual users chose', style: TextStyle(fontSize: 11,fontWeight: FontWeight.w500),)
+                                    : Text(
+                                  'Enable Annonimous Poll',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -1223,31 +1244,6 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       } else if (selectedCity == "image / video nomination") {
         allowNumberEnabled = true;
       }
-      //  FocusScope.of(context).requestFocus(focusNode);
-
-//      pageList.removeAt(1);
-//
-//      if (currentCity == "star rating") {
-//        pageList.insert(1, ImagePickers());
-//      }
-//// else if (currentCity == "number rating") {
-////        pageList.insert(1, Text("number rating"));
-////      } else if (currentCity == "emoji feedback") {
-////        pageList.insert(1, Text("emoji feedback"));
-////      } else if (currentCity == "like / dislike") {
-////        pageList.insert(1, Text("like / dislike"));
-////      } else if (currentCity == "yes / no / maybe") {
-////        pageList.insert(1, Text("yes / no / maybe"));
-////      } else
-//
-//      else if (currentCity == "text nomination") {
-//        pageList.insert(1, page2());
-//      } else if (currentCity == "image / video nomination") {
-//        pageList.insert(1, MultiPicker());
-//      }
-////    else if (currentCity == "video nomination") {
-////        pageList.insert(1, Text("video nomination"));
-////      }
     });
   }
 
