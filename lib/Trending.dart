@@ -179,14 +179,14 @@ class Trending {
                             icon: Icon(
                               Icons.lock_open,
                               color: Colors.green,
-                              size: 14,
+                              size: 18,
                             ),
                             onPressed: () {toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Open green lock means open to the public", "Poll is Public");})
                         : IconButton(
                             icon: Icon(
                               Icons.lock,
                               color: Colors.red,
-                              size: 14,
+                              size: 20,
                             ),
                       onPressed: (){toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Closed red lock means open to the public", "Poll is Private");},
                           )
@@ -271,7 +271,7 @@ class Trending {
                                                   icon: new Icon(
                                                     Icons.report,
                                                     color: Colors.red,
-                                                    size: 14,
+                                                    size: 18,
                                                   ),
                                                   onPressed: () {
                                                     toolTip(context,'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ','Private Poll Report');
@@ -282,7 +282,7 @@ class Trending {
                                                   icon: Icon(
                                                     Icons.play_circle_filled,
                                                     color: Colors.black,
-                                                    size: 14,
+                                                    size: 18,
                                                   ),
                                                   onPressed: () {
                                                     toolTip(
