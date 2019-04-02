@@ -159,10 +159,14 @@ class Trending {
             color: Colors.transparent,
             width: 10.0,
           ),
-          Column(
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:  0.0),
+                child:
+                Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 1.0),
+                margin: const EdgeInsets.only(top: 0.0),
                 color: Colors.transparent,
                 child: Row(
                   children: <Widget>[
@@ -207,29 +211,29 @@ class Trending {
                     document['loginProvider'] == 1
                         ? SvgPicture.asset(
                             'images/facebook.svg',
-                            height: 12.0,
-                            width: 12.0,
+                            height: 15.0,
+                            width: 15.0,
                             allowDrawingOutsideViewBox: true,
                           )
                         : document['loginProvider'] == 2
                             ? SvgPicture.asset(
                                 'images/google.svg',
-                                height: 10.0,
-                                width: 10.0,
+                                height: 15.0,
+                                width: 15.0,
                                 allowDrawingOutsideViewBox: true,
                               )
                             : document['loginProvider'] == 3
                                 ? SvgPicture.asset(
                                     'images/twitter.svg',
-                                    height: 20.0,
-                                    width: 20.0,
+                                    height: 25.0,
+                                    width: 25.0,
                                     allowDrawingOutsideViewBox: true,
                                   )
                                 : Text(''),
-                    Container(
-                      color: Colors.transparent,
-                      width: 5.0,
-                    ),
+//                    Container(
+//                      color: Colors.transparent,
+//                      width: 1.0,
+//                    ),
                     Row(
                       children: <Widget>[
                         Container(
@@ -309,7 +313,7 @@ class Trending {
                 ),
               ),
             ],
-          ),
+          ),)),
           Container(
             color: Colors.transparent,
             width: 5,
