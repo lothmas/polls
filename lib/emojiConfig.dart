@@ -59,7 +59,7 @@ class EmojiFeedbackState extends State<EmojiFeedback>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
-  double pos = 2.0; // should be between [0, 4]
+  double pos = 5.0; // should be between [0, 4]
 
   @override
   void initState() {
