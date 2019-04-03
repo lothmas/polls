@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
+import 'package:floating_search_bar/floating_search_bar.dart';
+
+//void main() => runApp(MyApp());
+
+class CustomCard extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<CustomCard> {
   @override
   Widget build(BuildContext context) {
-    return  new Card(
-      child: new Column(
-        children: <Widget>[
-          new Image.network('https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg'),
-          new Padding(
-              padding: new EdgeInsets.all(7.0),
-              child: new Row(
-                children: <Widget>[
-                  new Padding(
-                    padding: new EdgeInsets.all(7.0),
-                    child: new Icon(Icons.thumb_up),
-                  ),
-                  new Padding(
-                    padding: new EdgeInsets.all(7.0),
-                    child: new Text('Like',style: new TextStyle(fontSize: 18.0),),
-                  ),
-                  new Padding(
-                    padding: new EdgeInsets.all(7.0),
-                    child: new Icon(Icons.comment),
-                  ),
-                  new Padding(
-                    padding: new EdgeInsets.all(7.0),
-                    child: new Text('Comments',style: new TextStyle(fontSize: 18.0)),
-                  )
-
-                ],
-              )
-          )
-        ],
+    return MaterialApp(
+      home: FloatingSearchBar.builder(
+        itemCount: 100,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Text(index.toString()),
+          );
+        },
+        trailing: CircleAvatar(
+          child: Text("RD"),
+        ),
+        drawer: Drawer(
+          child: Container(),
+        ),
+        onChanged: (String value) {},
+        onTap: () {},
+        decoration: InputDecoration.collapsed(
+          hintText: "Search...",
+        ),
       ),
     );
   }

@@ -134,7 +134,7 @@ class Trending {
         children: [
           Container(
             color: Colors.transparent,
-            width: 10.0,
+            width: 3.0,
           ),
           Container(
             //   padding: new EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
@@ -157,7 +157,7 @@ class Trending {
           ),
           Container(
             color: Colors.transparent,
-            width: 10.0,
+            width: 1.0,
           ),
           Expanded(
               child: Padding(
@@ -199,14 +199,12 @@ class Trending {
               ),
               Container(
                 child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-
-
-//                    Container(
-//                      color: Colors.transparent,
-//                      width: 1.0,
-//                    ),
+                    Container(
+                      color: Colors.transparent,
+                      width: 3.0,
+                    ),
                     Row(
                       children: <Widget>[
                         document['loginProvider'] == 1
@@ -233,6 +231,10 @@ class Trending {
                             : Text(''),
                         Container(
                           color: Colors.transparent,
+                          width: 2.0,
+                        ),
+                        Container(
+                          color: Colors.transparent,
                           child: Text(
                             document['owner'].toString().toLowerCase(),
                             textAlign: TextAlign.left,
@@ -241,7 +243,7 @@ class Trending {
                         ),
                         Container(
                           color: Colors.transparent,
-                          width: 10.0,
+                          width: 8.0,
                         ),
                         Column(
                           children: <Widget>[
@@ -256,15 +258,16 @@ class Trending {
                                               ' | ' +
                                               document['allowedVoteNumber']
                                                   .toString(),
-                                          textStyle: TextStyle(fontSize: 10),
+                                          textStyle: TextStyle(fontSize: 8),
                                           borderColor: Colors.grey,
                                           borderSize: 1.0,
                                           color: Colors.white,
                                           // value to show inside the badge
                                           child: Row(
                                             children: <Widget>[
+                                              Container(width: 8,),
                                               Container(
-//                            width: 1,
+                                                width: 25,
                                                 color: Colors.white,
                                                 child: new IconButton(
                                                   icon: new Icon(
