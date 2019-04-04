@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_tags/input_tags.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +28,7 @@ class CreateVotes extends StatefulWidget {
 }
 
 class TestState extends State<CreateVotes> with TickerProviderStateMixin {
+  List<cards> voteUsers = new List();
   TargetPlatform _platform;
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
@@ -801,6 +802,22 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         ));
   }
 
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the Selection Screen!
+    final ListTile result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoaderSearchBarPage()),
+    );
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result!
+    setState(() {
+      voteUsers.add(cards(result));
+    });
+
+  }
+
   Widget page3() {
     _videoPlayerController1 =
         VideoPlayerController.file(new File(_platformVersion));
@@ -1101,110 +1118,35 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.bold),
                                     ),
                             ),
-                            tabsContent(
-                              Switch(
-                                value: isPrivate,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isPrivate = value;
-                                  });
-                                },
-                                activeTrackColor: Colors.blueGrey,
-                                activeColor: Colors.green,
+                            Scaffold(
+                              body: new ListView(
+                                children: voteUsers.map((cards string) {
+                                  return string;
+                                }).toList(),
                               ),
-                              isPrivate
-                                  ? Column(
-                                      children: <Widget>[
-                                        Container(
-                                            width: 93.0,
-                                            height: 25.0,
-                                            child:
-                                                FloatingActionButton.extended(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  new MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          new ExampleApp()),
-                                                );
-                                              },
-                                              icon: Icon(
-                                                Icons.add_circle,
-                                              ),
-                                              label: Text("Add Voter",
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            )),
-
-                                        LayoutBuilder(
-                                          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-                                            return SingleChildScrollView(
-                                              child: ConstrainedBox(
-                                                constraints: BoxConstraints(
-                                                  minHeight: viewportConstraints.maxHeight,
-                                                ),
-                                                child: IntrinsicHeight(
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Container(
-                                                        // A fixed-height child.
-                                                        color: Colors.yellow,
-                                                        height: 120.0,
-                                                      ),
-                                                      Expanded(
-                                                        // A flexible child that will grow to fit the viewport but
-                                                        // still be at least as big as necessary to fit its contents.
-                                                        child:    FloatingSearchBar.builder(
-                                                          itemCount: 100,
-                                                          itemBuilder: (BuildContext context,
-                                                              int index) {
-                                                            return ListTile(
-                                                              leading: Text(index.toString()),
-                                                            );
-                                                          },
-                                                          trailing: CircleAvatar(
-                                                            child: Text("RD"),
-                                                          ),
-                                                          drawer: Drawer(
-                                                            child: Container(),
-                                                          ),
-                                                          onChanged: (String value) {},
-                                                          onTap: () {},
-                                                          decoration: InputDecoration.collapsed(
-                                                            hintText: "Search...",
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        )
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                      ],
-                                    )
-                                  : Text(
-                                      'Enable to set Private_Poll',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                              floatingActionButton:
+                                  FloatingActionButton.extended(
+                                onPressed: () {
+//                                setState(() {
+//                                  voteUsers.add(cards());
+//                                });
+                                  _navigateAndDisplaySelection(context);
+//                                  Navigator.push(
+//                                    context,
+//                                    new MaterialPageRoute(
+//                                        builder: (context) =>
+//                                        new LoaderSearchBarPage()),
+//                                  );
+                                },
+                                icon: Icon(
+                                  Icons.add_circle,
+                                ),
+                                label: Text("Add Voter",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold)),
+//                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                              ),
                             ),
                             tabsContent(
                               Switch(
@@ -1522,5 +1464,45 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     } else {
       return null;
     }
+  }
+}
+
+class cards extends StatelessWidget {
+  ListTile listTitle1;
+
+  cards(ListTile listTitle) {
+    this.listTitle1 = listTitle;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Slidable(
+      delegate: new SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
+      child: new Container(
+        color: Colors.white,
+        child: listTitle1,
+      ),
+      secondaryActions: <Widget>[
+        new IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () => validationSnackBar(context, 'Delete'),
+        ),
+      ],
+    );
+    ;
+  }
+
+  void validationSnackBar(BuildContext context, String validationMessage) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.blueGrey,
+      content: Text(
+        validationMessage,
+        style: TextStyle(fontSize: 11),
+      ),
+      duration: Duration(seconds: 3),
+    ));
   }
 }

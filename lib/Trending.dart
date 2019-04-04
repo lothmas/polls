@@ -194,7 +194,7 @@ class Trending {
                             ),
                       onPressed: (){toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Closed red lock means open to the public", "Poll is Private");},
                           )
-                  ],
+                 ,Text("Search  🔍"), ],
                 ),
               ),
               Container(
