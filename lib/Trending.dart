@@ -282,11 +282,12 @@ class Trending {
       );
       list.add(Container(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Container(
-            color: Colors.transparent,
-            width: 30,
-          ),
+//          Container(
+//            color: Colors.transparent,
+//            width: 30,
+//          ),
           document['private'] == null
               ? Container(
                   child: GestureDetector(
@@ -318,7 +319,7 @@ class Trending {
                 ),
           Container(
             color: Colors.transparent,
-            width: 10,
+            width: 2,
           ),
           Container(
             child: GestureDetector(
@@ -347,6 +348,18 @@ class Trending {
               },
             ),
             decoration: _verticalDivider(),
+          ),
+          Container(
+            child: GestureDetector(
+              child: Text('   poll anonymously  🙈  ', style: TextStyle(fontSize: 11)),
+              onTap: () {
+                toolTip(
+                    context,
+                    'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+                    'Anonymous');
+              },
+            ),
+//            decoration: _verticalDivider(),
           )
         ],
       )));
