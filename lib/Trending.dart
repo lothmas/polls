@@ -291,7 +291,7 @@ class Trending {
               ? Container(
                   child: GestureDetector(
                       child: Text(
-                        "public poll 🔓",
+                        "public poll 🔓   ",
                         style: TextStyle(fontSize: 11),
                       ),
                       onTap: () {
@@ -305,7 +305,7 @@ class Trending {
               : Container(
                   child: GestureDetector(
                       child: Text(
-                        "public poll 🔓",
+                        "public poll 🔓   ",
                         style: TextStyle(fontSize: 11),
                       ),
                       onTap: () {
@@ -322,7 +322,7 @@ class Trending {
           ),
           Container(
             child: GestureDetector(
-              child: Text('public report 📊', style: TextStyle(fontSize: 11)),
+              child: Text('public report 📊   ', style: TextStyle(fontSize: 11)),
               onTap: () {
                 toolTip(
                     context,
@@ -338,7 +338,7 @@ class Trending {
           ),
           Container(
             child: GestureDetector(
-              child: Text('poll is live 🔌', style: TextStyle(fontSize: 11)),
+              child: Text('poll is live 🔌   ', style: TextStyle(fontSize: 11)),
               onTap: () {
                 toolTip(
                     context,
