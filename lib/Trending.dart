@@ -28,8 +28,8 @@ class Trending {
   var youtube = new FlutterYoutube();
   final bool debugMode = true;
 
-  List<Widget> homeTrendingList(
-      BuildContext context, DocumentSnapshot document) {
+  List<Widget> homeTrendingList(BuildContext context,
+      DocumentSnapshot document) {
     Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDate'];
@@ -37,7 +37,10 @@ class Trending {
     } catch (e) {}
 
     if (document['enabled'] == true) {
-      double c_width = MediaQuery.of(context).size.width * 1;
+      double c_width = MediaQuery
+          .of(context)
+          .size
+          .width * 1;
       var assetImage = new AssetImage("images/cast.png");
 
       List<Widget> list = new List();
@@ -68,31 +71,32 @@ class Trending {
             Column(
               children: <Widget>[
                 document['voteBy'] != 4 &&
-                        document['voteBy'] != 5 &&
-                        document['voteBy'] != 6 &&
-                        document['voteBy'] != 7 &&
-                        document['voteBy'] != 8
+                    document['voteBy'] != 5 &&
+                    document['voteBy'] != 6 &&
+                    document['voteBy'] != 7 &&
+                    document['voteBy'] != 8
                     ? IconButton(
-                        icon: Image.asset(
-                          "images/cast.png",
-                          width: 22.0,
-                          height: 22.0,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => new Polling(
-                                    voteID: document.documentID,
-                                    voteBy: document['voteBy'],
-                                    voteType: document['voteType'])),
-                          );
-                        },
-                      )
+                  icon: Image.asset(
+                    "images/cast.png",
+                    width: 22.0,
+                    height: 22.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                          new Polling(
+                              voteID: document.documentID,
+                              voteBy: document['voteBy'],
+                              voteType: document['voteType'])),
+                    );
+                  },
+                )
                     : Text(""),
                 Container(
-                    //height: 10.0,
-                    ),
+                  //height: 10.0,
+                ),
                 Text(
                   countdownlapsedTime(document['creationDateTime']),
                   style: TextStyle(
@@ -161,163 +165,173 @@ class Trending {
           ),
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(bottom:  2.0),
+                padding: const EdgeInsets.only(bottom: 2.0),
                 child:
                 Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 1.0),
-                color: Colors.transparent,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      document['title'].toString().toUpperCase(),
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    document['private'] == null
-                        ? IconButton(
-                            icon: Icon(
-                              Icons.lock_open,
-                              color: Colors.green,
-                              size: 18,
-                            ),
-                            onPressed: () {toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Open green lock means open to the public", "Poll is Public");})
-                        : IconButton(
-                            icon: Icon(
-                              Icons.lock,
-                              color: Colors.red,
-                              size: 20,
-                            ),
-                      onPressed: (){toolTip(context, "I show you if this poll is restricted to selected users, or it's open to the public. Closed red lock means open to the public", "Poll is Private");},
-                          )
-                 ,Text("Search  🔍"), ],
-                ),
-              ),
-              Container(
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
+                      margin: const EdgeInsets.only(top: 1.0),
                       color: Colors.transparent,
-                      width: 3.0,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        document['loginProvider'] == 1
-                            ? SvgPicture.asset(
-                          'images/facebook.svg',
-                          height: 15.0,
-                          width: 15.0,
-                          allowDrawingOutsideViewBox: true,
-                        )
-                            : document['loginProvider'] == 2
-                            ? SvgPicture.asset(
-                          'images/google.svg',
-                          height: 15.0,
-                          width: 15.0,
-                          allowDrawingOutsideViewBox: true,
-                        )
-                            : document['loginProvider'] == 3
-                            ? SvgPicture.asset(
-                          'images/twitter.svg',
-                          height: 25.0,
-                          width: 25.0,
-                          allowDrawingOutsideViewBox: true,
-                        )
-                            : Text(''),
-                        Container(
-                          color: Colors.transparent,
-                          width: 2.0,
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          child: Text(
-                            document['owner'].toString().toLowerCase(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(color: Colors.teal, fontSize: 11),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            document['title'].toString().toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          width: 8.0,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            new Container(
-                                child: Container(
-                                    color: Colors.transparent,
-                                    child: GestureDetector(
-                                      child: Badge.before(
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: Colors.transparent,
+                            width: 3.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              document['loginProvider'] == 1
+                                  ? SvgPicture.asset(
+                                'images/facebook.svg',
+                                height: 15.0,
+                                width: 15.0,
+                                allowDrawingOutsideViewBox: true,
+                              )
+                                  : document['loginProvider'] == 2
+                                  ? SvgPicture.asset(
+                                'images/google.svg',
+                                height: 15.0,
+                                width: 15.0,
+                                allowDrawingOutsideViewBox: true,
+                              )
+                                  : document['loginProvider'] == 3
+                                  ? SvgPicture.asset(
+                                'images/twitter.svg',
+                                height: 25.0,
+                                width: 25.0,
+                                allowDrawingOutsideViewBox: true,
+                              )
+                                  : Text(''),
+                              Container(
+                                color: Colors.transparent,
+                                width: 2.0,
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                child: Text(
+                                  document['owner'].toString().toLowerCase(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.teal, fontSize: 11),
+                                ),
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: 8.0,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  new Container(
+                                      child: Container(
+                                          color: Colors.transparent,
+                                          child: GestureDetector(
+                                            child: Badge.before(
 
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                                          value: '0' +
-                                              ' | ' +
-                                              document['allowedVoteNumber']
-                                                  .toString(),
-                                          textStyle: TextStyle(fontSize: 8),
-                                          borderColor: Colors.grey,
-                                          borderSize: 1.0,
-                                          color: Colors.white,
-                                          // value to show inside the badge
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(width: 8,),
-                                              Container(
-                                                width: 25,
+                                                value: '0' +
+                                                    ' | ' +
+                                                    document['allowedVoteNumber']
+                                                        .toString(),
+                                                textStyle: TextStyle(
+                                                    fontSize: 8),
+                                                borderColor: Colors.grey,
+                                                borderSize: 1.0,
                                                 color: Colors.white,
-                                                child: new IconButton(
-                                                  icon: new Icon(
-                                                    Icons.report,
-                                                    color: Colors.red,
-                                                    size: 18,
-                                                  ),
-                                                  onPressed: () {
-                                                    toolTip(context,'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ','Private Poll Report');
-                                                  },
-                                                ),
-                                              ),
-                                              IconButton(
-                                                  icon: Icon(
-                                                    Icons.play_circle_filled,
-                                                    color: Colors.black,
-                                                    size: 18,
-                                                  ),
-                                                  onPressed: () {
-                                                    toolTip(
-                                                        context,
-                                                        'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for','LIVE');
-                                                  })
-                                            ],
-                                          ) // text to append (required)
-                                          ),
-                                      onTap: () {
-                                        toolTip(
-                                            context,
-                                            'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
-                                            'Allowed Polls: ' +
-                                                document['allowedVoteNumber']
-                                                    .toString());
-                                      },
-                                    ))),
-                          ],
-                        ),
-                      ],
+                                                // value to show inside the badge
+                                                 // text to append (required)
+                                            ),
+                                            onTap: () {
+                                              toolTip(
+                                                  context,
+                                                  'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+                                                  'Allowed Polls: ' +
+                                                      document['allowedVoteNumber']
+                                                          .toString());
+                                            },
+                                          ))),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ),
-              ),
-            ],
-          ),)),
+                ),)),
           Container(
             color: Colors.transparent,
             width: 5,
           ),
         ],
       ));
+      list.add(  Container(
+        color: Colors.transparent,
+        height: 5,
+      ),);
+      list.add(Container(child: Row(children: <Widget>[
+        Container(
+          color: Colors.transparent,
+          width: 30,
+        ),
+        document['private'] == null
+            ?
+            Container(child:  GestureDetector(
+                child: Text("public poll 🔓", style: TextStyle(fontSize: 12),),
+                onTap: () {
+                  toolTip(context,
+                      "I show you if this poll is restricted to selected users, or it's open to the public. Open green lock means open to the public",
+                      "Poll is Public");
+                }
+            ),
+              decoration: _verticalDivider(),
+            )
+
+            :
+
+        Container(child:  GestureDetector(
+            child: Text("public poll 🔓", style: TextStyle(fontSize: 9),),
+            onTap:  () {
+              toolTip(context,
+                  "I show you if this poll is restricted to selected users, or it's open to the public. Closed red lock means open to the public",
+                  "Poll is Private");
+            }
+        ),
+          decoration: _verticalDivider(),),
+
+          Container(child:  GestureDetector(child: Text('public report 📊', style: TextStyle(fontSize: 9)),onTap: () {
+          toolTip(context,
+              'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
+              'Private Poll Report');
+        },),
+            decoration: _verticalDivider(),),
+
+              Container(child:  GestureDetector(child: Text('poll is live 🔌', style: TextStyle(fontSize: 9)),onTap: () {
+          toolTip(
+              context,
+              'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+              'LIVE');
+        },),
+                decoration: _verticalDivider(),
+              )
+
+      ],)));
+
 
       list.add(
         Divider(),
@@ -376,7 +390,7 @@ class Trending {
                 context,
                 new MaterialPageRoute(
                     builder: (context) =>
-                        new ImageScreen(document['title'], image)
+                    new ImageScreen(document['title'], image)
 
 //              new Image.network(
 //                document['postPath'],
@@ -385,7 +399,7 @@ class Trending {
 ////                width: MediaQuery.of(context).size.width,
 //                alignment: Alignment.center,
 //              ),
-                    ));
+                ));
           },
           child: FadeInImage.assetNetwork(
             placeholder: 'images/loader.gif',
@@ -408,7 +422,7 @@ class Trending {
         );
       } else if (null != document['postPath'] && document['postType'] == 2) {
         VideoPlayerController videoPlayerController1 =
-            VideoPlayerController.network(document['postPath']);
+        VideoPlayerController.network(document['postPath']);
         ChewieController _chewieController = ChewieController(
           videoPlayerController: videoPlayerController1,
           aspectRatio: 1,
@@ -494,26 +508,26 @@ class Trending {
         if (_duration.inSeconds != 0) {
           list.add(Container(
               child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                "images/count.png",
-                width: 120,
-              ),
-              FlipClock.reverseCountdown(
-                flipDirection: FlipDirection.down,
-                duration: _duration,
-                digitColor: Colors.white,
-                backgroundColor: Colors.blueGrey,
-                digitSize: 12.0,
-                height: 15,
-                width: 10,
-                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                //onDone: () => print('ih'),
-              ),
-            ],
-          )));
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    "images/count.png",
+                    width: 120,
+                  ),
+                  FlipClock.reverseCountdown(
+                    flipDirection: FlipDirection.down,
+                    duration: _duration,
+                    digitColor: Colors.white,
+                    backgroundColor: Colors.blueGrey,
+                    digitSize: 12.0,
+                    height: 15,
+                    width: 10,
+                    borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+                    //onDone: () => print('ih'),
+                  ),
+                ],
+              )));
         }
       }
       return list;
@@ -523,43 +537,85 @@ class Trending {
   }
 
   String countdownlapsedTime(DateTime dateVoteCreated) {
-    if (DateTime.now().difference(dateVoteCreated).inMinutes <= 60) {
-      int mins = DateTime.now().difference(dateVoteCreated).inMinutes;
+    if (DateTime
+        .now()
+        .difference(dateVoteCreated)
+        .inMinutes <= 60) {
+      int mins = DateTime
+          .now()
+          .difference(dateVoteCreated)
+          .inMinutes;
       if (mins > 1) {
         return mins.toString() + " mins ago";
       } else {
         return mins.toString() + " min ago";
       }
-    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 60 &&
-        DateTime.now().difference(dateVoteCreated).inMinutes <= 1440) {
-      int hrs = DateTime.now().difference(dateVoteCreated).inHours;
+    } else if (DateTime
+        .now()
+        .difference(dateVoteCreated)
+        .inMinutes > 60 &&
+        DateTime
+            .now()
+            .difference(dateVoteCreated)
+            .inMinutes <= 1440) {
+      int hrs = DateTime
+          .now()
+          .difference(dateVoteCreated)
+          .inHours;
       if (hrs > 1) {
         return hrs.toString() + " hrs ago";
       } else {
         return hrs.toString() + " hr ago";
       }
-    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 1440 &&
-        DateTime.now().difference(dateVoteCreated).inMinutes <= 10080) {
-      int days = DateTime.now().difference(dateVoteCreated).inDays;
+    } else if (DateTime
+        .now()
+        .difference(dateVoteCreated)
+        .inMinutes > 1440 &&
+        DateTime
+            .now()
+            .difference(dateVoteCreated)
+            .inMinutes <= 10080) {
+      int days = DateTime
+          .now()
+          .difference(dateVoteCreated)
+          .inDays;
       if (days > 1) {
         return days.toString() + " days ago";
       } else {
         return days.toString() + " day ago";
       }
-    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 10080 &&
-        DateTime.now().difference(dateVoteCreated).inMinutes <= 43800) {
-      int week = DateTime.now().difference(dateVoteCreated).inDays;
+    } else if (DateTime
+        .now()
+        .difference(dateVoteCreated)
+        .inMinutes > 10080 &&
+        DateTime
+            .now()
+            .difference(dateVoteCreated)
+            .inMinutes <= 43800) {
+      int week = DateTime
+          .now()
+          .difference(dateVoteCreated)
+          .inDays;
       if (week / 7 <= 2) {
-        if(week%7==0){
+        if (week % 7 == 0) {
           return (week / 7).toStringAsFixed(0) + " week ago";
         }
         return (week / 7).toStringAsFixed(1) + " weeks ago";
       } else {
         return (week / 7).toStringAsFixed(1) + " weeks ago";
       }
-    } else if (DateTime.now().difference(dateVoteCreated).inMinutes > 43800 &&
-        DateTime.now().difference(dateVoteCreated).inMinutes < 306600) {
-      int months = DateTime.now().difference(dateVoteCreated).inDays;
+    } else if (DateTime
+        .now()
+        .difference(dateVoteCreated)
+        .inMinutes > 43800 &&
+        DateTime
+            .now()
+            .difference(dateVoteCreated)
+            .inMinutes < 306600) {
+      int months = DateTime
+          .now()
+          .difference(dateVoteCreated)
+          .inDays;
       if ((months / 30).toInt() == 1) {
         return (months / 30).toInt().toString() + " month ago";
       } else {
@@ -567,6 +623,15 @@ class Trending {
       }
     }
   }
+
+  _verticalDivider() => BoxDecoration(
+    border: Border(
+      right: BorderSide(
+        color: Colors.blueGrey,
+        width: 0.5,
+      ),
+    ),
+  );
 
   void toolTip(BuildContext context, String message, String title) {
     Flushbar(
@@ -578,7 +643,7 @@ class Trending {
       boxShadow: BoxShadow(
           color: Colors.blue[800], offset: Offset(0.0, 2.0), blurRadius: 3.0),
       backgroundGradient:
-          LinearGradient(colors: [Colors.blueGrey, Colors.black]),
+      LinearGradient(colors: [Colors.blueGrey, Colors.black]),
       isDismissible: false,
       duration: Duration(seconds: 6),
       icon: Icon(
@@ -655,7 +720,10 @@ class ChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.display1;
+    final TextStyle textStyle = Theme
+        .of(context)
+        .textTheme
+        .display1;
     return Card(
       color: Colors.white,
       child: Center(
