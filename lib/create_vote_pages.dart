@@ -221,7 +221,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
             decoration: new BoxDecoration(
-              border: Border.all(color: Colors.transparent),
+              border: Border.all(color: Colors.yellow),
 //              shape: BoxShape.rectangle,
 //              image: new DecorationImage(
 //                image: new AssetImage("images/createVoteBack1.jpg"),
@@ -493,20 +493,37 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       color: Colors.blueGrey,
                                       size: 20,
                                     ),
-                                    title: new TextField(
-                                      controller: pollTitle,
-                                      focusNode: focusNode,
-                                      //  autofocus: true,
-                                      style: new TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 12.0),
-                                      decoration: new InputDecoration(
-                                        hintText: "Poll Title *",
-                                        hintStyle: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.blueGrey,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                    title: new Container (
+                                        padding: const EdgeInsets.all(2.0),
+                                        color: Colors.transparent,
+                                        child: new Container(
+                                          child: new Center(
+                                              child: new Column(
+                                                  children : [
+                                                           new TextFormField(
+                                                             controller: pollTitle,
+                                                             focusNode: focusNode,
+                                                      decoration: new InputDecoration(
+                                                        labelText: "Poll Title *",
+                                                        fillColor: Colors.white,
+                                                        border: new OutlineInputBorder(
+                                                          borderRadius: new BorderRadius.circular(25.0),
+                                                          borderSide: new BorderSide(
+                                                          ),
+                                                        ),
+                                                        contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+                                                        //fillColor: Colors.green
+                                                      ),
+                                                      keyboardType: TextInputType.text,
+                                                      style: new TextStyle(
+                                                          fontFamily: "Poppins",fontSize: 11.0,color: Colors.blueGrey,fontWeight: FontWeight.normal
+                                                      ),
+                                                    ),
+                                                  ]
+                                              )
+                                          ),
+
+                                        )
                                     ),
                                   ),
                                   new ListTile(
@@ -515,18 +532,32 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       color: Colors.blueGrey,
                                       size: 20,
                                     ),
-                                    title: new TextField(
-                                      controller: pollDescription,
-                                      style: new TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 12.0),
-                                      decoration: new InputDecoration(
-                                        hintText: "Poll Description",
-                                        hintStyle: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.blueGrey,
-                                            fontWeight: FontWeight.bold),
+                                    title: new Container(
+                                      child: new Center(
+                                          child: new Column(
+                                              children : [
+                                                new TextFormField(
+                                                  maxLines: 4,
+                                                  controller: pollDescription,
+                                                  decoration: new InputDecoration(
+                                                    labelText: "Poll Description",
+                                                    fillColor: Colors.white,
+                                                    border: new OutlineInputBorder(
+                                                      borderRadius: new BorderRadius.circular(25.0),
+                                                      borderSide: new BorderSide(
+                                                      ),
+                                                    ),
+                                                    //fillColor: Colors.green
+                                                  ),
+                                                  keyboardType: TextInputType.text,
+                                                  style: new TextStyle(
+                                                      fontFamily: "Poppins",fontSize: 11.0,color: Colors.blueGrey,fontWeight: FontWeight.normal
+                                                  ),
+                                                ),
+                                              ]
+                                          )
                                       ),
+
                                     ),
                                   ),
 
@@ -549,7 +580,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                               labelStyle: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.blueGrey,
-                                                  fontWeight: FontWeight.bold),
+                                                  ),
                                               labelText:
                                                   'Start Poll Date & Time',
                                               hasFloatingPlaceholder: false),
@@ -567,7 +598,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                               labelStyle: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.blueGrey,
-                                                  fontWeight: FontWeight.bold),
+                                                  ),
                                               labelText: 'End Poll Date & Time',
                                               hasFloatingPlaceholder: false),
                                           onChanged: (dt) =>
@@ -581,7 +612,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                         style: new TextStyle(
                                             fontSize: 12.0,
                                             color: Colors.blueGrey,
-                                            fontWeight: FontWeight.bold)),
+                                            )),
                                     title: Container(
                                       color: Colors.transparent,
                                       child: new Center(
@@ -595,7 +626,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                             style: new TextStyle(
                                                 color: Colors.blueGrey,
                                                 fontSize: 12.0,
-                                                fontWeight: FontWeight.bold),
+                                                ),
                                             value: currentCity,
                                             items: _dropDownMenuItems,
                                             onChanged: changedDropDownItem,
@@ -610,25 +641,35 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                       color: Colors.blueGrey,
                                       size: 20,
                                     ),
-                                    title: new TextField(
-                                      enabled: allowNumberEnabled,
-                                      inputFormatters: [
-                                        WhitelistingTextInputFormatter
-                                            .digitsOnly
-                                      ],
-                                      controller: pollAllowedNumber,
-                                      style: new TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold),
-                                      decoration: new InputDecoration(
-                                        hintText:
-                                            "Allowed Number of Polls Per Voter *",
-                                        hintStyle: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.blueGrey),
+                                    title: new Container(
+                                      child: new Center(
+                                          child: new Column(
+                                              children : [
+                                                new TextFormField(
+                                                  controller: pollAllowedNumber,
+                                                  decoration: new InputDecoration(
+                                                    labelText: "Allowed Number of Polls Per Voter *",
+                                                    fillColor: Colors.white,
+                                                    border: new OutlineInputBorder(
+                                                      borderRadius: new BorderRadius.circular(25.0),
+                                                      borderSide: new BorderSide(
+                                                      ),
+                                                    ),
+                                                    contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+
+                                                    //fillColor: Colors.green
+                                                  ),
+
+                                                  keyboardType: TextInputType.number,
+                                                  style: new TextStyle(
+                                                      fontFamily: "Poppins",fontSize: 11.0,color: Colors.blueGrey,fontWeight: FontWeight.normal
+
+                                                  ),
+                                                ),
+                                              ]
+                                          )
                                       ),
-                                      keyboardType: TextInputType.number,
+
                                     ),
                                   ),
 //                                  const Divider(
@@ -643,6 +684,10 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
             );
           },
         ));
+  }
+
+  Color hexToColor(String code) {
+    return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
   void _pickImage() async {
@@ -1046,7 +1091,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   children: <Widget>[
                                     Icon(Icons.security),
                                     SizedBox(width: 5),
-                                    Text('Annonimous',
+                                    Text('Annonymous',
                                         style: TextStyle(fontSize: 10)),
                                   ],
                                 ),
@@ -1355,8 +1400,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'reportDataToExpect': removeLastChar(reportDataToExpect.toString()),
         'creationDateTime': new DateTime.now(),
         'title': title,
-        'startDate': startDate,
-        'endDate': endDate,
+        'startDateTime': startDate,
+        'endDateTime': endDate,
       });
 
       if (_inputTags.length > 0) {

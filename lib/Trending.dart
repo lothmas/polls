@@ -32,7 +32,7 @@ class Trending {
       BuildContext context, DocumentSnapshot document) {
     Duration _duration = new Duration();
     try {
-      DateTime dDay = document['startDate'];
+      DateTime dDay = document['startDateTime'];
       _duration = dDay.difference(DateTime.now());
     } catch (e) {}
 
