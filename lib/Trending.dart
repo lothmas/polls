@@ -163,6 +163,7 @@ class Trending {
               child: Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 1.0),
@@ -181,6 +182,7 @@ class Trending {
                     ],
                   ),
                 ),
+                Container(height: 10,),
                 Container(
                   child: new Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -215,7 +217,7 @@ class Trending {
                                       : Text(''),
                           Container(
                             color: Colors.transparent,
-                            width: 2.0,
+                            width: 4.0,
                           ),
                           Container(
                             color: Colors.transparent,
@@ -231,6 +233,7 @@ class Trending {
                             width: 8.0,
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               new Container(
                                   child: Container(
@@ -265,6 +268,7 @@ class Trending {
                     ],
                   ),
                 ),
+                Container(height: 6,),
               ],
             ),
           )),
@@ -319,7 +323,7 @@ class Trending {
                 ),
           Container(
             color: Colors.transparent,
-            width: 2,
+            width: 5,
           ),
           Container(
             child: GestureDetector(
@@ -335,11 +339,11 @@ class Trending {
           ),
           Container(
             color: Colors.transparent,
-            width: 10,
+            width: 5,
           ),
           Container(
             child: GestureDetector(
-              child: Text('poll is live 🔌   ', style: TextStyle(fontSize: 11)),
+              child: Text('online 🔌   ', style: TextStyle(fontSize: 11)),
               onTap: () {
                 toolTip(
                     context,
@@ -350,8 +354,12 @@ class Trending {
             decoration: _verticalDivider(),
           ),
           Container(
+            color: Colors.transparent,
+            width: 5,
+          ),
+          Container(
             child: GestureDetector(
-              child: Text('   poll anonymously  🙈  ', style: TextStyle(fontSize: 11)),
+              child: Text('anonymous  🕵️‍️  ', style: TextStyle(fontSize: 11)),
               onTap: () {
                 toolTip(
                     context,

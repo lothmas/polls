@@ -1327,7 +1327,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       });
 
       var reportDataToExpect = new StringBuffer();
-      reportDataToExpect.write('0,');
+      reportDataToExpect.write('-1,');
       for (Tag reportData in _selectableTags22) {
         if (!reportData.active) {
           reportDataToExpect.write(reportData.id.toString() + ',');
