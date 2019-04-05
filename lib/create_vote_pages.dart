@@ -221,7 +221,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
             decoration: new BoxDecoration(
-              border: Border.all(color: Colors.yellow),
+              border: Border.all(color: Colors.transparent),
 //              shape: BoxShape.rectangle,
 //              image: new DecorationImage(
 //                image: new AssetImage("images/createVoteBack1.jpg"),
@@ -1390,7 +1390,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           Firestore.instance.collection('votes');
       DocumentReference docReferance = collectionReference.document();
       docReferance.setData({
-        'allowedVoteNumber': voteNumberAllowed,
+        'allowedVoteNumber': int.parse(voteNumberAllowed),
         'description': description,
         'enabled': false,
         'memberID': memberID,
