@@ -12,6 +12,7 @@ import 'package:stats/Trending.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:stats/create_vote_pages.dart';
 import 'package:stats/login_screen_1.dart';
+import 'package:stats/time_line/time_line.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -114,21 +115,14 @@ class _Trending extends State<Home> {
 
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(
-          name: "History",
+          name: "Timeline",
           colorTextUnSelected: Colors.grey,
           colorLineSelected: Colors.teal,
           colorTextSelected: Colors.blueGrey,
           key: UniqueKey(),
         ),
-        Container(
-          color: Colors.blueAccent,
-          child: Center(
-            child: Text(
-              "History",
-              style: TextStyle(color: Colors.white, fontSize: 30.0),
-            ),
-          ),
-        )));
+        Center(child: new TimeLine())
+    ));
 
     itens.add(new ScreenHiddenDrawer(
         new ItemHiddenMenu(

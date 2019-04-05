@@ -153,7 +153,8 @@ flutter:
     - images/google.svg
     - images/finalcountdown.jpg
     - images/count.png
-
+    - images/birds.jpg
+    - images/avatar.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
