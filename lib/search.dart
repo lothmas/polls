@@ -98,7 +98,7 @@ class LoaderSearchBarPage extends StatelessWidget {
   Widget get _body => Container(
         color: Colors.blueGrey,
         child: Center(
-          child: Text('Add Voter\'s to Private List for this POLL',
+          child: Text('Add Private Users',
               style: TextStyle(
                 fontSize: 15.0,
               )),

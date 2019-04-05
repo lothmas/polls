@@ -29,6 +29,8 @@ class CreateVotes extends StatefulWidget {
 
 class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   List<cards> voteUsers = new List();
+  List<cards> usersToAccessReport = new List();
+
   TargetPlatform _platform;
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
@@ -847,7 +849,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         ));
   }
 
-  _navigateAndDisplaySelection(BuildContext context) async {
+  _privateVotersCallBack(BuildContext context) async {
     // Navigator.push returns a Future that will complete after we call
     // Navigator.pop on the Selection Screen!
     final ListTile result = await Navigator.push(
@@ -859,6 +861,22 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     // and show the new result!
     setState(() {
       voteUsers.add(cards(result));
+    });
+
+  }
+
+  _privateReportViewersCallBack(BuildContext context) async {
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the Selection Screen!
+    final ListTile result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoaderSearchBarPage()),
+    );
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result!
+    setState(() {
+      usersToAccessReport.add(cards(result));
     });
 
   }
@@ -894,7 +912,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
               isScrollable: true,
               indicatorSize: TabBarIndicatorSize.label,
               labelStyle:
-                  TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                  TextStyle(fontSize: 12.0,),
               tabs: [
                 Tab(text: "Expected Report Data"),
                 Tab(text: "Poll Restrictions"),
@@ -937,8 +955,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                       Text("Poll Main Display",
                           style: new TextStyle(
                             fontSize: 12.0,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+//                            fontWeight: FontWeight.bold,
                           )),
                       new ListTile(
 //                        leading: ),
@@ -954,7 +972,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   Row(
                                     children: <Widget>[
                                       FlatButton.icon(
-                                        color: Colors.blueGrey[200],
+                                        color: Colors.transparent,
                                         icon: Icon(
                                           Icons.add_photo_alternate,
                                           color: Colors.blueGrey,
@@ -981,7 +999,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                   Row(
                                     children: <Widget>[
                                       FlatButton.icon(
-                                        color: Colors.blueGrey[200],
+                                        color: Colors.transparent,
                                         icon: Icon(
                                           Icons.video_library,
                                           color: Colors.blueGrey,
@@ -1035,7 +1053,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 margin: EdgeInsets.only(bottom: 1),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.date_range),
+                                    Icon(Icons.date_range,color: Colors.blueGrey,),
                                     SizedBox(width: 5),
                                     Text(
                                       'Age-Range',
@@ -1050,7 +1068,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 margin: EdgeInsets.only(bottom: 1),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.airline_seat_legroom_extra),
+                                    Icon(Icons.wc,color: Colors.blueGrey),
                                     SizedBox(width: 5),
                                     Text('Gender',
                                         style: TextStyle(fontSize: 10)),
@@ -1063,7 +1081,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 margin: EdgeInsets.only(bottom: 1),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.lock_outline),
+                                    Icon(Icons.lock_outline,color: Colors.blueGrey),
                                     SizedBox(width: 5),
                                     Text('Private Poll',
                                         style: TextStyle(fontSize: 10)),
@@ -1076,7 +1094,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 margin: EdgeInsets.only(bottom: 1),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.report),
+                                    Icon(Icons.equalizer,color: Colors.blueGrey),
                                     SizedBox(width: 5),
                                     Text('Report',
                                         style: TextStyle(fontSize: 10)),
@@ -1089,7 +1107,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 margin: EdgeInsets.only(bottom: 1),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.security),
+                                    Icon(Icons.security,color: Colors.blueGrey),
                                     SizedBox(width: 5),
                                     Text('Annonymous',
                                         style: TextStyle(fontSize: 10)),
@@ -1175,7 +1193,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 //                                setState(() {
 //                                  voteUsers.add(cards());
 //                                });
-                                  _navigateAndDisplaySelection(context);
+                                  _privateVotersCallBack(context);
 //                                  Navigator.push(
 //                                    context,
 //                                    new MaterialPageRoute(
@@ -1186,51 +1204,42 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                 icon: Icon(
                                   Icons.add_circle,
                                 ),
-                                label: Text("Add Voter",
+                                label: Text("Add Private Voter",
                                     style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold)),
 //                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
                               ),
                             ),
-                            tabsContent(
-                              Switch(
-                                value: isReportPublic,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isReportPublic = value;
-                                  });
-                                },
-                                activeTrackColor: Colors.blueGrey,
-                                activeColor: Colors.green,
+                            Scaffold(
+                              body: new ListView(
+                                children: usersToAccessReport.map((cards string) {
+                                  return string;
+                                }).toList(),
                               ),
-                              isReportPublic
-                                  ? MaterialSwitch(
-                                      padding: const EdgeInsets.all(5.0),
-                                      margin: const EdgeInsets.all(5.0),
-                                      selectedOption: selectedSwitchOption,
-                                      options: switchOptions,
-                                      selectedBackgroundColor: isReportPublic
-                                          ? Colors.blueGrey
-                                          : Colors.grey,
-                                      selectedTextColor: isReportPublic
-                                          ? Colors.white
-                                          : Colors.blueGrey,
-                                      onSelect: isReportPublic
-                                          ? (String selectedOption) {
-                                              setState(() {
-                                                selectedSwitchOption =
-                                                    selectedOption;
-                                              });
-                                            }
-                                          : null,
-                                    )
-                                  : Text(
-                                      'Public Report',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                              floatingActionButton:
+                              FloatingActionButton.extended(
+                                onPressed: () {
+//                                setState(() {
+//                                  voteUsers.add(cards());
+//                                });
+                                  _privateReportViewersCallBack(context);
+//                                  Navigator.push(
+//                                    context,
+//                                    new MaterialPageRoute(
+//                                        builder: (context) =>
+//                                        new LoaderSearchBarPage()),
+//                                  );
+                                },
+                                icon: Icon(
+                                  Icons.add_circle,
+                                ),
+                                label: Text("Add Private Report Viewers",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold)),
+//                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                              ),
                             ),
                             tabsContent(
                               Switch(
@@ -1251,7 +1260,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.w500),
                                     )
                                   : Text(
-                                      'Enable Annonimous Poll',
+                                      'Enable Annonymous Poll',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold),
