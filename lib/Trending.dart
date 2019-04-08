@@ -381,8 +381,6 @@ class Trending {
         child: new Column(
           children: <Widget>[
             document['description']!='' && document['postPath']==null?
-
-
             Container(
         child: Center(child: Text(document['description'],style: TextStyle(color: Colors.white70,fontSize: 16),textAlign: TextAlign.center,),),
         height: 350.0,
@@ -398,7 +396,6 @@ class Trending {
             )
         ),
       )
-
             :Text(
               document['description'],
               textAlign: TextAlign.justify,
