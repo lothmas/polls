@@ -380,7 +380,26 @@ class Trending {
         width: c_width,
         child: new Column(
           children: <Widget>[
-            Text(
+            document['description']!='' && document['postPath']==null?
+
+
+            Container(
+        child: Center(child: Text(document['description'],style: TextStyle(color: Colors.white70,fontSize: 16),textAlign: TextAlign.center,),),
+        height: 350.0,
+//        width: MediaQuery.of(context).size.width - 100.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.blue,
+            image: DecorationImage(
+                image: new AssetImage(
+                    "images/back9.jpg"
+                ),
+                fit: BoxFit.fill
+            )
+        ),
+      )
+
+            :Text(
               document['description'],
               textAlign: TextAlign.justify,
               style: TextStyle(
