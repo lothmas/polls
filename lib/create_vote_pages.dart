@@ -44,9 +44,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   bool isAgeRange = false;
   bool isGender = false;
   bool isLocation = false;
-  bool isPrivate = false;
-  bool isReportPublic = false;
-  bool isAnnonimous = false;
+//  bool isPrivate = false;
+//  bool isReportPublic = false;
+  bool isAnnoymous = false;
   final List<String> _list = [
     'gender',
     'location',
@@ -880,7 +880,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
     });
 
   }
-
+  int minValue;
+  int maxValue;
   Widget page3() {
     _videoPlayerController1 =
         VideoPlayerController.file(new File(_platformVersion));
@@ -1133,8 +1134,12 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                                         title: '',
                                         initialMinValue: 12,
                                         initialMaxValue: 100,
-                                        onMinValueChanged: (v) {},
-                                        onMaxValueChanged: (v) {},
+                                        onMinValueChanged: (v) {
+                                          minValue=v;
+                                        },
+                                        onMaxValueChanged: (v) {
+                                          maxValue=v;
+                                        },
                                       )
                                     : Text(
                                         'Enable to set Age-Range',
@@ -1243,16 +1248,16 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                             ),
                             tabsContent(
                               Switch(
-                                value: isAnnonimous,
+                                value: isAnnoymous,
                                 onChanged: (value) {
                                   setState(() {
-                                    isAnnonimous = value;
+                                    isAnnoymous = value;
                                   });
                                 },
                                 activeTrackColor: Colors.blueGrey,
                                 activeColor: Colors.green,
                               ),
-                              isAnnonimous
+                              isAnnoymous
                                   ? Text(
                                       'Users votes will now be annonimous, no one will know what individual users chose',
                                       style: TextStyle(
@@ -1413,6 +1418,72 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'endDateTime': endDate,
       });
 
+      if(isAgeRange){
+        Firestore.instance
+            .collection('votes')
+            .document(docReferance.documentID)
+            .updateData({
+          'ageRange': minValue.toString()+','+maxValue.toString(),
+
+        });
+      }
+
+      if(isGender){
+        int gender;
+        if(selectedSwitchOption=='male'){
+          gender=1;
+        }
+        else{
+          gender=2;
+        }
+        Firestore.instance
+            .collection('votes')
+            .document(docReferance.documentID)
+            .updateData({
+          'gender': gender,
+        });
+      }
+
+      if(isAnnoymous){
+        Firestore.instance
+            .collection('votes')
+            .document(docReferance.documentID)
+            .updateData({
+          'annonymous': 1,
+
+        });
+      }
+
+      if(voteUsers.length!=0){
+        var privateVoter= new StringBuffer();
+        for(cards private in voteUsers){
+          privateVoter.write(private.listTitle1.title.toString()+',');
+        }
+        Firestore.instance
+            .collection('votes')
+            .document(docReferance.documentID)
+            .updateData({
+          'private_voter': removeLastChar(privateVoter.toString()),
+        });
+
+      }
+
+      if(usersToAccessReport.length!=0){
+        var privateVoter= new StringBuffer();
+        for(cards private in usersToAccessReport){
+          privateVoter.write(private.listTitle1.title.toString()+',');
+        }
+        docReferance.setData({
+        });
+
+        Firestore.instance
+            .collection('votes')
+            .document(docReferance.documentID)
+            .updateData({
+          'private_report_viewer': removeLastChar(privateVoter.toString()),
+        });
+      }
+
       if (_inputTags.length > 0) {
         for (String nominiee in _inputTags) {
           CollectionReference collectionReference =
@@ -1426,6 +1497,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
           });
         }
       }
+
+
 
       if (files1.length > 0) {
         String nomineeUrl = null;
