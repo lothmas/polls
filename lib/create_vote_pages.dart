@@ -1422,7 +1422,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
-            .setData({
+            .updateData({
           'ageRange': minValue.toString()+','+maxValue.toString(),
 
         });
@@ -1439,7 +1439,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
-            .setData({
+            .updateData({
           'gender': gender,
         });
       }
@@ -1448,7 +1448,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
-            .setData({
+            .updateData({
           'annonymous': 1,
 
         });
@@ -1462,7 +1462,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
-            .setData({
+            .updateData({
           'private_voter': removeLastChar(privateVoter.toString()),
         });
 
@@ -1476,7 +1476,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
-            .setData({
+            .updateData({
           'private_report_viewer': removeLastChar(privateVoter.toString()),
         });
       }
