@@ -1449,7 +1449,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
             .collection('votes')
             .document(docReferance.documentID)
             .updateData({
-          'annonymous': 1,
+          'anonymous': 1,
 
         });
       }
@@ -1457,7 +1457,8 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       if(voteUsers.length!=0){
         var privateVoter= new StringBuffer();
         for(cards private in voteUsers){
-          privateVoter.write(private.listTitle1.title.toString()+',');
+          Text text=private.listTitle1.title;
+          privateVoter.write(text.data+',');
         }
         Firestore.instance
             .collection('votes')
@@ -1469,15 +1470,16 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
       }
 
       if(usersToAccessReport.length!=0){
-        var privateVoter= new StringBuffer();
+        var privateReportViewer= new StringBuffer();
         for(cards private in usersToAccessReport){
-          privateVoter.write(private.listTitle1.title.toString()+',');
+          Text text=private.listTitle1.title;
+          privateReportViewer.write(text.data+',');
         }
         Firestore.instance
             .collection('votes')
             .document(docReferance.documentID)
             .updateData({
-          'private_report_viewer': removeLastChar(privateVoter.toString()),
+          'private_report_viewer': removeLastChar(privateReportViewer.toString()),
         });
       }
 

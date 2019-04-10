@@ -292,7 +292,7 @@ class Trending {
 //            color: Colors.transparent,
 //            width: 30,
 //          ),
-          document['private'] == null
+          document['private_voter'] == null
               ? Container(
                   child: GestureDetector(
                       child: Text(
@@ -310,7 +310,7 @@ class Trending {
               : Container(
                   child: GestureDetector(
                       child: Text(
-                        "public poll 🔓   ",
+                        "private poll 🔓   ",
                         style: TextStyle(fontSize: 11),
                       ),
                       onTap: () {
@@ -321,10 +321,11 @@ class Trending {
                       }),
                   decoration: _verticalDivider(),
                 ),
-          Container(
-            color: Colors.transparent,
-            width: 5,
-          ),
+//          Container(
+//            color: Colors.transparent,
+//            width: 5,
+//          ),
+          document['private_report_viewer']==null?
           Container(
             child: GestureDetector(
               child: Text('public report 📊   ', style: TextStyle(fontSize: 11)),
@@ -336,12 +337,24 @@ class Trending {
               },
             ),
             decoration: _verticalDivider(),
-          ),
+          ):
           Container(
-            color: Colors.transparent,
-            width: 5,
-          ),
-          Container(
+            child: GestureDetector(
+              child: Text('private report 📊   ', style: TextStyle(fontSize: 11)),
+              onTap: () {
+                toolTip(
+                    context,
+                    'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
+                    'Private Poll Report');
+              },
+            ),
+            decoration: _verticalDivider(),
+          )
+//          Container(
+//            color: Colors.transparent,
+//            width: 5,
+//          ),
+         , Container(
             child: GestureDetector(
               child: Text('online 🔌   ', style: TextStyle(fontSize: 11)),
               onTap: () {
@@ -353,10 +366,11 @@ class Trending {
             ),
             decoration: _verticalDivider(),
           ),
-          Container(
-            color: Colors.transparent,
-            width: 5,
-          ),
+//          Container(
+//            color: Colors.transparent,
+//            width: 5,
+//          ),
+          document['anonymous']==1?
           Container(
             child: GestureDetector(
               child: Text('anonymous  🕵️‍️  ', style: TextStyle(fontSize: 11)),
@@ -367,8 +381,8 @@ class Trending {
                     'Anonymous');
               },
             ),
-//            decoration: _verticalDivider(),
-          )
+            decoration: _verticalDivider(),
+          ):Text('')
         ],
       )));
 
