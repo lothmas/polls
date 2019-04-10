@@ -88,7 +88,7 @@ class _Trending extends State<Home> {
         Center(
             child: new Container(
                 child: StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance.collection('votes').snapshots(),
+          stream: Firestore.instance.collection('votes').orderBy('creationDateTime', descending: true).snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
@@ -99,7 +99,7 @@ class _Trending extends State<Home> {
                   return new Card(
                     child: Column(
                       children:
-                          homeTrending.homeTrendingList(context, document),
+                          homeTrending.homeTrendingList(context, document,'MMM111'),
                     ),
                   );
                 }).toList(),

@@ -25,8 +25,36 @@ class Trending {
   var youtube = new FlutterYoutube();
   final bool debugMode = true;
 
-  List<Widget> homeTrendingList(
-      BuildContext context, DocumentSnapshot document) {
+  List<Widget> homeTrendingList(BuildContext context, DocumentSnapshot document, String memberID) {
+    int numberOfVotes=0 ;
+
+    Firestore.instance.collection("casted_votes")
+        .where("member_id", isEqualTo: memberID)
+        .where("vote_id", isEqualTo: document.documentID)
+        .getDocuments().then((string) {
+      if(string.documents.length!=0) {
+        string.documents.forEach((doc) => numberOfVotes=numberOfVotes+1);
+      }
+    });
+
+//    StreamBuilder<QuerySnapshot>(
+//      stream: Firestore.instance
+//          .collection('casted_votes')
+//          .where('vote_id', isEqualTo: document.documentID.toString())
+//          .where('member_id', isEqualTo: memberID)
+//          .snapshots(),
+//      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//        if (snapshot.hasData) {
+//          numberOfVotes=1;
+//        } else if (snapshot.hasError) {
+//          return Text("${snapshot.error}");
+//        }
+//
+//        // By default, show a loading spinner
+//        return CircularProgressIndicator();
+//      },
+//    );
+
     Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDateTime'];
@@ -179,7 +207,9 @@ class Trending {
                     ],
                   ),
                 ),
-                Container(height: 10,),
+                Container(
+                  height: 10,
+                ),
                 Container(
                   child: new Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -238,7 +268,7 @@ class Trending {
                                       child: GestureDetector(
                                         child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                                          value: '0' +
+                                          value: numberOfVotes.toString() +
                                               ' | ' +
                                               document['allowedVoteNumber']
                                                   .toString(),
@@ -265,7 +295,9 @@ class Trending {
                     ],
                   ),
                 ),
-                Container(height: 6,),
+                Container(
+                  height: 6,
+                ),
               ],
             ),
           )),
@@ -283,7 +315,7 @@ class Trending {
       );
       list.add(Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
 //          Container(
 //            color: Colors.transparent,
@@ -322,36 +354,39 @@ class Trending {
 //            color: Colors.transparent,
 //            width: 5,
 //          ),
-          document['private_report_viewer']==null?
-          Container(
-            child: GestureDetector(
-              child: Text('public report 📊   ', style: TextStyle(fontSize: 11)),
-              onTap: () {
-                toolTip(
-                    context,
-                    'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
-                    'Private Poll Report');
-              },
-            ),
-            decoration: _verticalDivider(),
-          ):
-          Container(
-            child: GestureDetector(
-              child: Text('private report 📊   ', style: TextStyle(fontSize: 11)),
-              onTap: () {
-                toolTip(
-                    context,
-                    'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
-                    'Private Poll Report');
-              },
-            ),
-            decoration: _verticalDivider(),
-          )
+          document['private_report_viewer'] == null
+                  ? Container(
+                      child: GestureDetector(
+                        child: Text('public report 📊   ',
+                            style: TextStyle(fontSize: 11)),
+                        onTap: () {
+                          toolTip(
+                              context,
+                              'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
+                              'Private Poll Report');
+                        },
+                      ),
+                      decoration: _verticalDivider(),
+                    )
+                  : Container(
+                      child: GestureDetector(
+                        child: Text('private report 📊   ',
+                            style: TextStyle(fontSize: 11)),
+                        onTap: () {
+                          toolTip(
+                              context,
+                              'I show you if poll report is public \'OR\' private, if bulb is red it\'s private else its public. Report for this poll is PRIVATE  ',
+                              'Private Poll Report');
+                        },
+                      ),
+                      decoration: _verticalDivider(),
+                    )
 //          Container(
 //            color: Colors.transparent,
 //            width: 5,
 //          ),
-         , Container(
+              ,
+          Container(
             child: GestureDetector(
               child: Text('online 🔌   ', style: TextStyle(fontSize: 11)),
               onTap: () {
@@ -367,19 +402,21 @@ class Trending {
 //            color: Colors.transparent,
 //            width: 5,
 //          ),
-          document['anonymous']==1?
-          Container(
-            child: GestureDetector(
-              child: Text('anonymous  🕵️‍️  ', style: TextStyle(fontSize: 11)),
-              onTap: () {
-                toolTip(
-                    context,
-                    'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
-                    'Anonymous');
-              },
-            ),
-            decoration: _verticalDivider(),
-          ):Text('')
+          document['anonymous'] == 1
+              ? Container(
+                  child: GestureDetector(
+                    child: Text('anonymous  🕵️‍️  ',
+                        style: TextStyle(fontSize: 11)),
+                    onTap: () {
+                      toolTip(
+                          context,
+                          'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+                          'Anonymous');
+                    },
+                  ),
+                  decoration: _verticalDivider(),
+                )
+              : Text('')
         ],
       )));
 
@@ -391,29 +428,31 @@ class Trending {
         width: c_width,
         child: new Column(
           children: <Widget>[
-            document['description']!='' && document['postPath']==null?
-            Container(
-        child: Center(child: Text(document['description'],style: TextStyle(color: Colors.white70,fontSize: 16),textAlign: TextAlign.center,),),
-        height: 350.0,
+            document['description'] != '' && document['postPath'] == null
+                ? Container(
+                    child: Center(
+                      child: Text(
+                        document['description'],
+                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    height: 350.0,
 //        width: MediaQuery.of(context).size.width - 100.0,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.blue,
-            image: DecorationImage(
-                image: new AssetImage(
-                    "images/back9.jpg"
-                ),
-                fit: BoxFit.fill
-            )
-        ),
-      )
-            :Text(
-              document['description'],
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 12.0,
-              ),
-            ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.blue,
+                        image: DecorationImage(
+                            image: new AssetImage("images/back9.jpg"),
+                            fit: BoxFit.fill)),
+                  )
+                : Text(
+                    document['description'],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                    ),
+                  ),
           ],
         ),
       ));
