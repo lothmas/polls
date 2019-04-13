@@ -28,14 +28,14 @@ class Trending {
   List<Widget> homeTrendingList(BuildContext context, DocumentSnapshot document, String memberID) {
     int numberOfVotes=0 ;
 
-    Firestore.instance.collection("casted_votes")
-        .where("member_id", isEqualTo: memberID)
-        .where("vote_id", isEqualTo: document.documentID)
-        .getDocuments().then((string) {
-      if(string.documents.length!=0) {
-        string.documents.forEach((doc) => numberOfVotes=numberOfVotes+1);
-      }
-    });
+//    Firestore.instance.collection("casted_votes")
+//        .where("member_id", isEqualTo: memberID)
+//        .where("vote_id", isEqualTo: document.documentID)
+//        .getDocuments().then((string) {
+//      if(string.documents.length!=0) {
+//        string.documents.forEach((doc) => numberOfVotes=numberOfVotes+1);
+//      }
+//    });
 
 //    StreamBuilder<QuerySnapshot>(
 //      stream: Firestore.instance
@@ -54,7 +54,7 @@ class Trending {
 //        return CircularProgressIndicator();
 //      },
 //    );
-
+print('voteId: '+document.documentID);
     Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDateTime'];
@@ -264,30 +264,49 @@ class Trending {
                             children: <Widget>[
                               new Container(
                                   child: Container(
-                                      color: Colors.transparent,
-                                      child: GestureDetector(
-                                        child: Badge.before(
+                                      child: Container(
+                                          color: Colors.transparent,
+                                          child: StreamBuilder<QuerySnapshot>(
+                                            stream: Firestore.instance
+                                                .collection('casted_votes')
+                                                .where('vote_id', isEqualTo: document.documentID)
+                                                .where('member_id', isEqualTo: 'MMM111')
+                                                .snapshots(),
+                                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                                              if (snapshot.hasData) {
+                                                return  Container(
+                                                    color: Colors.transparent,
+                                                    child: GestureDetector(
+                                                      child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                                          value: numberOfVotes.toString() +
-                                              ' | ' +
-                                              document['allowedVoteNumber']
-                                                  .toString(),
-                                          textStyle: TextStyle(fontSize: 8),
-                                          borderColor: Colors.grey,
-                                          borderSize: 1.0,
-                                          color: Colors.white,
-                                          // value to show inside the badge
-                                          // text to append (required)
-                                        ),
-                                        onTap: () {
-                                          toolTip(
-                                              context,
-                                              'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
-                                              'Allowed Polls: ' +
-                                                  document['allowedVoteNumber']
-                                                      .toString());
-                                        },
-                                      ))),
+                                                        value: snapshot.data.documents.length.toString() +
+                                                            ' | ' +
+                                                            document['allowedVoteNumber']
+                                                                .toString(),
+                                                        textStyle: TextStyle(fontSize: 8),
+                                                        borderColor: Colors.grey,
+                                                        borderSize: 1.0,
+                                                        color: Colors.white,
+                                                        // value to show inside the badge
+                                                        // text to append (required)
+                                                      ),
+                                                      onTap: () {
+                                                        toolTip(
+                                                            context,
+                                                            'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
+                                                            'Allowed Polls: ' +
+                                                                document['allowedVoteNumber']
+                                                                    .toString());
+                                                      },
+                                                    ));
+                                              } else if (snapshot.hasError) {
+                                                return Text("${snapshot.error}");
+                                              }
+                                              return Text("");
+
+                                            },
+                                          )))),
                             ],
                           ),
                         ],
