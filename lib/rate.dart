@@ -4,27 +4,35 @@ import 'package:stats/start_rating.dart';
 //void main() => runApp(StarRatingDemo());
 
 class StarRatings extends StatelessWidget {
+  int castedVoteNumber;
+  StarRatings(int castedVoteNumber){
+      this.castedVoteNumber=castedVoteNumber;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(title: 'Star Rating Demo Home Page'),
+      home: MyHomePage(title: 'Star Rating Demo Home Page',castedVoteNumber: castedVoteNumber,),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  int castedVoteNumber;
+  MyHomePage({Key key, this.title,this.castedVoteNumber}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(double.parse(castedVoteNumber.toString()));
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   final int starLength = 5;
-  double _rating = 0.0;
+  double _rating ;
+  _MyHomePageState(this._rating);
 
   void _incrementHalfStar() {
     setState(() {
