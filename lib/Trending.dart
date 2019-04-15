@@ -592,23 +592,11 @@ print('voteId: '+document.documentID);
           });
         }
         if (document['voteBy'] == 5) {
-          Firestore.instance.collection("casted_votes")
-              .where("member_id", isEqualTo: memberID)
-              .where("vote_id", isEqualTo: document.documentID)
-              .getDocuments().then((string) {
-            if(string.documents.length!=0) {
-              string.documents.forEach((doc) =>    list.add(Container(
-                height: 40,
-                child: CustomRadio(document.documentID,memberID),
-              )));
-            }
-            else{
-              list.add(Container(
-                height: 40,
-                child: CustomRadio(0),
-              ));
-            }
-          });
+          list.add(Container(
+            height: 40,
+            child: CustomRadio(document.documentID,memberID),
+          ));
+
         }
 
         if (document['voteBy'] == 6) {
