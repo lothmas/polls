@@ -38,20 +38,20 @@ const ActiveEmojiRadius = ActiveEmojiSize / 2.0;
 const HalfDiffSize = (ActiveEmojiSize - EmojiSize) / 2.0;
 
 class EmojiFeedback extends StatefulWidget {
-  final int currentIndex;
+  int currentIndex;
   final Function onChange;
   final num availableWidth;
 
-  const EmojiFeedback({
+   EmojiFeedback({
     Key key,
-    this.currentIndex = 2,
+    this.currentIndex,
     this.onChange,
     this.availableWidth = 320.0,
   }) : super(key: key);
 
   @override
   EmojiFeedbackState createState() {
-    return new EmojiFeedbackState();
+    return new EmojiFeedbackState(double.parse(currentIndex.toString()));
   }
 }
 
@@ -59,7 +59,9 @@ class EmojiFeedbackState extends State<EmojiFeedback>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
-  double pos = 5.0; // should be between [0, 4]
+  double pos ;
+
+  EmojiFeedbackState(this.pos); // should be between [0, 4]
 
   @override
   void initState() {

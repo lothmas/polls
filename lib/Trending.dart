@@ -592,16 +592,46 @@ print('voteId: '+document.documentID);
           });
         }
         if (document['voteBy'] == 5) {
-          list.add(Container(
-            height: 40,
-            child: CustomRadio(),
-          ));
+          Firestore.instance.collection("casted_votes")
+              .where("member_id", isEqualTo: memberID)
+              .where("vote_id", isEqualTo: document.documentID)
+              .getDocuments().then((string) {
+            if(string.documents.length!=0) {
+              string.documents.forEach((doc) =>    list.add(Container(
+                height: 40,
+                child: CustomRadio(string.documents.elementAt(0)['vote_number']),
+              )));
+            }
+            else{
+              list.add(Container(
+                height: 40,
+                child: CustomRadio(0),
+              ));
+            }
+          });
         }
 
         if (document['voteBy'] == 6) {
-          list.add(
-            Container(height: 78, child: Emoji()),
-          );
+
+
+          Firestore.instance.collection("casted_votes")
+              .where("member_id", isEqualTo: memberID)
+              .where("vote_id", isEqualTo: document.documentID)
+              .getDocuments().then((string) {
+            if(string.documents.length!=0) {
+              string.documents.forEach((doc) =>    list.add(
+                Container(height: 78, child: Emoji(string.documents.elementAt(0)['vote_number'])),
+              ));
+            }
+            else{
+              list.add(
+                Container(height: 78, child: Emoji(5)),
+              );
+            }
+          });
+
+
+
         }
         if (document['voteBy'] == 7) {
           list.add(
