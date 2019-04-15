@@ -612,8 +612,6 @@ print('voteId: '+document.documentID);
         }
 
         if (document['voteBy'] == 6) {
-
-
           Firestore.instance.collection("casted_votes")
               .where("member_id", isEqualTo: memberID)
               .where("vote_id", isEqualTo: document.documentID)
@@ -629,9 +627,6 @@ print('voteId: '+document.documentID);
               );
             }
           });
-
-
-
         }
         if (document['voteBy'] == 7) {
           list.add(
@@ -640,7 +635,7 @@ print('voteId: '+document.documentID);
         }
         if (document['voteBy'] == 8) {
           list.add(
-            Container(height: 55, child: new LikeDisLike()),
+            Container(height: 55, child: new LikeDisLike(document.documentID,memberID)),
           );
         }
       }

@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LikeDisLike extends StatefulWidget {
+  String voteID,memberID;
+  LikeDisLike(this.voteID,this.memberID);
+
   @override
   createState() {
-    return new CustomRadioState();
+    return new CustomRadioState(voteID,memberID);
   }
 }
 Color thumpsUp=Colors.grey;
@@ -11,6 +15,8 @@ Color thumpsdown=Colors.grey;
 
 class CustomRadioState extends State<LikeDisLike> {
   List<RadioModel> sampleData = new List<RadioModel>();
+  String voteID,memberID;
+  CustomRadioState(this.voteID,this.memberID);
 
   @override
   void initState() {
@@ -37,6 +43,8 @@ class CustomRadioState extends State<LikeDisLike> {
               setState(() {
                 sampleData.forEach((element) => element.isSelected = false);
                 sampleData[index].isSelected = true;
+
+
                 if(index==0&&thumpsUp==Colors.blueGrey){
                   thumpsUp=Colors.grey;
                   if(thumpsUp==Colors.blueGrey)
@@ -66,7 +74,7 @@ class CustomRadioState extends State<LikeDisLike> {
 
               });
             },
-            child: new RadioItem(sampleData[index]),
+            child: new RadioItem(sampleData[index],voteID,memberID),
           );
         },
       ),
@@ -76,7 +84,9 @@ class CustomRadioState extends State<LikeDisLike> {
 
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
-  RadioItem(this._item);
+  String voteID,memberID;
+
+  RadioItem(this._item, this.voteID, this.memberID);
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -84,38 +94,71 @@ class RadioItem extends StatelessWidget {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Container(
-            height: 35.0,
-            width: 35.0,
-            child: new Center(
-              child:  _item.buttonText=="Like"?
-              Column(children: <Widget>[new Icon(
-                Icons.thumb_up,
-                color:thumpsUp,
-              ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
-                Icons.thumb_down,
-                color: thumpsdown,
-              ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+          Container(
+              color: Colors.transparent,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: Firestore.instance
+                    .collection('casted_votes')
+                    .where('vote_id', isEqualTo: voteID)
+                    .where('member_id', isEqualTo: memberID)
+                    .snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-//              Text(_item.buttonText,
-//                  style: new TextStyle(
-//                      color:
-//                      _item.isSelected ? Colors.white : Colors.black,
-//                      //fontWeight: FontWeight.bold,
-//                      fontSize: 11.0)),
-            ),
-//            decoration: new BoxDecoration(
-//              color: _item.isSelected
-//                  ? Colors.amber[200]
-//                  : Colors.transparent,
-//              border: new Border.all(
-//                  width: 1.0,
-//                  color: _item.isSelected
-//                      ? Colors.blueAccent
-//                      : Colors.grey),
-//              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-//            ),
-          ),
+                  if (snapshot.hasData) {
+                 return  snapshot.data.documents.elementAt(0)['vote_number']==1?
+                   Container(
+                     height: 35.0,
+                     width: 35.0,
+                     child: new Center(
+                         child:  _item.buttonText=="Like"?
+                         Column(children: <Widget>[new Icon(
+                           Icons.thumb_up,
+                           color:Colors.orangeAccent,
+                         ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+                           Icons.thumb_down,
+                           color: thumpsdown,
+                         ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+                     ),):
+                   snapshot.data.documents.elementAt(0)['vote_number']==2?
+                   Container(
+                      height: 35.0,
+                      width: 35.0,
+                      child: new Center(
+                          child:  _item.buttonText=="Like"?
+                          Column(children: <Widget>[new Icon(
+                            Icons.thumb_up,
+                            color:thumpsUp,
+                          ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+                            Icons.thumb_down,
+                            color:Colors.orangeAccent,
+                          ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+                      ),):
+                   Container(
+                     height: 35.0,
+                     width: 35.0,
+                     child: new Center(
+                         child:  _item.buttonText=="Like"?
+                         Column(children: <Widget>[new Icon(
+                           Icons.thumb_up,
+                           color:thumpsUp,
+                         ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+                           Icons.thumb_down,
+                           color: thumpsdown,
+                         ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+                     ),)
+
+                   ;
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return Text("");
+
+                },
+              )),
+
 //          new Container(
 //            margin: new EdgeInsets.only(left: 10.0),
 //            child: new Text(_item.text),
