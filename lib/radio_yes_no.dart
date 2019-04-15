@@ -45,28 +45,28 @@ class CustomRadioState extends State<LikeDisLike> {
                 sampleData[index].isSelected = true;
 
 
-                if(index==0&&thumpsUp==Colors.blueGrey){
+                if(index==0&&thumpsUp==Colors.orangeAccent){
                   thumpsUp=Colors.grey;
-                  if(thumpsUp==Colors.blueGrey)
+                  if(thumpsUp==Colors.orangeAccent)
                     {
                       thumpsdown=Colors.grey;
                     }
 
                 }
                else if(index==0){
-                  thumpsUp=Colors.blueGrey;
+                  thumpsUp=Colors.orangeAccent;
                   thumpsdown=Colors.grey;
                 }
-                if(index==1&&thumpsdown==Colors.blueGrey){
+                if(index==1&&thumpsdown==Colors.orangeAccent){
                   thumpsdown=Colors.grey;
-                  if(thumpsdown==Colors.blueGrey)
+                  if(thumpsdown==Colors.orangeAccent)
                   {
                     thumpsUp=Colors.grey;
                   }
 
                 }
                 else if(index==1){
-                  thumpsdown=Colors.blueGrey;
+                  thumpsdown=Colors.orangeAccent;
                   thumpsUp=Colors.grey;
 
                 }

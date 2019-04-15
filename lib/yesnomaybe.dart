@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomRadio extends StatefulWidget {
   int castedVoteNumber;
-
+  String voteID,memberID;
   CustomRadio(int castedVote){
     this.castedVoteNumber=castedVote;
   }
