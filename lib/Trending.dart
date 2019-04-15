@@ -635,7 +635,7 @@ print('voteId: '+document.documentID);
         }
         if (document['voteBy'] == 7) {
           list.add(
-            Container(height: 65, child: new YesNoMaybe(3)),
+            Container(height: 65, child: new YesNoMaybe(document.documentID,memberID)),
           );
         }
         if (document['voteBy'] == 8) {

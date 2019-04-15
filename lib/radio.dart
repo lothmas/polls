@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class YesNoMaybe extends StatefulWidget {
-  int selectedYesNoMaybe;
-  YesNoMaybe(int i){
-    selectedYesNoMaybe=i;
-  }
+  String voteID,memberID;
+  YesNoMaybe(this.voteID, this.memberID);
+
+
 
   @override
   State<StatefulWidget> createState() {
-    return new _CurrencyState(selectedYesNoMaybe);
+    return new _CurrencyState(voteID,memberID);
   }
 }
 
@@ -22,8 +23,25 @@ class _CurrencyState extends State<YesNoMaybe> {
   double _result = 0.0;
   String _textResult = '';
 
-  _CurrencyState(int selectedYesNoMaybe){
-    _radioValue=selectedYesNoMaybe;
+  _CurrencyState(String voteID, String memberID){
+    Firestore.instance.collection("casted_votes")
+        .where("member_id", isEqualTo: memberID)
+        .where("vote_id", isEqualTo: voteID)
+        .getDocuments().then((string) {
+      if(string.documents.length!=0) {
+        setState(() {
+          _radioValue=string.documents.elementAt(0)['vote_number'];
+        });
+      }
+      else{
+        setState(() {
+          _radioValue=3;
+        });
+      }
+    });
+
+
+
   }
 
   void _handleRadioValueChange(int value) {
