@@ -26,35 +26,7 @@ class Trending {
   final bool debugMode = true;
 
   List<Widget> homeTrendingList(BuildContext context, DocumentSnapshot document, String memberID) {
-    int numberOfVotes=0 ;
 
-//    Firestore.instance.collection("casted_votes")
-//        .where("member_id", isEqualTo: memberID)
-//        .where("vote_id", isEqualTo: document.documentID)
-//        .getDocuments().then((string) {
-//      if(string.documents.length!=0) {
-//        string.documents.forEach((doc) => numberOfVotes=numberOfVotes+1);
-//      }
-//    });
-
-//    StreamBuilder<QuerySnapshot>(
-//      stream: Firestore.instance
-//          .collection('casted_votes')
-//          .where('vote_id', isEqualTo: document.documentID.toString())
-//          .where('member_id', isEqualTo: memberID)
-//          .snapshots(),
-//      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//        if (snapshot.hasData) {
-//          numberOfVotes=1;
-//        } else if (snapshot.hasError) {
-//          return Text("${snapshot.error}");
-//        }
-//
-//        // By default, show a loading spinner
-//        return CircularProgressIndicator();
-//      },
-//    );
-print('voteId: '+document.documentID);
     Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDateTime'];
