@@ -599,7 +599,7 @@ print('voteId: '+document.documentID);
             if(string.documents.length!=0) {
               string.documents.forEach((doc) =>    list.add(Container(
                 height: 40,
-                child: CustomRadio(string.documents.elementAt(0)['vote_number']),
+                child: CustomRadio(document.documentID,memberID),
               )));
             }
             else{

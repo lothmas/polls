@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomRadio extends StatefulWidget {
-  int castedVoteNumber;
   String voteID,memberID;
-  CustomRadio(int castedVote){
-    this.castedVoteNumber=castedVote;
-  }
+
+  CustomRadio(this.voteID, this.memberID);
+
 
   @override
   createState() {
-    return new CustomRadioState(castedVoteNumber);
+    return new CustomRadioState(voteID,memberID);
   }
 }
 
 class CustomRadioState extends State<CustomRadio> {
   List<RadioModel> sampleData = new List<RadioModel>();
-  int castedVoteNumber;
-  CustomRadioState(this.castedVoteNumber);
+  String voteID,memberID;
+
+  CustomRadioState(this.voteID, this.memberID);
 
   @override
   void initState() {
@@ -63,6 +63,7 @@ class CustomRadioState extends State<CustomRadio> {
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
   RadioItem(this._item);
+
   @override
   Widget build(BuildContext context) {
     return new Container(
