@@ -545,23 +545,10 @@ class Trending {
 
       if (_duration.inSeconds <= 0) {
         if (document['voteBy'] == 4) {
-          Firestore.instance.collection("casted_votes")
-              .where("member_id", isEqualTo: memberID)
-              .where("vote_id", isEqualTo: document.documentID)
-              .getDocuments().then((string) {
-            if(string.documents.length!=0) {
-              string.documents.forEach((doc) =>  list.add(Container(
-                height: 55,
-                child: StarRatings(string.documents.elementAt(0)['vote_number']),
-              )));
-            }
-            else{
-              list.add(Container(
-                height: 55,
-                child: StarRatings(0),
-              ));
-            }
-          });
+          list.add(Container(
+            height: 65,
+            child: new StarRatings(document.documentID,memberID,)
+          ));
         }
         if (document['voteBy'] == 5) {
           list.add(Container(

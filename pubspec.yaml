@@ -69,6 +69,7 @@ dependencies:
   flutter_slidable: ^0.4.9
   flutter_fluid_slider: ^0.0.1
   folding_cell: ^0.1.2
+  simple_countdown: ^0.0.1
 #  google_maps_flutter: ^0.2.0+3
 #  multi_image_picker: ^3.0.22
 dev_dependencies:
