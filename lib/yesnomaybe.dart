@@ -50,34 +50,70 @@ class CustomRadioState extends State<CustomRadio> {
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 try {
                   if (snapshot.hasData) {
-                    sampleData[
-                            snapshot.data.documents.elementAt(0)['vote_number']]
-                        .isSelected = true;
-                    return new ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: sampleData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return new InkWell(
-                          //highlightColor: Colors.red,
-                          splashColor: Colors.blueAccent,
-                          onTap: () {
-                            setState(() {
-                              sampleData.forEach(
-                                  (element) => element.isSelected = false);
-                              sampleData[index].isSelected = true;
-                            });
-                          },
-                          child: new RadioItem(sampleData[index]),
-                        );
-                      },
-                    );
+                    return settingNumberRating(snapshot,snapshot.data.documents.elementAt(0)['vote_number']);
                   } else if (snapshot.hasError) {
                     sampleData[11].isSelected = true;
                   }
                   sampleData[11].isSelected = true;
-                } catch (e) {}
+                } catch (e) {
+                  return settingNumberRating(snapshot,0);
+
+                }
               },
             )));
+  }
+
+  Container settingNumberRating(AsyncSnapshot<QuerySnapshot> snapshot,castedVote) {
+    sampleData[castedVote].isSelected = true;
+    return
+      new Container(
+//          height: 150.0,
+          child: new Column(children: <Widget>[new ListView.builder(
+    
+          scrollDirection: Axis.horizontal,
+      itemCount: sampleData.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new InkWell(
+          //highlightColor: Colors.red,
+          splashColor: Colors.blueAccent,
+          onTap: () {
+            setState(() {
+              sampleData.forEach(
+                  (element) => element.isSelected = false);
+              sampleData[index].isSelected = true;
+            });
+          },
+          child: new RadioItem(sampleData[index]),
+        );
+      },
+    ),
+          Row(
+            //  crossAxisAlignment: CrossAxisAlignment.b,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text('🗳 polls: ️',
+                style: TextStyle(color: Colors.black,fontSize: 11),),
+              Container(
+                  color: Colors.white,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: Firestore.instance
+                        .collection('casted_votes')
+                        .where('vote_id', isEqualTo: voteID)
+                        .snapshots(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      try {
+                        if (snapshot.hasData) {
+                          return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
+                        } else if (snapshot.hasError) {}
+                      } catch (e) {
+                      }
+                    },
+                  )),
+              Text('  ')
+            ],
+          ),
+          ]));
   }
 }
 
