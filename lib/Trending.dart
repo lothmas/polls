@@ -552,7 +552,7 @@ class Trending {
         }
         if (document['voteBy'] == 5) {
           list.add(Container(
-            height: 40,
+            height: 80,
             child: CustomRadio(document.documentID,memberID),
           ));
 

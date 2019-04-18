@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_countdown/simple_countdown.dart';
 
 class CustomRadio extends StatefulWidget {
   String voteID, memberID;
@@ -53,21 +54,21 @@ class CustomRadioState extends State<CustomRadio> {
                 try {
                   if (snapshot.hasData) {
                     sampleData[snapshot.data.documents.elementAt(0)['vote_number']].isSelected = true;
-                    return settingNumberRating(snapshot);
+                    return settingNumberRating(snapshot,1);
                   } else if (snapshot.hasError) {
                     sampleData[11].isSelected = true;
                   }
                   sampleData[11].isSelected = true;
                 } catch (e) {
                   sampleData[10].isSelected = false;
-                  return settingNumberRating(snapshot);
+                  return settingNumberRating(snapshot,0);
 
                 }
               },
             )));
   }
-
-  Container settingNumberRating(AsyncSnapshot<QuerySnapshot> snapshot) {
+  int castedVoteNumber=11;
+  Container settingNumberRating(AsyncSnapshot<QuerySnapshot> snapshot,int alreadyVoted) {
 
     return Container (child: new Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,16 +83,88 @@ class CustomRadioState extends State<CustomRadio> {
               //highlightColor: Colors.red,
               splashColor: Colors.blueAccent,
               onTap: () {
+                if(alreadyVoted==0){
                 setState(() {
                   sampleData.forEach(
                           (element) => element.isSelected = false);
                   sampleData[index].isSelected = true;
-                });
+                  if(index!=10){
+                    castedVoteNumber=index;
+                  }
+
+                });}
+                else{
+                  _showSnackBar(context,"maximun vote for this poll has already been reached.");
+                }
               },
               child: new RadioItem(sampleData[index]),
             );
           },
-        ))
+        )),
+
+        castedVoteNumber !=11 && alreadyVoted ==0
+            ? Row(
+          //  crossAxisAlignment: CrossAxisAlignment.b,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text('poll lock-in countdown:  ',
+                style: TextStyle(color: Colors.blueGrey)),
+            Center(
+              child: Countdown(
+                seconds: 15,
+                onFinish: () {
+                  setState(() {
+                    CollectionReference collectionReference =
+                    Firestore.instance.collection('casted_votes');
+                    DocumentReference docReferancew =
+                    collectionReference.document();
+                    docReferancew.setData({
+                      "vote_id": voteID,
+                      'member_id': memberID,
+                      'vote_number': castedVoteNumber,
+                    });
+                    castedVoteNumber=11;
+                    alreadyVoted=1;
+                  });
+                },
+                textStyle: TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        )
+            : Text(''),
+
+
+
+        Row(
+          //  crossAxisAlignment: CrossAxisAlignment.b,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text('🗳 polls: ️',
+              style: TextStyle(color: Colors.black,fontSize: 11),),
+            Container(
+                color: Colors.white,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('casted_votes')
+                      .where('vote_id', isEqualTo: voteID)
+                      .snapshots(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    try {
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
+                      } else if (snapshot.hasError) {}
+                    } catch (e) {
+                    }
+                  },
+                )),
+            Text('  ')
+          ],
+        )
 
       ],)
     );
@@ -99,65 +172,27 @@ class CustomRadioState extends State<CustomRadio> {
 
 
 
-    return
-      new Container(
-          height: 500.0,
-          child: new ListView.builder(
+  }
 
-          scrollDirection: Axis.horizontal,
-      itemCount: sampleData.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new InkWell(
-          //highlightColor: Colors.red,
-          splashColor: Colors.blueAccent,
-          onTap: () {
-            setState(() {
-              sampleData.forEach(
-                  (element) => element.isSelected = false);
-              sampleData[index].isSelected = true;
-            });
-          },
-          child: new RadioItem(sampleData[index]),
-        );
-      },
-    ),
-//          Row(
-//            //  crossAxisAlignment: CrossAxisAlignment.b,
-//            mainAxisAlignment: MainAxisAlignment.end,
-//            children: <Widget>[
-//              Text('🗳 polls: ️',
-//                style: TextStyle(color: Colors.black,fontSize: 11),),
-//              Container(
-//                  color: Colors.white,
-//                  child: StreamBuilder<QuerySnapshot>(
-//                    stream: Firestore.instance
-//                        .collection('casted_votes')
-//                        .where('vote_id', isEqualTo: voteID)
-//                        .snapshots(),
-//                    builder:
-//                        (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//                      try {
-//                        if (snapshot.hasData) {
-//                          return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
-//                        } else if (snapshot.hasError) {}
-//                      } catch (e) {
-//                      }
-//                    },
-//                  )),
-//              Text('  ')
-//            ],
-//          ),
-          );
+  /// This will show snackbar at bottom when user tap on Grid item
+  _showSnackBar(BuildContext context, String item) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(item),
+      backgroundColor: Colors.amber,
+    );
+
+    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 }
 
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
 
-  RadioItem(this._item);
+  RadioItem(this._item,);
 
   @override
   Widget build(BuildContext context) {
+
     return new Container(
 //      margin: new EdgeInsets.all(1.0),
       child: new Row(
@@ -178,7 +213,7 @@ class RadioItem extends StatelessWidget {
               border: new Border.all(
                   width: 1.0,
                   color:
-                  _item.buttonText!=''? Colors.transparent :_item.isSelected ? Colors.blueAccent : Colors.blueGrey),
+               _item.isSelected ? Colors.blueAccent : Colors.blueGrey),
               borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
             ),
           ),
