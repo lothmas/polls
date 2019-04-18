@@ -565,12 +565,12 @@ class Trending {
               .getDocuments().then((string) {
             if(string.documents.length!=0) {
               string.documents.forEach((doc) =>    list.add(
-                Container(height: 78, child: Emoji(string.documents.elementAt(0)['vote_number'])),
+                Container(height: 128, child: Emoji(string.documents.elementAt(0)['vote_number'],document.documentID,memberID)),
               ));
             }
             else{
               list.add(
-                Container(height: 78, child: Emoji(5)),
+                Container(height: 128, child: Emoji(5.0,document.documentID,memberID)),
               );
             }
           });

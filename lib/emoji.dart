@@ -4,22 +4,25 @@ import 'package:stats/emojiConfig.dart';
 
 
 class Emoji extends StatelessWidget {
-  int castedVoteNumber;
-  Emoji(this.castedVoteNumber);
+  final String voteID, memberID;
+  double castedVoteNumber;
+  Emoji(this.castedVoteNumber,this.voteID,this.memberID);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(castedVoteNumber),
+      home: HomePage(castedVoteNumber,voteID,memberID),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  int castedVoteNumber;
-  HomePage(this.castedVoteNumber);
+  String voteID, memberID;
+
+  double castedVoteNumber;
+  HomePage(this.castedVoteNumber,this.voteID,this.memberID);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +40,12 @@ class HomePage extends StatelessWidget {
 
             EmojiFeedback(
               currentIndex: castedVoteNumber,
+
               onChange: (index) {
                 print(index);
               },
+              voteID: voteID,
+              memberID: memberID,
             ),
             Container(
               height: 5,

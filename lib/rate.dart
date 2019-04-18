@@ -227,18 +227,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       try {
                         if (snapshot.hasData) {
-                          return Text(snapshot.data.documents.length.toString());
+                          return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
                         } else if (snapshot.hasError) {}
                       } catch (e) {
-                        return MaterialApp(
-                          home: MyHomePage(
-                            title: 'Star Rating Demo Home Page',
-                            castedVoteNumber: 0.0,
-                            voteID: voteID,
-                            memberID: memberID,
-                          ),
-                          debugShowCheckedModeBanner: false,
-                        );
                       }
                     },
                   )),

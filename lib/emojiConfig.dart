@@ -1,7 +1,9 @@
 library emoji_feedback;
 
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_countdown/simple_countdown.dart';
 
 class EmojiModel {
   final String label;
@@ -38,30 +40,35 @@ const ActiveEmojiRadius = ActiveEmojiSize / 2.0;
 const HalfDiffSize = (ActiveEmojiSize - EmojiSize) / 2.0;
 
 class EmojiFeedback extends StatefulWidget {
-  int currentIndex;
+  String voteID, memberID;
+  double currentIndex;
   final Function onChange;
   final num availableWidth;
-
+  double castedVoteNumber;
    EmojiFeedback({
     Key key,
     this.currentIndex,
     this.onChange,
-    this.availableWidth = 320.0,
+    this.availableWidth = 350.0,
+    this.voteID,
+    this.memberID
   }) : super(key: key);
 
   @override
   EmojiFeedbackState createState() {
-    return new EmojiFeedbackState(double.parse(currentIndex.toString()));
+    return new EmojiFeedbackState(double.parse(currentIndex.toString()),double.parse(currentIndex.toString()),voteID,memberID);
   }
 }
 
 class EmojiFeedbackState extends State<EmojiFeedback>
     with SingleTickerProviderStateMixin {
+  String voteID, memberID;
+
   AnimationController controller;
   Animation<double> animation;
   double pos ;
-
-  EmojiFeedbackState(this.pos); // should be between [0, 4]
+  double castedVoteNumber;
+  EmojiFeedbackState(this.pos,this.castedVoteNumber,this.voteID,this.memberID); // should be between [0, 4]
 
   @override
   void initState() {
@@ -132,36 +139,98 @@ class EmojiFeedbackState extends State<EmojiFeedback>
     }
     return Container(
       width: widget.availableWidth,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            top: ActiveEmojiRadius,
-            left: ActiveEmojiRadius,
-            right: ActiveEmojiRadius,
-            child: Container(
-              height: 1.0,
-              color: Colors.blueGrey,
-            ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: emojiButtons,
-            ),
-          ),
-          Positioned(
-            left: posTween.transform(pos / 4),
-            child: Container(
-              width: ActiveEmojiSize,
-              height: ActiveEmojiSize,
-              child: Stack(
-                children: activeEmojis,
+      child: Column(children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Positioned(
+              top: ActiveEmojiRadius,
+              left: ActiveEmojiRadius,
+              right: ActiveEmojiRadius,
+              child: Container(
+                height: 1.0,
+                color: Colors.blueGrey,
               ),
             ),
-          ),
-        ],
-      ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: emojiButtons,
+              ),
+            ),
+            Positioned(
+              left: posTween.transform(pos / 4),
+              child: Container(
+                width: ActiveEmojiSize,
+                height: ActiveEmojiSize,
+                child: Stack(
+                  children: activeEmojis,
+                ),
+              ),
+            ),
+          ],
+        ),
+        castedVoteNumber == 5 && pos!=5 ?
+        Row(
+          //  crossAxisAlignment: CrossAxisAlignment.b,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text('poll lock-in countdown:  ',
+                style: TextStyle(color: Colors.blueGrey)),
+            Center(
+              child: Countdown(
+                seconds: 15,
+                onFinish: () {
+                  setState(() {
+                    castedVoteNumber=pos;
+                    CollectionReference collectionReference =
+                    Firestore.instance.collection('casted_votes');
+                    DocumentReference docReferancew =
+                    collectionReference.document();
+                    docReferancew.setData({
+                      "vote_id": voteID,
+                      'member_id': memberID,
+                      'vote_number': pos,
+                    });
+                  });
+                },
+                textStyle: TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ):Text(''),
+
+        Row(
+          //  crossAxisAlignment: CrossAxisAlignment.b,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text('🗳 polls: ️',
+              style: TextStyle(color: Colors.black,fontSize: 11),),
+            Container(
+                color: Colors.white,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('casted_votes')
+                      .where('vote_id', isEqualTo: voteID)
+                      .snapshots(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    try {
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
+                      } else if (snapshot.hasError) {}
+                    } catch (e) {
+                    }
+                  },
+                )),
+            Text('  ')
+          ],
+        )
+
+      ],)
     );
   }
 
