@@ -208,14 +208,15 @@ class RadioItem extends StatelessWidget {
                       //fontWeight: FontWeight.bold,
                       fontSize: 11.0)),
             ),
-            decoration: new BoxDecoration(
+            decoration:             _item.buttonText!=''?
+            new BoxDecoration(
               color: _item.isSelected ? Colors.amber : Colors.transparent,
               border: new Border.all(
                   width: 1.0,
                   color:
                _item.isSelected ? Colors.blueAccent : Colors.blueGrey),
               borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-            ),
+            ):null,
           ),
 //          new Container(
 //            margin: new EdgeInsets.only(left: 10.0),
