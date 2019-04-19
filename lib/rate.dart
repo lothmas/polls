@@ -79,23 +79,29 @@ class _MyHomePageState extends State<MyHomePage> {
   int countDownValue = 15;
 
   void _incrementHalfStar() {
-//    if(castedVoteNumber != 0.0 && castedVoteNumber!=0) {
-    setState(() {
-      countDownValue = 5;
-      _rating += 0.5;
-      if (_rating > starLength) {
-        _rating = starLength.toDouble();
-      }
-    });
+    if(castedVoteNumber != 0.0 && castedVoteNumber!=0) {
+      setState(() {
+        countDownValue = 5;
+        _rating += 0.5;
+        if (_rating > starLength) {
+          _rating = starLength.toDouble();
+        }
+      });
+    }
+    else{
+      _showSnackBar(context,"maximun vote for this poll has already been reached.");
 
-//    else{
-////      Trending().toolTip(
-////          context,
-////          "You have already subimmited your poll, maximum permited polls have been reached.",
-////          "Poll is Locked-in");
-//    }
+    }
   }
+  /// This will show snackbar at bottom when user tap on Grid item
+  _showSnackBar(BuildContext context, String item) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(item),
+      backgroundColor: Colors.amber,
+    );
 
+    Scaffold.of(context).showSnackBar(objSnackbar);
+  }
   void _decrementHalfStar() {
 //    if(castedVoteNumber != 0.0 && castedVoteNumber!=0) {
     setState(() {
