@@ -582,7 +582,7 @@ class Trending {
         }
         if (document['voteBy'] == 8) {
           list.add(
-            Container(height: 55, child: new LikeDisLike(document.documentID,memberID)),
+            Container(height: 90, child: new LikeDisLike(document.documentID,memberID)),
           );
         }
       }

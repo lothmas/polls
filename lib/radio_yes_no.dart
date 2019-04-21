@@ -74,7 +74,7 @@ class CustomRadioState extends State<LikeDisLike> {
 
               });
             },
-            child: new RadioItem(sampleData[index],voteID,memberID),
+            child:  new RadioItem(sampleData[index],voteID,memberID),
           );
         },
       ),
@@ -165,6 +165,7 @@ class RadioItem extends StatelessWidget {
 //          )
         ],
       ),
+
     );
   }
 }
