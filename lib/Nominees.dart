@@ -5,7 +5,7 @@ import 'package:stats/TrendingMasterObject.dart';
 //import 'package:badge/badge.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
+//import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:quiver/async.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 

@@ -15,14 +15,14 @@ import 'package:stats/radio_yes_no.dart';
 import 'package:stats/rate.dart';
 import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
+//import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 typedef Widget DigitBuilder(BuildContext, int);
 
 class Trending {
-  var youtube = new FlutterYoutube();
+//  var youtube = new FlutterYoutube();
   final bool debugMode = true;
 
   List<Widget> homeTrendingList(BuildContext context, DocumentSnapshot document, String memberID) {
@@ -505,17 +505,17 @@ class Trending {
       } else if (null != document['postPath'] &&
           document['postType'] == 2 &&
           document['postPath'].contains("https://www.youtube.com")) {
-        list.add(
-          Container(
-              height: 270,
-              child: FlutterYoutube.playYoutubeVideoByUrl(
-                apiKey: "AIzaSyC-OhlIOcjW_WBqBbDUVKJF4qN4MMSNL8c",
-                videoUrl: document['postPath'],
-                autoPlay: false, //default falase
-                fullScreen: false,
-                //default false
-              )),
-        );
+//        list.add(
+//          Container(
+//              height: 270,
+//              child: FlutterYoutube.playYoutubeVideoByUrl(
+//                apiKey: "AIzaSyC-OhlIOcjW_WBqBbDUVKJF4qN4MMSNL8c",
+//                videoUrl: document['postPath'],
+//                autoPlay: false, //default falase
+//                fullScreen: false,
+//                //default false
+//              )),
+//        );
       } else if (null != document['postPath'] && document['postType'] == 2) {
         VideoPlayerController videoPlayerController1 =
             VideoPlayerController.network(document['postPath']);
@@ -577,7 +577,7 @@ class Trending {
         }
         if (document['voteBy'] == 7) {
           list.add(
-            Container(height: 65, child: new YesNoMaybe(document.documentID,memberID)),
+            Container(height: 120, child: new YesNoMaybe(document.documentID,memberID)),
           );
         }
         if (document['voteBy'] == 8) {

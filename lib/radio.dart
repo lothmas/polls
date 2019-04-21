@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:simple_countdown/simple_countdown.dart';
 
 class YesNoMaybe extends StatefulWidget {
-  String voteID,memberID;
+  String voteID, memberID;
+
   YesNoMaybe(this.voteID, this.memberID);
-
-
 
   @override
   State<StatefulWidget> createState() {
-    return new _CurrencyState(voteID,memberID);
+    return new _CurrencyState(voteID, memberID);
   }
 }
 
 class _CurrencyState extends State<YesNoMaybe> {
   final TextEditingController _currencyController = new TextEditingController();
-  int _radioValue ;
-  String voteID,memberID;
+  int _radioValue;
+
+  String voteID, memberID;
   int castedVoteNumber;
 
   static const EURO_MUL = 0.86;
@@ -26,80 +26,69 @@ class _CurrencyState extends State<YesNoMaybe> {
   double _result = 0.0;
   String _textResult = '';
 
-  _CurrencyState(String voteID, String memberID){
-    this.voteID=voteID;
-    this.memberID=memberID;
-    Firestore.instance.collection("casted_votes")
+  _CurrencyState(String voteID, String memberID) {
+    this.voteID = voteID;
+    this.memberID = memberID;
+    Firestore.instance
+        .collection("casted_votes")
         .where("member_id", isEqualTo: memberID)
         .where("vote_id", isEqualTo: voteID)
-        .getDocuments().then((string) {
-      if(string.documents.length!=0) {
+        .getDocuments()
+        .then((string) {
+      if (string.documents.length != 0) {
         setState(() {
-          _radioValue=string.documents.elementAt(0)['vote_number'];
+          _radioValue = string.documents.elementAt(0)['vote_number'];
           castedVoteNumber=1;
         });
-      }
-      else{
+      } else {
         setState(() {
-          _radioValue=3;
+          _radioValue = 3;
           castedVoteNumber=0;
         });
       }
     });
-
-
-
-  }
-
-  _showSnackBar(BuildContext context, String item) {
-    final SnackBar objSnackbar = new SnackBar(
-      content: new Text(item),
-      backgroundColor: Colors.amber,
-    );
-
-    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 
   void _handleRadioValueChange(int value) {
     setState(() {
-      if(castedVoteNumber==1){
+      if(_radioValue!=3&& castedVoteNumber==1){
         _showSnackBar(context,"maximun vote for this poll has already been reached.");
       }
-      else {
+      else{
         _radioValue = value;
-      }
 
-//      switch (_radioValue) {
-//        case 0:
-//          _result = _currencyCalculate(_currencyController.text, EURO_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
-//          } else {
-//            _textResult =
-//                'Cannot convert USD to Euro\nPlease check the Amount!';
-//          }
-//          break;
-//        case 1:
-//          _result = _currencyCalculate(_currencyController.text, POUND_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
-//          } else {
-//            _textResult =
-//                'Cannot convert USD to Pound\nPlease check the Amount!';
-//          }
-//          break;
-//        case 2:
-//          _result = _currencyCalculate(_currencyController.text, YEN_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
-//          } else {
-//            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
-//          }
-//          break;
-//      }
+      }
+      switch (_radioValue) {
+        case 0:
+          _result = _currencyCalculate(_currencyController.text, EURO_MUL);
+          if (_result > -1.0) {
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
+          } else {
+            _textResult =
+                'Cannot convert USD to Euro\nPlease check the Amount!';
+          }
+          break;
+        case 1:
+          _result = _currencyCalculate(_currencyController.text, POUND_MUL);
+          if (_result > -1.0) {
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
+          } else {
+            _textResult =
+                'Cannot convert USD to Pound\nPlease check the Amount!';
+          }
+          break;
+        case 2:
+          _result = _currencyCalculate(_currencyController.text, YEN_MUL);
+          if (_result > -1.0) {
+            _textResult =
+                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
+          } else {
+            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
+          }
+          break;
+      }
     });
   }
 
@@ -140,137 +129,150 @@ class _CurrencyState extends State<YesNoMaybe> {
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-
-      body: Column(children: <Widget>[
-        new Container(
-            alignment: Alignment.center,
-            child: new ListView(
+      body: new Container(
+          alignment: Alignment.center,
+          child: new ListView(
 //            padding: const EdgeInsets.all(25.0),
-              children: <Widget>[
-                new Container(
+            children: <Widget>[
+              new Container(
 //                margin: const EdgeInsets.all(3.0),
-                  alignment: Alignment.center,
-                  child: new Column(
-
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: <Widget>[
+                alignment: Alignment.center,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
 //                    new Padding(padding: new EdgeInsets.all(5.0)),
-                      new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              new Radio(
-                                activeColor: Colors.amber,
-                                value: 0,
-                                groupValue: _radioValue,
-                                onChanged: _handleRadioValueChange,
-                              ),
-                              new Text(
-                                'No',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ],
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            new Radio(
+                              activeColor: Colors.amber,
+                              value: 1,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'No',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            new Radio(
+                              activeColor: Colors.amber,
+                              value: 0,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'Yes',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            new Radio(
+                              activeColor: Colors.amber,
+                              value: 2,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                            new Text(
+                              'Maybe',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    castedVoteNumber == 0 && _radioValue != 3
+                        ? Row(
+                      //  crossAxisAlignment: CrossAxisAlignment.b,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text('poll lock-in countdown:  ',
+                            style: TextStyle(color: Colors.blueGrey)),
+                        Center(
+                          child: Countdown(
+                            seconds: 15,
+                            onFinish: () {
+                              setState(() {
+                                castedVoteNumber = 1;
+                                CollectionReference collectionReference =
+                                Firestore.instance.collection('casted_votes');
+                                DocumentReference docReferancew =
+                                collectionReference.document();
+                                docReferancew.setData({
+                                  "vote_id": voteID,
+                                  'member_id': memberID,
+                                  'vote_number': _radioValue,
+                                });
+                              });
+                            },
+                            textStyle: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
                           ),
-                          Column(
-                            children: <Widget>[
-                              new Radio(
-                                activeColor: Colors.amber,
-                                value: 1,
-                                groupValue: _radioValue,
-                                onChanged: _handleRadioValueChange,
-                              ),
-                              new Text(
-                                'Yes',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              new Radio(
-                                activeColor: Colors.amber,
-                                value: 2,
-                                groupValue: _radioValue,
-                                onChanged: _handleRadioValueChange,
-                              ),
-                              new Text(
-                                'Maybe',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            )),
-        castedVoteNumber == 0 && _radioValue != 3
-            ? Row(
-          //  crossAxisAlignment: CrossAxisAlignment.b,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text('poll lock-in countdown:  ',
-                style: TextStyle(color: Colors.blueGrey)),
-            Center(
-              child: Countdown(
-                seconds: 15,
-                onFinish: () {
-                  setState(() {
-                    castedVoteNumber = 1;
-                    CollectionReference collectionReference =
-                    Firestore.instance.collection('casted_votes');
-                    DocumentReference docReferancew =
-                    collectionReference.document();
-                    docReferancew.setData({
-                      "vote_id": voteID,
-                      'member_id': memberID,
-                      'vote_number': _radioValue,
-                    });
-                  });
-                },
-                textStyle: TextStyle(
-                    fontSize: 14,
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        )
-            : Text(''),
-        Row(
-          //  crossAxisAlignment: CrossAxisAlignment.b,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text('🗳 polls: ️',
-              style: TextStyle(color: Colors.black,fontSize: 11),),
-            Container(
-                color: Colors.white,
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance
-                      .collection('casted_votes')
-                      .where('vote_id', isEqualTo: voteID)
-                      .snapshots(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    try {
-                      if (snapshot.hasData) {
-                        return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
-                      } else if (snapshot.hasError) {}
-                    } catch (e) {
-                    }
-                  },
-                )),
-            Text('  ')
-          ],
-        )
+                        ),
+                      ],
+                    )
+                        : Text(''),
+                    Container(
+                      height: 10,
+                      color: Colors.transparent,
+                    ),
+                    Row(
+                      //  crossAxisAlignment: CrossAxisAlignment.b,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          '🗳 polls: ️',
+                          style: TextStyle(color: Colors.black, fontSize: 11),
+                        ),
+                        Container(
+                            color: Colors.white,
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: Firestore.instance
+                                  .collection('casted_votes')
+                                  .where('vote_id', isEqualTo: voteID)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                try {
+                                  if (snapshot.hasData) {
+                                    return Text(
+                                      snapshot.data.documents.length.toString(),
+                                      style: TextStyle(fontSize: 11),
+                                    );
+                                  } else if (snapshot.hasError) {}
+                                } catch (e) {}
+                              },
+                            )),
+                        Text('  ')
+                      ],
+                    ),
 
-      ],),
+                  ],
+                ),
+              )
+            ],
+          )),
     );
+  }
+
+  /// This will show snackbar at bottom when user tap on Grid item
+  _showSnackBar(BuildContext context, String item) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(item),
+      backgroundColor: Colors.amber,
+    );
+
+    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 
   double _currencyCalculate(String amount, double multiplier) {
