@@ -80,19 +80,37 @@ class EmojiFeedbackState extends State<EmojiFeedback>
   }
 
   void moveTo(int index) {
-    animation = Tween<double>(
-      begin: pos,
-      end: index.toDouble(),
-    ).chain(CurveTween(curve: Curves.linear)).animate(controller)
-      ..addListener(() {
-        setState(() {
-          pos = animation.value;
+    if(castedVoteNumber==5){
+      animation = Tween<double>(
+        begin: pos,
+        end: index.toDouble(),
+      ).chain(CurveTween(curve: Curves.linear)).animate(controller)
+        ..addListener(() {
+          setState(() {
+            pos = animation.value;
+          });
         });
-      });
-    controller.forward(from: 0.0);
-    if (widget.onChange is Function) {
-      widget.onChange(index);
+      controller.forward(from: 0.0);
+      if (widget.onChange is Function) {
+        widget.onChange(index);
+      }
     }
+    else{
+      _showSnackBar(context,"maximum votes for this poll have already been reached.");
+
+    }
+
+
+
+  }
+
+  _showSnackBar(BuildContext context, String item) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(item,style: TextStyle(fontSize: 11),),
+      backgroundColor: Colors.blueGrey,
+    );
+
+    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 
   @override

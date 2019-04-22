@@ -52,7 +52,7 @@ class CustomRadioState extends State<LikeDisLike> {
                       sampleData.forEach((element) => element.isSelected = false);
                       sampleData[index].isSelected = true;
                       voteNumber=index+1;
-                      if(castedVoteNumber==1 && voteNumber>2){
+                      if(castedVoteNumber==1 && voteNumber<3){
                         _showSnackBar(context,"maximum votes for this poll have already been reached.");
                       }
                       else {

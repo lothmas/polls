@@ -73,7 +73,7 @@ class MyGridView extends StatelessWidget {
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, City item) {
     final SnackBar objSnackbar = new SnackBar(
-      content: new Text(item,style: TextStyle(fontSize: 11),),
+      content: new Text('testing',style: TextStyle(fontSize: 11),),
       backgroundColor: Colors.blueGrey,
     );
 
