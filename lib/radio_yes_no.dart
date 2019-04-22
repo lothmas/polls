@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_countdown/simple_countdown.dart';
 
 class LikeDisLike extends StatefulWidget {
   String voteID,memberID;
@@ -12,10 +13,12 @@ class LikeDisLike extends StatefulWidget {
 }
 Color thumpsUp=Colors.grey;
 Color thumpsdown=Colors.grey;
-
+int castedVoteNumber;
+int voteNumber;
 class CustomRadioState extends State<LikeDisLike> {
   List<RadioModel> sampleData = new List<RadioModel>();
   String voteID,memberID;
+
   CustomRadioState(this.voteID,this.memberID);
 
   @override
@@ -32,52 +35,124 @@ class CustomRadioState extends State<LikeDisLike> {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
 
-      body: new ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: sampleData.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new InkWell(
-            //highlightColor: Colors.red,
-            splashColor: Colors.blueAccent,
-            onTap: () {
-              setState(() {
-                sampleData.forEach((element) => element.isSelected = false);
-                sampleData[index].isSelected = true;
+      body:
+
+      new Column(
+        children: <Widget>[
+          new Expanded(
+            child: new ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: sampleData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new InkWell(
+                  //highlightColor: Colors.red,
+                  splashColor: Colors.blueAccent,
+                  onTap: () {
+                    setState(() {
+                      sampleData.forEach((element) => element.isSelected = false);
+                      sampleData[index].isSelected = true;
+                      voteNumber=index+1;
+
+                      if(index==0&&thumpsUp==Colors.orangeAccent){
+                        thumpsUp=Colors.grey;
+                        if(thumpsUp==Colors.orangeAccent)
+                        {
+                          thumpsdown=Colors.grey;
+                        }
+
+                      }
+                      else if(index==0){
+                        thumpsUp=Colors.orangeAccent;
+                        thumpsdown=Colors.grey;
+                      }
+                      if(index==1&&thumpsdown==Colors.orangeAccent){
+                        thumpsdown=Colors.grey;
+                        if(thumpsdown==Colors.orangeAccent)
+                        {
+                          thumpsUp=Colors.grey;
+                        }
+
+                      }
+                      else if(index==1){
+                        thumpsdown=Colors.orangeAccent;
+                        thumpsUp=Colors.grey;
+
+                      }
 
 
-                if(index==0&&thumpsUp==Colors.orangeAccent){
-                  thumpsUp=Colors.grey;
-                  if(thumpsUp==Colors.orangeAccent)
-                    {
-                      thumpsdown=Colors.grey;
-                    }
+                    });
+                  },
+                  child:  new RadioItem(sampleData[index],voteID,memberID),
+                );
+              },
+            ),
+          ),
+          castedVoteNumber == 0 && voteNumber != 3
+              ? Row(
+            //  crossAxisAlignment: CrossAxisAlignment.b,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text('poll lock-in countdown:  ',
+                  style: TextStyle(color: Colors.blueGrey)),
+              Center(
+                child: Countdown(
+                  seconds: 15,
+                  onFinish: () {
+                    setState(() {
+                      castedVoteNumber = 1;
+                      CollectionReference collectionReference =
+                      Firestore.instance.collection('casted_votes');
+                      DocumentReference docReferancew =
+                      collectionReference.document();
+                      docReferancew.setData({
+                        "vote_id": voteID,
+                        'member_id': memberID,
+                        'vote_number': voteNumber,
+                      });
+                    });
+                  },
+                  textStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ):Text(''),
+          Row(
+            //  crossAxisAlignment: CrossAxisAlignment.b,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                '🗳 polls: ️',
+                style: TextStyle(color: Colors.black, fontSize: 11),
+              ),
+              Container(
+                  color: Colors.white,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: Firestore.instance
+                        .collection('casted_votes')
+                        .where('vote_id', isEqualTo: voteID)
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      try {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data.documents.length.toString(),
+                            style: TextStyle(fontSize: 11),
+                          );
+                        } else if (snapshot.hasError) {}
+                      } catch (e) {}
+                    },
+                  )),
+              Text('  ')
+            ],
+          ),
+        ],
+      )
 
-                }
-               else if(index==0){
-                  thumpsUp=Colors.orangeAccent;
-                  thumpsdown=Colors.grey;
-                }
-                if(index==1&&thumpsdown==Colors.orangeAccent){
-                  thumpsdown=Colors.grey;
-                  if(thumpsdown==Colors.orangeAccent)
-                  {
-                    thumpsUp=Colors.grey;
-                  }
 
-                }
-                else if(index==1){
-                  thumpsdown=Colors.orangeAccent;
-                  thumpsUp=Colors.grey;
-
-                }
-
-
-              });
-            },
-            child:  new RadioItem(sampleData[index],voteID,memberID),
-          );
-        },
-      ),
     );
   }
 }
@@ -103,59 +178,22 @@ class RadioItem extends StatelessWidget {
                     .where('member_id', isEqualTo: memberID)
                     .snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+                try {
                   if (snapshot.hasData) {
-                 return  snapshot.data.documents.elementAt(0)['vote_number']==1?
-                   Container(
-                     height: 35.0,
-                     width: 35.0,
-                     child: new Center(
-                         child:  _item.buttonText=="Like"?
-                         Column(children: <Widget>[new Icon(
-                           Icons.thumb_up,
-                           color:Colors.orangeAccent,
-                         ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
-                           Icons.thumb_down,
-                           color: thumpsdown,
-                         ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
-
-                     ),):
-                   snapshot.data.documents.elementAt(0)['vote_number']==2?
-                   Container(
-                      height: 35.0,
-                      width: 35.0,
-                      child: new Center(
-                          child:  _item.buttonText=="Like"?
-                          Column(children: <Widget>[new Icon(
-                            Icons.thumb_up,
-                            color:thumpsUp,
-                          ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
-                            Icons.thumb_down,
-                            color:Colors.orangeAccent,
-                          ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
-
-                      ),):
-                   Container(
-                     height: 35.0,
-                     width: 35.0,
-                     child: new Center(
-                         child:  _item.buttonText=="Like"?
-                         Column(children: <Widget>[new Icon(
-                           Icons.thumb_up,
-                           color:thumpsUp,
-                         ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
-                           Icons.thumb_down,
-                           color: thumpsdown,
-                         ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
-
-                     ),)
-
-                   ;
+                   int snapshots= snapshot.data.documents.elementAt(0)['vote_number'];
+                   castedVoteNumber=1;
+                   return show(snapshots);
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
                   return Text("");
+                }
+                catch(e){
+                  castedVoteNumber=0;
 
+                  return show(0);
+
+                }
                 },
               )),
 
@@ -167,6 +205,56 @@ class RadioItem extends StatelessWidget {
       ),
 
     );
+  }
+
+  Container show(int snapshot) {
+
+    return  snapshot==1?
+      Container(
+        height: 35.0,
+        width: 35.0,
+        child: new Center(
+            child:  _item.buttonText=="Like"?
+            Column(children: <Widget>[new Icon(
+              Icons.thumb_up,
+              color:Colors.orangeAccent,
+            ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+              Icons.thumb_down,
+              color: thumpsdown,
+            ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+        ),):
+      snapshot==2?
+      Container(
+         height: 35.0,
+         width: 35.0,
+         child: new Center(
+             child:  _item.buttonText=="Like"?
+             Column(children: <Widget>[new Icon(
+               Icons.thumb_up,
+               color:thumpsUp,
+             ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+               Icons.thumb_down,
+               color:Colors.orangeAccent,
+             ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+         ),):
+      Container(
+        height: 35.0,
+        width: 35.0,
+        child: new Center(
+            child:  _item.buttonText=="Like"?
+            Column(children: <Widget>[new Icon(
+              Icons.thumb_up,
+              color:thumpsUp,
+            ),Text("like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],):Column(children: <Widget>[new Icon(
+              Icons.thumb_down,
+              color: thumpsdown,
+            ),Text("dis-like",style: TextStyle(fontSize: 8,fontWeight: FontWeight.bold),)],)
+
+        ),)
+
+      ;
   }
 }
 
