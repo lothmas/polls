@@ -13,8 +13,8 @@ class LikeDisLike extends StatefulWidget {
 }
 Color thumpsUp=Colors.grey;
 Color thumpsdown=Colors.grey;
-int castedVoteNumber;
-int voteNumber;
+int castedVoteNumber =1;
+int voteNumber=3;
 class CustomRadioState extends State<LikeDisLike> {
   List<RadioModel> sampleData = new List<RadioModel>();
   String voteID,memberID;
@@ -52,34 +52,31 @@ class CustomRadioState extends State<LikeDisLike> {
                       sampleData.forEach((element) => element.isSelected = false);
                       sampleData[index].isSelected = true;
                       voteNumber=index+1;
-
-                      if(index==0&&thumpsUp==Colors.orangeAccent){
-                        thumpsUp=Colors.grey;
-                        if(thumpsUp==Colors.orangeAccent)
-                        {
-                          thumpsdown=Colors.grey;
+                      if(castedVoteNumber==1){
+                        _showSnackBar(context,"maximun vote for this poll has already been reached.");
+                      }
+                      else {
+                        if (index == 0 && thumpsUp == Colors.orangeAccent) {
+                          thumpsUp = Colors.grey;
+                          if (thumpsUp == Colors.orangeAccent) {
+                            thumpsdown = Colors.grey;
+                          }
                         }
-
-                      }
-                      else if(index==0){
-                        thumpsUp=Colors.orangeAccent;
-                        thumpsdown=Colors.grey;
-                      }
-                      if(index==1&&thumpsdown==Colors.orangeAccent){
-                        thumpsdown=Colors.grey;
-                        if(thumpsdown==Colors.orangeAccent)
-                        {
-                          thumpsUp=Colors.grey;
+                        else if (index == 0) {
+                          thumpsUp = Colors.orangeAccent;
+                          thumpsdown = Colors.grey;
                         }
-
+                        if (index == 1 && thumpsdown == Colors.orangeAccent) {
+                          thumpsdown = Colors.grey;
+                          if (thumpsdown == Colors.orangeAccent) {
+                            thumpsUp = Colors.grey;
+                          }
+                        }
+                        else if (index == 1) {
+                          thumpsdown = Colors.orangeAccent;
+                          thumpsUp = Colors.grey;
+                        }
                       }
-                      else if(index==1){
-                        thumpsdown=Colors.orangeAccent;
-                        thumpsUp=Colors.grey;
-
-                      }
-
-
                     });
                   },
                   child:  new RadioItem(sampleData[index],voteID,memberID),
@@ -154,6 +151,16 @@ class CustomRadioState extends State<LikeDisLike> {
 
 
     );
+  }
+
+  /// This will show snackbar at bottom when user tap on Grid item
+  _showSnackBar(BuildContext context, String item) {
+    final SnackBar objSnackbar = new SnackBar(
+      content: new Text(item),
+      backgroundColor: Colors.amber,
+    );
+
+    Scaffold.of(context).showSnackBar(objSnackbar);
   }
 }
 
