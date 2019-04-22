@@ -52,78 +52,46 @@ class _CurrencyState extends State<YesNoMaybe> {
   void _handleRadioValueChange(int value) {
     setState(() {
       if(_radioValue!=3&& castedVoteNumber==1){
-        _showSnackBar(context,"maximun vote for this poll has already been reached.");
+        _showSnackBar(context,"maximum votes for this poll have already been reached.");
       }
       else{
         _radioValue = value;
 
       }
-      switch (_radioValue) {
-        case 0:
-          _result = _currencyCalculate(_currencyController.text, EURO_MUL);
-          if (_result > -1.0) {
-            _textResult =
-                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
-          } else {
-            _textResult =
-                'Cannot convert USD to Euro\nPlease check the Amount!';
-          }
-          break;
-        case 1:
-          _result = _currencyCalculate(_currencyController.text, POUND_MUL);
-          if (_result > -1.0) {
-            _textResult =
-                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
-          } else {
-            _textResult =
-                'Cannot convert USD to Pound\nPlease check the Amount!';
-          }
-          break;
-        case 2:
-          _result = _currencyCalculate(_currencyController.text, YEN_MUL);
-          if (_result > -1.0) {
-            _textResult =
-                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
-          } else {
-            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
-          }
-          break;
-      }
+//      switch (_radioValue) {
+//        case 0:
+//          _result = _currencyCalculate(_currencyController.text, EURO_MUL);
+//          if (_result > -1.0) {
+//            _textResult =
+//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
+//          } else {
+//            _textResult =
+//                'Cannot convert USD to Euro\nPlease check the Amount!';
+//          }
+//          break;
+//        case 1:
+//          _result = _currencyCalculate(_currencyController.text, POUND_MUL);
+//          if (_result > -1.0) {
+//            _textResult =
+//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
+//          } else {
+//            _textResult =
+//                'Cannot convert USD to Pound\nPlease check the Amount!';
+//          }
+//          break;
+//        case 2:
+//          _result = _currencyCalculate(_currencyController.text, YEN_MUL);
+//          if (_result > -1.0) {
+//            _textResult =
+//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
+//          } else {
+//            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
+//          }
+//          break;
+//      }
     });
   }
 
-  void _handleCurrencyAmountChange(String amount) {
-    setState(() {
-      switch (_radioValue) {
-        case 0:
-          _result = _currencyCalculate(amount, EURO_MUL);
-          if (_result > -1.0) {
-            _textResult = '$amount USD = ${_result.toStringAsFixed(3)} Euro';
-          } else {
-            _textResult =
-                'Cannot convert USD to Euro\nPlease check the Amount!';
-          }
-          break;
-        case 1:
-          _result = _currencyCalculate(amount, POUND_MUL);
-          if (_result > -1.0) {
-            _textResult = '$amount USD = ${_result.toStringAsFixed(3)} Pound';
-          } else {
-            _textResult =
-                'Cannot convert USD to Pound\nPlease check the Amount!';
-          }
-          break;
-        case 2:
-          _result = _currencyCalculate(amount, YEN_MUL);
-          if (_result > -1.0) {
-            _textResult = '$amount USD = ${_result.toStringAsFixed(3)} Yen';
-          } else {
-            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
-          }
-          break;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,8 +162,8 @@ class _CurrencyState extends State<YesNoMaybe> {
                       //  crossAxisAlignment: CrossAxisAlignment.b,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text('poll lock-in countdown:  ',
-                            style: TextStyle(color: Colors.blueGrey)),
+                        Text('poll lock-down in:  ',
+                            style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 11)),
                         Center(
                           child: Countdown(
                             seconds: 15,
@@ -268,8 +236,8 @@ class _CurrencyState extends State<YesNoMaybe> {
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, String item) {
     final SnackBar objSnackbar = new SnackBar(
-      content: new Text(item),
-      backgroundColor: Colors.amber,
+      content: new Text(item,style: TextStyle(fontSize: 11),),
+      backgroundColor: Colors.blueGrey,
     );
 
     Scaffold.of(context).showSnackBar(objSnackbar);

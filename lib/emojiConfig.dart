@@ -175,8 +175,8 @@ class EmojiFeedbackState extends State<EmojiFeedback>
           //  crossAxisAlignment: CrossAxisAlignment.b,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('poll lock-in countdown:  ',
-                style: TextStyle(color: Colors.blueGrey)),
+            Text('poll lock-down in:  ',
+                style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 11)),
             Center(
               child: Countdown(
                 seconds: 15,

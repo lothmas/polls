@@ -7,7 +7,7 @@ import 'package:simple_countdown/simple_countdown.dart';
 
 class StarRatings extends StatelessWidget {
   final String voteID, memberID;
-
+  int castedVoteNumber;
   StarRatings(this.voteID, this.memberID);
 
   @override
@@ -29,7 +29,7 @@ class StarRatings extends StatelessWidget {
                     castedVoteNumber:
                         double.parse(snapshot.data.documents.elementAt(0)['vote_number'].toString()),
                     voteID: voteID,
-                    memberID: memberID,
+                    memberID: memberID,voteNumber: 1,
                   ),
                   debugShowCheckedModeBanner: false,
                 );
@@ -40,7 +40,7 @@ class StarRatings extends StatelessWidget {
                   title: 'Star Rating Demo Home Page',
                   castedVoteNumber: 0.0,
                   voteID: voteID,
-                  memberID: memberID,
+                  memberID: memberID,voteNumber: 0,
                 ),
                 debugShowCheckedModeBanner: false,
               );
@@ -53,33 +53,33 @@ class StarRatings extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   double castedVoteNumber;
   String voteID, memberID;
-
+  int voteNumber;
   MyHomePage(
-      {Key key, this.title, this.castedVoteNumber, this.voteID, this.memberID})
+      {Key key, this.title, this.castedVoteNumber, this.voteID, this.memberID,this.voteNumber})
       : super(key: key);
 
   final String title;
 
   @override
   _MyHomePageState createState() =>
-      _MyHomePageState(castedVoteNumber, castedVoteNumber, voteID, memberID);
+      _MyHomePageState(castedVoteNumber, castedVoteNumber, voteID, memberID,voteNumber);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   double castedVoteNumber;
   AnimationController _controller;
   String voteID, memberID;
-
+  int voteNumber;
   final int starLength = 5;
   double _rating;
 
   _MyHomePageState(
-      this._rating, this.castedVoteNumber, this.voteID, this.memberID);
+      this._rating, this.castedVoteNumber, this.voteID, this.memberID,this.voteNumber);
 
   int countDownValue = 15;
 
   void _incrementHalfStar() {
-    if(castedVoteNumber != 0.0 && castedVoteNumber!=0) {
+    if(voteNumber!=1) {
       setState(() {
         countDownValue = 5;
         _rating += 0.5;
@@ -89,21 +89,21 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
     else{
-      _showSnackBar(context,"maximun vote for this poll has already been reached.");
+      _showSnackBar(context,"maximum votes for this poll have already been reached.");
 
     }
   }
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, String item) {
     final SnackBar objSnackbar = new SnackBar(
-      content: new Text(item),
-      backgroundColor: Colors.amber,
+      content: new Text(item,style: TextStyle(fontSize: 11),),
+      backgroundColor: Colors.blueGrey,
     );
 
     Scaffold.of(context).showSnackBar(objSnackbar);
   }
   void _decrementHalfStar() {
-//    if(castedVoteNumber != 0.0 && castedVoteNumber!=0) {
+    if(voteNumber !=1) {
     setState(() {
       countDownValue = 5;
       _rating -= 0.5;
@@ -111,12 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
         _rating = 0.0;
       }
     });
-//    }else{
-////      Trending().toolTip(
-////          context,
-////          "I show you if this poll is restricted to selected users, or it's open to the public. Open green lock means open to the public",
-////          "Poll is Public");
-//    }
+    }else{
+      _showSnackBar(context,"maximum votes for this poll have already been reached.");
+
+    }
   }
 
   @override
@@ -139,10 +137,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 between: 5.0,
                 starSize: 25.0,
                 onRaitingTap: (rating) {
-                  print('Clicked rating: $rating / $starLength');
-                  setState(() {
-                    _rating = rating;
-                  });
+                  if(voteNumber !=1) {
+                    setState(() {
+                      _rating = rating;
+                    });
+                  }else{
+                    _showSnackBar(context,"maximum votes for this poll have already been reached.");
+
+                  }
+
                 },
               ),
               Row(
@@ -188,8 +191,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   //  crossAxisAlignment: CrossAxisAlignment.b,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text('poll lock-in countdown:  ',
-                        style: TextStyle(color: Colors.blueGrey)),
+                    Text('poll lock-down in:  ',
+                        style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 11)),
                     Center(
                       child: Countdown(
                         seconds: 15,

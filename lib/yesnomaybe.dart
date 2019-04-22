@@ -94,7 +94,7 @@ class CustomRadioState extends State<CustomRadio> {
 
                 });}
                 else{
-                  _showSnackBar(context,"maximun vote for this poll has already been reached.");
+                  _showSnackBar(context,"maximum votes for this poll have already been reached.");
                 }
               },
               child: new RadioItem(sampleData[index]),
@@ -107,8 +107,8 @@ class CustomRadioState extends State<CustomRadio> {
           //  crossAxisAlignment: CrossAxisAlignment.b,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('poll lock-in countdown:  ',
-                style: TextStyle(color: Colors.blueGrey)),
+            Text('poll lock-down in:  ',
+                style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 11)),
             Center(
               child: Countdown(
                 seconds: 15,
@@ -177,8 +177,8 @@ class CustomRadioState extends State<CustomRadio> {
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, String item) {
     final SnackBar objSnackbar = new SnackBar(
-      content: new Text(item),
-      backgroundColor: Colors.amber,
+      content: new Text(item,style: TextStyle(fontSize: 11),),
+      backgroundColor: Colors.blueGrey,
     );
 
     Scaffold.of(context).showSnackBar(objSnackbar);
