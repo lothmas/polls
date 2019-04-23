@@ -15,6 +15,7 @@ import 'package:stats/radio_yes_no.dart';
 import 'package:stats/rate.dart';
 import 'package:stats/yesnomaybe.dart';
 import 'package:video_player/video_player.dart';
+
 //import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,8 +26,8 @@ class Trending {
 //  var youtube = new FlutterYoutube();
   final bool debugMode = true;
 
-  List<Widget> homeTrendingList(BuildContext context, DocumentSnapshot document, String memberID) {
-
+  List<Widget> homeTrendingList(
+      BuildContext context, DocumentSnapshot document, String memberID) {
     Duration _duration = new Duration();
     try {
       DateTime dDay = document['startDateTime'];
@@ -241,23 +242,34 @@ class Trending {
                                           child: StreamBuilder<QuerySnapshot>(
                                             stream: Firestore.instance
                                                 .collection('casted_votes')
-                                                .where('vote_id', isEqualTo: document.documentID)
-                                                .where('member_id', isEqualTo: 'MMM111')
+                                                .where('vote_id',
+                                                    isEqualTo:
+                                                        document.documentID)
+                                                .where('member_id',
+                                                    isEqualTo: 'MMM111')
                                                 .snapshots(),
-                                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
                                               if (snapshot.hasData) {
-                                                return  Container(
+                                                return Container(
                                                     color: Colors.transparent,
                                                     child: GestureDetector(
                                                       child: Badge.before(
 //                      (trending.getVotesCasted()+" | "+trending.getAllowedVoteNumber()) );
-                                                        value: snapshot.data.documents.length.toString() +
+                                                        value: snapshot
+                                                                .data
+                                                                .documents
+                                                                .length
+                                                                .toString() +
                                                             ' | ' +
-                                                            document['allowedVoteNumber']
+                                                            document[
+                                                                    'allowedVoteNumber']
                                                                 .toString(),
-                                                        textStyle: TextStyle(fontSize: 8),
-                                                        borderColor: Colors.grey,
+                                                        textStyle: TextStyle(
+                                                            fontSize: 8),
+                                                        borderColor:
+                                                            Colors.grey,
                                                         borderSize: 1.0,
                                                         color: Colors.white,
                                                         // value to show inside the badge
@@ -268,15 +280,16 @@ class Trending {
                                                             context,
                                                             'I show you if poll has started and currently live \'OR\' if closed. Currenctly its LIVE that\'s what the play icon stands for',
                                                             'Allowed Polls: ' +
-                                                                document['allowedVoteNumber']
+                                                                document[
+                                                                        'allowedVoteNumber']
                                                                     .toString());
                                                       },
                                                     ));
                                               } else if (snapshot.hasError) {
-                                                return Text("${snapshot.error}");
+                                                return Text(
+                                                    "${snapshot.error}");
                                               }
                                               return Text("");
-
                                             },
                                           )))),
                             ],
@@ -415,7 +428,7 @@ class Trending {
         Divider(),
       );
       list.add(Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(5),
         width: c_width,
         child: new Column(
           children: <Widget>[
@@ -424,18 +437,18 @@ class Trending {
                     child: Center(
                       child: Text(
                         document['description'],
-                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        style: TextStyle(color: Colors.white70, fontSize: 13),
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    height: 350.0,
-//        width: MediaQuery.of(context).size.width - 100.0,
+                    height: 250.0,
+//                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.blue,
                         image: DecorationImage(
-                            image: new AssetImage("images/back9.jpg"),
-                            fit: BoxFit.fill)),
+                            image: new AssetImage("images/back7.jpg"),
+                            fit: BoxFit.cover)),
                   )
                 : Text(
                     document['description'],
@@ -447,21 +460,7 @@ class Trending {
           ],
         ),
       ));
-//    list.add(
-//      Row( children: [
-//        Container(
-//          color: Colors.transparent,
-//          width: 10.0,
-//        ),
-//
-//        Text(document['description'], textAlign: TextAlign.justify,softWrap: true),
-//        Container(
-//          color: Colors.transparent,
-//          width: 10.0,
-//        ),
-//          ]
-//      )
-//    );
+
       list.add(Container(
         color: Colors.transparent,
         height: 2.0,
@@ -546,43 +545,56 @@ class Trending {
       if (_duration.inSeconds <= 0) {
         if (document['voteBy'] == 4) {
           list.add(Container(
-            height: 65,
-            child: new StarRatings(document.documentID,memberID,)
-          ));
+              height: 65,
+              child: new StarRatings(
+                document.documentID,
+                memberID,
+              )));
         }
         if (document['voteBy'] == 5) {
           list.add(Container(
-            height: 80,
-            child: CustomRadio(document.documentID,memberID),
+            height: 70,
+            child: CustomRadio(document.documentID, memberID),
           ));
-
         }
 
         if (document['voteBy'] == 6) {
-          Firestore.instance.collection("casted_votes")
+          Firestore.instance
+              .collection("casted_votes")
               .where("member_id", isEqualTo: memberID)
               .where("vote_id", isEqualTo: document.documentID)
-              .getDocuments().then((string) {
-            if(string.documents.length!=0) {
-              string.documents.forEach((doc) =>    list.add(
-                Container(height: 128, child: Emoji(string.documents.elementAt(0)['vote_number'],document.documentID,memberID)),
-              ));
-            }
-            else{
+              .getDocuments()
+              .then((string) {
+            if (string.documents.length != 0) {
+              string.documents.forEach((doc) => list.add(
+                    Container(
+                        height: 128,
+                        child: Emoji(
+                            string.documents.elementAt(0)['vote_number'],
+                            document.documentID,
+                            memberID)),
+                  ));
+            } else {
               list.add(
-                Container(height: 128, child: Emoji(5.0,document.documentID,memberID)),
+                Container(
+                    height: 128,
+                    child: Emoji(5.0, document.documentID, memberID)),
               );
             }
           });
         }
         if (document['voteBy'] == 7) {
           list.add(
-            Container(height: 120, child: new YesNoMaybe(document.documentID,memberID)),
+            Container(
+                height: 88,
+                child: new YesNoMaybe(document.documentID, memberID)),
           );
         }
         if (document['voteBy'] == 8) {
           list.add(
-            Container(height: 90, child: new LikeDisLike(document.documentID,memberID)),
+            Container(
+                height: 85,
+                child: new LikeDisLike(document.documentID, memberID)),
           );
         }
       }

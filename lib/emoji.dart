@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-
+      backgroundColor: Colors.white,
       body: Container(
 //        padding: EdgeInsets.only(top: 48.0, left: 18.0),
         child: Column(

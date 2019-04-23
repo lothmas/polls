@@ -34,7 +34,7 @@ class CustomRadioState extends State<LikeDisLike> {
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-
+        backgroundColor: Colors.white,
       body:
 
       new Column(
@@ -46,7 +46,7 @@ class CustomRadioState extends State<LikeDisLike> {
               itemBuilder: (BuildContext context, int index) {
                 return new InkWell(
                   //highlightColor: Colors.red,
-                  splashColor: Colors.blueAccent,
+                  splashColor: Colors.white,
                   onTap: () {
                     setState(() {
                       sampleData.forEach((element) => element.isSelected = false);
@@ -140,7 +140,9 @@ class CustomRadioState extends State<LikeDisLike> {
                             style: TextStyle(fontSize: 11),
                           );
                         } else if (snapshot.hasError) {}
-                      } catch (e) {}
+                      } catch (e) {
+                        return Text('');
+                      }
                     },
                   )),
               Text('  ')
@@ -193,7 +195,7 @@ class RadioItem extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-                  return Text("");
+//                  return Text("");
                 }
                 catch(e){
                   castedVoteNumber=0;

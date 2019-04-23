@@ -56,39 +56,7 @@ class _CurrencyState extends State<YesNoMaybe> {
       }
       else{
         _radioValue = value;
-
       }
-//      switch (_radioValue) {
-//        case 0:
-//          _result = _currencyCalculate(_currencyController.text, EURO_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Euro';
-//          } else {
-//            _textResult =
-//                'Cannot convert USD to Euro\nPlease check the Amount!';
-//          }
-//          break;
-//        case 1:
-//          _result = _currencyCalculate(_currencyController.text, POUND_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Pound';
-//          } else {
-//            _textResult =
-//                'Cannot convert USD to Pound\nPlease check the Amount!';
-//          }
-//          break;
-//        case 2:
-//          _result = _currencyCalculate(_currencyController.text, YEN_MUL);
-//          if (_result > -1.0) {
-//            _textResult =
-//                '${_currencyController.text} USD = ${_result.toStringAsFixed(3)} Yen';
-//          } else {
-//            _textResult = 'Cannot convert USD to Yen\nPlease check the Amount!';
-//          }
-//          break;
-//      }
     });
   }
 
@@ -96,6 +64,7 @@ class _CurrencyState extends State<YesNoMaybe> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: false,
       body: new Container(
           alignment: Alignment.center,
@@ -112,7 +81,7 @@ class _CurrencyState extends State<YesNoMaybe> {
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Column(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             new Radio(
@@ -122,12 +91,12 @@ class _CurrencyState extends State<YesNoMaybe> {
                               onChanged: _handleRadioValueChange,
                             ),
                             new Text(
-                              'No',
-                              style: TextStyle(fontSize: 11),
+                              'NO',
+                              style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        Column(
+                        Row(
                           children: <Widget>[
                             new Radio(
                               activeColor: Colors.amber,
@@ -136,12 +105,12 @@ class _CurrencyState extends State<YesNoMaybe> {
                               onChanged: _handleRadioValueChange,
                             ),
                             new Text(
-                              'Yes',
-                              style: TextStyle(fontSize: 11),
+                              'YES',
+                              style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        Column(
+                        Row(
                           children: <Widget>[
                             new Radio(
                               activeColor: Colors.amber,
@@ -150,8 +119,8 @@ class _CurrencyState extends State<YesNoMaybe> {
                               onChanged: _handleRadioValueChange,
                             ),
                             new Text(
-                              'Maybe',
-                              style: TextStyle(fontSize: 11),
+                              'MAYBE',
+                              style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
                             ),
                           ],
                         )
@@ -190,10 +159,10 @@ class _CurrencyState extends State<YesNoMaybe> {
                       ],
                     )
                         : Text(''),
-                    Container(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
+//                    Container(
+//                      height: 10,
+//                      color: Colors.transparent,
+//                    ),
                     Row(
                       //  crossAxisAlignment: CrossAxisAlignment.b,
                       mainAxisAlignment: MainAxisAlignment.end,

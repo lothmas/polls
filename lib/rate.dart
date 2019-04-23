@@ -24,26 +24,21 @@ class StarRatings extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             try {
               if (snapshot.hasData) {
-                return MaterialApp(
-                  home: MyHomePage(
+                return  MyHomePage(
                     castedVoteNumber:
                         double.parse(snapshot.data.documents.elementAt(0)['vote_number'].toString()),
                     voteID: voteID,
                     memberID: memberID,voteNumber: 1,
-                  ),
-                  debugShowCheckedModeBanner: false,
                 );
               } else if (snapshot.hasError) {}
             } catch (e) {
-              return MaterialApp(
-                home: MyHomePage(
+              return  MyHomePage(
                   title: 'Star Rating Demo Home Page',
                   castedVoteNumber: 0.0,
                   voteID: voteID,
                   memberID: memberID,voteNumber: 0,
-                ),
-                debugShowCheckedModeBanner: false,
-              );
+                );
+
             }
           },
         ));
@@ -120,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

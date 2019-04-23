@@ -42,7 +42,7 @@ class CustomRadioState extends State<CustomRadio> {
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
-            color: Colors.transparent,
+            color: Colors.white,
             child: StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance
                   .collection('casted_votes')
