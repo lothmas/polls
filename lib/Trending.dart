@@ -541,62 +541,67 @@ class Trending {
 //    else{
 //    //  list.add(Image.asset("images/finalcountdown.jpg"));
 //      }
+try {
+  if (_duration.inSeconds <= 0) {
+    if (document['voteBy'] == 4) {
+      list.add(Container(
+          height: 65,
+          child: new StarRatings(
+            document.documentID,
+            memberID,
+          )));
+    }
+    if (document['voteBy'] == 5) {
+      list.add(Container(
+        height: 70,
+        child: CustomRadio(document.documentID, memberID),
+      ));
+    }
 
-      if (_duration.inSeconds <= 0) {
-        if (document['voteBy'] == 4) {
-          list.add(Container(
-              height: 65,
-              child: new StarRatings(
-                document.documentID,
-                memberID,
-              )));
-        }
-        if (document['voteBy'] == 5) {
-          list.add(Container(
-            height: 70,
-            child: CustomRadio(document.documentID, memberID),
-          ));
-        }
-
-        if (document['voteBy'] == 6) {
-          Firestore.instance
-              .collection("casted_votes")
-              .where("member_id", isEqualTo: memberID)
-              .where("vote_id", isEqualTo: document.documentID)
-              .getDocuments()
-              .then((string) {
-            if (string.documents.length != 0) {
-              string.documents.forEach((doc) => list.add(
-                    Container(
-                        height: 128,
-                        child: Emoji(
-                            string.documents.elementAt(0)['vote_number'],
-                            document.documentID,
-                            memberID)),
-                  ));
-            } else {
+    if (document['voteBy'] == 6) {
+      Firestore.instance
+          .collection("casted_votes")
+          .where("member_id", isEqualTo: memberID)
+          .where("vote_id", isEqualTo: document.documentID)
+          .getDocuments()
+          .then((string) {
+        if (string.documents.length != 0) {
+          string.documents.forEach((doc) =>
               list.add(
                 Container(
                     height: 128,
-                    child: Emoji(5.0, document.documentID, memberID)),
-              );
-            }
-          });
-        }
-        if (document['voteBy'] == 7) {
+                    child: Emoji(
+                        string.documents.elementAt(0)['vote_number'],
+                        document.documentID,
+                        memberID)),
+              ));
+        } else {
           list.add(
             Container(
-                height: 88,
-                child: new YesNoMaybe(document.documentID, memberID)),
+                height: 128,
+                child: Emoji(5.0, document.documentID, memberID)),
           );
         }
-        if (document['voteBy'] == 8) {
-          list.add(
-            Container(
-                height: 85,
-                child: new LikeDisLike(document.documentID, memberID)),
-          );
-        }
+      });
+    }
+    if (document['voteBy'] == 7) {
+      list.add(
+        Container(
+            height: 88,
+            child: new YesNoMaybe(document.documentID, memberID)),
+      );
+    }
+    if (document['voteBy'] == 8) {
+      list.add(
+        Container(
+            height: 85,
+            child: new LikeDisLike(document.documentID, memberID)),
+      );
+    }
+  }
+}
+      catch(e){
+
       }
       list.add(
         new Container(
