@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stats/emojiConfig.dart';
 //import 'package:emoji_feedback/emoji_feedback.dart';
@@ -5,15 +6,14 @@ import 'package:stats/emojiConfig.dart';
 
 class Emoji extends StatelessWidget {
   final String voteID, memberID;
-  double castedVoteNumber;
-  Emoji(this.castedVoteNumber,this.voteID,this.memberID);
+  Emoji(this.voteID,this.memberID);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(castedVoteNumber,voteID,memberID),
+      home: HomePage(voteID,memberID),
     );
   }
 }
@@ -21,8 +21,7 @@ class Emoji extends StatelessWidget {
 class HomePage extends StatelessWidget {
   String voteID, memberID;
 
-  double castedVoteNumber;
-  HomePage(this.castedVoteNumber,this.voteID,this.memberID);
+  HomePage(this.voteID,this.memberID);
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +36,47 @@ class HomePage extends StatelessWidget {
             Container(
               height: 2,
             ),
+            Container(
+                color: Colors.transparent,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('casted_votes')
+                      .where('vote_id', isEqualTo: voteID)
+                      .where('member_id', isEqualTo: memberID)
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    try {
+                      if (snapshot.hasData) {
+                        return EmojiFeedback(
+                          currentIndex: snapshot.data.documents.elementAt(0)['vote_number'],
 
-            EmojiFeedback(
-              currentIndex: castedVoteNumber,
+                          onChange: (index) {
+                            print(index);
+                          },
+                          voteID: voteID,
+                          memberID: memberID,
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+//                  return Text("");
+                    }
+                    catch(e){
 
-              onChange: (index) {
-                print(index);
-              },
-              voteID: voteID,
-              memberID: memberID,
-            ),
+                      return EmojiFeedback(
+                        currentIndex: 5,
+
+                        onChange: (index) {
+                          print(index);
+                        },
+                        voteID: voteID,
+                        memberID: memberID,
+                      );
+
+                    }
+                  },
+                )),
+
             Container(
               height: 5,
             ),

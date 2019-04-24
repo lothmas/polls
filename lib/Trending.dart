@@ -541,7 +541,7 @@ class Trending {
 //    else{
 //    //  list.add(Image.asset("images/finalcountdown.jpg"));
 //      }
-try {
+
   if (_duration.inSeconds <= 0) {
     if (document['voteBy'] == 4) {
       list.add(Container(
@@ -559,30 +559,11 @@ try {
     }
 
     if (document['voteBy'] == 6) {
-      Firestore.instance
-          .collection("casted_votes")
-          .where("member_id", isEqualTo: memberID)
-          .where("vote_id", isEqualTo: document.documentID)
-          .getDocuments()
-          .then((string) {
-        if (string.documents.length != 0) {
-          string.documents.forEach((doc) =>
-              list.add(
-                Container(
-                    height: 128,
-                    child: Emoji(
-                        string.documents.elementAt(0)['vote_number'],
-                        document.documentID,
-                        memberID)),
-              ));
-        } else {
-          list.add(
-            Container(
-                height: 128,
-                child: Emoji(5.0, document.documentID, memberID)),
-          );
-        }
-      });
+      list.add(
+        Container(
+            height: 100,
+            child: Emoji(document.documentID, memberID)),
+      );
     }
     if (document['voteBy'] == 7) {
       list.add(
@@ -599,10 +580,8 @@ try {
       );
     }
   }
-}
-      catch(e){
 
-      }
+
       list.add(
         new Container(
           width: 500.0,
