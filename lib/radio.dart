@@ -186,8 +186,14 @@ class _CurrencyState extends State<YesNoMaybe> {
                                       snapshot.data.documents.length.toString(),
                                       style: TextStyle(fontSize: 11),
                                     );
-                                  } else if (snapshot.hasError) {}
-                                } catch (e) {}
+                                  } else if (snapshot.hasError) {
+                                    return Text('0');
+
+                                  }
+                                } catch (e) {
+                                  return Text('0');
+
+                                }
                               },
                             )),
                         Text('  ')

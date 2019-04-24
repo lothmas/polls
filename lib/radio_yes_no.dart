@@ -139,9 +139,13 @@ class CustomRadioState extends State<LikeDisLike> {
                             snapshot.data.documents.length.toString(),
                             style: TextStyle(fontSize: 11),
                           );
-                        } else if (snapshot.hasError) {}
+                        } else if (snapshot.hasError) {
+                          return Text('0');
+
+                        }
                       } catch (e) {
-                        return Text('');
+                        return Text('0');
+
                       }
                     },
                   )),
