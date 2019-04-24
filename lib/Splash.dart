@@ -11,9 +11,12 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool loggedIn =false;
+    String userUID;
+
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       if(user!=null) {
         loggedIn = true;
+        userUID=user.uid;
       }
     });
     return new MaterialApp(
@@ -24,7 +27,7 @@ class SplashView extends StatelessWidget {
           builder: (context) => new _SplashContent(),
         ),
         routes: <String, WidgetBuilder>{
-          '/main': (BuildContext context) => loggedIn ? Home(): Scaffold(
+          '/main': (BuildContext context) => loggedIn ? Home(userUID): Scaffold(
               resizeToAvoidBottomPadding: false,
 
               body: new LoginScreen1())}

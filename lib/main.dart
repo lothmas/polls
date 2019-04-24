@@ -19,6 +19,7 @@ const PrimaryColor = const Color(0x00000000);
 //void main() => runApp(Home());
 
 void main() async {
+
   final FirebaseApp app = await FirebaseApp.configure(
     name: 'test',
     options: FirebaseOptions(
@@ -33,22 +34,25 @@ void main() async {
   final FirebaseStorage storage =
       FirebaseStorage(app: app, storageBucket: 'gs://polls-223422.appspot.com');
   bool loggedIn = false;
+  String userUID;
   FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
     if (user != null) {
       loggedIn = true;
+      userUID = user.uid;
     }
 
   });
 
   if(loggedIn){
-    Home();
+    Home(userUID);
   }else{
     runApp(SplashView());
   }
 }
 
 class Home extends StatefulWidget {
-  Home({this.storage});
+  String userUID;
+  Home(this.userUID, {this.storage});
 
   final FirebaseStorage storage;
 
@@ -56,11 +60,12 @@ class Home extends StatefulWidget {
   State<StatefulWidget> createState() {
     // TODO: implement createState
     // imageCache.clear();
-    return _Trending(storage: storage);
+    return _Trending(userUID,storage: storage);
   }
 }
 
 class _Trending extends State<Home> {
+
   List<ScreenHiddenDrawer> itens = new List();
   List<ScreenHiddenDrawer> itens1 = new List();
 
@@ -99,7 +104,7 @@ class _Trending extends State<Home> {
                   return new Card(
                     child: Column(
                       children:
-                          homeTrending.homeTrendingList(context, document,'MMM111'),
+                          homeTrending.homeTrendingList(context, document,userUID),
                     ),
                   );
                 }).toList(),
@@ -168,8 +173,9 @@ class _Trending extends State<Home> {
   }
 
   int _currentIndex = 0;
+   String userUID;
 
-  _Trending({this.storage});
+  _Trending(this.userUID,{this.storage});
 
   final FirebaseStorage storage;
 

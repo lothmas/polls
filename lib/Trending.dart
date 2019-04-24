@@ -246,7 +246,7 @@ class Trending {
                                                     isEqualTo:
                                                         document.documentID)
                                                 .where('member_id',
-                                                    isEqualTo: 'MMM111')
+                                                    isEqualTo: memberID)
                                                 .snapshots(),
                                             builder: (BuildContext context,
                                                 AsyncSnapshot<QuerySnapshot>
@@ -561,7 +561,7 @@ class Trending {
     if (document['voteBy'] == 6) {
       list.add(
         Container(
-            height: 100,
+            height: 115,
             child: Emoji(document.documentID, memberID)),
       );
     }

@@ -49,7 +49,6 @@ class HomePage extends StatelessWidget {
                       if (snapshot.hasData) {
                         return EmojiFeedback(
                           currentIndex: snapshot.data.documents.elementAt(0)['vote_number'],
-
                           onChange: (index) {
                             print(index);
                           },
@@ -65,7 +64,6 @@ class HomePage extends StatelessWidget {
 
                       return EmojiFeedback(
                         currentIndex: 5,
-
                         onChange: (index) {
                           print(index);
                         },

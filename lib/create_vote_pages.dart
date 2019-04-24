@@ -264,10 +264,14 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                     ? FlatButton(
                         child: getSubmitButtonWrapper(submitButtonStyle),
                         onPressed: () {
+                          String userUID;
+                          FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+                            userUID=user.uid;
+                          });
                           createVote(
                               pollAllowedNumber.value.text,
                               pollDescription.value.text,
-                              "MMM111",
+                              userUID,
                               dropdownValue,
                               pollTitle.value.text);
                         })
@@ -1372,9 +1376,10 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 //          profilePic = data.documents[0].data['profile_pic'];
         });
       }
-
+      String userUID;
       FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
         owner = user.displayName;
+        userUID=user.uid;
         profilePic = user.photoUrl;
         if (user.photoUrl.contains('facebook')) {
           loginProvider = 1;
@@ -1557,7 +1562,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
 
       Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => Home()),
+        new MaterialPageRoute(builder: (context) => Home(userUID)),
       );
     });
   }

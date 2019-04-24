@@ -82,11 +82,17 @@ class LoginScreen1 extends StatelessWidget {
                            authToken: result.session.token,
                            authTokenSecret: result.session.secret
                        );
+                       String userUID;
+                       FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+                         if (user != null) {
+                           userUID = user.uid;
+                         }
 
+                       });
                          Navigator.pushReplacement(
                            context,
                            new MaterialPageRoute(
-                               builder: (context) => new Home()),
+                               builder: (context) => new Home(userUID)),
                          );
 
                        break;
@@ -152,10 +158,20 @@ class LoginScreen1 extends StatelessWidget {
         break;
       case FacebookLoginStatus.loggedIn:
         FirebaseAuth.instance.signInWithFacebook(accessToken: facebookLoginResult.accessToken.token);
+
+        String userUID;
+        FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+          if (user != null) {
+            userUID = user.uid;
+          }
+
+        });
+
+
         Navigator.pushReplacement(
           context,
           new MaterialPageRoute(
-              builder: (context) => new Home()),
+              builder: (context) => new Home(userUID)),
         );
 
         //onLoginStatusChanged(true);
@@ -183,10 +199,17 @@ class LoginScreen1 extends StatelessWidget {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+    String userUID;
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      if (user != null) {
+        userUID = user.uid;
+      }
+
+    });
     Navigator.pushReplacement(
       context,
       new MaterialPageRoute(
-          builder: (context) => new Home()),
+          builder: (context) => new Home(userUID)),
     );
     // do something with signed-in user
   }
@@ -213,10 +236,17 @@ class LoginScreen1 extends StatelessWidget {
         FirebaseAuth.instance.signInWithTwitter(
             authToken: result.session.token ,
             authTokenSecret: result.session.secret);
+        String userUID;
+        FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+          if (user != null) {
+            userUID = user.uid;
+          }
+
+        });
         Navigator.pushReplacement(
           context,
           new MaterialPageRoute(
-              builder: (context) => new Home()),
+              builder: (context) => new Home(userUID)),
         );
         break;
       case TwitterLoginStatus.cancelledByUser:

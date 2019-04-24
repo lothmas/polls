@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int countDownValue = 15;
 
   void _incrementHalfStar() {
-    if(voteNumber!=1) {
+    if(voteNumber!=1 ) {
       setState(() {
         countDownValue = 5;
         _rating += 0.5;
@@ -195,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onFinish: () {
                           setState(() {
                             castedVoteNumber = _rating;
+                            voteNumber=1;
                             CollectionReference collectionReference =
                                 Firestore.instance.collection('casted_votes');
                             DocumentReference docReferancew =
