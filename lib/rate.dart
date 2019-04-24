@@ -233,6 +233,45 @@ class _MyHomePageState extends State<MyHomePage> {
                         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       try {
                         if (snapshot.hasData) {
+                          StringBuffer one= new StringBuffer();StringBuffer onehalf= new StringBuffer();StringBuffer two= new StringBuffer();StringBuffer twohalf= new StringBuffer();StringBuffer three= new StringBuffer();StringBuffer threehalf= new StringBuffer();StringBuffer four= new StringBuffer();StringBuffer fourhalf= new StringBuffer();StringBuffer five= new StringBuffer();
+                          one.write(0);onehalf.write(0);two.write(0);twohalf.write(0);three.write(0);threehalf.write(0);four.write(0);fourhalf.write(0);five.write(0);
+                          for(DocumentSnapshot query in snapshot.data.documents){
+                            if(query['vote_number']==1){
+                              one.write(int.parse(one.toString())+1);
+                            }
+                            else if(query['vote_number']==1.5){
+                              onehalf.write(int.parse(onehalf.toString())+1);
+
+                            }
+                            else if(query['vote_number']==2.0){
+                              two.write(int.parse(two.toString())+1);
+                            }
+                            else if(query['vote_number']==2.5){
+                              twohalf.write(int.parse(twohalf.toString())+1);
+
+                            }
+                            else if(query['vote_number']==3.0){
+                              three.write(int.parse(three.toString())+1);
+
+                            }
+                            else if(query['vote_number']==3.5){
+
+                              threehalf.write(int.parse(threehalf.toString())+1);
+
+                            }
+                            else if(query['vote_number']==4.0){
+                              four.write(int.parse(four.toString())+1);
+
+                            }
+                            else if(query['vote_number']==4.5){
+                              fourhalf.write(int.parse(fourhalf.toString())+1);
+
+                            }
+                            else if(query['vote_number']==5.0){
+                              five.write(int.parse(five.toString())+1);
+
+                            }
+                          }
                           return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
                         } else if (snapshot.hasError) {
                           return Text('0');
