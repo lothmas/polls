@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                           memberID: memberID,
                         );
                       } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
+                        return Text("");
                       }
 //                  return Text("");
                     }

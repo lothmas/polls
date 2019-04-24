@@ -239,8 +239,13 @@ class EmojiFeedbackState extends State<EmojiFeedback>
                     try {
                       if (snapshot.hasData) {
                         return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
-                      } else if (snapshot.hasError) {}
+                      } else if (snapshot.hasError) {
+                        return Text("");
+
+                      }
                     } catch (e) {
+                      return Text("");
+
                     }
                   },
                 )),
