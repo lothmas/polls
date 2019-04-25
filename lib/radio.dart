@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:simple_countdown/simple_countdown.dart';
+import 'package:sqflite/sqflite.dart';
 
 class YesNoMaybe extends StatefulWidget {
   String voteID, memberID;
@@ -52,7 +54,7 @@ class _CurrencyState extends State<YesNoMaybe> {
   void _handleRadioValueChange(int value) {
     setState(() {
       if(_radioValue!=3&& castedVoteNumber==1){
-        _showSnackBar(context,"maximum votes for this poll have already been reached.");
+       // _showSnackBar(context,"maximum votes for this poll have already been reached.");
       }
       else{
         _radioValue = value;
@@ -60,6 +62,7 @@ class _CurrencyState extends State<YesNoMaybe> {
     });
   }
 
+  String popularRating='';
 
   @override
   Widget build(BuildContext context) {
@@ -165,38 +168,44 @@ class _CurrencyState extends State<YesNoMaybe> {
 //                    ),
                     Row(
                       //  crossAxisAlignment: CrossAxisAlignment.b,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          '🗳 polls: ️',
-                          style: TextStyle(color: Colors.black, fontSize: 11),
-                        ),
-                        Container(
-                            color: Colors.white,
-                            child: StreamBuilder<QuerySnapshot>(
-                              stream: Firestore.instance
-                                  .collection('casted_votes')
-                                  .where('vote_id', isEqualTo: voteID)
-                                  .snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                                try {
-                                  if (snapshot.hasData) {
-                                    return Text(
-                                      snapshot.data.documents.length.toString(),
-                                      style: TextStyle(fontSize: 11),
-                                    );
-                                  } else if (snapshot.hasError) {
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+
+                          children: <Widget>[     Text(
+                            '🔥 popular rate: ️'+popularRating,
+                            style: TextStyle(color: Colors.black, fontSize: 11),
+                          ),
+                          ],),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+
+                          children: <Widget>[     Text(
+                            '🗳 total polls: ️',
+                            style: TextStyle(color: Colors.black, fontSize: 11),
+                          ),
+                          Container(
+                              color: Colors.white,
+                              child: StreamBuilder<QuerySnapshot>(
+                                stream: Firestore.instance
+                                    .collection('casted_votes')
+                                    .where('vote_id', isEqualTo: voteID)
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  try {
+                                    if (snapshot.hasData) {
+                                      _getPopular(snapshot.data.documents,voteID);
+                                      return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
+                                    } else if (snapshot.hasError) {
+                                      return Text('0');
+                                    }
+                                  } catch (e) {
                                     return Text('0');
-
                                   }
-                                } catch (e) {
-                                  return Text('0');
-
-                                }
-                              },
-                            )),
-                        Text('  ')
+                                },
+                              )),Text('  ')],)
                       ],
                     ),
 
@@ -206,6 +215,41 @@ class _CurrencyState extends State<YesNoMaybe> {
             ],
           )),
     );
+  }
+
+  _getPopular(List<DocumentSnapshot> documents ,String voteID) async {
+    String voteIDRefactored=voteID.replaceAll('-', '');
+
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, voteIDRefactored);
+    // open the database
+    Database database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+          // When creating the db, create the table
+          await db.execute(
+              'CREATE TABLE '+voteIDRefactored+' (popular TEXT)');
+        });
+
+
+    for (DocumentSnapshot query in documents) {
+      // Insert some records in a transaction
+      String insertQuery='INSERT INTO '+voteIDRefactored+'(popular) VALUES('+query['vote_number'].toString()+')';
+      await database.transaction((txn) async {
+        await txn.rawInsert(insertQuery);
+      });
+    }
+    String popularRate='SELECT `popular` FROM `'+voteIDRefactored+'` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
+
+    await database.transaction((txn) async {
+      var count= await txn.rawQuery(popularRate);
+
+      setState(() {
+        popularRating= count.elementAt(0)['popular'].toString();
+      });
+    });
+
+// Close the database
+    await database.close();
   }
 
   /// This will show snackbar at bottom when user tap on Grid item

@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:stats/Trending.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:stats/start_rating.dart';
 import 'package:simple_countdown/simple_countdown.dart';
-import 'package:kt_dart/collection.dart';
-//void main() => runApp(StarRatingDemo());
 
 class StarRatings extends StatelessWidget {
   final String voteID, memberID;
@@ -93,8 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
     } else {
-      _showSnackBar(
-          context, "maximum votes for this poll have already been reached.");
+//      _showSnackBar(context, "maximum votes for this poll have already been reached.");
     }
   }
 
@@ -121,11 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
     } else {
-      _showSnackBar(
-          context, "maximum votes for this poll have already been reached.");
+//      _showSnackBar(context, "maximum votes for this poll have already been reached.");
     }
   }
-
+  String popularRating='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -234,10 +231,21 @@ class _MyHomePageState extends State<MyHomePage> {
               : Text(''),
           Row(
             //  crossAxisAlignment: CrossAxisAlignment.b,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                '🗳 polls: ️',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: <Widget>[     Text(
+                '🔥 popular rate: ️'+popularRating,
+                style: TextStyle(color: Colors.black, fontSize: 11),
+              ),
+              ],),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+
+                children: <Widget>[     Text(
+                '🗳 total polls: ️',
                 style: TextStyle(color: Colors.black, fontSize: 11),
               ),
               Container(
@@ -251,58 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       try {
                         if (snapshot.hasData) {
-                          StringBuffer one = new StringBuffer();
-                          StringBuffer onehalf = new StringBuffer();
-                          StringBuffer two = new StringBuffer();
-                          StringBuffer twohalf = new StringBuffer();
-                          StringBuffer three = new StringBuffer();
-                          StringBuffer threehalf = new StringBuffer();
-                          StringBuffer four = new StringBuffer();
-                          StringBuffer fourhalf = new StringBuffer();
-                          StringBuffer five = new StringBuffer();
-                          one.write(0);
-                          onehalf.write(0);
-                          two.write(0);
-                          twohalf.write(0);
-                          three.write(0);
-                          threehalf.write(0);
-                          four.write(0);
-                          fourhalf.write(0);
-                          five.write(0);
-                          Map<String,int> rate=new Map();
-                            rate['one']=0;
-                            rate['onehalf']=0;
-                            rate['two']=0;
-                            rate['twohalf']=0;
-                            rate['three']=0;
-                            rate['threehalf']=0;
-                            rate['four']=0;
-                            rate['fourhalf']=0;
-                            rate['five']=0;
-
-                          for (DocumentSnapshot query
-                              in snapshot.data.documents) {
-                            if (query['vote_number'] == 1.0) {
-                              rate['one']=rate['one']+1;
-                            } else if (query['vote_number'] == 1.5) {
-                              rate['onehalf']=rate['onehalf']+1;
-                            } else if (query['vote_number'] == 2.0) {
-                              rate['two']=rate['two']+1;
-                            } else if (query['vote_number'] == 2.5) {
-                              rate['twohalf']=rate['twohalf']+1;
-                            } else if (query['vote_number'] == 3.0) {
-                              rate['three']=rate['three']+1;
-                            } else if (query['vote_number'] == 3.5) {
-                              rate['threehalf']=rate['threehalf']+1;
-                            } else if (query['vote_number'] == 4.0) {
-                              rate['four']=rate['four']+1;
-                            } else if (query['vote_number'] == 4.5) {
-                              rate['fourhalf']=rate['fourhalf']+1;
-                            } else if (query['vote_number'] == 5.0) {
-                              rate['five']=rate['five']+1;
-                            }
-                          }
-                         // var maxBy = rate.maxBy { it.value }
+                          _getPopular(snapshot.data.documents,voteID);
                           return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
                         } else if (snapshot.hasError) {
                           return Text('0');
@@ -311,8 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         return Text('0');
                       }
                     },
-                  )),
-              Text('  ')
+                  )),Text('  ')],)
             ],
           ),
           Container(
@@ -321,6 +277,41 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+
+  _getPopular(List<DocumentSnapshot> documents ,String voteID) async {
+    String voteIDRefactored=voteID.replaceAll('-', '');
+
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, voteIDRefactored);
+    // open the database
+    Database database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+          // When creating the db, create the table
+          await db.execute(
+              'CREATE TABLE '+voteIDRefactored+' (popular TEXT)');
+        });
+
+
+    for (DocumentSnapshot query in documents) {
+      // Insert some records in a transaction
+      String insertQuery='INSERT INTO '+voteIDRefactored+'(popular) VALUES('+query['vote_number'].toString()+')';
+      await database.transaction((txn) async {
+       await txn.rawInsert(insertQuery);
+      });
+    }
+    String popularRate='SELECT `popular` FROM `'+voteIDRefactored+'` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
+
+    await database.transaction((txn) async {
+      var count= await txn.rawQuery(popularRate);
+
+      setState(() {
+        popularRating= count.elementAt(0)['popular'].toString();
+      });
+    });
+
+// Close the database
+    await database.close();
   }
 
   _onPressCountDown(AnimationController ctr) {
