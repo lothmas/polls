@@ -575,7 +575,7 @@ class Trending {
     if (document['voteBy'] == 8) {
       list.add(
         Container(
-            height: 85,
+            height: 95,
             child: new LikeDisLike(document.documentID, memberID)),
       );
     }

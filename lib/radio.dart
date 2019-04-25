@@ -173,9 +173,8 @@ class _CurrencyState extends State<YesNoMaybe> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
 
-                          children: <Widget>[     Text(
-                            '🔥 popular rate: ️'+popularRating,
-                            style: TextStyle(color: Colors.black, fontSize: 11),
+                          children: <Widget>[Text('🔥 popular option:  ',style: TextStyle(fontSize: 11),),Text(popularRating=='0'?'YES':popularRating=='1'?'NO':popularRating=='2'?'MAYBE':'',
+                            style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
                           ),
                           ],),
                         Row(

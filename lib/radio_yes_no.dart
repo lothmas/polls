@@ -126,10 +126,17 @@ class CustomRadioState extends State<LikeDisLike> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
 
-                children: <Widget>[     Text(
-                  '🔥 popular selection: ️'+popularRating,
+                children: <Widget>[  popularRating!=''?   Text(
+                  '🔥 popular choice: ️',
                   style: TextStyle(color: Colors.black, fontSize: 11),
-                ),
+                ):'',
+               popularRating=='0'?new Icon(
+                 Icons.thumb_up,
+                 color:Colors.orangeAccent,
+               ):popularRating=='1'?new Icon(
+                 Icons.thumb_down,
+                 color:Colors.orangeAccent,
+               ):''
                 ],),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

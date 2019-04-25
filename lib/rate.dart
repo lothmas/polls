@@ -237,9 +237,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
 
                 children: <Widget>[     Text(
-                '🔥 popular rate: ️'+popularRating,
+                '🔥 popular star: ️'+popularRating,
                 style: TextStyle(color: Colors.black, fontSize: 11),
               ),
+
               ],),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
