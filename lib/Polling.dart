@@ -6,6 +6,7 @@ import 'package:stats/Nominees.dart';
 import 'package:stats/drag.dart';
 import 'package:stats/draggable_order_image/reorderimage.dart';
 import 'package:stats/multiple_selection/multipleselection.dart';
+import 'package:stats/reorder/reorder_nominees.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -91,7 +92,11 @@ class _Trending extends State<Polling> {
                   //voteBy 1(text) 2(image) 3(video)
                   if (voteType1 == 2 && voteBy1 == 2) {
                     // return new ReOrderGrid().reorder(nomineesList, voteType1);
+                    return new ReorderNominees(nomineesList,voteBy1);
+
                     return new DraggableReOrderImage(nomineesList, voteBy1);
+
+
                   }
                   if (voteType1 == 2 && voteBy1 == 1) {
                     List<NomineesEntityList> nomineesList1 = new List();
@@ -108,6 +113,7 @@ class _Trending extends State<Polling> {
                       nomineesList1.add(nominee1);
                       count++;
                     }
+                    return new ReorderNominees(nomineesList1,voteBy1);
                     return new DraggableReOrderImage(nomineesList1, voteBy1);
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
                     return new SingleSelectDrag(nomineesList, voteBy1, "images/background.jpg");
