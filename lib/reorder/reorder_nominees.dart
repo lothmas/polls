@@ -5,111 +5,68 @@ import 'package:stats/NomineeMasterObject.dart';
 
 class ReorderNominees extends StatefulWidget {
   List<NomineesEntityList> nomineesList;
-  ReorderNominees(this.nomineesList, int voteBy1);
+  List<Widget> _tiles =new List();
+
+  ReorderNominees(this.nomineesList, int voteBy1){
+    try {
+      for (NomineesEntityList nominee in nomineesList) {
+        _tiles.add(Container(
+          key: UniqueKey(),
+//        height: 200,
+//        width: 150,
+          child: Card(
+            key: UniqueKey(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                 ListTile(
+                  leading: Icon(Icons.album),
+                  title: Text(nominee.nomineeName),
+                  subtitle: Text(
+                      'Music by Julie Gable. Lyrics by Sidney Stein.',
+                      style: TextStyle(fontSize: 11)),
+                ),
+                ButtonTheme
+                    .bar( // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child:  Text('votes: 23'),
+                        onPressed: () {
+                          /* ... */
+                        },
+                      ),
+                      FlatButton(
+                        child:  Text('LISTEN'),
+                        onPressed: () {
+                          /* ... */
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),),);
+      }
+    }catch(e){
+
+    }
+  }
 
   @override
-  _WrapExampleState createState() => _WrapExampleState();
+  _WrapExampleState createState() => _WrapExampleState(_tiles);
 }
 
 class _WrapExampleState extends State<ReorderNominees> {
-  final double _iconSize = 90;
   List<Widget> _tiles;
+
+  _WrapExampleState(this._tiles);
+
 
   @override
   void initState() {
     super.initState();
-    _tiles = <Widget>[
-      Container(key: UniqueKey(),
-//        height: 200,
-//        width: 150,
-        child: Card(
-          key: UniqueKey(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.album),
-                title: Text('The Enchanted Nightingale',style: TextStyle(fontSize: 11),),
-                subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.',style: TextStyle(fontSize: 11)),
-              ),
-              ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text('BUY TICKETS'),
-                      onPressed: () { /* ... */ },
-                    ),
-                    FlatButton(
-                      child: const Text('LISTEN'),
-                      onPressed: () { /* ... */ },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),),
-      Container(key: UniqueKey(),
-//        height: 200,
-//        width: 150,
-        child: Card(
-          key: UniqueKey(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.album),
-                title: Text('The Enchanted Nightingale',style: TextStyle(fontSize: 11),),
-                subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.',style: TextStyle(fontSize: 11)),
-              ),
-              ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text('BUY TICKETS'),
-                      onPressed: () { /* ... */ },
-                    ),
-                    FlatButton(
-                      child: const Text('LISTEN'),
-                      onPressed: () { /* ... */ },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),), Container(key: UniqueKey(),
-//        height: 200,
-//        width: 150,
-        child: Card(
-          key: UniqueKey(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.album),
-                title: Text('The Enchanted Nightingale',style: TextStyle(fontSize: 11),),
-                subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.',style: TextStyle(fontSize: 11)),
-              ),
-              ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text('BUY TICKETS'),
-                      onPressed: () { /* ... */ },
-                    ),
-                    FlatButton(
-                      child: const Text('LISTEN'),
-                      onPressed: () { /* ... */ },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),),
-
-    ];
   }
 
   @override
