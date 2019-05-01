@@ -263,9 +263,9 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
                 currentPage == 4
                     ? FlatButton(
                         child: getSubmitButtonWrapper(submitButtonStyle),
-                        onPressed: () {
+                        onPressed: () async {
                           String userUID;
-                          FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+                         await FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
                             userUID=user.uid;
                           });
                           createVote(
@@ -1421,6 +1421,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'title': title,
         'startDateTime': startDate,
         'endDateTime': endDate,
+        'popularrate':-1
       });
 
       if(isAgeRange){
