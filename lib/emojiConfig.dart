@@ -120,8 +120,6 @@ class EmojiFeedbackState extends State<EmojiFeedback>
     Scaffold.of(context).showSnackBar(objSnackbar);
   }
 
-  String popularRating = '';
-
   @override
   Widget build(BuildContext context) {
     final posTween =
@@ -238,35 +236,64 @@ class EmojiFeedbackState extends State<EmojiFeedback>
               //  crossAxisAlignment: CrossAxisAlignment.b,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '🔥 popular feedback: ️',
-                          style: TextStyle(color: Colors.black, fontSize: 11),
-                        ),
-                       popularRating!=''? Container(
-                            child: Row(
-                          children: <Widget>[
-                            Image.asset(
-                              reactions[int.parse(popularRating.substring(0,1))].activeSrc,
-                              package: 'emoji_feedback',
-                              height: 20,
-                              width: 20,
-                            ),
-                            Text(
-                              ' ' + reactions[int.parse(popularRating.substring(0,1))].label,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 8),
-                            ),
-                          ],
-                        )):Text('')
-                      ],
-                    )
-                  ],
-                ),
+                Container(
+                    color: Colors.white,
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: Firestore.instance
+                          .collection('votes').document(voteID).snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        try {
+                          if (snapshot.hasData) {
+                            //  _getPopular(snapshot.data.documents,document);
+                            if(snapshot.data['popularRate']!=-1) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '🔥 popular feedback: ️',
+                                        style: TextStyle(color: Colors.black, fontSize: 11),
+                                      ),
+                                      snapshot.data['popularRate']!=-1? Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                reactions[snapshot.data['popularRate']].activeSrc,
+                                                package: 'emoji_feedback',
+                                                height: 20,
+                                                width: 20,
+                                              ),
+                                              Text(
+                                                ' ' + reactions[snapshot.data['popularRate']].label,
+                                                style:
+                                                TextStyle(color: Colors.black, fontSize: 8),
+                                              ),
+                                            ],
+                                          )):Text(''),Text(
+                                                                                  '   🔢 ' +
+                                            snapshot.data['voteNumber'].toString() +
+                                            ' votes',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 11),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              );
+                            }
+                            else{
+                              return Text('');
+                            }
+                          } else if (snapshot.hasError) {
+                            return Text('');
+                          }
+                        } catch (e) {
+                          return Text('');
+                        }
+                      },
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -285,7 +312,6 @@ class EmojiFeedbackState extends State<EmojiFeedback>
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             try {
                               if (snapshot.hasData) {
-                                _getPopular(snapshot.data.documents, voteID);
                                 return Text(
                                   snapshot.data.documents.length.toString(),
                                   style: TextStyle(fontSize: 11),
@@ -307,44 +333,6 @@ class EmojiFeedbackState extends State<EmojiFeedback>
         ));
   }
 
-  _getPopular(List<DocumentSnapshot> documents, String voteID) async {
-    String voteIDRefactored = voteID.replaceAll('-', '');
-
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, voteIDRefactored);
-    // open the database
-    Database database = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      // When creating the db, create the table
-      await db.execute('CREATE TABLE ' + voteIDRefactored + ' (popular TEXT)');
-    });
-
-    for (DocumentSnapshot query in documents) {
-      // Insert some records in a transaction
-      String insertQuery = 'INSERT INTO ' +
-          voteIDRefactored +
-          '(popular) VALUES(' +
-          query['vote_number'].toString() +
-          ')';
-      await database.transaction((txn) async {
-        await txn.rawInsert(insertQuery);
-      });
-    }
-    String popularRate = 'SELECT `popular` FROM `' +
-        voteIDRefactored +
-        '` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
-
-    await database.transaction((txn) async {
-      var count = await txn.rawQuery(popularRate);
-
-      setState(() {
-        popularRating = count.elementAt(0)['popular'].toString();
-      });
-    });
-
-// Close the database
-    await database.close();
-  }
 
   @override
   void dispose() {

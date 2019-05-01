@@ -127,28 +127,59 @@ class CustomRadioState extends State<LikeDisLike> {
               //  crossAxisAlignment: CrossAxisAlignment.b,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    popularRating != ''
-                        ? Text(
-                            '🔥 popular choice: ️',
-                            style: TextStyle(color: Colors.black, fontSize: 11),
-                          )
-                        : Text(''),
-                    popularRating == '0'
-                        ? new Icon(
-                            Icons.thumb_up,
-                            color: Colors.orangeAccent,
-                          )
-                        : popularRating == '1'
-                            ? new Icon(
-                                Icons.thumb_down,
-                                color: Colors.orangeAccent,
-                              )
-                            : Text('')
-                  ],
-                ),
+                Container(
+                    color: Colors.white,
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: Firestore.instance
+                          .collection('votes')
+                          .document(voteID)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        try {
+                          if (snapshot.hasData) {
+                            if (snapshot.data['popularRate'] != -1) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  snapshot.data['popularRate'] != -1
+                                      ? Text(
+                                          '🔥 popular choice: ️',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 11),
+                                        )
+                                      : Text(''),
+                                  snapshot.data['popularRate']-1 == 0
+                                      ? new Icon(
+                                          Icons.thumb_up,
+                                          color: Colors.orangeAccent,
+                                        )
+                                      : snapshot.data['popularRate']-1 == 1
+                                          ? new Icon(
+                                              Icons.thumb_down,
+                                              color: Colors.orangeAccent,
+                                            )
+                                          : Text(''),
+                                  Text('   🔢 ' +
+                                      snapshot.data['voteNumber'].toString() +
+                                      ' votes',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 11),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Text('');
+                            }
+                          } else if (snapshot.hasError) {
+                            return Text('');
+                          }
+                        } catch (e) {
+                          return Text('');
+                        }
+                      },
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[

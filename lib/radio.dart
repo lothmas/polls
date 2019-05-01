@@ -62,7 +62,6 @@ class _CurrencyState extends State<YesNoMaybe> {
     });
   }
 
-  String popularRating='';
 
   @override
   Widget build(BuildContext context) {
@@ -166,47 +165,83 @@ class _CurrencyState extends State<YesNoMaybe> {
 //                      height: 10,
 //                      color: Colors.transparent,
 //                    ),
-                    Row(
-                      //  crossAxisAlignment: CrossAxisAlignment.b,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
 
-                          children: <Widget>[Text('🔥 popular option:  ',style: TextStyle(fontSize: 11),),Text(popularRating=='0'?'YES':popularRating=='1'?'NO':popularRating=='2'?'MAYBE':'',
-                            style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
-                          ),
-                          ],),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
 
-                          children: <Widget>[     Text(
-                            '🗳 total polls: ️',
-                            style: TextStyle(color: Colors.black, fontSize: 11),
-                          ),
-                          Container(
-                              color: Colors.white,
-                              child: StreamBuilder<QuerySnapshot>(
-                                stream: Firestore.instance
-                                    .collection('casted_votes')
-                                    .where('vote_id', isEqualTo: voteID)
-                                    .snapshots(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  try {
-                                    if (snapshot.hasData) {
-                                      _getPopular(snapshot.data.documents,voteID);
-                                      return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
-                                    } else if (snapshot.hasError) {
-                                      return Text('0');
-                                    }
-                                  } catch (e) {
-                                    return Text('0');
-                                  }
-                                },
-                              )),Text('  ')],)
-                      ],
-                    ),
+                    Container(
+                        color: Colors.white,
+                        child: StreamBuilder<DocumentSnapshot>(
+                          stream: Firestore.instance
+                              .collection('votes').document(voteID).snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            try {
+                              if (snapshot.hasData) {
+                                //  _getPopular(snapshot.data.documents,document);
+
+                                  return  Row(
+                                    //  crossAxisAlignment: CrossAxisAlignment.b,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[snapshot.data['popularRate']!=-1?
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+
+                                        children: <Widget>[Text('🔥 popular option:  ',style: TextStyle(fontSize: 11),),Text(snapshot.data['popularRate']==0?'YES':snapshot.data['popularRate']==1?'NO':snapshot.data['popularRate']==2?'MAYBE':'',
+                                          style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                                        ),  Text('   🔢 ' +
+                                            snapshot.data['voteNumber'].toString() +
+                                            ' votes',
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 11),
+                                        )
+                                        ],):Text(''),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+
+                                        children: <Widget>[     Text(
+                                          '🗳 total polls: ️',
+                                          style: TextStyle(color: Colors.black, fontSize: 11),
+                                        ),
+                                        Container(
+                                            color: Colors.white,
+                                            child: StreamBuilder<QuerySnapshot>(
+                                              stream: Firestore.instance
+                                                  .collection('casted_votes')
+                                                  .where('vote_id', isEqualTo: voteID)
+                                                  .snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                                try {
+                                                  if (snapshot.hasData) {
+                                                    return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
+                                                  } else if (snapshot.hasError) {
+                                                    return Text('0');
+                                                  }
+                                                } catch (e) {
+                                                  return Text('0');
+                                                }
+                                              },
+                                            )),Text('  '),],),
+
+                                    ],
+                                  );
+
+
+                              } else if (snapshot.hasError) {
+                                return Text('');
+                              }
+                            } catch (e) {
+                              return Text('');
+                            }
+                          },
+                        ))
+
+
+
+
+
+
+
+
 
                   ],
                 ),
@@ -216,40 +251,6 @@ class _CurrencyState extends State<YesNoMaybe> {
     );
   }
 
-  _getPopular(List<DocumentSnapshot> documents ,String voteID) async {
-    String voteIDRefactored=voteID.replaceAll('-', '');
-
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, voteIDRefactored);
-    // open the database
-    Database database = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-          // When creating the db, create the table
-          await db.execute(
-              'CREATE TABLE '+voteIDRefactored+' (popular TEXT)');
-        });
-
-
-    for (DocumentSnapshot query in documents) {
-      // Insert some records in a transaction
-      String insertQuery='INSERT INTO '+voteIDRefactored+'(popular) VALUES('+query['vote_number'].toString()+')';
-      await database.transaction((txn) async {
-        await txn.rawInsert(insertQuery);
-      });
-    }
-    String popularRate='SELECT `popular` FROM `'+voteIDRefactored+'` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
-
-    await database.transaction((txn) async {
-      var count= await txn.rawQuery(popularRate);
-
-      setState(() {
-        popularRating= count.elementAt(0)['popular'].toString();
-      });
-    });
-
-// Close the database
-    await database.close();
-  }
 
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, String item) {

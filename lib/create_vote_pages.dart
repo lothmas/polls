@@ -1421,7 +1421,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
         'title': title,
         'startDateTime': startDate,
         'endDateTime': endDate,
-        'popularrate':-1
+        'popularRate':-1
       });
 
       if(isAgeRange){

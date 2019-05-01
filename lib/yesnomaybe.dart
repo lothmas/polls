@@ -146,37 +146,67 @@ class CustomRadioState extends State<CustomRadio> {
           //  crossAxisAlignment: CrossAxisAlignment.b,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
 
-              children: <Widget>[    Row(children: <Widget>[Text(
-                '🔥 popular rate: ️',
-                style: TextStyle(color: Colors.black, fontSize: 11),
-              ),
+            Container(
+                color: Colors.white,
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: Firestore.instance
+                      .collection('votes').document(voteID).snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    try {
+                      if (snapshot.hasData) {
+                        if(snapshot.data['popularRate']!=-1) {
+                          return  Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
 
-              new Container(
-                height: 13.0,
-                width: 13.0,
-                child: new Center(
-                  child: new Text(popularRating,
-                      style: new TextStyle(
-                          color:  Colors.white,
-                          //fontWeight: FontWeight.bold,
-                          fontSize: 11.0,fontWeight: FontWeight.bold)),
-                ),
-                decoration:
-                new BoxDecoration(
-                  color: Colors.blueGrey ,
-                  border: new Border.all(
-                      width: 1.0,
-                      color:Colors.blueGrey ),
-                  borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
-                ),
-              ),
+                            children: <Widget>[    Row(children: <Widget>[
+                              Text(
+                                '🔥 popular rate: ️'
+                                style: TextStyle(color: Colors.black, fontSize: 11),
+                              ),
 
+                              new Container(
+                                height: 13.0,
+                                width: 13.0,
+                                child: new Center(
+                                  child: new Text((snapshot.data['popularRate']+1).toString(),
+                                      style: new TextStyle(
+                                          color:  Colors.white,
+                                          //fontWeight: FontWeight.bold,
+                                          fontSize: 11.0,fontWeight: FontWeight.bold)),
+                                ),
+                                decoration:
+                                new BoxDecoration(
+                                  color: Colors.blueGrey ,
+                                  border: new Border.all(
+                                      width: 1.0,
+                                      color:Colors.blueGrey ),
+                                  borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+                                ),
+                              ),
+                              Text(
+                                    '   🔢 ' +
+                                    snapshot.data['voteNumber'].toString() +
+                                    ' votes',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 11),
+                              )
 
-              ],)
-              ],),
+                            ],)
+                            ],);
+                        }
+                        else{
+                          return Text('');
+                        }
+                      } else if (snapshot.hasError) {
+                        return Text('');
+                      }
+                    } catch (e) {
+                      return Text('');
+                    }
+                  },
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
 
@@ -195,7 +225,6 @@ class CustomRadioState extends State<CustomRadio> {
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       try {
                         if (snapshot.hasData) {
-                          _getPopular(snapshot.data.documents,voteID);
                           return Text(snapshot.data.documents.length.toString(),style: TextStyle(fontSize: 11),);
                         } else if (snapshot.hasError) {
                           return Text('0');
@@ -210,45 +239,6 @@ class CustomRadioState extends State<CustomRadio> {
 
       ],)
     );
-
-
-
-
-  }
-
-  _getPopular(List<DocumentSnapshot> documents ,String voteID) async {
-    String voteIDRefactored=voteID.replaceAll('-', '');
-
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, voteIDRefactored);
-    // open the database
-    Database database = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-          // When creating the db, create the table
-          await db.execute(
-              'CREATE TABLE '+voteIDRefactored+' (popular TEXT)');
-        });
-
-
-    for (DocumentSnapshot query in documents) {
-      // Insert some records in a transaction
-      String insertQuery='INSERT INTO '+voteIDRefactored+'(popular) VALUES('+query['vote_number'].toString()+')';
-      await database.transaction((txn) async {
-        await txn.rawInsert(insertQuery);
-      });
-    }
-    String popularRate='SELECT `popular` FROM `'+voteIDRefactored+'` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
-
-    await database.transaction((txn) async {
-      var count= await txn.rawQuery(popularRate);
-
-      setState(() {
-        popularRating= count.elementAt(0)['popular'].toString();
-      });
-    });
-
-// Close the database
-    await database.close();
   }
 
   /// This will show snackbar at bottom when user tap on Grid item

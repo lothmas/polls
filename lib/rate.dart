@@ -236,10 +236,38 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
 
-                children: <Widget>[     Text(
-                '🔥 popular star: ️'+popularRating,
-                style: TextStyle(color: Colors.black, fontSize: 11),
-              ),
+                children: <Widget>[    Container(
+                    color: Colors.white,
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: Firestore.instance
+                          .collection('votes').document(voteID).snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        try {
+                          if (snapshot.hasData) {
+                            //  _getPopular(snapshot.data.documents,document);
+                            if(snapshot.data['popularRate']!=-1) {
+                              return Text(
+                                '🔥 popular star: ️' +
+                                    snapshot.data['popularRate'].toString() +
+                                    '   🔢 ' +
+                                    snapshot.data['voteNumber'].toString() +
+                                    ' votes',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 11),
+                              );
+                            }
+                            else{
+                              return Text('');
+                            }
+                          } else if (snapshot.hasError) {
+                            return Text('');
+                          }
+                        } catch (e) {
+                          return Text('');
+                        }
+                      },
+                    ))
 
               ],),
               Row(
