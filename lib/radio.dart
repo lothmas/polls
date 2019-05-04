@@ -185,7 +185,7 @@ class _CurrencyState extends State<YesNoMaybe> {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
 
-                                        children: <Widget>[Text('🔥 popular option:  ',style: TextStyle(fontSize: 11),),Text(snapshot.data['popularRate']==0?'YES':snapshot.data['popularRate']==1?'NO':snapshot.data['popularRate']==2?'MAYBE':'',
+                                        children: <Widget>[Text('🔥 popular:  ',style: TextStyle(fontSize: 11),),Text(snapshot.data['popularRate']==0?'YES':snapshot.data['popularRate']==1?'NO':snapshot.data['popularRate']==2?'MAYBE':'',
                                           style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
                                         ),  Text('   🔢 ' +
                                             snapshot.data['voteNumber'].toString() +

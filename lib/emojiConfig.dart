@@ -253,7 +253,7 @@ class EmojiFeedbackState extends State<EmojiFeedback>
                                   Row(
                                     children: <Widget>[
                                       Text(
-                                        '🔥 popular feedback: ️',
+                                        '🔥 popular: ️',
                                         style: TextStyle(color: Colors.black, fontSize: 11),
                                       ),
                                       snapshot.data['popularRate']!=-1? Container(

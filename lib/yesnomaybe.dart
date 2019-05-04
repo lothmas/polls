@@ -162,7 +162,7 @@ class CustomRadioState extends State<CustomRadio> {
 
                             children: <Widget>[    Row(children: <Widget>[
                               Text(
-                                '🔥 popular rate: ️'
+                                '🔥 popular: ️',
                                 style: TextStyle(color: Colors.black, fontSize: 11),
                               ),
 

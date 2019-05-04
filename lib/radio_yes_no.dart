@@ -144,7 +144,7 @@ class CustomRadioState extends State<LikeDisLike> {
                                 children: <Widget>[
                                   snapshot.data['popularRate'] != -1
                                       ? Text(
-                                          '🔥 popular choice: ️',
+                                          '🔥 popular: ️',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 11),
@@ -198,7 +198,6 @@ class CustomRadioState extends State<LikeDisLike> {
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             try {
                               if (snapshot.hasData) {
-                                _getPopular(snapshot.data.documents, voteID);
                                 return Text(
                                   snapshot.data.documents.length.toString(),
                                   style: TextStyle(fontSize: 11),
@@ -220,44 +219,44 @@ class CustomRadioState extends State<LikeDisLike> {
         ));
   }
 
-  _getPopular(List<DocumentSnapshot> documents, String voteID) async {
-    String voteIDRefactored = voteID.replaceAll('-', '');
-
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, voteIDRefactored);
-    // open the database
-    Database database = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      // When creating the db, create the table
-      await db.execute('CREATE TABLE ' + voteIDRefactored + ' (popular TEXT)');
-    });
-
-    for (DocumentSnapshot query in documents) {
-      // Insert some records in a transaction
-      String insertQuery = 'INSERT INTO ' +
-          voteIDRefactored +
-          '(popular) VALUES(' +
-          query['vote_number'].toString() +
-          ')';
-      await database.transaction((txn) async {
-        await txn.rawInsert(insertQuery);
-      });
-    }
-    String popularRate = 'SELECT `popular` FROM `' +
-        voteIDRefactored +
-        '` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
-
-    await database.transaction((txn) async {
-      var count = await txn.rawQuery(popularRate);
-
-      setState(() {
-        popularRating = count.elementAt(0)['popular'].toString();
-      });
-    });
-
-// Close the database
-    await database.close();
-  }
+//  _getPopular(List<DocumentSnapshot> documents, String voteID) async {
+//    String voteIDRefactored = voteID.replaceAll('-', '');
+//
+//    var databasesPath = await getDatabasesPath();
+//    String path = join(databasesPath, voteIDRefactored);
+//    // open the database
+//    Database database = await openDatabase(path, version: 1,
+//        onCreate: (Database db, int version) async {
+//      // When creating the db, create the table
+//      await db.execute('CREATE TABLE ' + voteIDRefactored + ' (popular TEXT)');
+//    });
+//
+//    for (DocumentSnapshot query in documents) {
+//      // Insert some records in a transaction
+//      String insertQuery = 'INSERT INTO ' +
+//          voteIDRefactored +
+//          '(popular) VALUES(' +
+//          query['vote_number'].toString() +
+//          ')';
+//      await database.transaction((txn) async {
+//        await txn.rawInsert(insertQuery);
+//      });
+//    }
+//    String popularRate = 'SELECT `popular` FROM `' +
+//        voteIDRefactored +
+//        '` GROUP BY `popular` ORDER BY COUNT(*) DESC LIMIT 1;';
+//
+//    await database.transaction((txn) async {
+//      var count = await txn.rawQuery(popularRate);
+//
+//      setState(() {
+//        popularRating = count.elementAt(0)['popular'].toString();
+//      });
+//    });
+//
+//// Close the database
+//    await database.close();
+//  }
 
   /// This will show snackbar at bottom when user tap on Grid item
   _showSnackBar(BuildContext context, String item) {

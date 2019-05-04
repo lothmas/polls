@@ -3,6 +3,8 @@ library flip_panel;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:stats/Graph.dart';
 import 'package:stats/Polling.dart';
 import 'package:badge/badge.dart';
@@ -29,6 +31,7 @@ class Trending {
   List<Widget> homeTrendingList(
       BuildContext context, DocumentSnapshot document, String memberID) {
     Duration _duration = new Duration();
+
     try {
       DateTime dDay = document['startDateTime'];
       _duration = dDay.difference(DateTime.now());
@@ -496,9 +499,29 @@ class Trending {
 //              ),
                     ));
           },
-          child: FadeInImage.assetNetwork(
-            placeholder: 'images/loader.gif',
-            image: document['postPath'],
+          child: TransitionToImage(
+            image: AdvancedNetworkImage(
+              document['postPath'],
+              loadedCallback: () => print('It works!'),
+              loadFailedCallback: () => print('Oh, no!'),
+              useDiskCache: true,
+              retryDuration: new Duration(seconds: 5),
+              // loadingProgress: (double progress) => print(progress),
+              // disableMemoryCache: true,
+            ),
+            // loadedCallback: () => print('It works!'),
+            // loadFailedCallback: () => print('Oh, no!'),
+            // disableMemoryCache: true,
+            fit: BoxFit.contain,
+            placeholder: Image.asset('images/loader.gif'),
+            enableRefresh: true,
+            loadingWidgetBuilder: (double progress) {
+              return Container(
+
+                alignment: Alignment.center,
+                child: Image.asset('images/loader.gif'),
+              );
+            },
           ),
         ));
       } else if (null != document['postPath'] &&
