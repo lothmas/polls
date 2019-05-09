@@ -87,12 +87,13 @@ class _Trending extends State<Polling> {
                     nomineesList.add(nominee);
                   }).toList();
                   List<String> items = new List();
+                double widthSize=  MediaQuery.of(context).size.width;
 
                   //voteType 1(one_select) 2 (order) 3(multiple_select)
                   //voteBy 1(text) 2(image) 3(video)
                   if (voteType1 == 2 && voteBy1 == 2) {
                     // return new ReOrderGrid().reorder(nomineesList, voteType1);
-                    return new ReorderNominees(nomineesList,voteBy1);
+                    return new ReorderNominees(nomineesList,voteBy1,widthSize);
 
                     return new DraggableReOrderImage(nomineesList, voteBy1);
 
@@ -113,7 +114,7 @@ class _Trending extends State<Polling> {
                       nomineesList1.add(nominee1);
                       count++;
                     }
-                    return new ReorderNominees(nomineesList1,voteBy1);
+                    return new ReorderNominees(nomineesList1,voteBy1,widthSize);
                     return new DraggableReOrderImage(nomineesList1, voteBy1);
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
                     return new SingleSelectDrag(nomineesList, voteBy1, "images/background.jpg");
