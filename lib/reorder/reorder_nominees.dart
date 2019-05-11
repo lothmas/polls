@@ -49,9 +49,8 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
 
   @override
   void initState() {
-
     super.initState();
-    actionTxt='Click When Done';
+    actionTxt='done';
     nomineesList.forEach((heroName) {
       itemBins.add(new ItemBin(Container(
         height: 200,
@@ -82,17 +81,31 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
       appBar: new AppBar(
         backgroundColor: Colors.white,
 
-        title: new Text("Poll By Re-Ordering",style: TextStyle(fontSize: 12,color: Colors.black),),
+        title: new Text("Poll By Re-Ordering",style: TextStyle(fontSize: 12,color: Colors.blueGrey,fontWeight: FontWeight.bold),),
         actions: <Widget>[
           new Center(
               child: new GestureDetector(
                 child: new Container(
-                  child: actionTxt=='Click When Done'? Text(actionTxt,style: TextStyle(fontSize: 12.0,color: Colors.black),):Center(
+                  child: actionTxt=='done'? GestureDetector(
+      onTap: () {
+        setState(() {
+          actionTxt='complete';
+        });
+
+      },
+      child: Row(
+        children:  <Widget>[
+
+          Text('Submit Poll  ',style: TextStyle(fontSize: 12,color: Colors.blueGrey,fontWeight: FontWeight.bold),),
+          Image.asset('images/submited.png',height: 20,width: 20,),
+        ],
+      ),
+    ):Center(
       child: Countdown(
       seconds: 15,
       onFinish: () {
         setState(() {
-          actionTxt='completed';
+          actionTxt='done';
 
 //          CollectionReference collectionReference =
 //          Firestore.instance.collection('casted_votes');
@@ -116,6 +129,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
                 onTap: (){
                  changeActionState();
                   editSwitchController.editStateChanged();
+
                 },
               )
           )
