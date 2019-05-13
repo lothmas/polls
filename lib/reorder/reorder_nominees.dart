@@ -145,13 +145,15 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
         });
 
       },
-      child: Row(
+      child:Column(children: <Widget>[
+        Container(height:5,color: Colors.transparent,),
+        Row(
         children:  <Widget>[
 
           Text('Submit Poll  ',style: TextStyle(fontSize: 12,color: Colors.blueGrey,fontWeight: FontWeight.bold),),
           Image.asset('images/submited.png',height: 20,width: 20,),
         ],
-      ),
+      ),],)
     ):Center(
       child: Countdown(
       seconds: 15,
