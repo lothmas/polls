@@ -1,6 +1,6 @@
 import 'dart:io';
 
-//import 'package:adv_image_picker/adv_image_picker.dart';
+import 'package:adv_image_picker/adv_image_picker.dart';
 import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -697,7 +697,7 @@ class TestState extends State<CreateVotes> with TickerProviderStateMixin {
   }
 
   void _pickImage() async {
-//    files1.addAll(await AdvImagePicker.pickImagesToFile(context));
+    files1.addAll(await AdvImagePicker.pickImagesToFile(context));
 
     setState(() {});
   }

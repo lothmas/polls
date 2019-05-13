@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dragablegridview_flutter/dragablegridviewbin.dart';
 import 'package:dragablegridview_flutter/dragablegridview_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:random_color/random_color.dart';
 import 'package:simple_countdown/simple_countdown.dart';
 import 'package:stats/NomineeMasterObject.dart';
+import 'package:stats/image_display.dart';
 
 class ItemBin extends DragAbleGridViewBin{
 
@@ -52,6 +55,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
     super.initState();
     actionTxt='done';
     nomineesList.forEach((heroName) {
+      voteBy1==1?
       itemBins.add(new ItemBin(Container(
         height: 200,
         width: (widthSize/2)-2,
@@ -69,7 +73,54 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
               ],
             ),
           ),
-        ))));
+        )))):
+      voteBy1==2?
+      itemBins.add(new ItemBin(Container(
+          height: 120,
+          width: (widthSize/2)-2,
+          child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) =>
+                        new ImageScreen('Nominee', Image.network(heroName.nomineeImage))
+                    ));
+              },
+              child: TransitionToImage(
+                image: AdvancedNetworkImage(
+                  heroName.nomineeImage,
+                  loadedCallback: () => print('It works!'),
+                  loadFailedCallback: () => print('Oh, no!'),
+                  useDiskCache: true,
+                  retryDuration: new Duration(seconds: 5),
+                  // loadingProgress: (double progress) => print(progress),
+                  // disableMemoryCache: true,
+                ),
+                // loadedCallback: () => print('It works!'),
+                // loadFailedCallback: () => print('Oh, no!'),
+                // disableMemoryCache: true,
+                fit: BoxFit.fill,
+                placeholder: Image.asset('images/loader.gif'),
+                enableRefresh: true,
+                loadingWidgetBuilder: (double progress) {
+                  return Container(
+
+                    alignment: Alignment.center,
+                    child: Image.asset('images/loader.gif'),
+                  );
+                },
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5,
+            margin: EdgeInsets.all(10),
+          ),))):Text('');
     }
     );
   }
@@ -129,7 +180,6 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
                 onTap: (){
                  changeActionState();
                   editSwitchController.editStateChanged();
-
                 },
               )
           )
@@ -150,19 +200,12 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
         deleteIcon: new Image.asset("images/close.png",width: 15.0 ,height: 15.0 ),
         child: (int position){
           return new Container(
-//            padding: EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 5.0),
-//            decoration: new BoxDecoration(
-//              borderRadius: BorderRadius.all(new Radius.circular(3.0)),
-//              border: new Border.all(color: Colors.blue),
-//            ),
-            //因为本布局和删除图标同处于一个Stack内，设置marginTop和marginRight能让图标处于合适的位置
-            //Because this layout and the delete_Icon are in the same Stack, setting marginTop and marginRight will make the icon in the proper position.
-//            margin: EdgeInsets.only(top: 6.0,right: 6.0),
             child: itemBins.elementAt(position).data,
           );
         },
         editChangeListener: (){
         //  changeActionState();
+          String ddd='sdsd';
         },
       ),
     );
