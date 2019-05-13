@@ -76,7 +76,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
         )))):
       voteBy1==2?
       itemBins.add(new ItemBin(Container(
-          height: 120,
+          height: 100,
           width: (widthSize/2)-2,
           child: Card(
             semanticContainer: true,
@@ -103,7 +103,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
                 // loadedCallback: () => print('It works!'),
                 // loadFailedCallback: () => print('Oh, no!'),
                 // disableMemoryCache: true,
-                fit: BoxFit.scaleDown,
+                fit: BoxFit.contain,
                 placeholder: Image.asset('images/loader.gif'),
                 enableRefresh: true,
                 loadingWidgetBuilder: (double progress) {
@@ -116,10 +116,11 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
               ),
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7.0),
+              borderRadius: BorderRadius.circular(3.0),
             ),
+//            color: Colors.blueGrey[50],
             elevation: 5,
-            margin: EdgeInsets.all(8),
+            margin: EdgeInsets.all(1),
           ),))):Text('');
     }
     );
