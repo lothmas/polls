@@ -103,7 +103,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
                 // loadedCallback: () => print('It works!'),
                 // loadFailedCallback: () => print('Oh, no!'),
                 // disableMemoryCache: true,
-                fit: BoxFit.fill,
+                fit: BoxFit.scaleDown,
                 placeholder: Image.asset('images/loader.gif'),
                 enableRefresh: true,
                 loadingWidgetBuilder: (double progress) {
@@ -116,10 +116,10 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
               ),
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(7.0),
             ),
             elevation: 5,
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(8),
           ),))):Text('');
     }
     );
