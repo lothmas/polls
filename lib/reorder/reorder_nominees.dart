@@ -76,47 +76,37 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
         )))):
       voteBy1==2?
       itemBins.add(new ItemBin(Container(
-          height: 100,
+          height: 150,
           width: (widthSize/2)-2,
           child: Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) =>
-                        new ImageScreen('Nominee', Image.network(heroName.nomineeImage))
-                    ));
-              },
-              child: TransitionToImage(
-                image: AdvancedNetworkImage(
-                  heroName.nomineeImage,
-                  loadedCallback: () => print('It works!'),
-                  loadFailedCallback: () => print('Oh, no!'),
-                  useDiskCache: true,
-                  retryDuration: new Duration(seconds: 5),
-                  // loadingProgress: (double progress) => print(progress),
-                  // disableMemoryCache: true,
-                ),
-                // loadedCallback: () => print('It works!'),
-                // loadFailedCallback: () => print('Oh, no!'),
-                // disableMemoryCache: true,
-                fit: BoxFit.contain,
-                placeholder: Image.asset('images/loader.gif'),
-                enableRefresh: true,
-                loadingWidgetBuilder: (double progress) {
-                  return Container(
+            child: new Column(
+              children: <Widget>[
+                new Image.network(heroName.nomineeImage,height: 100,width: (widthSize/2)-2),
+                new Padding(
+                    padding: new EdgeInsets.all(7.0),
+                    child: new Row(
+                      children: <Widget>[
+                        new Padding(
+                          padding: new EdgeInsets.all(7.0),
+                          child: new Icon(Icons.thumb_up,size: 15,),
+                        ),
+                        new Padding(
+                          padding: new EdgeInsets.all(7.0),
+                          child: new Text('Like',style: new TextStyle(fontSize: 10.0),),
+                        ),
+                        new Padding(
+                          padding: new EdgeInsets.all(7.0),
+                          child: new Icon(Icons.comment,size: 15,),
+                        ),
+                        new Padding(
+                          padding: new EdgeInsets.all(7.0),
+                          child: new Text('Comments',style: new TextStyle(fontSize: 10.0)),
+                        )
 
-                    alignment: Alignment.center,
-                    child: Image.asset('images/loader.gif'),
-                  );
-                },
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3.0),
+                      ],
+                    )
+                )
+              ],
             ),
 //            color: Colors.blueGrey[50],
             elevation: 5,
@@ -191,7 +181,7 @@ class DragAbleGridViewDemoState extends State<ReorderNominees>{
       body: new DragAbleGridView(
         mainAxisSpacing:5.0,
         crossAxisSpacing:5.0,
-        childAspectRatio:1.8,
+        childAspectRatio:voteBy1==1?2:voteBy1==2?1:2,
         crossAxisCount: 2,
         itemBins:itemBins,
         editSwitchController:editSwitchController,
