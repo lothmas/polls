@@ -7,6 +7,7 @@ import 'package:stats/drag.dart';
 import 'package:stats/draggable_order_image/reorderimage.dart';
 import 'package:stats/multiple_selection/multipleselection.dart';
 import 'package:stats/reorder/reorder_nominees.dart';
+import 'package:stats/selection.dart';
 
 const PrimaryColor = const Color(0x00000000);
 
@@ -119,7 +120,7 @@ class _Trending extends State<Polling> {
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
                     return new SingleSelectDrag(nomineesList, voteBy1, "images/background.jpg");
                   } else if (voteType1 == 3) {
-                    return new MultipleSelection1(nomineesList, voteBy1);
+                    return new PollBySelect(nomineesList, voteBy1);
                   }
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
