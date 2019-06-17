@@ -23,7 +23,7 @@ class _DraggableImages extends State<DraggableImages> {
     Widget images = Image.network(
       widget.item.nomineeImage,
       fit: BoxFit.cover,
-      height: 80.0,
+   //   height: 80.0,
     );
     return new Padding(
         padding: new EdgeInsets.all(0.6),
@@ -53,35 +53,17 @@ class _DraggableImages extends State<DraggableImages> {
                           builder: (context) =>   new ImageScreen(widget.item.nomineeName,image)
                   ));
                 },
-                child: new Card(
-                    child: Column(
-                  children: <Widget>[
-//              new Column(
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                children: <Widget>[
-                    FadeInImage.assetNetwork(
+                child:  Column(children: <Widget>[
+                Expanded(
+                child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                    child:   FadeInImage.assetNetwork(
                       placeholder: 'images/loader.gif',
                       image: widget.item.nomineeImage,
                       fit: BoxFit.cover,
-                      height: 80.0,
-                    ),
-                    new Container(
-                        child: new Center(
-                            child: new Column(
-                      children: <Widget>[
-                        //  new SizedBox(height: 0),
-                        Text(widget.item.nomineeName,
-                            textAlign: TextAlign.center,
-                            style: new TextStyle(
-                                color: Colors.black,
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.bold))
-//                          new Text('Population: ${item.population}')
-                      ],
-                    )))
-                    //    ],
-                  ],
-                ))),
+                    ),  ),
+            )])),
 //              elevation: 2.0,
 //              margin: EdgeInsets.all(5.0),
             //   ),

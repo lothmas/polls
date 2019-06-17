@@ -80,6 +80,7 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
+#  multi_image_picker: ^4.3.3
   badge: ^0.0.3
   path_provider: ^0.5.0
 

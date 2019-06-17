@@ -18,8 +18,8 @@ class DragAvatarBorder extends StatelessWidget {
       opacity: opacity,
       child: new Container(
         decoration: new BoxDecoration(
-          border: Border.all(color: Colors.lightBlue),
-          shape: BoxShape.circle,
+          border: Border.all(color: Colors.grey[100]),
+          shape: BoxShape.rectangle,
 //                  image: new DecorationImage(
 //                    image: new AssetImage("images/background.jpg"),
 //                    fit: BoxFit.cover,

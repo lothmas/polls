@@ -13,6 +13,7 @@ class SingleSelectDrag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var main = new MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: new Scaffold(
           resizeToAvoidBottomPadding: false,
 
@@ -26,10 +27,7 @@ class SingleSelectDrag extends StatelessWidget {
       fit: StackFit.expand,
       children: <Widget>[
         main,
-        Banner(
-          message: "Single-Select",
-          location: BannerLocation.topEnd,
-        ),
+
       ],
     );
   }

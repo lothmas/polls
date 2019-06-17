@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_countdown/simple_countdown.dart';
 import 'package:stats/NomineeMasterObject.dart';
 import 'package:stats/dropcity/draggable_view.dart';
 
@@ -29,9 +30,11 @@ class DropTarget extends StatefulWidget {
     _selection = value;
   }
 
-  DropTarget(this.item, {this.size, NomineesEntityList selectedItem, this.itemSize}) {
+  DropTarget(this.item,
+      {this.size, NomineesEntityList selectedItem, this.itemSize}) {
     _selection = selectedItem;
   }
+
   @override
   _DropTargetState createState() => new _DropTargetState();
 
@@ -48,9 +51,7 @@ class _DropTargetState extends State<DropTarget> {
     return new Padding(
         padding: new EdgeInsets.all(4.0),
         child:
-            widget.selection != null ? addDraggable(getTarget()) : getTarget()
-
-    );
+            widget.selection != null ? addDraggable(getTarget()) : getTarget());
   }
 
   Widget addDraggable(DragTarget target) => new Draggable<NomineesEntityList>(
@@ -68,50 +69,56 @@ class _DropTargetState extends State<DropTarget> {
       builder: (BuildContext context, List<NomineesEntityList> accepted,
           List<dynamic> rejected) {
         return new SizedBox(
-            child: new Container(
-                width: MediaQuery.of(context).size.width-8,
-                height: 110,
-                decoration: new BoxDecoration(
-                    color: accepted.isEmpty
-                        ? (widget.selection != null
-                            ? getDropBorderColor(widget.selection.status)
-                            : Colors.transparent)
-                        : Colors.lime[200],
-                  border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor),
+          child: new Container(
+              width: MediaQuery.of(context).size.width - 8,
+              height: 110,
+              decoration: new BoxDecoration(
+                color: accepted.isEmpty
+                    ? (widget.selection != null
+                        ? getDropBorderColor(widget.selection.status)
+                        : Colors.transparent)
+                    : Colors.lime[200],
+                border: Border(
+                    bottom: BorderSide(color: Theme.of(context).dividerColor),
 //                      left: BorderSide(color: Theme.of(context).dividerColor),
-                      top: BorderSide(color: Theme.of(context).dividerColor)),
+                    top: BorderSide(color: Theme.of(context).dividerColor)),
 //                    border: new Border.all(
 //                        width: 1.0,
 //                        color:
 //                            accepted.isEmpty ? Colors.lightBlueAccent : Colors.cyan[200])
-                ),
-                child: widget.selection != null
-                    ? new Column(children: [
-                        new Padding(
-                            padding: new EdgeInsets.symmetric(vertical: 12.0),
-                            child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,color:Colors.black ),)),
-                        new Center(
-                            child: new SizedBox(
-                                width: MediaQuery.of(context).size.width-50,
-                                height: 60,
-                                child: new Material(
-                                    elevation: 10.0,
-                                    child: new Center(
-                                      child: new
-                                      Text(
-                                        widget.selection.nomineeName,
-                                        textAlign: TextAlign.center,
-                                        style:  TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-
-                                    )))),
-                      ])
-                    : new Center(child: new Text(widget.item.nomineesDescription,style:TextStyle(fontWeight: FontWeight.bold,  fontSize: 10.0,)))),
-
-
+              ),
+              child: widget.selection != null
+                  ? new Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                          new Center(
+                              child: new SizedBox(
+//                              width: MediaQuery.of(context).size.width,
+                                  child: new Material(
+                                      child: new Center(
+                            child: new Image.network(
+                              widget.selection.nomineeImage,
+                              height: 100,
+                            ),
+                          )))),
+                          new Countdown(
+                            seconds: 15,
+                            onFinish: () {
+                              setState(() {});
+                            },
+                            textStyle: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ])
+                  : new Center(
+                      child: new Text(widget.item.nomineesDescription,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10.0,
+                          )))),
         );
       });
 
@@ -131,7 +138,8 @@ class _DropTargetState extends State<DropTarget> {
             style: new TextStyle(
                 fontSize: 12.0,
                 color: Colors.white,
-                decoration: TextDecoration.none,fontWeight: FontWeight.bold)),
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.bold)),
         size: widget.itemSize,
         color: Colors.cyan,
       ));

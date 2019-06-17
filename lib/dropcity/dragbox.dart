@@ -145,7 +145,7 @@ class _GameViewState extends State<GameView> {
           child: GridView.count(
            // primary: true,
             padding: const EdgeInsets.all(1.0),
-                crossAxisSpacing: 9.0,
+                crossAxisSpacing: 1.0,
             crossAxisCount: 3,
             children: widget.items
                 .where((item) => !item.selected)
@@ -161,7 +161,7 @@ class _GameViewState extends State<GameView> {
         child:
         Container(
 
-               color: Colors.grey[300],
+               color: Colors.transparent,
             child:  Column(children: <Widget>[
           new Row(
 
@@ -174,15 +174,15 @@ class _GameViewState extends State<GameView> {
                   itemSize: itemSize))
                   .toList()),
 
-                      Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
-
-                  _buildButton1('images/vote.png',validated ? _approveVote:_doNothing  ),
-
-                ]),
+//                      Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                mainAxisSize: MainAxisSize.max,
+//                children: [
+//                  _buildButton(validated ? 'images/refresh.png':'images/yes.png',validated ? _onClear : _onValidate),
+//
+//                  _buildButton1('images/vote.png',validated ? _approveVote:_doNothing  ),
+//
+//                ]),
        ]),
 
         ),
