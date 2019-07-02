@@ -7,6 +7,7 @@ import 'package:stats/drag.dart';
 import 'package:stats/draggable_order_grid/drag_and_drop_grid_reorder.dart';
 import 'package:stats/draggable_order_image/reorderimage.dart';
 import 'package:stats/multiple_selection/multipleselection.dart';
+import 'package:stats/multipleorder/reorder_draggeable.dart';
 import 'package:stats/reorder/reorder_nominees.dart';
 import 'package:stats/selection.dart';
 
@@ -94,7 +95,9 @@ class _Trending extends State<Polling> {
                   //voteType 1(one_select) 2 (order) 3(multiple_select)
                   //voteBy 1(text) 2(image) 3(video)
                   if (voteType1 == 2 && voteBy1 == 2) {
-                     return new ReOrderGrid().reorder(nomineesList, voteType1);
+                    return ReorderDraggeble();
+
+                    return new ReOrderGrid().reorder(nomineesList, voteType1);
                   //  return new ReorderNominees(nomineesList,voteBy1,widthSize);
 
                   //  return new DraggableReOrderImage(nomineesList, voteBy1);
@@ -119,6 +122,7 @@ class _Trending extends State<Polling> {
                   //  return new ReOrderGrid().reorder(nomineesList, voteType1);
 
                   //  return new ReorderNominees(nomineesList1,voteBy1,widthSize);
+                    return ReorderDraggeble();
                     return new DraggableReOrderImage(nomineesList1, voteBy1);
                   } else if (voteType1 == 1 && (voteBy1 == 1 || voteBy1 == 2)) {
                     return new SingleSelectDrag(nomineesList, voteBy1, "images/background.jpg");

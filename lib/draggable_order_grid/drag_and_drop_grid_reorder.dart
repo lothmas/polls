@@ -16,21 +16,21 @@ class ReOrderGrid {
       home: new Scaffold(
         resizeToAvoidBottomPadding: false,
 
-        appBar: new AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'images/long_press.png',
-                  fit: BoxFit.contain,
-                  height: 100,
-                ),
-                Container(
-                    padding: const EdgeInsets.all(8.0), child: Text('Long Press, Drag & Place in Favoured Order',style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),))
-              ],
-
-            ),backgroundColor: Colors.white,
-        ),
+//        appBar: new AppBar(
+//            title: Row(
+//              mainAxisAlignment: MainAxisAlignment.center,
+//              children: [
+//                Image.asset(
+//                  'images/long_press.png',
+//                  fit: BoxFit.contain,
+//                  height: 100,
+//                ),
+//                Container(
+//                    padding: const EdgeInsets.all(8.0), child: Text('Long Press, Drag & Place in Favoured Order',style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.bold),))
+//              ],
+//
+//            ),backgroundColor: Colors.white,
+//        ),
         body: new SortableListView(
           items: nomineesList,
           itemBuilder: (_, int index) => new Card(
